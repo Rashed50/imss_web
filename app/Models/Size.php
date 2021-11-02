@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Size extends Model
 {
     use HasFactory;
+
+    public function brandInfo(){
+        return $this->belongsTo(Brand::class, 'BranId', 'BranId');
+    }
 }
