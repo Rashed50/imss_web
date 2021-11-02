@@ -1,37 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Login</title>
-    <!-- vendor css -->
-    <link href="{{ asset('contents/admin') }}/assets/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="{{ asset('contents/admin') }}/assets/lib/Ionicons/css/ionicons.css" rel="stylesheet">
-    <!-- Starlight CSS -->
-    <link rel="stylesheet" href="{{ asset('contents/admin') }}/assets/css/starlight.css">
-    <style media="screen">
-      .signin-logo {
-        margin-bottom: 10px;
-      }
-      .signin-logo span.tx-info {
-        font-weight: bold;
-      }
-    </style>
-  </head>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <body>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <div class="d-flex align-items-center justify-content-center bg-sl-primary ht-100v">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-      @yield('content')
-      <!-- login-wrapper -->
-    </div>
-    <!-- d-flex -->
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    <script src="{{ asset('contents/admin') }}/assets/lib/jquery/jquery.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/lib/popper.js/popper.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/lib/bootstrap/bootstrap.js"></script>
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100">
+            @include('layouts.navigation')
 
-  </body>
+            <!-- Page Heading -->
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <main>
+                {{ $slot }}
+            </main>
+        </div>
+    </body>
 </html>

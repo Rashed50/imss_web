@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Brand extends Model
 {
     use HasFactory;
+
+    public function cateInfo(){
+        return $this->belongsTo(Category::class, 'CateId', 'CateId');
+    }
 }

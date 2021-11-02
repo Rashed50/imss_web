@@ -1,18 +1,66 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminController;
-
-
+use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\BrandController;
+use App\Http\Controllers\admin\SizeController;
+use App\Http\Controllers\admin\ThicknessController;
+use App\Http\Controllers\admin\StockController;
 /*
 |--------------------------------------------------------------------------
-| Create Route
+| Web Routes
 |--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
 */
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/admin/add', [AdminController::class, 'add'])->name('add.here');
+Route::get('/dashboard', function () {
+    return view('admin.index');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('/dashboard/add', function () {
+    return view('admin.add');
+})->middleware(['auth'])->name('add.here');
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('category/add', [CategoryController::class, 'add'])->name('category.add');
+    Route::get('category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('category/add', [CategoryController::class, 'store'])->name('category.store');
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('brand/add', [BrandController::class, 'add'])->name('brand.add');
+    Route::get('brand/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
+    Route::post('brand/add', [BrandController::class, 'store'])->name('brand.store');
+});
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('size/add', [SizeController::class, 'add'])->name('size.add');
+    Route::get('size/edit/{id}', [SizeController::class, 'edit'])->name('size.edit');
+    Route::post('size/add', [SizeController::class, 'store'])->name('size.store');
+});
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('thickness/add', [ThicknessController::class, 'add'])->name('thickness.add');
+    Route::get('thickness/edit/{id}', [ThicknessController::class, 'edit'])->name('thickness.edit');
+    Route::post('thickness/add', [ThicknessController::class, 'store'])->name('thickness.store');
+});
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('stock/add', [StockController::class, 'add'])->name('stock.add');
+    Route::get('stock/edit/{id}', [StockController::class, 'edit'])->name('stock.edit');
+    Route::post('stock/add', [StockController::class, 'store'])->name('stock.store');
+});
+
+
+
+require __DIR__.'/auth.php';
