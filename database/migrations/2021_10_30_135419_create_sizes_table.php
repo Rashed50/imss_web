@@ -17,9 +17,12 @@ class CreateSizesTable extends Migration
             $table->id('SizeId');
             $table->string('SizeName');
             $table->boolean('SizeStatus')->default(true);
+            $table->unsignedBigInteger('CateId');
             $table->unsignedBigInteger('BranId');
+            $table->foreign('CateId')->references('CateId')->on('categories')->onDelete('cascade');
             $table->foreign('BranId')->references('BranId')->on('brands')->onDelete('cascade');
             $table->timestamps();
+
         });
     }
 

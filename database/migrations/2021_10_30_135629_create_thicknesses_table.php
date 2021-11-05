@@ -17,9 +17,15 @@ class CreateThicknessesTable extends Migration
             $table->id('ThicId');
             $table->string('ThicName');
             $table->boolean('ThicStatus')->default(true);
+            $table->unsignedBigInteger('CateId');
+            $table->unsignedBigInteger('BranId');
             $table->unsignedBigInteger('SizeId');
-            $table->foreign('SizeId')->references('SizeId')->on('sizes')->onDelete('cascade');
             $table->timestamps();
+
+            $table->foreign('CateId')->references('CateId')->on('categories')->onDelete('cascade');
+            $table->foreign('BranId')->references('BranId')->on('brands')->onDelete('cascade');
+            $table->foreign('SizeId')->references('SizeId')->on('sizes')->onDelete('cascade');
+
         });
     }
 
