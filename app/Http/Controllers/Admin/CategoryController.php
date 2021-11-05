@@ -36,7 +36,7 @@ class CategoryController extends Controller{
 
         $insert = Category::insertGetId([
             'CateName'=>$request['CateName'],
-            // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         if($insert){

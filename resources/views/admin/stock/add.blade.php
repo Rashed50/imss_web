@@ -18,7 +18,7 @@
                   <div class="card-header">
                       <div class="row">
                           <div class="col-md-12">
-                              <h3 class="card-title card_top_title">New Brand Information</h3>
+                              <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Brand Information</h3>
                           </div>
                           <div class="clearfix"></div>
                       </div>
@@ -45,7 +45,7 @@
                     <div class="form-group row custom_form_group{{ $errors->has('CateId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Category Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="CateId" id="CateId">
+                          <select class="form-control" name="CateId" id="CateId_val">
                             <option value="">Select Category</option>
                             @foreach ($allCate as $cat)
                              <option value="{{ $cat->CateId }}" {{ (@$data->CateId==$cat->CateId)?'selected': '' }}>{{ $cat->CateName }}</option>
@@ -58,57 +58,63 @@
                           @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('CateId') ? ' has-error' : '' }}">
+
+                    <div class="form-group row custom_form_group{{ $errors->has('BranId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Brand Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="CateId" id="CateId">
+                          <select class="form-control" name="BranId" id="BranId_val">
+                            @if(@$data)
+                            <option value="{{ @$data->BranId }}">{{ @$data->brandInfo->BranName }}</option>
+                            @else
                             <option value="">Select Brand</option>
-                            @foreach ($allCate as $cat)
-                             <option value="{{ $cat->CateId }}" {{ (@$data->CateId==$cat->CateId)?'selected': '' }}>{{ $cat->CateName }}</option>
-                            @endforeach
+                            @endif
                           </select>
-                          @if ($errors->has('CateId'))
+                          @if ($errors->has('BranId'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('CateId') }}</strong>
+                                  <strong>{{ $errors->first('BranId') }}</strong>
                               </span>
                           @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('CateId') ? ' has-error' : '' }}">
+
+                    <div class="form-group row custom_form_group{{ $errors->has('SizeId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Size Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="CateId" id="CateId">
+                          <select class="form-control" name="SizeId" id="SizeId_val">
+                            @if(@$data)
+                            <option value="{{ @$data->SizeId }}">{{ @$data->sizeInfo->SizeName }}</option>
+                            @else
                             <option value="">Select Size</option>
-                            @foreach ($allCate as $cat)
-                             <option value="{{ $cat->CateId }}" {{ (@$data->CateId==$cat->CateId)?'selected': '' }}>{{ $cat->CateName }}</option>
-                            @endforeach
+                            @endif
                           </select>
-                          @if ($errors->has('CateId'))
+                          @if ($errors->has('SizeId'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('CateId') }}</strong>
+                                  <strong>{{ $errors->first('SizeId') }}</strong>
                               </span>
                           @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('CateId') ? ' has-error' : '' }}">
+
+                    <div class="form-group row custom_form_group{{ $errors->has('ThicId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Thickness Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="CateId" id="CateId">
+                          <select class="form-control" name="ThicId" id="ThicId_val">
+                            @if(@$data)
+                            <option value="{{ @$data->ThicId }}">{{ @$data->thickInfo->ThicName }}</option>
+                            @else
                             <option value="">Select Thickness</option>
-                            @foreach ($allCate as $cat)
-                             <option value="{{ $cat->CateId }}" {{ (@$data->CateId==$cat->CateId)?'selected': '' }}>{{ $cat->CateName }}</option>
-                            @endforeach
+                            @endif
                           </select>
-                          @if ($errors->has('CateId'))
+                          @if ($errors->has('ThicId'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('CateId') }}</strong>
+                                  <strong>{{ $errors->first('ThicId') }}</strong>
                               </span>
                           @endif
                         </div>
                     </div>
 
                     <div class="form-group row custom_form_group{{ $errors->has('StocValue') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Brand Name:<span class="req_star">*</span></label>
+                        <label class="col-sm-3 control-label">Stock Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                           <input type="number" placeholder="Stock Value" class="form-control" id="StocValue" name="StocValue" value="{{(@$data)?@$data->StocValue:old('StocValue')}}" required>
                           @if ($errors->has('StocValue'))
@@ -121,7 +127,7 @@
 
                   </div>
                   <div class="card-footer card_footer_button text-center">
-                      <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">SAVE</button>
+                      <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">{{ (@$data)?'UPDATE':'SAVE' }}</button>
                   </div>
               </div>
             </form>
@@ -175,6 +181,9 @@
                                             <th>SL NO.</th>
                                             <th>Category Name</th>
                                             <th>Brand Name</th>
+                                            <th>Size</th>
+                                            <th>Thickness</th>
+                                            <th>Stock</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -183,10 +192,13 @@
                                         <tr>
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $stock->cateInfo->CateName ??'' }}</td>
+                                            <td>{{ $stock->brandInfo->BranName ??'' }}</td>
+                                            <td>{{ $stock->sizeInfo->SizeName ??'' }}</td>
+                                            <td>{{ $stock->thickInfo->ThicName ??'' }}</td>
                                             <td>{{ $stock->StocValue ??'' }}</td>
                                             <td>
                                                 <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
-                                                <a href="{{ route('brand.edit',$stock->CateId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
+                                                <a href="{{ route('stock.edit',$stock->StocId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                             </td>
                                         </tr>
@@ -203,4 +215,72 @@
     <!-- end list -->
   </div>
   <!-- sl-pagebody -->
+
+
+
+ <script>
+    $(document).ready(function(){
+        $('#CateId_val[name="CateId"]').on('change', function(){
+            var CateId = $(this).val();
+            if(CateId){
+                $.ajax({
+                    url: "{{url('dashboard/stock/getBrand')}}/"+CateId,
+                    type: "GET",
+                    dataType: "Json",
+                    success: function(data){
+                        var d = $('#BranId_val[name="BranId"]').empty();
+                        $.each(data, function(key , value){
+                            $('select[name="BranId"]').append('<option value="'+value.BranId+'">'+value.BranName+'</option>');
+                        });
+
+                    },
+                });
+            }else{
+                alert('Please select brand');
+            }
+        });
+
+        $('#BranId_val[name="BranId"]').on('change', function(){
+            var BranId = $(this).val();
+            if(BranId){
+                $.ajax({
+                    url: "{{url('dashboard/stock/getSize')}}/"+BranId,
+                    type: "GET",
+                    dataType: "Json",
+                    success: function(data){
+                        var d = $('#SizeId_val[name="SizeId"]').empty();
+                        $.each(data, function(key , value){
+                            $('select[name="SizeId"]').append('<option value="'+value.SizeId+'">'+value.SizeName+'</option>');
+                        });
+
+                    },
+                });
+            }else{
+                alert('Please select size');
+            }
+        });
+
+        $('#SizeId_val[name="SizeId"]').on('change', function(){
+            var SizeId = $(this).val();
+            if(SizeId){
+                $.ajax({
+                    url: "{{url('dashboard/stock/getThick')}}/"+SizeId,
+                    type: "GET",
+                    dataType: "Json",
+                    success: function(data){
+                        var d = $('#ThicId_val[name="ThicId"]').empty();
+                        $.each(data, function(key , value){
+                            $('select[name="ThicId"]').append('<option value="'+value.ThicId+'">'+value.ThicName+'</option>');
+                        });
+
+                    },
+                });
+            }else{
+                alert('Please select thickness');
+            }
+        });
+
+    });
+
+ </script>
 @endsection

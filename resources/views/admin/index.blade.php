@@ -1,57 +1,106 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="mdc-layout-grid__inner">
-        <div
-            class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
-            <div class="mdc-card info-card info-card--success">
-                <div class="card-inner">
-                    <h5 class="card-title">Borrowed</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$62,0076.00</h5>
-                    <p class="tx-12 text-muted">48% target reached</p>
-                    <div class="card-icon-wrapper">
-                        <i class="material-icons">dvr</i>
-                    </div>
-                </div>
+<!-- ########## START: MAIN PANEL ########## -->
+
+  <nav class="breadcrumb sl-breadcrumb">
+    <a class="breadcrumb-item" href="index.html">Starlight</a>
+    <span class="breadcrumb-item active">Dashboard</span>
+  </nav>
+
+  <div class="sl-pagebody">
+
+    <div class="row row-sm">
+      <div class="col-sm-6 col-xl-3">
+        <div class="card pd-20 bg-primary">
+          <div class="d-flex justify-content-between align-items-center mg-b-10">
+            <h6 class="tx-11 tx-uppercase mg-b-0 tx-spacing-1 tx-white">Today's Sales</h6>
+            <a href="" class="tx-white-8 hover-white"><i class="icon ion-android-more-horizontal"></i></a>
+          </div><!-- card-header -->
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="sparkline2">5,3,9,6,5,9,7,3,5,2</span>
+            <h3 class="mg-b-0 tx-white tx-lato tx-bold">$850</h3>
+          </div><!-- card-body -->
+          <div class="d-flex align-items-center justify-content-between mg-t-15 bd-t bd-white-2 pd-t-10">
+            <div>
+              <span class="tx-11 tx-white-6">Gross Sales</span>
+              <h6 class="tx-white mg-b-0">$2,210</h6>
             </div>
-        </div>
-        <div
-            class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
-            <div class="mdc-card info-card info-card--danger">
-                <div class="card-inner">
-                    <h5 class="card-title">Annual Profit</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$1,958,104.00</h5>
-                    <p class="tx-12 text-muted">55% target reached</p>
-                    <div class="card-icon-wrapper">
-                        <i class="material-icons">attach_money</i>
-                    </div>
-                </div>
+            <div>
+              <span class="tx-11 tx-white-6">Tax Return</span>
+              <h6 class="tx-white mg-b-0">$320</h6>
             </div>
-        </div>
-        <div
-            class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
-            <div class="mdc-card info-card info-card--primary">
-                <div class="card-inner">
-                    <h5 class="card-title">Lead Conversion</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$234,769.00</h5>
-                    <p class="tx-12 text-muted">87% target reached</p>
-                    <div class="card-icon-wrapper">
-                        <i class="material-icons">trending_up</i>
-                    </div>
-                </div>
+          </div><!-- -->
+        </div><!-- card -->
+      </div><!-- col-3 -->
+      <div class="col-sm-6 col-xl-3 mg-t-20 mg-sm-t-0">
+        <div class="card pd-20 bg-info">
+          <div class="d-flex justify-content-between align-items-center mg-b-10">
+            <h6 class="tx-11 tx-uppercase mg-b-0 tx-spacing-1 tx-white">This Week's Sales</h6>
+            <a href="" class="tx-white-8 hover-white"><i class="icon ion-android-more-horizontal"></i></a>
+          </div><!-- card-header -->
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="sparkline2">5,3,9,6,5,9,7,3,5,2</span>
+            <h3 class="mg-b-0 tx-white tx-lato tx-bold">$4,625</h3>
+          </div><!-- card-body -->
+          <div class="d-flex align-items-center justify-content-between mg-t-15 bd-t bd-white-2 pd-t-10">
+            <div>
+              <span class="tx-11 tx-white-6">Gross Sales</span>
+              <h6 class="tx-white mg-b-0">$2,210</h6>
             </div>
-        </div>
-        <div
-            class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
-            <div class="mdc-card info-card info-card--info">
-                <div class="card-inner">
-                    <h5 class="card-title">Average Income</h5>
-                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$1,200.00</h5>
-                    <p class="tx-12 text-muted">87% target reached</p>
-                    <div class="card-icon-wrapper">
-                        <i class="material-icons">credit_card</i>
-                    </div>
-                </div>
+            <div>
+              <span class="tx-11 tx-white-6">Tax Return</span>
+              <h6 class="tx-white mg-b-0">$320</h6>
             </div>
-        </div>
-    <div/>
+          </div><!-- -->
+        </div><!-- card -->
+      </div><!-- col-3 -->
+      <div class="col-sm-6 col-xl-3 mg-t-20 mg-xl-t-0">
+        <div class="card pd-20 bg-purple">
+          <div class="d-flex justify-content-between align-items-center mg-b-10">
+            <h6 class="tx-11 tx-uppercase mg-b-0 tx-spacing-1 tx-white">This Month's Sales</h6>
+            <a href="" class="tx-white-8 hover-white"><i class="icon ion-android-more-horizontal"></i></a>
+          </div><!-- card-header -->
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="sparkline2">5,3,9,6,5,9,7,3,5,2</span>
+            <h3 class="mg-b-0 tx-white tx-lato tx-bold">$11,908</h3>
+          </div><!-- card-body -->
+          <div class="d-flex align-items-center justify-content-between mg-t-15 bd-t bd-white-2 pd-t-10">
+            <div>
+              <span class="tx-11 tx-white-6">Gross Sales</span>
+              <h6 class="tx-white mg-b-0">$2,210</h6>
+            </div>
+            <div>
+              <span class="tx-11 tx-white-6">Tax Return</span>
+              <h6 class="tx-white mg-b-0">$320</h6>
+            </div>
+          </div><!-- -->
+        </div><!-- card -->
+      </div><!-- col-3 -->
+      <div class="col-sm-6 col-xl-3 mg-t-20 mg-xl-t-0">
+        <div class="card pd-20 bg-sl-primary">
+          <div class="d-flex justify-content-between align-items-center mg-b-10">
+            <h6 class="tx-11 tx-uppercase mg-b-0 tx-spacing-1 tx-white">This Year's Sales</h6>
+            <a href="" class="tx-white-8 hover-white"><i class="icon ion-android-more-horizontal"></i></a>
+          </div><!-- card-header -->
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="sparkline2">5,3,9,6,5,9,7,3,5,2</span>
+            <h3 class="mg-b-0 tx-white tx-lato tx-bold">$91,239</h3>
+          </div><!-- card-body -->
+          <div class="d-flex align-items-center justify-content-between mg-t-15 bd-t bd-white-2 pd-t-10">
+            <div>
+              <span class="tx-11 tx-white-6">Gross Sales</span>
+              <h6 class="tx-white mg-b-0">$2,210</h6>
+            </div>
+            <div>
+              <span class="tx-11 tx-white-6">Tax Return</span>
+              <h6 class="tx-white mg-b-0">$320</h6>
+            </div>
+          </div><!-- -->
+        </div><!-- card -->
+      </div><!-- col-3 -->
+    </div><!-- row -->
+  </div>
+  <!-- sl-pagebody -->
+
+
 @endsection

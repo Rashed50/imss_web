@@ -14,8 +14,8 @@
   <div class="sl-sideleft-menu">
     <a href="index.html" class="sl-menu-link active">
       <div class="sl-menu-item">
-        <i class="fas fa-tachometer-alt"></i>
-        
+        <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
+        <span class="menu-item-label">Dashboard</span>
       </div>
       <!-- menu-item -->
     </a>
@@ -28,6 +28,13 @@
         <span class="menu-item-label">Charts</span>
       </div>
     </a>
+
+    <a href="{{ route('vendor.add') }}" class="sl-menu-link">
+        <div class="sl-menu-item">
+          <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+          <span class="menu-item-label">Vendor</span>
+        </div>
+      </a>
     <!-- single menu -->
 
 

@@ -18,7 +18,7 @@
                   <div class="card-header">
                       <div class="row">
                           <div class="col-md-12">
-                              <h3 class="card-title card_top_title">New Thickness Information</h3>
+                              <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Thickness Information</h3>
                           </div>
                           <div class="clearfix"></div>
                       </div>
@@ -72,7 +72,7 @@
 
                   </div>
                   <div class="card-footer card_footer_button text-center">
-                      <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">SAVE</button>
+                      <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">{{ (@$data)?'UPDATE':'SAVE' }}</button>
                   </div>
               </div>
             </form>

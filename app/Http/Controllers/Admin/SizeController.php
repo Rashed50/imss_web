@@ -42,7 +42,7 @@ class SizeController extends Controller{
         $insert = Size::insertGetId([
             'BranId'=>$request['BranId'],
             'SizeName'=>$request['SizeName'],
-            // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         if($insert){

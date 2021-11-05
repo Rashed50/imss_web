@@ -42,7 +42,7 @@ class BrandController extends Controller{
         $insert = Brand::insertGetId([
             'CateId'=>$request['CateId'],
             'BranName'=>$request['BranName'],
-            // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         if($insert){

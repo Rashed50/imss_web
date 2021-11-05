@@ -42,7 +42,7 @@ class ThicknessController extends Controller{
         $insert = Thickness::insertGetId([
             'SizeId'=>$request['SizeId'],
             'ThicName'=>$request['ThicName'],
-            // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         if($insert){
