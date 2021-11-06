@@ -17,6 +17,22 @@ class CreateAccountTypesTable extends Migration
             $table->id('AcctTypeId');
             $table->string('AcctTypeName');
         });
+
+        /* insert data in database */
+
+        DB::table('account_types')->insert([ // step 01
+          'AcctTypeId' => 1,
+          'AcctTypeName' => 'Account Type 01'
+        ]);
+
+        DB::table('account_types')->insert([ // step 02
+          'AcctTypeId' => 2,
+          'AcctTypeName' => 'Account Type 02'
+        ]);
+
+
+
+
     }
 
     /**

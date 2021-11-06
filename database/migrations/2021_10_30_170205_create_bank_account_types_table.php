@@ -17,6 +17,18 @@ class CreateBankAccountTypesTable extends Migration
             $table->id('BankAcctTypeId');
             $table->string('BankAcctTypeName');
         });
+
+        /* insert data in database */
+        DB::table('bank_account_types')->insert([ // step 01
+          'BankAcctTypeId' => 1,
+          'BankAcctTypeName' => 'Bank Account Type 01'
+        ]);
+
+        DB::table('bank_account_types')->insert([ // step 02
+          'BankAcctTypeId' => 2,
+          'BankAcctTypeName' => 'Bank Account Type 02'
+        ]);
+
     }
 
     /**
