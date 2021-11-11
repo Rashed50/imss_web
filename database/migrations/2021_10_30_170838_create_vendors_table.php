@@ -23,6 +23,8 @@ class CreateVendorsTable extends Migration
             $table->double('InitialBalance',10,2)->default(0);
             $table->date('OpeningDate');
             $table->boolean('ActiveStatus')->default(true);
+            $table->unsignedBigInteger('CreateById');
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->unsignedBigInteger('ChartOfAcctId');
             // $table->foreign('ChartOfAcctId')->references('ChartOfAcctId')->on('chart_of_accounts');
