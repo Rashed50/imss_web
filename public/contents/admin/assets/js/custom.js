@@ -11,12 +11,21 @@
                         $.each(data, function(key , value){
                             $('select[name="BranId"]').append('<option value="'+value.BranId+'">'+value.BranName+'</option>');
                         });
-                        
                     },
                 });
             }else{
                 alert('danger');
             }
         });
-    
-    });
+});
+
+$(document).ready(function(){
+    $( function() {
+        $( "#datepicker" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        format: 'mm/dd/yyyy',
+        todayHighlight: true,
+        });
+    } );
+});

@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-lg-8">
-            <form class="form-horizontal" id="registration" method="post" action="#" enctype="multipart/form-data">
+            <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('brand.update') : route('brand.store') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
                   <div class="card-header">
@@ -62,6 +62,7 @@
                         <label class="col-sm-3 control-label">Brand Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                           <input type="text" placeholder="Brand Title" class="form-control" id="BranName" name="BranName" value="{{(@$data)?@$data->BranName:old('BranName')}}" required>
+                          <input type="hidden" name="BranId" value="{{@$data->BranId ?? ''}}">
                           @if ($errors->has('BranName'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('BranName') }}</strong>

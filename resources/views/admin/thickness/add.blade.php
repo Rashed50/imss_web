@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-lg-8">
-            <form class="form-horizontal" id="registration" method="post" action="#" enctype="multipart/form-data">
+            <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('thickness.update') : route('thickness.store') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
                   <div class="card-header">
@@ -42,14 +42,50 @@
                         <div class="col-md-2"></div>
                     </div>
 
+                    <div class="form-group row custom_form_group{{ $errors->has('CateId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Category Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                          <select class="form-control" name="CateId" id="CateId_val">
+                            <option value="">Select Category</option>
+                            @foreach ($allCate as $cat)
+                             <option value="{{ $cat->CateId }}" {{ (@$data->CateId==$cat->CateId)?'selected': '' }}>{{ $cat->CateName }}</option>
+                            @endforeach
+                          </select>
+                          @if ($errors->has('CateId'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('CateId') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row custom_form_group{{ $errors->has('BranId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Brand Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                          <select class="form-control" name="BranId" id="BranId_val">
+                            @if(@$data)
+                            <option value="{{ @$data->BranId }}">{{ @$data->brandInfo->BranName }}</option>
+                            @else
+                            <option value="">Select Brand</option>
+                            @endif
+                          </select>
+                          @if ($errors->has('BranId'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('BranId') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
+
                     <div class="form-group row custom_form_group{{ $errors->has('SizeId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Size Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="SizeId" id="SizeId">
+                          <select class="form-control" name="SizeId" id="SizeId_val">
+                            @if(@$data)
+                            <option value="{{ @$data->SizeId }}">{{ @$data->sizeInfo->SizeName }}</option>
+                            @else
                             <option value="">Select Size</option>
-                            @foreach ($allSize as $size)
-                             <option value="{{ $size->SizeId }}" {{ (@$data->SizeId==$size->SizeId)?'selected': '' }}>{{ $size->SizeName }}</option>
-                            @endforeach
+                            @endif
                           </select>
                           @if ($errors->has('SizeId'))
                               <span class="invalid-feedback" role="alert">
@@ -62,6 +98,7 @@
                         <label class="col-sm-3 control-label">Thickness:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                           <input type="text" placeholder="Brand Title" class="form-control" id="ThicName" name="ThicName" value="{{(@$data)?@$data->ThicName:old('ThicName')}}" required>
+                          <input type="hidden" name="ThicId" value="{{@$data->ThicId ?? ''}}">
                           @if ($errors->has('ThicName'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('ThicName') }}</strong>
@@ -123,6 +160,8 @@
                                     <thead>
                                         <tr>
                                             <th>SL NO.</th>
+                                            <th>category</th>
+                                            <th>Brand</th>
                                             <th>Size</th>
                                             <th>Thickness</th>
                                             <th>Manage</th>
@@ -132,6 +171,8 @@
                                       @foreach ($allThickness as $key=>$thickness)
                                         <tr>
                                             <td>{{ $key+1 }}</td>
+                                            <td>{{ $thickness->cateInfo->CateName ??'' }}</td>
+                                            <td>{{ $thickness->brandInfo->BranName ??'' }}</td>
                                             <td>{{ $thickness->sizeInfo->SizeName ??'' }}</td>
                                             <td>{{ $thickness->ThicName ??'' }}</td>
                                             <td>
@@ -153,4 +194,70 @@
     <!-- end list -->
   </div>
   <!-- sl-pagebody -->
+
+  <script>
+    $(document).ready(function(){
+        $('#CateId_val[name="CateId"]').on('change', function(){
+            var CateId = $(this).val();
+            if(CateId){
+                $.ajax({
+                    url: "{{url('dashboard/stock/getBrand')}}/"+CateId,
+                    type: "GET",
+                    dataType: "Json",
+                    success: function(data){
+                        var d = $('#BranId_val[name="BranId"]').empty();
+                        $.each(data, function(key , value){
+                            $('select[name="BranId"]').append('<option value="'+value.BranId+'">'+value.BranName+'</option>');
+                        });
+
+                    },
+                });
+            }else{
+                alert('Please select brand');
+            }
+        });
+
+        $('#BranId_val[name="BranId"]').on('change', function(){
+            var BranId = $(this).val();
+            if(BranId){
+                $.ajax({
+                    url: "{{url('dashboard/stock/getSize')}}/"+BranId,
+                    type: "GET",
+                    dataType: "Json",
+                    success: function(data){
+                        var d = $('#SizeId_val[name="SizeId"]').empty();
+                        $.each(data, function(key , value){
+                            $('select[name="SizeId"]').append('<option value="'+value.SizeId+'">'+value.SizeName+'</option>');
+                        });
+
+                    },
+                });
+            }else{
+                alert('Please select size');
+            }
+        });
+
+        $('#SizeId_val[name="SizeId"]').on('change', function(){
+            var SizeId = $(this).val();
+            if(SizeId){
+                $.ajax({
+                    url: "{{url('dashboard/stock/getThick')}}/"+SizeId,
+                    type: "GET",
+                    dataType: "Json",
+                    success: function(data){
+                        var d = $('#ThicId_val[name="ThicId"]').empty();
+                        $.each(data, function(key , value){
+                            $('select[name="ThicId"]').append('<option value="'+value.ThicId+'">'+value.ThicName+'</option>');
+                        });
+
+                    },
+                });
+            }else{
+                alert('Please select thickness');
+            }
+        });
+
+    });
+
+ </script>
 @endsection

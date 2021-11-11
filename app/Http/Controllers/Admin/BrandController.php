@@ -55,4 +55,33 @@ class BrandController extends Controller{
 
     }
 
+
+    public function update(Request $request){
+        $id= $request->BranId;
+        $this->validate($request,[
+            'BranName'=>'required|max:150|unique:brands,BranName,'.$id.',BranId',
+            'CateId'=>'required',
+        ],[
+            'BranName.required'=> 'please enter brand name',
+            'CateId.required'=> 'please select category name',
+            'BranName.max'=> 'max brand name content is 150 character',
+            'BranName.unique' => 'this brand name already exists! please another name',
+        ]);
+
+        $update = Brand::where('BranStatus',true)->where('BranId',$id)->update([
+            'CateId'=>$request['CateId'],
+            'BranName'=>$request['BranName'],
+            'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+        ]);
+
+        if($update){
+            Session::flash('success','brand updated Successfully.');
+                return redirect()->route('brand.add');
+        }else{
+            Session::flash('error','please try again.');
+                return redirect()->back();
+        }
+
+    }
+
 }

@@ -62,7 +62,7 @@ class StockController extends Controller{
             'StocValue.max'=> 'max stock amount content is 30 number',
         ]);
 
-        $insert = Stock::insertGetId([
+        $update = Stock::insertGetId([
             'CateId'=>$request['SizeId'],
             'BranId'=>$request['BranId'],
             'SizeId'=>$request['SizeId'],
@@ -71,8 +71,45 @@ class StockController extends Controller{
             'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
-        if($insert){
+        if($update){
             Session::flash('success','new stock amount store Successfully.');
+                return redirect()->route('stock.add');
+        }else{
+            Session::flash('error','please try again.');
+                return redirect()->back();
+        }
+
+    }
+
+
+    public function update(Request $request){
+        $id= $request->StocId;
+        $this->validate($request,[
+            'StocValue'=>'required|max:30',
+            'CateId'=>'required',
+            'BranId'=>'required',
+            'SizeId'=>'required',
+            'ThicId'=>'required',
+        ],[
+            'StocValue.required'=> 'please enter stock amount',
+            'CateId.required'=> 'please select category name',
+            'BranId.required'=> 'please select brand name',
+            'SizeId.required'=> 'please select size',
+            'ThicId.required'=> 'please select thickness',
+            'StocValue.max'=> 'max stock amount content is 30 number',
+        ]);
+
+        $update = Stock::where('StocId',$id)->update([
+            'CateId'=>$request['SizeId'],
+            'BranId'=>$request['BranId'],
+            'SizeId'=>$request['SizeId'],
+            'ThicId'=>$request['ThicId'],
+            'StocValue'=>$request['StocValue'],
+            'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+        ]);
+
+        if($update){
+            Session::flash('success','stock amount update Successfully.');
                 return redirect()->route('stock.add');
         }else{
             Session::flash('error','please try again.');

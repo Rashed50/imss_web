@@ -49,4 +49,29 @@ class CategoryController extends Controller{
 
     }
 
+    public function update(Request $request){
+        $id= $request->CateId;
+        $this->validate($request,[
+            'CateName'=>'required|max:200|unique:categories,CateName,'.$id.',CateId',
+        ],[
+            'CateName.required'=> 'please enter category name',
+            'CateName.max'=> 'max category name content is 200 character',
+            'CateName.unique' => 'this category name already exists! please another name',
+        ]);
+
+        $insert = Category::where('CateStatus',true)->where('CateId',$id)->update([
+            'CateName'=>$request['CateName'],
+            'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+        ]);
+
+        if($insert){
+            Session::flash('success','category updated Successfully.');
+                return redirect()->route('category.add');
+        }else{
+            Session::flash('error','please try again.');
+                return redirect()->back();
+        }
+
+    }
+
 }

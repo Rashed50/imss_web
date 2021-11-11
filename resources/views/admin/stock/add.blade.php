@@ -12,13 +12,13 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-lg-8">
-            <form class="form-horizontal" id="registration" method="post" action="#" enctype="multipart/form-data">
+            <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('stock.update') : route('stock.store') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
                   <div class="card-header">
                       <div class="row">
                           <div class="col-md-12">
-                              <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Brand Information</h3>
+                              <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Stock Information</h3>
                           </div>
                           <div class="clearfix"></div>
                       </div>
@@ -117,6 +117,7 @@
                         <label class="col-sm-3 control-label">Stock Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                           <input type="number" placeholder="Stock Value" class="form-control" id="StocValue" name="StocValue" value="{{(@$data)?@$data->StocValue:old('StocValue')}}" required>
+                          <input type="hidden" name="StocId" value="{{@$data->StocId ?? ''}}">
                           @if ($errors->has('StocValue'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('StocValue') }}</strong>
@@ -141,7 +142,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>Brand List</h3>
+                            <h3 class="card-title card_top_title"></i>Stock List</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>

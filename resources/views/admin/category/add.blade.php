@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-lg-8">
-            <form class="form-horizontal" id="registration" method="post" action="#" enctype="multipart/form-data">
+            <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('category.update') : route('category.store') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
                   <div class="card-header">
@@ -46,6 +46,7 @@
                         <label class="col-sm-3 control-label">Category Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                           <input type="text" placeholder="Category Title" class="form-control" id="CateName" name="CateName" value="{{(@$data)?@$data->CateName:old('CateName')}}" required>
+                          <input type="hidden" name="CateId" value="{{@$data->CateId ?? ''}}">
                           @if ($errors->has('CateName'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('CateName') }}</strong>

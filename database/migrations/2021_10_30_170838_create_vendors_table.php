@@ -24,7 +24,7 @@ class CreateVendorsTable extends Migration
             $table->date('OpeningDate');
             $table->boolean('ActiveStatus')->default(true);
             $table->timestamps();
-            // $table->unsignedBigInteger('ChartOfAcctId');
+            $table->unsignedBigInteger('ChartOfAcctId');
             // $table->foreign('ChartOfAcctId')->references('ChartOfAcctId')->on('chart_of_accounts');
 
         });

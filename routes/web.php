@@ -35,6 +35,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('category/add', [CategoryController::class, 'add'])->name('category.add');
     Route::get('category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::post('category/add', [CategoryController::class, 'store'])->name('category.store');
+    Route::post('category/edit', [CategoryController::class, 'update'])->name('category.update');
 });
 
 
@@ -42,18 +43,21 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('brand/add', [BrandController::class, 'add'])->name('brand.add');
     Route::get('brand/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
     Route::post('brand/add', [BrandController::class, 'store'])->name('brand.store');
+    Route::post('brand/edit', [BrandController::class, 'update'])->name('brand.update');
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('size/add', [SizeController::class, 'add'])->name('size.add');
     Route::get('size/edit/{id}', [SizeController::class, 'edit'])->name('size.edit');
     Route::post('size/add', [SizeController::class, 'store'])->name('size.store');
+    Route::post('size/edit', [SizeController::class, 'update'])->name('size.update');
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('thickness/add', [ThicknessController::class, 'add'])->name('thickness.add');
     Route::get('thickness/edit/{id}', [ThicknessController::class, 'edit'])->name('thickness.edit');
     Route::post('thickness/add', [ThicknessController::class, 'store'])->name('thickness.store');
+    Route::post('thickness/edit', [ThicknessController::class, 'update'])->name('thickness.update');
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -61,9 +65,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('stock/edit/{id}', [StockController::class, 'edit'])->name('stock.edit');
     Route::get('stock/getBrand/{id}', [StockController::class, 'getBrand'])->name('stock.getBrand');
     Route::get('stock/getSize/{id}', [StockController::class, 'getSize'])->name('stock.getSize');
-    Route::post('stock/add', [StockController::class, 'store'])->name('stock.store');
     Route::get('stock/getThick/{id}', [StockController::class, 'getThick'])->name('stock.getThick');
     Route::post('stock/add', [StockController::class, 'store'])->name('stock.store');
+    Route::post('stock/edit', [StockController::class, 'update'])->name('stock.update');
 });
 
 
@@ -71,6 +75,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('vendor/add', [VendorController::class, 'add'])->name('vendor.add');
     Route::get('vendor/edit/{id}', [VendorController::class, 'edit'])->name('vendor.edit');
     Route::post('vendor/add', [VendorController::class, 'store'])->name('vendor.store');
+    Route::post('vendor/edit', [VendorController::class, 'update'])->name('vendor.update');
 });
 
 
