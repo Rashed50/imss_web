@@ -19,7 +19,7 @@ class CreateCustomerInfosTable extends Migration
             $table->string('TradeName')->nullable();
             $table->string('ContactNumber',50)->nullable();
             $table->text('Address')->nullable();
-            $table->unsignedBigInteger('CustTypeId');
+            // $table->unsignedBigInteger('CustTypeId');
             $table->float('DueAmount')->nullable();
             $table->float('InitialDue')->nullable();
             $table->string('Photo')->nullable();
@@ -29,15 +29,15 @@ class CreateCustomerInfosTable extends Migration
             $table->boolean('status')->default(1);
             $table->timestamps();
 
-            $table->unsignedBigInteger('DiviId');
-            $table->unsignedBigInteger('DistId');
-            $table->unsignedBigInteger('ThanId');
-            $table->unsignedBigInteger('UnioId');
+            // $table->unsignedBigInteger('DiviId');
+            // $table->unsignedBigInteger('DistId');
+            // $table->unsignedBigInteger('ThanId');
+            // $table->unsignedBigInteger('UnioId');
 
-            $table->foreign('DiviId')->references('DiviId')->on('divisions')->onDelete('cascade');
-            $table->foreign('DistId')->references('DistId')->on('districts')->onDelete('cascade');
-            $table->foreign('ThanId')->references('ThanId')->on('thanas')->onDelete('cascade');
-            $table->foreign('UnioId')->references('UnioId')->on('unions')->onDelete('cascade');
+            // $table->foreign('DiviId')->references('DiviId')->on('divisions')->onDelete('cascade');
+            // $table->foreign('DistId')->references('DistId')->on('districts')->onDelete('cascade');
+            // $table->foreign('ThanId')->references('ThanId')->on('thanas')->onDelete('cascade');
+            // $table->foreign('UnioId')->references('UnioId')->on('unions')->onDelete('cascade');
         });
     }
 
