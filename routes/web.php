@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\CustomerTypeController;
 use App\Http\Controllers\admin\CompanyInfoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -94,6 +95,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('customer/type/add', [CustomerTypeController::class, 'store'])->name('customer.type.store');
     Route::post('customer/type/edit', [CustomerTypeController::class, 'update'])->name('customer.type.update');
 });
+
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {

@@ -9,6 +9,7 @@
 
   <div class="sl-pagebody">
     <!-- form -->
+<<<<<<< HEAD
 
   <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('customer.update') : route('customer.store') }}" enctype="multipart/form-data">
     @csrf
@@ -41,6 +42,7 @@
 
             <div class="row">
                 <div class="col-md-6">
+
                     <div class="form-group row custom_form_group{{ $errors->has('CustName') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Customer Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
@@ -120,6 +122,7 @@
                         @endif
                         </div>
                     </div>
+
                 </div>
 
                   
@@ -165,11 +168,13 @@
                                     <strong>{{ $errors->first('DiviId') }}</strong>
                                 </span>
                             @endif
+
                         </div>
                     </div>
                     <div class="form-group row custom_form_group{{ $errors->has('DistId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">District :</span></label>
                         <div class="col-sm-7">
+
                             <select class="form-control" name="DistId" id="DistId">
                                 <option value="">Select District</option>
                                 <option value="1">Mymensingh</option>
@@ -180,11 +185,13 @@
                                     <strong>{{ $errors->first('DistId') }}</strong>
                                 </span>
                             @endif
+
                         </div>
                     </div>
                     <div class="form-group row custom_form_group{{ $errors->has('ThanId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Thana :</span></label>
                         <div class="col-sm-7">
+
                             <select class="form-control" name="ThanId" id="ThanId">
                                 <option value="">Select Thana</option>
                                 <option value="1">Dhanmondi</option>
@@ -218,10 +225,12 @@
                                     </span>
                                 @endif
                             </div>
+
                         <div class="pl-2">
                             <img id="showImage" height="70" alt="">
                         </div>
                     </div>
+
 
                 </div>
             </div>
@@ -233,6 +242,7 @@
         </div>
     </div>
   </form>
+
     <!-- list -->
     <div class="row" style="margin-top:30px">
         <div class="col-lg-12">

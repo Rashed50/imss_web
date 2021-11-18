@@ -61,6 +61,7 @@ class CustomerTypeController extends Controller{
         ]);
 
         $update = CustomerType::where('CusTypeId',$id)->update([
+
             'TypeName'=>$request['TypeName']
         ]);
         if($update){
