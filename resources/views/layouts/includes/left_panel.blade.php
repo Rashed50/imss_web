@@ -35,10 +35,31 @@
           <span class="menu-item-label">Vendor</span>
         </div>
       </a>
+
+       <a href="{{ route('company.add') }}" class="sl-menu-link">
+        <div class="sl-menu-item">
+          <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+          <span class="menu-item-label">Company Info</span>
+        </div>
+    </a>
+
     <!-- single menu -->
 
 
     <!-- multiple menu -->
+    <a href="#" class="sl-menu-link">
+      <div class="sl-menu-item">
+        <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+        <span class="menu-item-label">Customer</span>
+        <i class="menu-item-arrow fa fa-angle-down"></i>
+      </div>
+    </a>
+    <!-- sl-menu-link -->
+    <ul class="sl-menu-sub nav flex-column">
+      <li class="nav-item"><a href="{{ route('customer.add') }}" class="nav-link">Customer Add</a></li>
+      <li class="nav-item"><a href="{{ route('customer.type.add') }}" class="nav-link">Customer Type</a></li>
+    </ul>
+
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
@@ -60,7 +81,7 @@
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-        <span class="menu-item-label">Purchase</span>
+        <span class="menu-item-label">Demo</span>
         <i class="menu-item-arrow fa fa-angle-down"></i>
       </div>
     </a>

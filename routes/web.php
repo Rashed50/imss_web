@@ -7,6 +7,9 @@ use App\Http\Controllers\admin\SizeController;
 use App\Http\Controllers\admin\ThicknessController;
 use App\Http\Controllers\admin\StockController;
 use App\Http\Controllers\admin\VendorController;
+use App\Http\Controllers\admin\CustomerController;
+use App\Http\Controllers\admin\CustomerTypeController;
+use App\Http\Controllers\admin\CompanyInfoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,6 +79,28 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('vendor/edit/{id}', [VendorController::class, 'edit'])->name('vendor.edit');
     Route::post('vendor/add', [VendorController::class, 'store'])->name('vendor.store');
     Route::post('vendor/edit', [VendorController::class, 'update'])->name('vendor.update');
+});
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('customer/add', [CustomerController::class, 'add'])->name('customer.add');
+    Route::get('customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::post('customer/add', [CustomerController::class, 'store'])->name('customer.store');
+    Route::post('customer/edit', [CustomerController::class, 'update'])->name('customer.update');
+});
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('customer/type/add', [CustomerTypeController::class, 'add'])->name('customer.type.add');
+    Route::get('customer/type/edit/{id}', [CustomerTypeController::class, 'edit'])->name('customer.type.edit');
+    Route::post('customer/type/add', [CustomerTypeController::class, 'store'])->name('customer.type.store');
+    Route::post('customer/type/edit', [CustomerTypeController::class, 'update'])->name('customer.type.update');
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('company/add', [CompanyInfoController::class, 'add'])->name('company.add');
+    Route::get('company/edit/{id}', [CompanyInfoController::class, 'edit'])->name('company.edit');
+    Route::post('company/add', [CompanyInfoController::class, 'store'])->name('company.store');
+    Route::post('company/edit', [CompanyInfoController::class, 'update'])->name('company.update');
 });
 
 

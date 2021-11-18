@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <div class="form-group row custom_form_group{{ $errors->has('OpeningDate') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Opening Date:<span class="req_star">*</span></label>
+                            <label class="col-sm-3 control-label">Opening Date:</label>
                             <div class="col-sm-7">
                             <input type="text" class="form-control" id="datepicker" name="OpeningDate" value="{{(@$data)? date('d-F-Y',strtotime(@$data->OpeningDatedate)):date('d-F-Y',strtotime(Carbon\Carbon::now())) }}" required autocomplete="off">
                             @if ($errors->has('OpeningDate'))
@@ -90,9 +90,9 @@
                             </div>
                         </div>
                         <div class="form-group row custom_form_group{{ $errors->has('Balance') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Balance :<span class="req_star">*</span></label>
+                            <label class="col-sm-3 control-label">Balance :</label>
                             <div class="col-sm-7">
-                            <input type="text" placeholder="Balance" class="form-control" id="Balance" name="Balance" value="{{(@$data)?@$data->Balance:old('Balance')}}" required>
+                            <input type="text" placeholder="Balance is 0.00 TK" class="form-control" id="Balance" name="Balance" value="{{(@$data)?@$data->Balance:old('Balance')}}" required>
                             @if ($errors->has('Balance'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('Balance') }}</strong>
@@ -101,9 +101,9 @@
                             </div>
                         </div>
                         <div class="form-group row custom_form_group{{ $errors->has('InitialBalance') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Initial Balance:<span class="req_star">*</span></label>
+                            <label class="col-sm-3 control-label">Initial Balance:</label>
                             <div class="col-sm-7">
-                            <input type="text" placeholder="Initial Balance" class="form-control" id="InitialBalance" name="InitialBalance" value="{{(@$data)?@$data->InitialBalance:old('InitialBalance')}}" required>
+                            <input type="text" placeholder="Initial Balance is 0.00 TK" class="form-control" id="InitialBalance" name="InitialBalance" value="{{(@$data)?@$data->InitialBalance:old('InitialBalance')}}" required>
                             @if ($errors->has('InitialBalance'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('InitialBalance') }}</strong>
@@ -111,9 +111,8 @@
                             @endif
                             </div>
                         </div>
-
                         <div class="form-group row custom_form_group{{ $errors->has('VendAddress') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Vendor Address :<span class="req_star">*</span></label>
+                            <label class="col-sm-3 control-label">Address :</span></label>
                             <div class="col-sm-7">
                             <input type="text" placeholder="Vendor Address" class="form-control" id="VendAddress" name="VendAddress" value="{{(@$data)?@$data->VendAddress:old('VendAddress')}}" required>
                             @if ($errors->has('VendAddress'))
@@ -139,51 +138,17 @@
                             </div>
                         </div>
 
-                        <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctName') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Accoun Header :<span class="req_star">*</span></label>
+                        <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
+                            <label class="col-sm-3 control-label">AC Header:</span></label>
                             <div class="col-sm-7">
-                            <input type="text" placeholder="Accoun Header" class="form-control" id="ChartOfAcctName" name="ChartOfAcctName" value="{{(@$data)?@$data->ChartOfAcctName:old('ChartOfAcctName')}}" required>
-                            @if ($errors->has('ChartOfAcctName'))
+                            <input type="text" placeholder="AC Header" class="form-control" id="ChartOfAcctId" name="ChartOfAcctId" value="{{(@$data)?@$data->ChartOfAcctId:old('ChartOfAcctId')}}" required>
+                            @if ($errors->has('ChartOfAcctId'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('ChartOfAcctName') }}</strong>
+                                    <strong>{{ $errors->first('ChartOfAcctId') }}</strong>
                                 </span>
                             @endif
                             </div>
                         </div>
-                        <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctNumber') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Accoun Header :<span class="req_star">*</span></label>
-                            <div class="col-sm-7">
-                            <input type="text" placeholder="Accoun Header" class="form-control" id="ChartOfAcctNumber" name="ChartOfAcctNumber" value="{{(@$data)?@$data->ChartOfAcctNumber:old('ChartOfAcctNumber')}}" required>
-                            @if ($errors->has('ChartOfAcctNumber'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('ChartOfAcctNumber') }}</strong>
-                                </span>
-                            @endif
-                            </div>
-                        </div>
-                        <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctName') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Accoun Header :<span class="req_star">*</span></label>
-                            <div class="col-sm-7">
-                            <input type="text" placeholder="Accoun Header" class="form-control" id="ChartOfAcctName" name="ChartOfAcctName" value="{{(@$data)?@$data->ChartOfAcctName:old('ChartOfAcctName')}}" required>
-                            @if ($errors->has('ChartOfAcctName'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('ChartOfAcctName') }}</strong>
-                                </span>
-                            @endif
-                            </div>
-                        </div>
-                        <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctName') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Accoun Header :<span class="req_star">*</span></label>
-                            <div class="col-sm-7">
-                            <input type="text" placeholder="Accoun Header" class="form-control" id="ChartOfAcctName" name="ChartOfAcctName" value="{{(@$data)?@$data->ChartOfAcctName:old('ChartOfAcctName')}}" required>
-                            @if ($errors->has('ChartOfAcctName'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('ChartOfAcctName') }}</strong>
-                                </span>
-                            @endif
-                            </div>
-                        </div>
-
 
                     </div>
                 </div>

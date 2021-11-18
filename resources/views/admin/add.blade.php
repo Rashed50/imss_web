@@ -41,11 +41,6 @@
                         <div class="col-md-2"></div>
                     </div>
 
-
-
-
-
-
                     <div class="form-group row custom_form_group{{ $errors->has('ban_title') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Title:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
