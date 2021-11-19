@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\CustomerTypeController;
 use App\Http\Controllers\admin\CompanyInfoController;
+use App\Http\Controllers\admin\ThanaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,6 +104,12 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('company/edit/{id}', [CompanyInfoController::class, 'edit'])->name('company.edit');
     Route::post('company/add', [CompanyInfoController::class, 'store'])->name('company.store');
     Route::post('company/edit', [CompanyInfoController::class, 'update'])->name('company.update');
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::post('district-wise-thana', [ThanaController::class, 'getThana'])->name('District-wise-thana');
+    Route::post('thana-wise-union', [ThanaController::class, 'getUnion'])->name('Thana-wise-union');
 });
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\DistrictController;
 use Illuminate\Http\Request;
 use App\Models\CustomerInfo;
 use Illuminate\Support\Str;
@@ -17,7 +18,9 @@ class CustomerController extends Controller{
 
     public function add(){
        $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
-        return view('admin.customer.add', compact('allCustomer'));
+       $DistrictOBJ = new DistrictController();
+       $District = $DistrictOBJ->getAll();
+       return view('admin.customer.add', compact('allCustomer','District'));
     }
 
     public function edit($id){

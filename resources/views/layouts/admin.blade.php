@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Admin Panel</title>
 
@@ -39,7 +40,7 @@
       </div>
     </footer> -->
     <!-- script file -->
-    
+
     <script src="{{ asset('contents/admin') }}/assets/lib/popper.js/popper.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/lib/bootstrap/bootstrap.js"></script>
 
@@ -63,5 +64,12 @@
     <script src="{{ asset('contents/admin') }}/assets/js/starlight.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/ResizeSensor.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/custom.js"></script>
+    <script type="text/javascript">
+      $.ajaxSetup({
+          headers:{
+              'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+          }
+      })
+    </script>
   </body>
 </html>
