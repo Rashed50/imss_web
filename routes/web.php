@@ -10,7 +10,11 @@ use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\CustomerTypeController;
 use App\Http\Controllers\admin\CompanyInfoController;
+<<<<<<< HEAD
 use App\Http\Controllers\admin\ThanaController;
+=======
+use App\Http\Controllers\admin\ProductPurchaseController;
+>>>>>>> b75f19ad78905e1395bcaad0b8137247fec47cb9
 
 /*
 |--------------------------------------------------------------------------
@@ -108,10 +112,21 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
+<<<<<<< HEAD
     Route::post('district-wise-thana', [ThanaController::class, 'getThana'])->name('District-wise-thana');
     Route::post('thana-wise-union', [ThanaController::class, 'getUnion'])->name('Thana-wise-union');
 });
 
 
+=======
+    Route::get('product/purchase/add', [ProductPurchaseController::class, 'add'])->name('product.purchase.add');
+    Route::get('product/purchase/edit/{id}', [ProductPurchaseController::class, 'edit'])->name('product.purchase.edit');
+    Route::post('product/purchase/add', [ProductPurchaseController::class, 'store'])->name('product.purchase.store');
+    Route::post('product/purchase/edit', [ProductPurchaseController::class, 'update'])->name('product.purchase.update');
+});
+
+
+
+>>>>>>> b75f19ad78905e1395bcaad0b8137247fec47cb9
 
 require __DIR__.'/auth.php';

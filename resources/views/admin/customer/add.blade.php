@@ -26,9 +26,11 @@
         <div class="col-md-2"></div>
     </div>
   {{-- Response Massage --}}
+
   <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('customer.update') : route('customer.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card">
+
         <div class="card-header">
             <div class="row">
                 <div class="col-md-12">
@@ -125,7 +127,6 @@
 
 
                 <div class="col-md-6">
-
                     <div class="form-group row custom_form_group{{ $errors->has('CustTypeId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Customer Type :</span></label>
                         <div class="col-sm-7">
@@ -203,7 +204,6 @@
                             @endif
                         </div>
                      </div>
-
                     <div class="form-group row custom_form_group{{ $errors->has('Photo') ? ' has-error' : '' }}">
                          <label class="col-sm-3 control-label">Photo :</span></label>
                             <div class="col-sm-5">

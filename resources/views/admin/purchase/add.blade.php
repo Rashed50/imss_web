@@ -10,7 +10,7 @@
   <div class="sl-pagebody">
     <!-- form -->
 
-  <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('customer.update') : route('customer.store') }}" enctype="multipart/form-data">
+  <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('product.purchase.update') : route('product.purchase.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card">
         <div class="card-header">
@@ -41,172 +41,188 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="form-group row custom_form_group{{ $errors->has('CustName') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Customer Name:<span class="req_star">*</span></label>
+                    <div class="form-group row custom_form_group{{ $errors->has('TransactionId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Transaction Id:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <input type="text" placeholder="Customer Name" class="form-control" id="CustName" name="CustName" value="{{(@$data)?@$data->CustName:old('CustName')}}" required>
+                          <input type="text" placeholder="Transaction Id" class="form-control" id="TransactionId" name="TransactionId" value="{{(@$data)?@$data->TransactionId:old('TransactionId')}}" required>
                           <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
-                          @if ($errors->has('CustName'))
+                          @if ($errors->has('TransactionId'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('CustName') }}</strong>
+                                  <strong>{{ $errors->first('TransactionId') }}</strong>
                               </span>
                           @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('TradeName') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Trade Name:<span class="req_star">*</span></label>
+                     <div class="form-group row custom_form_group{{ $errors->has('PurchaseDate') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Purchase Date:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="Trade Name" class="form-control" id="TradeName" name="TradeName" value="{{(@$data)?@$data->TradeName:old('TradeName')}}" required>
-                        @if ($errors->has('TradeName'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('TradeName') }}</strong>
-                            </span>
-                        @endif
+                          <input type="text" placeholder="Purchase Date" class="form-control" id="PurchaseDate" name="PurchaseDate" value="{{(@$data)?@$data->PurchaseDate:old('PurchaseDate')}}" required>
+                          <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
+                          @if ($errors->has('PurchaseDate'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('PurchaseDate') }}</strong>
+                              </span>
+                          @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('ContactNumber') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Contact Number:<span class="req_star">*</span></label>
+                    <div class="form-group row custom_form_group{{ $errors->has('TotalPrice') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Total Price:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                            <input type="hidden" name="VendId" value="{{@$data->VendId ?? ''}}">
-                            <input type="text" placeholder="Contact Number" class="form-control" id="ContactNumber" name="ContactNumber" value="{{(@$data)?@$data->ContactNumber:old('ContactNumber')}}" required>
-                        @if ($errors->has('ContactNumber'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('ContactNumber') }}</strong>
-                            </span>
-                        @endif
+                          <input type="text" placeholder="Total Price" class="form-control" id="TotalPrice" name="TotalPrice" value="{{(@$data)?@$data->TotalPrice:old('TotalPrice')}}" required>
+                          <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
+                          @if ($errors->has('TotalPrice'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('TotalPrice') }}</strong>
+                              </span>
+                          @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('FatherName') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Father Name:<span class="req_star">*</span></label>
+                    <div class="form-group row custom_form_group{{ $errors->has('Discount') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Discount:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="Father Name" class="form-control" id="FatherName" name="FatherName" value="{{(@$data)?@$data->FatherName:old('FatherName')}}" required>
-                        @if ($errors->has('FatherName'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('FatherName') }}</strong>
-                            </span>
-                        @endif
+                          <input type="text" placeholder="Discount" class="form-control" id="Discount" name="Discount" value="{{(@$data)?@$data->Discount:old('Discount')}}" required>
+                          <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
+                          @if ($errors->has('Discount'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('Discount') }}</strong>
+                              </span>
+                          @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('NID') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">NID NO. :</label>
+                     <div class="form-group row custom_form_group{{ $errors->has('CarringCost') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Carring Cost:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="NID NO." class="form-control" name="NID" value="{{(@$data)? @$data->NID:old('NID')}}" required autocomplete="off">
-                        @if ($errors->has('NID'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('NID') }}</strong>
-                            </span>
-                        @endif
+                          <input type="text" placeholder="Carring Cost" class="form-control" id="CarringCost" name="CarringCost" value="{{(@$data)?@$data->CarringCost:old('CarringCost')}}" required>
+                          <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
+                          @if ($errors->has('CarringCost'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('CarringCost') }}</strong>
+                              </span>
+                          @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('DueAmount') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Due Amount :</label>
+                     
+                       <div class="form-group row custom_form_group{{ $errors->has('LabourCost') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Labour Cost:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="Due Amount is 0.00 TK" class="form-control" id="DueAmount" name="DueAmount" value="{{(@$data)?@$data->DueAmount:old('DueAmount')}}" required>
-                        @if ($errors->has('DueAmount'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('DueAmount') }}</strong>
-                            </span>
-                        @endif
+                          <input type="text" placeholder="Labour Cost" class="form-control" id="LabourCost" name="LabourCost" value="{{(@$data)?@$data->LabourCost:old('LabourCost')}}" required>
+                          <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
+                          @if ($errors->has('LabourCost'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('LabourCost') }}</strong>
+                              </span>
+                          @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('InitialDue') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Initial Due Balance:</label>
+                     <div class="form-group row custom_form_group{{ $errors->has('BankId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Bank Id:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="Initial Balance is 0.00 TK" class="form-control" id="InitialDue" name="InitialDue" value="{{(@$data)?@$data->InitialDue:old('InitialDue')}}" required>
-                        @if ($errors->has('InitialDue'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('InitialDue') }}</strong>
-                            </span>
-                        @endif
+                          <input type="text" placeholder="Bank Id" class="form-control" id="BankId" name="BankId" value="{{(@$data)?@$data->BankId:old('BankId')}}" required>
+                          <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
+                          @if ($errors->has('BankId'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('BankId') }}</strong>
+                              </span>
+                          @endif
                         </div>
                     </div>
+                    
+
+
+
+
+
                 </div>
 
                 {{--  2nd col-md-6 start  --}}
                 <div class="col-md-6">
-                    <div class="form-group row custom_form_group{{ $errors->has('Address') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Address :</span></label>
+                    
+                    <div class="form-group row custom_form_group{{ $errors->has('VendorId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Vendor Name:</span></label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="Vendor Address" class="form-control" id="Address" name="Address" value="{{(@$data)?@$data->Address:old('Address')}}" required>
-                        @if ($errors->has('Address'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('Address') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('CustTypeId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Customer Type :</span></label>
-                        <div class="col-sm-7">
-                        <select class="form-control" name="CustTypeId" id="CustTypeId">
-                            <option value="">Select category</option>
+                        <select class="form-control" name="VendorId" id="VendorId">
+                            <option value="">Select Vendor</option>
                             <option value="1">Wholesaler</option>
                             <option value="2">Retailer</option>
                         </select>
-                        @if ($errors->has('CustTypeId'))
+                        @if ($errors->has('VendorId'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('CustTypeId') }}</strong>
+                                <strong>{{ $errors->first('VendorId') }}</strong>
                             </span>
                         @endif
                         </div>
-                    </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('DiviId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Division :</span></label>
+                    </div>  
+                    <div class="form-group row custom_form_group{{ $errors->has('StaffId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Staff Name:</span></label>
                         <div class="col-sm-7">
-                        <select class="form-control" name="DiviId" id="DiviId">
-                            <option value="">Select Division</option>
-                            <option value="1">Dhaka</option>
-                            <option value="2">Mymensingh</option>
+                        <select class="form-control" name="StaffId" id="StaffId">
+                            <option value="">Select Staff</option>
+                            <option value="1">Wholesaler</option>
+                            <option value="2">Retailer</option>
                         </select>
-                        @if ($errors->has('DiviId'))
+                        @if ($errors->has('StaffId'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('DiviId') }}</strong>
+                                <strong>{{ $errors->first('StaffId') }}</strong>
                             </span>
                         @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('DistId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">District :</span></label>
+                      <div class="form-group row custom_form_group{{ $errors->has('PaymentType') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Payment Type:</span></label>
                         <div class="col-sm-7">
-                        <select class="form-control" name="DistId" id="DistId">
-                            <option value="">Select District</option>
-                            <option value="1">Mymensingh</option>
-                            <option value="2">Netrokona</option>
+                        <select class="form-control" name="PaymentType" id="PaymentType">
+                            <option value="">Select Payment Type</option>
+                            <option value="1">Wholesaler</option>
+                            <option value="2">Retailer</option>
                         </select>
-                        @if ($errors->has('DistId'))
+                        @if ($errors->has('PaymentType'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('DistId') }}</strong>
+                                <strong>{{ $errors->first('PaymentType') }}</strong>
                             </span>
                         @endif
                         </div>
-                    </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('ThanId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Thana :</span></label>
+                    </div> 
+                    <div class="form-group row custom_form_group{{ $errors->has('ToSaleId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">To Sale Id:</span></label>
                         <div class="col-sm-7">
-                        <select class="form-control" name="ThanId" id="ThanId">
-                            <option value="">Select Thana</option>
-                            <option value="1">Dhanmondi</option>
-                            <option value="2">Uttora</option>
+                        <select class="form-control" name="ToSaleId" id="ToSaleId">
+                            <option value="">Select To Sale Id</option>
+                            <option value="1">Wholesaler</option>
+                            <option value="2">Retailer</option>
                         </select>
-                        @if ($errors->has('ThanId'))
+                        @if ($errors->has('ToSaleId'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('ThanId') }}</strong>
+                                <strong>{{ $errors->first('ToSaleId') }}</strong>
                             </span>
                         @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('UnioId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Union :</span></label>
+                    <div class="form-group row custom_form_group{{ $errors->has('TruckNo') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Truck No:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="Vendor UnioId" class="form-control" id="UnioId" name="UnioId" value="{{(@$data)?@$data->UnioId:old('UnioId')}}" required>
-                        @if ($errors->has('UnioId'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('UnioId') }}</strong>
-                            </span>
-                        @endif
+                          <input type="text" placeholder="Truck No" class="form-control" id="TruckNo" name="TruckNo" value="{{(@$data)?@$data->TruckNo:old('TruckNo')}}" required>
+                          <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
+                          @if ($errors->has('TruckNo'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('TruckNo') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div> 
+                    <div class="form-group row custom_form_group{{ $errors->has('DoNo') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Do No:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                          <input type="text" placeholder="Do No" class="form-control" id="DoNo" name="DoNo" value="{{(@$data)?@$data->DoNo:old('DoNo')}}" required>
+                          <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
+                          @if ($errors->has('DoNo'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('DoNo') }}</strong>
+                              </span>
+                          @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('Photo') ? ' has-error' : '' }}">
+                    
+                    <!-- <div class="form-group row custom_form_group{{ $errors->has('Photo') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Photo :</span></label>
                         <div class="col-sm-5">
                         <input type="file" id="image" class="form-control" id="Photo" name="Photo">
@@ -219,7 +235,7 @@
                         <div class="pl-2">
                             <img id="showImage" height="70" alt="">
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -270,46 +286,46 @@
                         <div class="col-12">
                             <div class="table-responsive">
                                 <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
-                                <table id="datatable1" class="table responsive mb-0">
+                                <table id="datatable1" class="table table-bordered responsive mb-0">
                                     <thead>
                                         <tr>
-
                                             <th>SL NO.</th>
-                                            <th>Customer</th>
-                                            <th>Father</th>
-                                            <th>TradeName</th>
-                                            <th>ContactNumber</th>
-                                            <th>Address</th>
-                                            <th>DueAmount</th>
-                                            <th>InitialDue</th>
-                                            <th>NID</th>
-                                            <th>Photo</th>
+                                            <th>Transaction Id</th>
+                                            <th>Total Price</th>
+                                            <th>Purchase Date</th>
+                                            <th>Vendor Id</th>
+                                            <th>Staff Id</th>
+                                            <th>Labour Cost</th>
+                                            <th>Payment Type</th>
+                                            <th>Bank Id</th>
+                                            <th>Discount</th>
+                                            <th>Carring Cost</th>
+                                            <th>ToSaleId</th>
+                                            <th>Do No</th>
+                                            <th>Truck No</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      @foreach ($allCustomer as $key=>$customer)
+                                      @foreach ($purchaseProduct as $key=>$purchase)
                                         <tr>
                                             <td>{{ $key+1 }}</td>
-                                            <td>{{ $customer->TransactionId ??'' }}</td>
-                                            <td>{{ $customer->TotalPrice ??'' }}</td>
-                                            <td>{{ $customer->PurchaseDate ??'' }}</td>
-                                            <td>{{ $customer->VendorId ??'' }}</td>
-                                            <td>{{ $customer->StaffId ??'' }}</td>
-                                            <td>{{ $customer->LabourCost ??'' }}</td>
-                                            <td>{{ $customer->PaymentType ??'' }}</td>
-                                            <td>{{ $customer->BankId ??'' }}</td>
-                                            <td>{{ $customer->Discount ??'' }}</td>
-                                            <td>{{ $customer->CarringCost ??'' }}</td>
-                                            <td>{{ $customer->ToSaleId ??'' }}</td>
-                                            <td>{{ $customer->DoNo ??'' }}</td>
-                                            <td>{{ $customer->TruckNo ??'' }}</td>
-                                            <td>
-                                                <img height="40" src="{{ asset('uploads/customer/'.$customer->Photo) }}" alt="">
-                                            </td>
+                                            <td>{{ $purchase->TransactionId ??'' }}</td>
+                                            <td>{{ $purchase->TotalPrice ??'' }}</td>
+                                            <td>{{ $purchase->PurchaseDate ??'' }}</td>
+                                            <td>{{ $purchase->VendorId ??'' }}</td>
+                                            <td>{{ $purchase->StaffId ??'' }}</td>
+                                            <td>{{ $purchase->LabourCost ??'' }}</td>
+                                            <td>{{ $purchase->PaymentType ??'' }}</td>
+                                            <td>{{ $purchase->BankId ??'' }}</td>
+                                            <td>{{ $purchase->Discount ??'' }}</td>
+                                            <td>{{ $purchase->CarringCost ??'' }}</td>
+                                            <td>{{ $purchase->ToSaleId ??'' }}</td>
+                                            <td>{{ $purchase->DoNo ??'' }}</td>
+                                            <td>{{ $purchase->TruckNo ??'' }}</td>
                                             <td>
                                                 <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
-                                                <a href="{{ route('customer.edit',$customer->CustId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
+                                                <a href="{{ route('product.purchase.edit',$purchase->CustId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                             </td>
                                         </tr>

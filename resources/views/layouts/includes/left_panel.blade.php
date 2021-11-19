@@ -42,7 +42,13 @@
           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
           <span class="menu-item-label">Company Info</span>
         </div>
-    </a>
+       </a>
+       <a href="{{ route('product.purchase.add') }}" class="sl-menu-link">
+        <div class="sl-menu-item">
+          <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+          <span class="menu-item-label">Product Purchase</span>
+        </div>
+       </a>
 
 
     <!-- single menu -->
