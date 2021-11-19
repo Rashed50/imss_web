@@ -9,7 +9,6 @@
 
   <div class="sl-pagebody">
     <!-- form -->
-<<<<<<< HEAD
 
   <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('customer.update') : route('customer.store') }}" enctype="multipart/form-data">
     @csrf
@@ -127,18 +126,6 @@
 
                   
                 <div class="col-md-6">
-                    <div class="form-group row custom_form_group{{ $errors->has('Address') ? ' has-error' : '' }}">
-                         <label class="col-sm-3 control-label">Address :</span></label>
-                        <div class="col-sm-7">
-                        <input type="text" placeholder="Vendor Address" class="form-control" id="Address" name="Address" value="{{(@$data)?@$data->Address:old('Address')}}" required>
-                            @if ($errors->has('Address'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('Address') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                     </div>
-
                     <div class="form-group row custom_form_group{{ $errors->has('CustTypeId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Customer Type :</span></label>
                         <div class="col-sm-7">
@@ -215,6 +202,17 @@
                             @endif
                          </div>
                     </div>
+                    <div class="form-group row custom_form_group{{ $errors->has('Address') ? ' has-error' : '' }}">
+                         <label class="col-sm-3 control-label">Address :</span></label>
+                        <div class="col-sm-7">
+                        <input type="text" placeholder="Vendor Address" class="form-control" id="Address" name="Address" value="{{(@$data)?@$data->Address:old('Address')}}" required>
+                            @if ($errors->has('Address'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('Address') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                     </div>
                     <div class="form-group row custom_form_group{{ $errors->has('Photo') ? ' has-error' : '' }}">
                          <label class="col-sm-3 control-label">Photo :</span></label>
                             <div class="col-sm-5">

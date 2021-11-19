@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\CustomerTypeController;
 use App\Http\Controllers\admin\CompanyInfoController;
+use App\Http\Controllers\admin\ProductPurchaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +105,15 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('company/add', [CompanyInfoController::class, 'store'])->name('company.store');
     Route::post('company/edit', [CompanyInfoController::class, 'update'])->name('company.update');
 });
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('product/purchase/add', [ProductPurchaseController::class, 'add'])->name('product.purchase.add');
+    Route::get('product/purchase/edit/{id}', [ProductPurchaseController::class, 'edit'])->name('product.purchase.edit');
+    Route::post('product/purchase/add', [ProductPurchaseController::class, 'store'])->name('product.purchase.store');
+    Route::post('product/purchase/edit', [ProductPurchaseController::class, 'update'])->name('product.purchase.update');
+});
+
 
 
 
