@@ -61,7 +61,8 @@ class CustomerTypeController extends Controller{
         ]);
 
         $update = CustomerType::where('CusTypeId',$id)->update([
-            'TypeName'=>$request['TypeName'],
+
+            'TypeName'=>$request['TypeName']
         ]);
         if($update){
             Session::flash('success','customer type updated Successfully.');
