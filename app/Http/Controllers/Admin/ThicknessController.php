@@ -14,6 +14,17 @@ use Image;
 
 
 class ThicknessController extends Controller{
+    /*
+    |--------------------------------------------------------------------------
+    | DATABASE OPERATION
+    |--------------------------------------------------------------------------
+    */
+    // ajax Method
+    public function sizeWiseThickness(Request $request){
+      $getThickness = Thickness::where('SizeId',$request->Size)->get();
+      return json_encode($getThickness);
+    }
+    // ajax Method
 
     public function add(){
        $allThickness = Thickness::with('cateInfo','brandInfo','sizeInfo')->where('ThicStatus',true)->orderBy('ThicId','DESC')->get();

@@ -13,8 +13,20 @@ use Image;
 
 
 class VendorController extends Controller{
+    /*
+    |--------------------------------------------------------------------------
+    | DATABASE OPERATION
+    |--------------------------------------------------------------------------
+    */
+    public function getAll(){
+      return $allVendor = Vendor::where('ActiveStatus',true)->orderBy('VendId','DESC')->get();
+    }
 
-    // view related method
+
+
+
+
+    
 
     public function add(){
        $allVendor = Vendor::where('ActiveStatus',true)->orderBy('VendId','DESC')->get();

@@ -14,6 +14,20 @@ use Image;
 
 
 class SizeController extends Controller{
+    /*
+    |--------------------------------------------------------------------------
+    | DATABASE OPERATION
+    |--------------------------------------------------------------------------
+    */
+    // ajax Method
+    public function brandWiseSize(Request $request){
+      $getSize = Size::where('BranId',$request->BranId)->get();
+      return json_encode($getSize);
+    }
+    // ajax Method
+
+
+
 
     public function add(){
        $allSize = Size::with('cateInfo','brandInfo')->where('SizeStatus',true)->orderBy('SizeId','DESC')->get();

@@ -4,6 +4,10 @@
   outline: 0px;
 }
 
+button{
+  cursor: pointer;
+}
+
 img{
   border: 0px;
 }
@@ -682,9 +686,9 @@ div.image_custom_row{
   margin-top: 2px !important;
 }
 
-.custom_form_group{
-  margin-bottom: 10px;
-  align-items: center;
+.custom_form_group {
+	margin-bottom: 3px;
+	align-items: center;
 }
 
 /* .custom-control-label::before{
@@ -711,4 +715,35 @@ div.image_custom_row{
 
 .btn, .sp-container button {
 	padding: 0.40rem 0.75rem;
+}
+
+.waves-effect{
+  cursor: pointer!important;
+}
+
+div.SecondPart{
+  border: 1px solid #ddd;
+  padding: 10px 0px;
+}
+
+div.SecondPart .SecondPart__Child {
+	margin: 10px 20px;
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+label.form-check-label{
+  padding-left: 0;
+}
+
+select.form-control:not([size]):not([multiple]) {
+	height: calc(2rem);
+}
+
+.form-control, .dataTables_filter input {
+	padding: 0.30rem 0.40rem;
+}
+
+.custom-form-control2{
+  width: 40%;
 }

@@ -14,6 +14,28 @@ use Image;
 
 
 class BrandController extends Controller{
+    /*
+    |--------------------------------------------------------------------------
+    | DATABASE OPERATION
+    |--------------------------------------------------------------------------
+    */
+    // ajax Method
+    public function categoryWiseBrand(Request $request){
+      $getBrand = Brand::where('CateId',$request->CategoryID)->get();
+      return json_encode($getBrand);
+    }
+    // ajax Method
+
+
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | BLADE OPERATION
+    |--------------------------------------------------------------------------
+    */
 
     public function add(){
        $allCate = Category::where('CateStatus',true)->orderBy('CateName','ASC')->get();
