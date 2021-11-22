@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Admin Panel</title>
 
@@ -39,7 +40,7 @@
       </div>
     </footer> -->
     <!-- script file -->
-    
+
     <script src="{{ asset('contents/admin') }}/assets/lib/popper.js/popper.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/lib/bootstrap/bootstrap.js"></script>
 
@@ -63,5 +64,309 @@
     <script src="{{ asset('contents/admin') }}/assets/js/starlight.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/ResizeSensor.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/custom.js"></script>
+    <script type="text/javascript">
+      $.ajaxSetup({
+          headers:{
+              'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+          }
+      });
+
+        // Category Wise Brand
+        $(document).ready(function() {
+          $('select[name="CategoryID"]').on('change', function(){
+              var CategoryID = $(this).val();
+              if(CategoryID) {
+                  $.ajax({
+                      url: "{{ route('Category-wise-Brand') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { CategoryID:CategoryID },
+                      success:function(data) {
+                         if(data == ""){
+                           $('select[name="BranId"]').empty();
+                           $('select[name="BranId"]').append('<option value="">Data Not Found! </option>');
+
+                           $('select[name="Size"]').empty();
+                           $('select[name="Size"]').append('<option value="">Data Not Found!</option>');
+
+                           $('select[name="Thickness"]').empty();
+                           $('select[name="Thickness"]').append('<option value="">Data Not Found!</option>');
+
+                         }else{
+                           $('select[name="BranId"]').empty();
+                           $('select[name="BranId"]').append('<option value="">Select Brand</option>');
+
+                           $('select[name="Size"]').empty();
+                           $('select[name="Size"]').append('<option value="">Select Size</option>');
+
+                           $('select[name="Thickness"]').empty();
+                           $('select[name="Thickness"]').append('<option value="">Select Thickness</option>');
+
+                           $.each(data, function(key, value){
+                              $('select[name="BranId"]').append('<option value="'+ value.BranId+'">' + value.BranName + '</option>');
+                           });
+                         }
+
+                      },
+
+                  });
+              } else{
+
+              }
+          });
+
+
+
+
+          // Brand Wise productSize
+          $('select[name="BranId"]').on('change', function(){
+              var BranId = $(this).val();
+              if(BranId) {
+                  $.ajax({
+                      url: "{{ route('Brand-wise-size') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { BranId:BranId },
+                      success:function(data) {
+                         if(data == ""){
+                           $('select[name="Size"]').empty();
+                           $('select[name="Size"]').append('<option value="">Data Not Found! </option>');
+
+                           $('select[name="Thickness"]').empty();
+                           $('select[name="Thickness"]').append('<option value="">Data Not Found!</option>');
+                         }else{
+                           $('select[name="Size"]').empty();
+                           $('select[name="Size"]').append('<option value="">Select Size</option>');
+
+                           $('select[name="Thickness"]').empty();
+                           $('select[name="Thickness"]').append('<option value="">Select Thickness</option>');
+                           $.each(data, function(key, value){
+                              $('select[name="Size"]').append('<option value="'+ value.SizeId+'">' + value.SizeName+ '</option>');
+                           });
+                         }
+
+                      },
+                  });
+              } else{
+
+              }
+          });
+          // product Size Wise Thickness
+          $('select[name="Size"]').on('change', function(){
+              var Size = $(this).val();
+              if(Size) {
+                  $.ajax({
+                      url: "{{ route('size-wise-thickness') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { Size:Size },
+                      success:function(data) {
+                         if(data == ""){
+                           $('select[name="Thickness"]').empty();
+                           $('select[name="Thickness"]').append('<option value="">Data Not Found! </option>');
+                         }else{
+                           $('select[name="Thickness"]').empty();
+                           $('select[name="Thickness"]').append('<option value="">Select Size</option>');
+                           $.each(data, function(key, value){
+                              $('select[name="Thickness"]').append('<option value="'+ value.ThicId+'">' + value.ThicName+ '</option>');
+                           });
+                         }
+
+                      },
+                  });
+              } else{
+
+              }
+          });
+      });
+      /* ================= Add To Cart  ================= */
+      function addToCart(){
+        /* ====== Catch Value ====== */
+        var CategoryId = $('select[name="CategoryID"]').val();
+        var BranId = $('select[name="BranId"]').val();
+        var Size = $('select[name="Size"]').val();
+        var Thickness = $('select[name="Thickness"]').val();
+
+        // Name
+        var CategoryName = $('select[name="CategoryID"] option:selected').text();
+        var BrandName = $('select[name="BranId"] option:selected').text();
+        var SizeName = $('select[name="Size"] option:selected').text();
+        var ThicknessName = $('select[name="Thickness"] option:selected').text();
+
+
+
+        var UnitPrice = $('input[name="UnitPrice"]').val();
+        var Qunatity = $('input[name="Qunatity"]').val();
+        /* ====== Ajax Call ====== */
+        $.ajax({
+            url: "{{ route('product-purchase.addToCart') }}",
+            type:"POST",
+            dataType:"json",
+            data: {
+              CategoryId:CategoryId,
+              BranId:BranId,
+              Size:Size,
+              Thickness:Thickness,
+              UnitPrice:UnitPrice,
+              Qunatity:Qunatity,
+              // Name
+              CategoryName:CategoryName,
+              BrandName:BrandName,
+              SizeName:SizeName,
+              ThicknessName:ThicknessName,
+            },
+            success:function(data) {
+              getOrderListInAddToCart();
+              // Clear
+              $('#CategoryId').val('');
+              $('#BranId').val('');
+              $('#Size').val('');
+              $('#Thickness').val('');
+              $('#UnitPrice').val('');
+              $('#Qunatity').val('');
+              //  start message
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+              })
+              if($.isEmptyObject(data.error)){
+                  Toast.fire({
+                    type: 'success',
+                    title: data.success
+                  })
+              }else{
+                Toast.fire({
+                  type: 'error',
+                  title: data.error
+                })
+              }
+              //  end message
+            },
+        });
+
+        /* ___________________________ */
+      }
+      /* ================= Add To Cart Order List ================= */
+      function getOrderListInAddToCart(){
+        /* ====== Ajax Call ====== */
+        $.ajax({
+            url: "{{ route('product-purchase-listIn.addToCart') }}",
+            type:"GET",
+            dataType:"json",
+            success:function(response) {
+              $('input[id="NetAmount"]').val(response.cartTotal);
+              var rows = "";
+              $.each(response.carts,function(key, value){
+                rows += `
+                <tr>
+                  <td>${value.options.CategoryName}</td>
+                  <td>${value.options.BrandName}</td>
+                  <td>${value.options.SizeName}</td>
+                  <td>${value.options.ThicknessName}</td>
+                  <td>${value.price} * ${value.qty}</td>
+                  <td> ${value.subtotal} </td>
+                  <td>
+
+
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                      ${value.qty > 1
+                          ? ` <button type="submit" class="btn btn-danger btn-sm" id="${value.rowId}" onclick="cartDecrement(this.id)">-</button>`
+                          : ` <button type="submit" class="btn btn-danger btn-sm" disabled>-</button>`
+                      }
+                      <input type="text" class="form-control custom-form-control2" min="1" value="${value.qty}">
+                      <button type="button" class="btn btn-success btn-sm" id="${value.rowId}" onclick="cartIncrement(this.id)">+</button>
+                    </div>
+
+
+                  </td>
+                  <td>
+                    <a style="cursor:pointer"  type="submit" title="delete" id="${value.rowId}" onclick="removeToCart(this.id)"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                  </td>
+                </tr>
+
+                `
+              });
+              $('#addToCartOrderList').html(rows);
+
+            },
+        });
+        /* ___________________________ */
+      }
+      getOrderListInAddToCart();
+
+      // Qunatity Increment
+      function cartIncrement(rowId){
+        $.ajax({
+            type:'POST',
+            url: "{{ route('QunatityIncrement') }}",
+            data: { rowId:rowId },
+            dataType:'json',
+            success:function(data){
+              getOrderListInAddToCart();
+            }
+        });
+      }
+
+      // Qunatity Decrement
+      function cartDecrement(rowId){
+        $.ajax({
+            type:'POST',
+            url: "{{ route('QunatityDecrement') }}",
+            data: { rowId:rowId },
+            dataType:'json',
+            success:function(data){
+              getOrderListInAddToCart();
+            }
+        });
+      }
+
+      // Remove Cart
+      function removeToCart(id){
+        $.ajax({
+            type:'POST',
+            url: "{{ route('remove-cart') }}",
+            data: { id:id },
+            dataType:'json',
+            success:function(data){
+                getOrderListInAddToCart();
+                //  start message
+                const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
+
+                     if($.isEmptyObject(data.error)){
+                          Toast.fire({
+                            type: 'success',
+                            title: data.success
+                          })
+                     }else{
+                           Toast.fire({
+                              type: 'error',
+                              title: data.error
+                          })
+					 }
+                    //  end message
+            }
+        });
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
   </body>
 </html>

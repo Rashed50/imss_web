@@ -8,11 +8,29 @@
   </nav>
 
   <div class="sl-pagebody">
-    <!-- form -->
+  {{-- Response Massage --}}
+  <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-7">
+            @if(Session::has('success'))
+            <div class="alert alert-success alertsuccess" role="alert">
+                <strong>Success!</strong> {{Session::get('success')}}
+            </div>
+            @endif
+            @if(Session::has('error'))
+            <div class="alert alert-danger alerterror" role="alert">
+                <strong>Opps!</strong> {{Session::get('error')}}
+            </div>
+            @endif
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+  {{-- Response Massage --}}
 
   <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('customer.update') : route('customer.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card">
+
         <div class="card-header">
             <div class="row">
                 <div class="col-md-12">
@@ -22,23 +40,6 @@
             </div>
         </div>
         <div class="card-body card_form">
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-7">
-                    @if(Session::has('success'))
-                    <div class="alert alert-success alertsuccess" role="alert">
-                        <strong>Success!</strong> {{Session::get('success')}}
-                    </div>
-                    @endif
-                    @if(Session::has('error'))
-                    <div class="alert alert-danger alerterror" role="alert">
-                        <strong>Opps!</strong> {{Session::get('error')}}
-                    </div>
-                    @endif
-                </div>
-                <div class="col-md-2"></div>
-            </div>
-
             <div class="row">
                 <div class="col-md-6">
 
@@ -124,7 +125,7 @@
 
                 </div>
 
-                  
+
                 <div class="col-md-6">
                     <div class="form-group row custom_form_group{{ $errors->has('CustTypeId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Customer Type :</span></label>
@@ -142,30 +143,15 @@
                         </div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('DiviId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Division :</span></label>
-                        <div class="col-sm-7">
-                            <select class="form-control" name="DiviId" id="DiviId">
-                                <option value="">Select Division</option>
-                                <option value="1">Dhaka</option>
-                                <option value="2">Mymensingh</option>
-                            </select>
-                            @if ($errors->has('DiviId'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('DiviId') }}</strong>
-                                </span>
-                            @endif
-
-                        </div>
-                    </div>
                     <div class="form-group row custom_form_group{{ $errors->has('DistId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">District :</span></label>
                         <div class="col-sm-7">
 
                             <select class="form-control" name="DistId" id="DistId">
-                                <option value="">Select District</option>
-                                <option value="1">Mymensingh</option>
-                                <option value="2">Netrokona</option>
+                              <option value="">Select District</option>
+                              @foreach ($District as $data)
+                                <option value="{{ $data->DistId }}">{{ $data->DistName }}</option>
+                              @endforeach
                             </select>
                             @if ($errors->has('DistId'))
                                 <span class="invalid-feedback" role="alert">
@@ -180,9 +166,7 @@
                         <div class="col-sm-7">
 
                             <select class="form-control" name="ThanId" id="ThanId">
-                                <option value="">Select Thana</option>
-                                <option value="1">Dhanmondi</option>
-                                <option value="2">Uttora</option>
+                              <option value="">Select Thana</option>
                             </select>
                             @if ($errors->has('ThanId'))
                                 <span class="invalid-feedback" role="alert">
@@ -191,10 +175,16 @@
                             @endif
                         </div>
                     </div>
+
                     <div class="form-group row custom_form_group{{ $errors->has('UnioId') ? ' has-error' : '' }}">
                          <label class="col-sm-3 control-label">Union :</span></label>
                          <div class="col-sm-7">
-                          <input type="text" placeholder="Vendor UnioId" class="form-control" id="UnioId" name="UnioId" value="{{(@$data)?@$data->UnioId:old('UnioId')}}" required>
+
+                           <select class="form-control" name="UnioId" id="UnioId">
+                             <option value="">Select Union</option>
+                           </select>
+
+
                             @if ($errors->has('UnioId'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('UnioId') }}</strong>
@@ -202,6 +192,7 @@
                             @endif
                          </div>
                     </div>
+
                     <div class="form-group row custom_form_group{{ $errors->has('Address') ? ' has-error' : '' }}">
                          <label class="col-sm-3 control-label">Address :</span></label>
                         <div class="col-sm-7">
@@ -232,11 +223,11 @@
 
                 </div>
             </div>
-            
+
         </div>
 
         <div class="card-footer card_footer_button text-center">
-            <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">{{ (@$data)?'UPDATE':'SUBMIT' }}</button>
+            <button type="submit" class="btn btn-primary waves-effect">{{ (@$data)?'UPDATE':'SUBMIT' }}</button>
         </div>
     </div>
   </form>
@@ -254,29 +245,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-7">
-                            @if(Session::has('success_soft'))
-                              <div class="alert alert-success alertsuccess" role="alert">
-                                 <strong>Successfully!</strong> delete customer information.
-                              </div>
-                            @endif
 
-                            @if(Session::has('success_update'))
-                              <div class="alert alert-success alertsuccess" role="alert">
-                                 <strong>Successfully!</strong> update customer information.
-                              </div>
-                            @endif
-
-                            @if(Session::has('error'))
-                              <div class="alert alert-warning alerterror" role="alert">
-                                 <strong>Opps!</strong> please try again.
-                              </div>
-                            @endif
-                        </div>
-                        <div class="col-md-2"></div>
-                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
@@ -331,5 +300,68 @@
     </div>
     <!-- end list -->
   </div>
-  <!-- sl-pagebody -->
+  {{-- script area --}}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('select[name="DistId"]').on('change', function(){
+          var DistId = $(this).val();
+          if(DistId) {
+              $.ajax({
+                  url: "{{ route('District-wise-thana') }}",
+                  type:"POST",
+                  dataType:"json",
+                  data: { DistId:DistId },
+                  success:function(data) {
+
+
+                     $('select[name="ThanId"]').empty();
+                     $('select[name="UnioId"]').empty();
+
+                        $.each(data, function(key, value){
+                            $('select[name="ThanId"]').append('<option value="'+ value.ThanId +'">' + value.ThanaName + '</option>');
+                        });
+
+
+                  },
+
+              });
+          } else{
+
+          }
+      });
+      // Union
+      $('select[name="ThanId"]').on('change', function(){
+          var ThanId = $(this).val();
+          if(ThanId) {
+              $.ajax({
+                  url: "{{ route('Thana-wise-union') }}",
+                  type:"POST",
+                  dataType:"json",
+                  data: { ThanId:ThanId },
+                  success:function(data) {
+
+
+                     // $('select[name="ThanId"]').empty();
+                     $('select[name="UnioId"]').empty();
+
+                        $.each(data, function(key, value){
+                            $('select[name="UnioId"]').append('<option value="'+ value.UnioId +'">' + value.UnioName + '</option>');
+                        });
+
+
+                  },
+
+              });
+          } else{
+
+          }
+      });
+
+  });
+  </script>
+
+
+
+
+
 @endsection

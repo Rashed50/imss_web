@@ -10,6 +10,8 @@ use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\CustomerTypeController;
 use App\Http\Controllers\admin\CompanyInfoController;
+
+use App\Http\Controllers\admin\ThanaController;
 use App\Http\Controllers\admin\ProductPurchaseController;
 
 /*
@@ -49,6 +51,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('brand/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
     Route::post('brand/add', [BrandController::class, 'store'])->name('brand.store');
     Route::post('brand/edit', [BrandController::class, 'update'])->name('brand.update');
+    // ajax route
+    Route::post('category-wise-brand', [BrandController::class, 'categoryWiseBrand'])->name('Category-wise-Brand');
+    // ajax route
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -56,6 +61,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('size/edit/{id}', [SizeController::class, 'edit'])->name('size.edit');
     Route::post('size/add', [SizeController::class, 'store'])->name('size.store');
     Route::post('size/edit', [SizeController::class, 'update'])->name('size.update');
+    // ajax route
+    Route::post('brand-wise-size', [SizeController::class, 'brandWiseSize'])->name('Brand-wise-size');
+    // ajax route
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -63,6 +71,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('thickness/edit/{id}', [ThicknessController::class, 'edit'])->name('thickness.edit');
     Route::post('thickness/add', [ThicknessController::class, 'store'])->name('thickness.store');
     Route::post('thickness/edit', [ThicknessController::class, 'update'])->name('thickness.update');
+    // ajax route
+    Route::post('size-wise-thickness', [ThicknessController::class, 'sizeWiseThickness'])->name('size-wise-thickness');
+    // ajax route
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -108,13 +119,38 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
-    Route::get('product/purchase/add', [ProductPurchaseController::class, 'add'])->name('product.purchase.add');
-    Route::get('product/purchase/edit/{id}', [ProductPurchaseController::class, 'edit'])->name('product.purchase.edit');
-    Route::post('product/purchase/add', [ProductPurchaseController::class, 'store'])->name('product.purchase.store');
-    Route::post('product/purchase/edit', [ProductPurchaseController::class, 'update'])->name('product.purchase.update');
+
+    Route::post('district-wise-thana', [ThanaController::class, 'getThana'])->name('District-wise-thana');
+    Route::post('thana-wise-union', [ThanaController::class, 'getUnion'])->name('Thana-wise-union');
 });
 
 
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('product/purchase/add', [ProductPurchaseController::class, 'add'])->name('product.purchase.add');
+
+    Route::get('product/purchase/edit/{id}', [ProductPurchaseController::class, 'edit'])->name('product.purchase.edit');
+    
+    Route::post('product/purchase/add', [ProductPurchaseController::class, 'store'])->name('product.purchase.store');
+
+
+
+    Route::post('product/purchase/edit', [ProductPurchaseController::class, 'update'])->name('product.purchase.update');
+
+
+
+
+    /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
+    Route::post('product/purchase/add-to-cart', [ProductPurchaseController::class, 'productAddToCart'])->name('product-purchase.addToCart');
+
+    Route::get('product/purchase/order-list', [ProductPurchaseController::class, 'getOrderList'])->name('product-purchase-listIn.addToCart');
+
+    Route::post('product/purchase/qunatity-increment', [ProductPurchaseController::class, 'QunatityIncrement'])->name('QunatityIncrement');
+
+    Route::post('product/purchase/qunatity-decrement', [ProductPurchaseController::class, 'QunatityDecrement'])->name('QunatityDecrement');
+
+    Route::post('product/purchase/remove', [ProductPurchaseController::class, 'productRemoveToCart'])->name('remove-cart');
+    /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
+});
 
 
 require __DIR__.'/auth.php';

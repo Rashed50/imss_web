@@ -13,6 +13,15 @@ use Image;
 
 
 class CategoryController extends Controller{
+    /*
+    |--------------------------------------------------------------------------
+    | DATABASE OPERATION
+    |--------------------------------------------------------------------------
+    */
+    public function getAll(){
+      return $allCate = Category::where('CateStatus',true)->orderBy('CateId','DESC')->get();
+    }
+
 
     public function add(){
        $allCate = Category::where('CateStatus',true)->orderBy('CateId','DESC')->get();

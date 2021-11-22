@@ -63,7 +63,7 @@ class StockController extends Controller{
         ]);
 
         $update = Stock::insertGetId([
-            'CateId'=>$request['SizeId'],
+            'CateId'=>$request['CateId'],
             'BranId'=>$request['BranId'],
             'SizeId'=>$request['SizeId'],
             'ThicId'=>$request['ThicId'],

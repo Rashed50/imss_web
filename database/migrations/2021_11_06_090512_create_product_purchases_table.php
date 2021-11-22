@@ -19,13 +19,12 @@ class CreateProductPurchasesTable extends Migration
             $table->float('TotalPrice',2)->nullable();
             $table->date('PurchaseDate')->nullable();
             $table->integer('VendorId')->nullable();
-            $table->integer('StaffId');
             $table->float('LabourCost',2)->nullable();
             $table->integer('PaymentType');
             $table->integer('BankId')->nullable();
             $table->integer('Discount');
             $table->integer('CarringCost');
-            $table->integer('ToSaleId');
+            $table->integer('ToSaleId')->default(0);
             $table->string('DoNo',40);
             $table->string('TruckNo',40);
             $table->unsignedBigInteger('CreateById');
