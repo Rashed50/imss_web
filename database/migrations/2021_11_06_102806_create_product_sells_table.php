@@ -15,15 +15,15 @@ class CreateProductSellsTable extends Migration
     {
         Schema::create('product_sells', function (Blueprint $table) {
             $table->id('ProdSellId');
-            $table->float('Commission',2)->nullable();
-            $table->float('TotalAmount',2)->nullable();
-            $table->float('NetAmount',2)->nullable();
-            $table->float('DueAmount',2)->nullable();
-            $table->float('PaidAmount',2)->nullable();
-            $table->float('LabourCost',2)->nullable();
+            $table->float('Commission',11,2)->default(0); // discount
+            $table->float('TotalAmount',11,2)->default(0);
+            $table->float('NetAmount',11,2)->default(0);
+            $table->float('DueAmount',11,2)->default(0);
+            $table->float('PaidAmount',11,2)->default(0);
+            $table->float('LabourCost',11,2)->default(0);
             $table->date('SellingDate')->nullable();
-            $table->string('VoucharNo',15)->nullable();
-            $table->float('CarryingCost',2);
+            $table->string('VoucharNo',15)->default(0);
+            $table->float('CarryingCost',11,2)->default(0);;
             $table->boolean('status')->nullable();
             $table->unsignedBigInteger('CreateById');
             $table->timestamps();
@@ -32,8 +32,8 @@ class CreateProductSellsTable extends Migration
             $table->unsignedBigInteger('CustId');
 
 
-            $table->foreign('TranId')->references('TranId')->on('transactions')->onDelete('cascade');
-            $table->foreign('CustId')->references('CustId')->on('customer_infos')->onDelete('cascade');
+          //  $table->foreign('TranId')->references('TranId')->on('transactions')->onDelete('cascade');
+         //    $table->foreign('CustId')->references('CustId')->on('customer_infos')->onDelete('cascade');
         });
     }
 

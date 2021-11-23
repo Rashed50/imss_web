@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Http\Request;
 use App\Models\ProductPurchase;
+use App\Models\PurchaseRecord;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Session;
 use Image;
 use Cart;
+use Auth;
 
 
 class ProductPurchaseController extends Controller{
@@ -27,23 +29,48 @@ class ProductPurchaseController extends Controller{
 
   public function store(Request $request){
     // form validation
-
+    $CreateBy = Auth::user()->id;
 
     // insert data in database
     $insert = ProductPurchase::insertGetId([
       'TransactionId' => 0,
-      'TotalPrice' => 0,
-      'PurchaseDate' => 0,
-      'VendorId' => 0,
-      'LabourCost' => 0,
-      'PaymentType' => 0,
-      'BankId' => 0,
-      'Discount' => 0,
-      'CarringCost' => 0,
-      'DoNo' => 0,
-      'TruckNo' => 0,
-      'CreateById' => 0,
+      'TotalPrice' => $request->PayAmount,
+      'PurchaseDate' => $request->PurchaseDate,
+      'VendorId' => $request->VendorName,
+      'LabourCost' => $request->LabourCost,
+      'PaymentType' => 1,
+      'BankId' => 1,
+      'Discount' => $request->Discount,
+      'CarringCost' => $request->CarryingBill,
+      'DoNo' => $request->doNO,
+      'TruckNo' => $request->TruckNo,
+      'CreateById' => $CreateBy,
+      'created_at' => Carbon::now(),
     ]);
+
+    // insert Cart Content
+    $carts = Cart::content();
+    foreach ($carts as $data) {
+      PurchaseRecord::insert([
+        'Quantity' => $data->qty,
+        'UnitPrice' => $data->price,
+        'Amount' => $data->subtotal,
+        'ProdPurcId' => $insert,
+        'CateId' => $data->options->CategoryId,
+        'BranId' => $data->options->BranId,
+        'SizeId' => $data->options->Size,
+        'ThicId' => $data->options->Thickness,
+      ]);
+    }
+    // Cart Destroy
+    Cart::destroy();
+    // Redirect Back
+    if($insert){
+      Session::flash('success','value');
+      return redirect()->back();
+    }
+
+
 
   }
 

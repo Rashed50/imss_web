@@ -747,3 +747,9 @@ select.form-control:not([size]):not([multiple]) {
 .custom-form-control2{
   width: 40%;
 }
+
+div.holeseller__topber {
+	border: 1px solid #ddd;
+	margin-bottom: 20px;
+	padding: 10px 0px;
+}

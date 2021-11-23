@@ -49,10 +49,13 @@
           <span class="menu-item-label">Product Purchase</span>
         </div>
        </a>
-       <a href="{{ route('labour.add') }}" class="sl-menu-link">
+
+       {{-- hole Seller --}}
+       <a href="{{ route('Product.Hole.Seller') }}" class="sl-menu-link">
         <div class="sl-menu-item">
           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-          <span class="menu-item-label">Labour Cost</span>
+          <span class="menu-item-label">Hole Seller</span>
+
         </div>
        </a>
 

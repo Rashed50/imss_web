@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\CustomerTypeController;
 use App\Http\Controllers\admin\CompanyInfoController;
+use App\Http\Controllers\admin\HoleSellerController;
 
 use App\Http\Controllers\admin\ThanaController;
 use App\Http\Controllers\admin\ProductPurchaseController;
@@ -178,7 +179,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('product/purchase/add', [ProductPurchaseController::class, 'add'])->name('product.purchase.add');
 
     Route::get('product/purchase/edit/{id}', [ProductPurchaseController::class, 'edit'])->name('product.purchase.edit');
-    
+
     Route::post('product/purchase/add', [ProductPurchaseController::class, 'store'])->name('product.purchase.store');
 
 
@@ -198,6 +199,21 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('product/purchase/qunatity-decrement', [ProductPurchaseController::class, 'QunatityDecrement'])->name('QunatityDecrement');
 
     Route::post('product/purchase/remove', [ProductPurchaseController::class, 'productRemoveToCart'])->name('remove-cart');
+    /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('product/hole-seller/purchase', [HoleSellerController::class, 'add'])->name('Product.Hole.Seller');
+    /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
+    Route::post('product/hole-seller/purchase/add-to-cart', [HoleSellerController::class, 'productAddToCart'])->name('holeseller-purchase.addToCart');
+
+    Route::post('product/hole-seller/purchase/remove-to-cart', [HoleSellerController::class, 'productRemoveToCart'])->name('remove-cart-in.holeseller');
+
+    Route::post('product/hole-seller/purchase/increment-to-cart', [HoleSellerController::class, 'QunatityIncrement'])->name('QunatityIncrementInHoleSeller');
+
+    Route::post('product/hole-seller/purchase/decrement-to-cart', [HoleSellerController::class, 'QunatityDecrement'])->name('cartDecrementInHoleSeller');
+
     /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
 });
 
