@@ -246,7 +246,7 @@
             },
         });
 
-        /* ___________________________ */
+        /* _________ */
       }
       /* ================= Add To Cart Order List ================= */
       function getOrderListInAddToCart(){
@@ -257,6 +257,8 @@
             dataType:"json",
             success:function(response) {
               $('input[id="NetAmount"]').val(response.cartTotal);
+              $('input[id="PayAmount"]').val(response.cartTotal);
+              $('input[id="temporaryField"]').val(response.cartTotal);
               var rows = "";
               $.each(response.carts,function(key, value){
                 rows += `
@@ -292,7 +294,7 @@
 
             },
         });
-        /* ___________________________ */
+        /* _________ */
       }
       getOrderListInAddToCart();
 
@@ -349,24 +351,337 @@
                               type: 'error',
                               title: data.error
                           })
-					 }
+           }
                     //  end message
+            }
+        });
+      }
+      /* ======================= Hole Seller Add to Cart ======================= */
+      function holeSelleraddToCart() {
+        /* ====== Catch Value ====== */
+        var CategoryId = $('select[name="CategoryID"]').val();
+        var BranId = $('select[name="BranId"]').val();
+        var Size = $('select[name="Size"]').val();
+        var Thickness = $('select[name="Thickness"]').val();
+
+        // Name
+        var CategoryName = $('select[name="CategoryID"] option:selected').text();
+        var BrandName = $('select[name="BranId"] option:selected').text();
+        var SizeName = $('select[name="Size"] option:selected').text();
+        var ThicknessName = $('select[name="Thickness"] option:selected').text();
+
+
+
+        var UnitPrice = $('input[name="UnitPrice"]').val();
+        var Qunatity = $('input[name="Qunatity"]').val();
+        var LabourPerUnit = $('input[name="LabourPerUnit"]').val();
+
+        /* ====== Ajax Call ====== */
+        $.ajax({
+            url: "{{ route('holeseller-purchase.addToCart') }}",
+            type:"POST",
+            dataType:"json",
+            data: {
+              holCategoryId:CategoryId,
+              holBranId:BranId,
+              holSize:Size,
+              holThickness:Thickness,
+              holUnitPrice:UnitPrice,
+              holQunatity:Qunatity,
+              holLabourPerUnit:LabourPerUnit,
+              // Name
+              holCategoryName:CategoryName,
+              holBrandName:BrandName,
+              holSizeName:SizeName,
+              holThicknessName:ThicknessName,
+            },
+            success:function(data) {
+              getHoleSellerOrderListInAddToCart();
+              // Clear
+              $('#CategoryId').val('');
+              $('#BranId').val('');
+              $('#Size').val('');
+              $('#Thickness').val('');
+              $('#UnitPrice').val('');
+              $('#Qunatity').val('');
+              $('#LabourPerUnit').val('');
+              //  start message
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+              })
+              if($.isEmptyObject(data.error)){
+                  Toast.fire({
+                    type: 'success',
+                    title: data.success
+                  })
+              }else{
+                Toast.fire({
+                  type: 'error',
+                  title: data.error
+                })
+              }
+              //  end message
+            },
+        });
+
+        /* _________ */
+      }
+      /* ================= Add To Cart Order List ================= */
+      function getHoleSellerOrderListInAddToCart(){
+        /* ====== Ajax Call ====== */
+        $.ajax({
+            url: "{{ route('product-purchase-listIn.addToCart') }}",
+            type:"GET",
+            dataType:"json",
+            success:function(response) {
+              $('input[id="NetAmount"]').val(response.cartTotal);
+              $('input[id="PayAmount"]').val(response.cartTotal);
+              $('input[id="temporaryField"]').val(response.cartTotal);
+              var rows = "";
+              $.each(response.carts,function(key, value){
+                rows += `
+                <tr>
+                  <td>${value.options.holCategoryName}</td>
+                  <td>${value.options.holBrandName}</td>
+                  <td>${value.options.holSizeName}</td>
+                  <td>${value.options.holThicknessName}</td>
+                  <td>${value.price} * ${value.qty}</td>
+                  <td> ${value.subtotal} </td>
+                  <td> ${value.options.LabourPerUnit} </td>
+                  <td>
+
+
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                      ${value.qty > 1
+                          ? ` <button type="submit" class="btn btn-danger btn-sm" id="${value.rowId}" onclick="cartDecrementInHoleSeller(this.id)">-</button>`
+                          : ` <button type="submit" class="btn btn-danger btn-sm" disabled>-</button>`
+                      }
+                      <input type="text" class="form-control custom-form-control2" min="1" value="${value.qty}">
+                      <button type="button" class="btn btn-success btn-sm" id="${value.rowId}" onclick="cartIncrementInHoleSeller(this.id)">+</button>
+                    </div>
+
+
+                  </td>
+                  <td>
+                    <a style="cursor:pointer"  type="submit" title="delete" id="${value.rowId}" onclick="removeToCartInHoleSeller(this.id)"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                  </td>
+                </tr>
+
+                `
+              });
+              $('#holeSellerOrderList').html(rows);
+
+            },
+        });
+        /* _________ */
+      }
+      getHoleSellerOrderListInAddToCart();
+
+      // Remove Cart
+      function removeToCartInHoleSeller(id){
+        $.ajax({
+            type:'POST',
+            url: "{{ route('remove-cart-in.holeseller') }}",
+            data: { id:id },
+            dataType:'json',
+            success:function(data){
+                getHoleSellerOrderListInAddToCart();
+                //  start message
+                const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                      })
+
+                     if($.isEmptyObject(data.error)){
+                          Toast.fire({
+                            type: 'success',
+                            title: data.success
+                          })
+                     }else{
+                           Toast.fire({
+                              type: 'error',
+                              title: data.error
+                          })
+           }
+                    //  end message
+            }
+        });
+      }
+      // Cart Increment
+      function cartIncrementInHoleSeller(rowId){
+        $.ajax({
+            type:'POST',
+            url: "{{ route('QunatityIncrementInHoleSeller') }}",
+            data: { rowId:rowId },
+            dataType:'json',
+            success:function(data){
+              getHoleSellerOrderListInAddToCart();
+            }
+        });
+      }
+      // Cart Decrement
+      function cartDecrementInHoleSeller(rowId){
+        $.ajax({
+            type:'POST',
+            url: "{{ route('cartDecrementInHoleSeller') }}",
+            data: { rowId:rowId },
+            dataType:'json',
+            success:function(data){
+              getHoleSellerOrderListInAddToCart();
             }
         });
       }
 
 
-
-
-
-
-
-
-
-
+      // Qunatity Decrement
+      // function cartDecrement(rowId){
+      //   $.ajax({
+      //       type:'POST',
+      //       url: "",
+      //       data: { rowId:rowId },
+      //       dataType:'json',
+      //       success:function(data){
+      //         getOrderListInAddToCart();
+      //       }
+      //   });
+      // }
 
 
 
     </script>
+
+
+     </script>
+     <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[name="DiviId"]').on('change', function(){
+              var DiviId = $(this).val();
+              // alert(DiviId);
+              if(DiviId) {
+
+                  $.ajax({
+                      url: "{{ route('Division-wise-District') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { DiviId:DiviId },
+                      success:function(data) {
+
+
+                          if(data == ""){
+                           $('select[name="DistId"]').empty();
+                           $('select[name="DistId"]').append('<option value="">Data Not Found! </option>');
+
+                            $('select[name="ThanId"]').empty();
+                           $('select[name="ThanId"]').append('<option value="">Data Not Found! </option>');
+                          
+                         }else{
+                           $('select[name="DistId"]').empty();
+                           $('select[name="DistId"]').append('<option value="">Select District</option>');
+
+                            $('select[name="ThanId"]').empty();
+                           $('select[name="ThanId"]').append('<option value="">Select District</option>');
+
+                           $.each(data, function(key, value){
+                                $('select[name="DistId"]').append('<option value="'+ value.DistId +'">' + value.DistName+ '</option>');
+                            });
+                         }
+
+
+                      },
+
+                  });
+              } else{
+
+              }
+          });
+          // Union
+          $('select[name="DistId"]').on('change', function(){
+              var DistId = $(this).val();
+              // alert(DistId);
+              if(DistId) {
+                  $.ajax({
+                      url: "{{ route('District-wise-thana') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { DistId:DistId },
+                      success:function(data) {
+
+
+                         // $('select[name="DistId"]').empty();
+                         // $('select[name="ThanId"]').empty();
+
+                         if(data == ""){
+                           
+                           $('select[name="ThanId"]').empty();
+                           $('select[name="ThanId"]').append('<option value="">Data Not Found! </option>');
+                          
+                         }else{
+                          
+                           $('select[name="ThanId"]').empty();
+                           $('select[name="ThanId"]').append('<option value="">Select Thana</option>');
+
+                        
+                           $.each(data, function(key, value){
+                                $('select[name="ThanId"]').append('<option value="'+ value.ThanId +'">' + value.ThanaName + '</option>');
+                            });;
+                         }
+
+
+                      },
+
+                  });
+              } else{
+
+              }
+          });
+
+
+           // Union
+          $('select[name="ThanId"]').on('change', function(){
+              var ThanId = $(this).val();
+              if(ThanId) {
+                  $.ajax({
+                      url: "{{ route('Thana-wise-union') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { ThanId:ThanId },
+                      success:function(data) {
+
+
+                         if(data == ""){
+                           
+                           $('select[name="UnioId"]').empty();
+                           $('select[name="UnioId"]').append('<option value="">Data Not Found! </option>');
+                          
+                         }else{
+                          
+                           $('select[name="UnioId"]').empty();
+                           $('select[name="UnioId"]').append('<option value="">Select Union</option>');
+
+                        
+                           $.each(data, function(key, value){
+                                $('select[name="UnioId"]').append('<option value="'+ value.UnioId +'">' + value.UnioName + '</option>');
+                            });
+                         }
+
+                            
+
+
+                      },
+
+                  });
+              } else{
+
+              }
+          });
+
+
+      });
+  </script>
   </body>
 </html>

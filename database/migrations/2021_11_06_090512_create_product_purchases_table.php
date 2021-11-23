@@ -16,10 +16,10 @@ class CreateProductPurchasesTable extends Migration
         Schema::create('product_purchases', function (Blueprint $table) {
             $table->id('ProdPurcId');
             $table->integer('TransactionId');
-            $table->float('TotalPrice',2)->nullable();
+            $table->float('TotalPrice',11,2)->nullable();
             $table->date('PurchaseDate')->nullable();
             $table->integer('VendorId')->nullable();
-            $table->float('LabourCost',2)->nullable();
+            $table->float('LabourCost',11,2)->nullable();
             $table->integer('PaymentType');
             $table->integer('BankId')->nullable();
             $table->integer('Discount');

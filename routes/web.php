@@ -10,9 +10,15 @@ use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\CustomerTypeController;
 use App\Http\Controllers\admin\CompanyInfoController;
+use App\Http\Controllers\admin\HoleSellerController;
 
 use App\Http\Controllers\admin\ThanaController;
 use App\Http\Controllers\admin\ProductPurchaseController;
+use App\Http\Controllers\admin\DivisionController;
+use App\Http\Controllers\admin\DistrictController;
+use App\Http\Controllers\admin\AjaxController;
+use App\Http\Controllers\admin\UnionController;
+use App\Http\Controllers\admin\LabourRateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +100,16 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('vendor/edit', [VendorController::class, 'update'])->name('vendor.update');
 });
 
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('labour-rate/add', [LabourRateController::class, 'add'])->name('labour.add');
+    Route::get('labour-rate/edit/{id}', [LabourRateController::class, 'edit'])->name('labour.edit');
+    Route::get('dashboard/stock/labour/getSize/{id}', [LabourRateController::class, 'getSize'])->name('labour.edit');
+    Route::post('labour-rate/add', [LabourRateController::class, 'store'])->name('labour.store');
+    Route::post('labour-rate/edit', [LabourRateController::class, 'update'])->name('labour.update');
+});
+
+
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('customer/add', [CustomerController::class, 'add'])->name('customer.add');
     Route::get('customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
@@ -115,21 +131,55 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('company/edit/{id}', [CompanyInfoController::class, 'edit'])->name('company.edit');
     Route::post('company/add', [CompanyInfoController::class, 'store'])->name('company.store');
     Route::post('company/edit', [CompanyInfoController::class, 'update'])->name('company.update');
+
 });
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
-
-    Route::post('district-wise-thana', [ThanaController::class, 'getThana'])->name('District-wise-thana');
-    Route::post('thana-wise-union', [ThanaController::class, 'getUnion'])->name('Thana-wise-union');
+    Route::get('division/add', [DivisionController::class, 'add'])->name('division.add');
+    Route::get('division/edit/{id}', [DivisionController::class, 'edit'])->name('division.edit');
+    Route::post('division/add', [DivisionController::class, 'store'])->name('division.store');
+    Route::post('division/edit', [DivisionController::class, 'update'])->name('division.update');
 });
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('district/add', [DistrictController::class, 'add'])->name('district.add');
+    Route::get('district/edit/{id}', [DistrictController::class, 'edit'])->name('district.edit');
+    Route::post('district/add', [DistrictController::class, 'store'])->name('district.store');
+    Route::post('district/edit', [DistrictController::class, 'update'])->name('district.update');
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('thana/add', [ThanaController::class, 'add'])->name('thana.add');
+    Route::get('thana/edit/{id}', [ThanaController::class, 'edit'])->name('thana.edit');
+    Route::post('thana/add', [ThanaController::class, 'store'])->name('thana.store');
+    Route::post('thana/edit', [ThanaController::class, 'update'])->name('thana.update');
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('union/add', [UnionController::class, 'add'])->name('union.add');
+    Route::get('union/edit/{id}', [UnionController::class, 'edit'])->name('union.edit');
+    Route::post('union/add', [UnionController::class, 'store'])->name('union.store');
+    Route::post('union/edit', [UnionController::class, 'update'])->name('union.update');
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::post('Division-wise-District', [AjaxController::class, 'getDistrict'])->name('Division-wise-District');
+    Route::post('district-wise-thana', [AjaxController::class, 'getThana'])->name('District-wise-thana');
+    Route::post('thana-wise-union', [AjaxController::class, 'getUnion'])->name('Thana-wise-union');
+});
+
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('product/purchase/add', [ProductPurchaseController::class, 'add'])->name('product.purchase.add');
 
     Route::get('product/purchase/edit/{id}', [ProductPurchaseController::class, 'edit'])->name('product.purchase.edit');
-    
+
     Route::post('product/purchase/add', [ProductPurchaseController::class, 'store'])->name('product.purchase.store');
 
 
@@ -149,6 +199,21 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('product/purchase/qunatity-decrement', [ProductPurchaseController::class, 'QunatityDecrement'])->name('QunatityDecrement');
 
     Route::post('product/purchase/remove', [ProductPurchaseController::class, 'productRemoveToCart'])->name('remove-cart');
+    /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('product/hole-seller/purchase', [HoleSellerController::class, 'add'])->name('Product.Hole.Seller');
+    /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
+    Route::post('product/hole-seller/purchase/add-to-cart', [HoleSellerController::class, 'productAddToCart'])->name('holeseller-purchase.addToCart');
+
+    Route::post('product/hole-seller/purchase/remove-to-cart', [HoleSellerController::class, 'productRemoveToCart'])->name('remove-cart-in.holeseller');
+
+    Route::post('product/hole-seller/purchase/increment-to-cart', [HoleSellerController::class, 'QunatityIncrement'])->name('QunatityIncrementInHoleSeller');
+
+    Route::post('product/hole-seller/purchase/decrement-to-cart', [HoleSellerController::class, 'QunatityDecrement'])->name('cartDecrementInHoleSeller');
+
     /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
 });
 

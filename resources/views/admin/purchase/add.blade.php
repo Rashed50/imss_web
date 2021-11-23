@@ -9,7 +9,7 @@
         <div class="col-md-7">
             @if(Session::has('success'))
             <div class="alert alert-success alertsuccess" role="alert">
-                <strong>Success!</strong> {{Session::get('success')}}
+                <strong>Success</strong> Added New Product
             </div>
             @endif
             @if(Session::has('error'))
@@ -142,7 +142,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('LabourCost') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Labour Cost:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="LabourCost" name="LabourCost" value="{{ old('LabourCost') }}" required>
+                                        <input type="text" placeholder="Input Amount" class="form-control" id="LabourCost" name="LabourCost" onkeyup="addedLabourCost()" value="{{ old('LabourCost') }}" required>
                                         @if ($errors->has('LabourCost'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('LabourCost') }}</strong>
@@ -154,7 +154,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('CarryingBill') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Carrying Bill:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="CarryingBill" name="CarryingBill" value="{{ old('CarryingBill') }}" required>
+                                        <input type="text" placeholder="Input Amount" class="form-control" id="CarryingBill" name="CarryingBill" onkeyup="CarryingBillCost()" value="{{ old('CarryingBill') }}" required>
                                         @if ($errors->has('CarryingBill'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('CarryingBill') }}</strong>
@@ -162,11 +162,14 @@
                                         @endif
                                     </div>
                                 </div>
-
+                                {{-- hidden field --}}
+                                <input type="hidden" id="temporaryField" value="">
+                                <input type="hidden" id="temporaryField2" value="">
+                                {{-- hidden field --}}
                                 <div class="form-group row custom_form_group{{ $errors->has('Discount') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Discount:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="Discount" name="Discount" value="{{ old('Discount') }}" required>
+                                        <input type="text" placeholder="Input Amount" class="form-control" id="discountpersent" name="Discount" value="{{ old('Discount') }}" onkeyup="DiscountAmount()" required>
                                         @if ($errors->has('Discount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('Discount') }}</strong>
@@ -245,22 +248,6 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                {{-- <div class="form-group row custom_form_group{{ $errors->has('Credit') ? ' has-error' : '' }}">
-                                    <label class="col-sm-5 control-label">Credit Form:<span class="req_star">*</span></label>
-                                    <div class="col-sm-7">
-                                        <select class="form-control" name="Credit" id="Credit">
-                                            <option value="">Select Credit</option>
-                                        </select>
-                                        @if ($errors->has('Credit'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('Credit') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div> --}}
-
-
 
                             </div>
                         </div>
@@ -360,82 +347,72 @@
                 </div>
               </div>
             </div>
+            {{-- Order List --}}
         </div>
 
     </div>
-    {{-- list --}}
-    <div class="row" style="margin-top:30px">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>customer List</h3>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive">
-                                <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
-                                <table id="datatable1" class="table table-bordered responsive mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>SL NO.</th>
-                                            <th>Transaction Id</th>
-                                            <th>Total Price</th>
-                                            <th>Purchase Date</th>
-                                            <th>Vendor Id</th>
-                                            <th>Staff Id</th>
-                                            <th>Labour Cost</th>
-                                            <th>Payment Type</th>
-                                            <th>Bank Id</th>
-                                            <th>Discount</th>
-                                            <th>Carring Cost</th>
-                                            <th>ToSaleId</th>
-                                            <th>Do No</th>
-                                            <th>Truck No</th>
-                                            <th>Manage</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                      @foreach ($purchaseProduct as $key=>$purchase)
-                                        <tr>
-                                            <td>{{ $key+1 }}</td>
-                                            <td>{{ $purchase->TransactionId ??'' }}</td>
-                                            <td>{{ $purchase->TotalPrice ??'' }}</td>
-                                            <td>{{ $purchase->PurchaseDate ??'' }}</td>
-                                            <td>{{ $purchase->VendorId ??'' }}</td>
-                                            <td>{{ $purchase->StaffId ??'' }}</td>
-                                            <td>{{ $purchase->LabourCost ??'' }}</td>
-                                            <td>{{ $purchase->PaymentType ??'' }}</td>
-                                            <td>{{ $purchase->BankId ??'' }}</td>
-                                            <td>{{ $purchase->Discount ??'' }}</td>
-                                            <td>{{ $purchase->CarringCost ??'' }}</td>
-                                            <td>{{ $purchase->ToSaleId ??'' }}</td>
-                                            <td>{{ $purchase->DoNo ??'' }}</td>
-                                            <td>{{ $purchase->TruckNo ??'' }}</td>
-                                            <td>
-                                                <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
-                                                <a href="{{ route('product.purchase.edit',$purchase->CustId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
-                                                <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
-                                            </td>
-                                        </tr>
-                                      @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end list -->
+
   </div>
+  {{-- script --}}
+  <script type="text/javascript">
+    // Attend Labour Cost
+    function addedLabourCost(){
+      var LabourCost = parseFloat( $('#LabourCost').val() );
+      var NetAmount = parseFloat( $('#NetAmount').val() );
 
+      if(LabourCost >= 0){
+          var total_amount = (LabourCost + NetAmount);
+          $("#PayAmount").val('');
+          $("#PayAmount").val(total_amount);
+          // temporaryField
+          $("#temporaryField").val('');
+          $("#temporaryField").val(total_amount);
+      }else{
+          $("#PayAmount").val('');
+          $("#PayAmount").val(NetAmount);
+      }
+    }
+    // Carrying Bill
+    function CarryingBillCost(){
+      var PayAmount = parseFloat( $('#PayAmount').val() );
+      var CarryingBill = parseFloat( $('#CarryingBill').val() );
+      var temporaryField = parseFloat( $('#temporaryField').val() );
+
+
+
+      if(CarryingBill >= 0){
+          var total_amount = (temporaryField - CarryingBill);
+          $("#PayAmount").val('');
+          $("#PayAmount").val(total_amount);
+          $("#temporaryField2").val('');
+          $("#temporaryField2").val(total_amount);
+      }else{
+          $("#PayAmount").val('');
+          $("#PayAmount").val(temporaryField);
+          $("#temporaryField2").val('');
+          $("#temporaryField2").val(PayAmount);
+      }
+    }
+
+    // Carrying Bill
+    function DiscountAmount(){
+      var temporaryField2 = parseFloat( $('#temporaryField2').val() );
+      var Discount = parseFloat( $('#discountpersent').val() );
+
+
+
+      if(Discount >= 0){
+          var total_amount = (temporaryField2 - Discount);
+          $("#PayAmount").val('');
+          $("#PayAmount").val(total_amount);
+      }else{
+          $("#PayAmount").val('');
+          $("#PayAmount").val(temporaryField2);
+      }
+    }
+
+
+  </script>
 
 
 
