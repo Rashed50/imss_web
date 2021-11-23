@@ -15,9 +15,9 @@ class CreateProductSellRecordsTable extends Migration
     {
         Schema::create('product_sell_records', function (Blueprint $table) {
             $table->id('ProdSellRecoId');
-            $table->float('Quantity',2)->nullable();
-            $table->float('Amount',2)->nullable();
-            $table->float('LabourCost',2)->nullable();
+            $table->integer('Quantity')->nullable();
+            $table->float('Amount',11,2)->nullable();
+            $table->float('LabourCost',11,2)->nullable();
             $table->unsignedBigInteger('CreateById');
             $table->boolean('status')->default(1);
 

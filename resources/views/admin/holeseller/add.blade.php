@@ -23,9 +23,100 @@
     {{-- Response Massage --}}
     <div class="card">
         <div class="card-body card_form">
+            {{-- Topbar --}}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="holeseller__topber">
+                  <div class="row">
+                      {{-- First --}}
+                      <div class="col-md-5">
+                        {{-- form input element --}}
+                        <div class="form-group row custom_form_group{{ $errors->has('TradeName') ? ' has-error' : '' }}">
+                            <label class="col-sm-4 control-label">Trade Name:<span class="req_star">*</span></label>
+                            <div class="col-sm-6">
+
+                              <select class="form-control" name="TradeName">
+                                <option value="">Select Trade Name</option>
+
+                              </select>
+                              @if ($errors->has('TradeName'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('TradeName') }}</strong>
+                                  </span>
+                              @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row custom_form_group{{ $errors->has('ContactNo') ? ' has-error' : '' }}">
+                            <label class="col-sm-4 control-label">Contact No:<span class="req_star">*</span></label>
+                            <div class="col-sm-6">
+                              <input type="text" class="form-control" name="ContactNo" value="{{ old('ContactNo') }}" placeholder="Contact No">
+                              @if ($errors->has('ContactNo'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('ContactNo') }}</strong>
+                                  </span>
+                              @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row custom_form_group{{ $errors->has('VoucharNo') ? ' has-error' : '' }}">
+                            <label class="col-sm-4 control-label">Vouchar No:<span class="req_star">*</span></label>
+                            <div class="col-sm-6">
+                              <input type="text" class="form-control" name="VoucharNo" value="{{ old('VoucharNo') }}" placeholder="Vouchar No">
+                              @if ($errors->has('VoucharNo'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('VoucharNo') }}</strong>
+                                  </span>
+                              @endif
+                            </div>
+                        </div>
+
+                        {{-- form input element --}}
+                      </div>
+                      {{-- Second --}}
+                      <div class="col-md-5">
+                        {{-- form input element --}}
+                        <div class="form-group row custom_form_group{{ $errors->has('SellDate') ? ' has-error' : '' }}">
+                            <label class="col-sm-4 control-label">Sell Date:<span class="req_star">*</span></label>
+                            <div class="col-sm-6">
+                              <input type="date" class="form-control" name="SellDate" value="{{ old('SellDate') }}">
+                              @if ($errors->has('SellDate'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('SellDate') }}</strong>
+                                  </span>
+                              @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row custom_form_group{{ $errors->has('DebitAccount') ? ' has-error' : '' }}">
+                            <label class="col-sm-4 control-label">Debit Account:<span class="req_star">*</span></label>
+                            <div class="col-sm-6">
+
+                              <select class="form-control" name="DebitAccount">
+                                <option value="">Select Debit Account</option>
+
+                              </select>
+                              @if ($errors->has('DebitAccount'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('DebitAccount') }}</strong>
+                                  </span>
+                              @endif
+                            </div>
+                        </div>
+                        {{-- form input element --}}
+                      </div>
+                      {{-- Third --}}
+                      <div class="col-md-2">
+                        <img src={{ asset('image/') }}"" alt="no image" style="width: 100px; border: 1px solid #ddd;">
+                      </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{-- Topbar --}}
             <div class="row">
                 <div class="col-md-4">
-
                     <div class="form-group row custom_form_group{{ $errors->has('CategoryID') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Category:<span class="req_star">*</span></label>
                         <div class="col-sm-8">
@@ -89,10 +180,12 @@
                         </div>
                     </div>
 
+
+
                     <div class="form-group row custom_form_group{{ $errors->has('UnitPrice') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Unit Price:<span class="req_star">*</span></label>
-                        <div class="col-sm-8">
-                          <input type="text" class="form-control" name="UnitPrice" value="{{ old('UnitPrice') }}" placeholder="Input Amount">
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" name="UnitPrice" value="{{ old('UnitPrice') }}" placeholder="Unit Price">
                           @if ($errors->has('UnitPrice'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('UnitPrice') }}</strong>
@@ -101,10 +194,22 @@
                         </div>
                     </div>
 
+                    <div class="form-group row custom_form_group{{ $errors->has('LabourPerUnit') ? ' has-error' : '' }}">
+                        <label class="col-sm-4 control-label">Labour Cost:<span class="req_star">*</span></label>
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" name="LabourPerUnit" value="{{ old('LabourPerUnit') }}" placeholder="Per Unit">
+                          @if ($errors->has('LabourPerUnit'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('LabourPerUnit') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
+
                     <div class="form-group row custom_form_group{{ $errors->has('Qunatity') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Qunatity:<span class="req_star">*</span></label>
                         <div class="col-sm-4">
-                          <input type="number" class="form-control" name="Qunatity" value="{{ old('Qunatity') }}" placeholder="">
+                          <input type="number" class="form-control" name="Qunatity" value="0">
                           @if ($errors->has('Qunatity'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('Qunatity') }}</strong>
@@ -112,7 +217,7 @@
                           @endif
                         </div>
                         <div class="col-md-4">
-                          <button type="submit" class="btn btn-primary waves-effect" onclick="addToCart()">Add To Cart</button>
+                          <button type="submit" class="btn btn-primary waves-effect" onclick="holeSelleraddToCart()">Add To Cart</button>
                         </div>
                     </div>
                 </div>
@@ -165,7 +270,32 @@
                                 {{-- hidden field --}}
                                 <input type="hidden" id="temporaryField" value="">
                                 <input type="hidden" id="temporaryField2" value="">
+
                                 {{-- hidden field --}}
+                                <div class="form-group row custom_form_group{{ $errors->has('TotalCost') ? ' has-error' : '' }}">
+                                    <label class="col-sm-6 control-label">Total Cost:<span class="req_star">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" placeholder="Input Amount" class="form-control" id="TotalCost" name="TotalCost" value="{{ old('TotalCost') }}" required>
+                                        @if ($errors->has('TotalCost'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('TotalCost') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="form-group row custom_form_group{{ $errors->has('PayAmount') ? ' has-error' : '' }}">
+                                    <label class="col-sm-6 control-label">Pay Amount:<span class="req_star">*</span></label>
+                                    <div class="col-sm-6">
+                                        <input type="text" placeholder="Input Amount" class="form-control" id="PayAmount" name="PayAmount" value="{{ old('PayAmount') }}" required>
+                                        @if ($errors->has('PayAmount'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('PayAmount') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 <div class="form-group row custom_form_group{{ $errors->has('Discount') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Discount:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
@@ -178,141 +308,60 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row custom_form_group{{ $errors->has('PayAmount') ? ' has-error' : '' }}">
-                                    <label class="col-sm-6 control-label">Pay PayAmount:<span class="req_star">*</span></label>
+                                <div class="form-group row custom_form_group{{ $errors->has('DueAmount') ? ' has-error' : '' }}">
+                                    <label class="col-sm-6 control-label">Due Amount:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="PayAmount" name="PayAmount" value="{{ old('PayAmount') }}" required>
-                                        @if ($errors->has('PayAmount'))
+                                        <input type="text" placeholder="Input Amount" class="form-control" id="DueAmount" name="DueAmount" value="{{ old('DueAmount') }}" >
+                                        @if ($errors->has('DueAmount'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('PayAmount') }}</strong>
+                                            <strong>{{ $errors->first('DueAmount') }}</strong>
                                         </span>
                                         @endif
                                     </div>
                                 </div>
+
 
 
 
                             </div>
                             {{-- Second Item --}}
                             <div class="col-md-6">
+                              {{-- <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                  Set Pay Date
+                                </label>
+                              </div> --}}
 
-                                <div class="form-group row custom_form_group{{ $errors->has('doNO') ? ' has-error' : '' }}">
-                                    <label class="col-sm-5 control-label">DO No:<span class="req_star">*</span></label>
-                                    <div class="col-sm-7">
-                                      <input type="text" class="form-control" name="doNO" value="{{ old('doNO') }}" placeholder="Input DO No">
-                                      @if ($errors->has('doNO'))
-                                      <span class="invalid-feedback" role="alert">
-                                          <strong>{{ $errors->first('doNO') }}</strong>
-                                      </span>
-                                      @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group row custom_form_group{{ $errors->has('TruckNo') ? ' has-error' : '' }}">
-                                    <label class="col-sm-5 control-label">Truck No:<span class="req_star">*</span></label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control" name="TruckNo" value="{{ old('TruckNo') }}" placeholder="Input Truck No">
-                                        @if ($errors->has('TruckNo'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('TruckNo') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group row custom_form_group{{ $errors->has('PurchaseDate') ? ' has-error' : '' }}">
-                                    <label class="col-sm-5 control-label">Purchase Date:<span class="req_star">*</span></label>
-                                    <div class="col-sm-7">
-                                        <input type="date" class="form-control" name="PurchaseDate" value="{{ old('PurchaseDate') }}">
-                                        @if ($errors->has('PurchaseDate'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('PurchaseDate') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group row custom_form_group{{ $errors->has('VendorName') ? ' has-error' : '' }}">
-                                    <label class="col-sm-5 control-label">Vendor Name:<span class="req_star">*</span></label>
-                                    <div class="col-sm-7">
-                                        <select class="form-control" name="VendorName" id="VendorName">
-                                            <option value="">Select Vendor </option>
-                                            @foreach ($vendorList as $vendor)
-                                              <option value="{{ $vendor->VendId }}"> {{ $vendor->VendName }} </option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('VendorName'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('VendorName') }}</strong>
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        {{-- second row --}}
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="SecondPart__Child">
-                              <div class="row">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-8">
-                                  {{-- row --}}
-                                  <div class="row">
-                                    <div class="col-md-2">
-                                      <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                        <label class="form-check-label" for="inlineCheckbox1">Select</label>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                      <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1">Direct Retail</label>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                      <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">Direct Whole Sale</label>
-                                      </div>
-                                    </div>
+                              <div class="form-group row custom_form_group">
+                                  <label class="col-sm-3 control-label">Date:<span class="req_star">*</span></label>
+                                  <div class="col-sm-6">
+                                      <input type="date" class="form-control" id="" name="" value="{{ old('') }}" required>
                                   </div>
-                                  {{-- row --}}
-                                  <div class="row">
-                                    <div class="col-md-12">
-
-                                      <div class="form-group row custom_form_group" style="margin-top: 10px">
-                                          <div class="col-sm-7">
-                                              <select class="form-control" name="VendorId" id="VendorId">
-                                                  <option value="1">Wholesaler</option>
-                                                  <option value="2">Retailer</option>
-                                              </select>
-                                          </div>
-                                      </div>
-
-
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-1"></div>
                               </div>
+
+                              <div class="form-group row custom_form_group">
+                                  <label class="col-sm-3 control-label">Pre Due:</label>
+                                  <div class="col-sm-6">
+                                      <input type="text" class="form-control" id="" value="98493" disabled>
+                                  </div>
+                              </div>
+
+
                             </div>
-                          </div>
                         </div>
+                        {{-- Button Row --}}
                         <div class="row">
                           <div class="col-md-12">
-                            <div style="margin: 0; text-align:center">
+                            <div style="margin: 10px; text-align:center; background: #f5f5f5; padding: 10px 0px;">
                               <button type="submit" class="btn btn-primary waves-effect">SAVE</button>
                             </div>
                           </div>
-
                         </div>
+                        {{-- Button Row --}}
                        </form>
                     </div>
                 </div>
-
             </div>
             {{-- Order Wise Product List --}}
             <div class="row" style="margin-top:20px">
@@ -332,11 +381,12 @@
                                                 <th>Thickness</th>
                                                 <th>Rate & Qunatity</th>
                                                 <th>Amount</th>
+                                                <th>Labour Cost</th>
                                                 <th>Qunatity</th>
                                                 <th>Manage</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="addToCartOrderList">
+                                        <tbody id="holeSellerOrderList">
 
                                         </tbody>
                                     </table>
@@ -349,9 +399,7 @@
             </div>
             {{-- Order List --}}
         </div>
-
     </div>
-
   </div>
   {{-- script --}}
   <script type="text/javascript">

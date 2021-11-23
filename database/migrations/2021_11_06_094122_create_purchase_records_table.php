@@ -15,9 +15,9 @@ class CreatePurchaseRecordsTable extends Migration
     {
         Schema::create('purchase_records', function (Blueprint $table) {
           $table->id('PurcRecoId');
-          $table->float('Quantity',2)->nullable();
-          $table->float('UnitPrice',2)->nullable();
-          $table->float('Amount',2)->nullable();
+          $table->integer('Quantity')->nullable();
+          $table->float('UnitPrice',11,2)->nullable();
+          $table->float('Amount',11,2)->nullable();
           $table->unsignedBigInteger('ProdPurcId');
           $table->unsignedBigInteger('CateId');
           $table->unsignedBigInteger('BranId');
