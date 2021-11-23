@@ -14,14 +14,18 @@ use Image;
 
 class CustomerTypeController extends Controller{
 
+    public function getAll(){
+       return $allType = CustomerType::orderBy('CusTypeId','DESC')->get();
+    }
+
     public function add(){
-       $allType = CustomerType::orderBy('CusTypeId','DESC')->get();
+        $allType = $this->getAll();
         return view('admin.customer.type', compact('allType'));
     }
 
     public function edit($id){
-        $data = CustomerType::where('CusTypeId',$id)->firstOrFail();
-        $allType = CustomerType::orderBy('CusTypeId','DESC')->get();
+        $allType = $this->getAll();
+        $data = $allType->where('CusTypeId',$id)->firstOrFail();
         return view('admin.customer.type', compact('data', 'allType'));
     }
 
