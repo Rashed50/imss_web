@@ -3,27 +3,11 @@
 <!-- ########## START: MAIN PANEL ########## -->
 
   <div class="sl-pagebody">
-    {{-- Response Massage --}}
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-7">
-            @if(Session::has('success'))
-            <div class="alert alert-success alertsuccess" role="alert">
-                <strong>Success</strong> Added New Product
-            </div>
-            @endif
-            @if(Session::has('error'))
-            <div class="alert alert-danger alerterror" role="alert">
-                <strong>Opps!</strong> {{Session::get('error')}}
-            </div>
-            @endif
-        </div>
-        <div class="col-md-2"></div>
-    </div>
-    {{-- Response Massage --}}
     <div class="card">
         <div class="card-body card_form">
             {{-- Topbar --}}
+            <form action="{{ route('product.seller') }}" method="post">
+              @csrf
             <div class="row">
               <div class="col-md-12">
                 <div class="holeseller__topber">
@@ -34,10 +18,11 @@
                         <div class="form-group row custom_form_group{{ $errors->has('TradeName') ? ' has-error' : '' }}">
                             <label class="col-sm-4 control-label">Trade Name:<span class="req_star">*</span></label>
                             <div class="col-sm-6">
-
                               <select class="form-control" name="TradeName">
                                 <option value="">Select Trade Name</option>
-
+                                @foreach ($allCustomer as $Customer)
+                                  <option value="{{ $Customer->CustId }}">{{ $Customer->TradeName }}</option>
+                                @endforeach
                               </select>
                               @if ($errors->has('TradeName'))
                                   <span class="invalid-feedback" role="alert">
@@ -62,7 +47,7 @@
                         <div class="form-group row custom_form_group{{ $errors->has('VoucharNo') ? ' has-error' : '' }}">
                             <label class="col-sm-4 control-label">Vouchar No:<span class="req_star">*</span></label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control" name="VoucharNo" value="{{ old('VoucharNo') }}" placeholder="Vouchar No">
+                              <input type="text" class="form-control" name="VoucharNo" value="{{ $vouchar }}" placeholder="Vouchar No">
                               @if ($errors->has('VoucharNo'))
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('VoucharNo') }}</strong>
@@ -79,7 +64,7 @@
                         <div class="form-group row custom_form_group{{ $errors->has('SellDate') ? ' has-error' : '' }}">
                             <label class="col-sm-4 control-label">Sell Date:<span class="req_star">*</span></label>
                             <div class="col-sm-6">
-                              <input type="date" class="form-control" name="SellDate" value="{{ old('SellDate') }}">
+                              <input type="date" class="form-control" id="" name="SellDate" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                               @if ($errors->has('SellDate'))
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $errors->first('SellDate') }}</strong>
@@ -107,7 +92,7 @@
                       </div>
                       {{-- Third --}}
                       <div class="col-md-2">
-                        <img src={{ asset('image/') }}"" alt="no image" style="width: 100px; border: 1px solid #ddd;">
+                        <img src="" id="holeCustomerImage" alt="no image" style="width: 100px; border: 1px solid #ddd;">
                       </div>
 
                   </div>
@@ -180,8 +165,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="form-group row custom_form_group{{ $errors->has('UnitPrice') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Unit Price:<span class="req_star">*</span></label>
                         <div class="col-sm-6">
@@ -217,7 +200,7 @@
                           @endif
                         </div>
                         <div class="col-md-4">
-                          <button type="submit" class="btn btn-primary waves-effect" onclick="holeSelleraddToCart()">Add To Cart</button>
+                          <p style="margin-top:10px; display:inline" class="btn btn-primary waves-effect" onclick="holeSelleraddToCart()">Add To Cart</p>
                         </div>
                     </div>
                 </div>
@@ -226,8 +209,7 @@
 
                 <div class="col-md-8">
                     <div class="SecondPart">
-                      <form action="{{ route('product.purchase.store') }}" method="post">
-                        @csrf
+
 
                         <div class="row">
                             {{-- First Item --}}
@@ -270,6 +252,7 @@
                                 {{-- hidden field --}}
                                 <input type="hidden" id="temporaryField" value="">
                                 <input type="hidden" id="temporaryField2" value="">
+                                <input type="hidden" id="temporaryField3" value="">
 
                                 {{-- hidden field --}}
                                 <div class="form-group row custom_form_group{{ $errors->has('TotalCost') ? ' has-error' : '' }}">
@@ -287,7 +270,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('PayAmount') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Pay Amount:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="PayAmount" name="PayAmount" value="{{ old('PayAmount') }}" required>
+                                        <input type="text" placeholder="Input Amount" class="form-control" id="PayAmount2" name="PayAmount" value="{{ old('PayAmount') }}" required onkeyup="paymentAmount()">
                                         @if ($errors->has('PayAmount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('PayAmount') }}</strong>
@@ -336,14 +319,14 @@
                               <div class="form-group row custom_form_group">
                                   <label class="col-sm-3 control-label">Date:<span class="req_star">*</span></label>
                                   <div class="col-sm-6">
-                                      <input type="date" class="form-control" id="" name="" value="{{ old('') }}" required>
+                                      <input type="date" class="form-control" id="" name="SellingDate" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                                   </div>
                               </div>
 
                               <div class="form-group row custom_form_group">
                                   <label class="col-sm-3 control-label">Pre Due:</label>
                                   <div class="col-sm-6">
-                                      <input type="text" class="form-control" id="" value="98493" disabled>
+                                      <input type="text" class="form-control"  id="predueAmount" value="" disabled>
                                   </div>
                               </div>
 
@@ -358,11 +341,10 @@
                             </div>
                           </div>
                         </div>
-                        {{-- Button Row --}}
-                       </form>
                     </div>
                 </div>
             </div>
+            </form>
             {{-- Order Wise Product List --}}
             <div class="row" style="margin-top:20px">
               <div class="col-md-12">
@@ -410,33 +392,33 @@
 
       if(LabourCost >= 0){
           var total_amount = (LabourCost + NetAmount);
-          $("#PayAmount").val('');
-          $("#PayAmount").val(total_amount);
+          $("#TotalCost").val('');
+          $("#TotalCost").val(total_amount);
           // temporaryField
           $("#temporaryField").val('');
           $("#temporaryField").val(total_amount);
       }else{
-          $("#PayAmount").val('');
-          $("#PayAmount").val(NetAmount);
+          $("#TotalCost").val('');
+          $("#TotalCost").val(NetAmount);
       }
     }
     // Carrying Bill
     function CarryingBillCost(){
-      var PayAmount = parseFloat( $('#PayAmount').val() );
+      var TotalCost = parseFloat( $('#TotalCost').val() );
       var CarryingBill = parseFloat( $('#CarryingBill').val() );
       var temporaryField = parseFloat( $('#temporaryField').val() );
 
 
 
       if(CarryingBill >= 0){
-          var total_amount = (temporaryField - CarryingBill);
-          $("#PayAmount").val('');
-          $("#PayAmount").val(total_amount);
+          var total_amount = (temporaryField + CarryingBill);
+          $("#TotalCost").val('');
+          $("#TotalCost").val(total_amount);
           $("#temporaryField2").val('');
           $("#temporaryField2").val(total_amount);
       }else{
-          $("#PayAmount").val('');
-          $("#PayAmount").val(temporaryField);
+          $("#TotalCost").val('');
+          $("#TotalCost").val(temporaryField);
           $("#temporaryField2").val('');
           $("#temporaryField2").val(PayAmount);
       }
@@ -444,28 +426,36 @@
 
     // Carrying Bill
     function DiscountAmount(){
-      var temporaryField2 = parseFloat( $('#temporaryField2').val() );
+      var temporaryField3 = parseFloat( $('#temporaryField3').val() );
       var Discount = parseFloat( $('#discountpersent').val() );
 
-
-
       if(Discount >= 0){
-          var total_amount = (temporaryField2 - Discount);
-          $("#PayAmount").val('');
-          $("#PayAmount").val(total_amount);
+          var total_amount = (temporaryField3 - Discount);
+          $("#DueAmount").val('');
+          $("#DueAmount").val(total_amount);
       }else{
-          $("#PayAmount").val('');
-          $("#PayAmount").val(temporaryField2);
+          $("#DueAmount").val('');
+          $("#DueAmount").val(temporaryField3);
       }
+    }
+
+    function paymentAmount(){
+      var temporaryField2 = parseFloat( $('#temporaryField2').val() );
+      var PayAmount2 = parseFloat($("#PayAmount2").val());
+
+      if(PayAmount2 >= 0){
+          var total_amount = (temporaryField2 - PayAmount2);
+          $("#DueAmount").val('');
+          $("#DueAmount").val(total_amount);
+          $("#temporaryField3").val(total_amount);
+      }else{
+          $("#DueAmount").val('');
+          $("#DueAmount").val(temporaryField2);
+          $("#temporaryField3").val(temporaryField2);
+      }
+
     }
 
 
   </script>
-
-
-
-
-
-
-
 @endsection

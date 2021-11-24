@@ -146,6 +146,8 @@ class ProductPurchaseController extends Controller{
      $CatgOBJ = new CategoryController();
      $allCatg = $CatgOBJ->getAll();
      $purchaseProduct = $this->getAll();
+     // Cart Destroy
+     Cart::destroy();
      return view('admin.purchase.add', compact('purchaseProduct','allCatg','vendorList'));
 
   }

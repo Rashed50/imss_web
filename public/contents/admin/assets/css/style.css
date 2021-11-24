@@ -187,10 +187,14 @@ div.vouchar_image img{
 }
 
 .custom_form_group .parmanent_address {
-	padding: 15px 10px 0px;
-	border: 1px solid #ddd;
-	margin-bottom: 15px;
-	border-radius: 2px;
+    padding: 15px 10px 0px;
+    border: 1px solid #ddd;
+    margin: 5px 0px;
+    border-radius: 2px;
+}
+
+.form-group {
+    margin-bottom: 7px;
 }
 
 .custom_form_group label.control-label{
@@ -703,7 +707,6 @@ div.image_custom_row{
 }
 
 .card .card-header .card_top_title{
-  text-align: center;
 	color: red;
 	font-weight: 700;
 	font-size: 16px;

@@ -14,6 +14,7 @@ use App\Http\Controllers\admin\HoleSellerController;
 
 use App\Http\Controllers\admin\ThanaController;
 use App\Http\Controllers\admin\ProductPurchaseController;
+use App\Http\Controllers\admin\EmployeeInfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,11 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard/add', function () {
     return view('admin.add');
 })->middleware(['auth'])->name('add.here');
+
+/* ++++++++++++++++++++++ Employee ++++++++++++++++++++++ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('employee/add', [EmployeeInfoController::class, 'add'])->name('employee.add');
+});
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -100,6 +106,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::post('customer/add', [CustomerController::class, 'store'])->name('customer.store');
     Route::post('customer/edit', [CustomerController::class, 'update'])->name('customer.update');
+    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+    Route::post('customer/information/for/product-purchase', [CustomerController::class, 'CustIdWiseCustomerInformation'])->name('TradeName-wise-Customer.information');
+    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -166,6 +175,8 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('product/hole-seller/purchase/decrement-to-cart', [HoleSellerController::class, 'QunatityDecrement'])->name('cartDecrementInHoleSeller');
 
     /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
+    Route::post('product/hole-seller/store', [HoleSellerController::class, 'productSellStore'])->name('product.seller');
+
 });
 
 

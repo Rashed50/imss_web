@@ -23,8 +23,7 @@ class CreateEmployeeInformationTable extends Migration
             $table->string('Photo')->nullable();
             $table->date('JoinDate')->nullable();
             $table->date('ReviewDate')->nullable();
-            $table->float('Salary',2)->default(0);
-            $table->float('Commision',2)->default(0);
+            $table->float('Salary',11,2)->default(0);
             $table->string('PostOffice')->nullable();
             $table->timestamps();
 

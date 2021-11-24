@@ -14,6 +14,7 @@
     <link href="{{ asset('contents/admin') }}/assets/lib/Ionicons/css/ionicons.css" rel="stylesheet">
     <link href="{{ asset('contents/admin') }}/assets/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
     <link href="{{ asset('contents/admin') }}/assets/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+    <link href="{{ asset('contents/admin') }}/assets/lib/toast/toast.css" rel="stylesheet">
     <!-- dataTables css -->
     <link href="{{ asset('contents/admin') }}/assets/lib/datatables/jquery.dataTables.css" rel="stylesheet">
     <link href="{{ asset('contents/admin') }}/assets/lib/select2/css/select2.min.css" rel="stylesheet">
@@ -59,7 +60,32 @@
     <!-- <script src="{{ asset('contents/admin') }}/assets/lib/chart.js/Chart.js"></script> -->
     <!-- <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.js"></script> -->
     <!-- <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.pie.js"></script> -->
+
     <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.resize.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/lib/toast/toast.min.js"></script>
+    <script>
+      @if(Session::has('message'))
+        var type ="{{Session::get('alert-type','info')}}"
+        switch(type){
+            case 'info':
+                toastr.info(" {{Session::get('message')}} ");
+                break;
+
+            case 'success':
+                toastr.success(" {{Session::get('message')}} ");
+                break;
+
+            case 'warning':
+                toastr.warning(" {{Session::get('message')}} ");
+                break;
+
+            case 'error':
+                toastr.error(" {{Session::get('message')}} ");
+                break;
+        }
+    @endif
+    </script>
+
     <script src="{{ asset('contents/admin') }}/assets/lib/flot-spline/jquery.flot.spline.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/starlight.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/js/ResizeSensor.js"></script>
@@ -114,10 +140,6 @@
 
               }
           });
-
-
-
-
           // Brand Wise productSize
           $('select[name="BranId"]').on('change', function(){
               var BranId = $(this).val();
@@ -173,6 +195,33 @@
                          }
 
                       },
+                  });
+              } else{
+
+              }
+          });
+
+
+
+
+          // Trade Name Wise Customer information
+          $('select[name="TradeName"]').on('change', function(){
+              var TradeName = $(this).val();
+              // alert(TradeName);
+              if(TradeName) {
+                  $.ajax({
+                      url: "{{ route('TradeName-wise-Customer.information') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { TradeName:TradeName },
+                      success:function(data) {
+                         /* +++++++++++++++++++++++++++++++++++ */
+                         $('input[name="ContactNo"]').val(data.ContactNumber);
+                         $('input[id="predueAmount"]').val(data.DueAmount);
+                         $('#holeCustomerImage').prop("src", data.Photo);
+                         /* +++++++++++++++++++++++++++++++++++ */
+                      },
+
                   });
               } else{
 
@@ -438,7 +487,7 @@
             dataType:"json",
             success:function(response) {
               $('input[id="NetAmount"]').val(response.cartTotal);
-              $('input[id="PayAmount"]').val(response.cartTotal);
+              $('input[id="TotalCost"]').val(response.cartTotal);
               $('input[id="temporaryField"]').val(response.cartTotal);
               var rows = "";
               $.each(response.carts,function(key, value){
@@ -450,7 +499,7 @@
                   <td>${value.options.holThicknessName}</td>
                   <td>${value.price} * ${value.qty}</td>
                   <td> ${value.subtotal} </td>
-                  <td> ${value.options.LabourPerUnit} </td>
+                  <td> ${value.options.holLabourPerUnit} </td>
                   <td>
 
 

@@ -15,6 +15,31 @@ use Image;
 
 
 class CustomerController extends Controller{
+    /*
+    |--------------------------------------------------------------------------
+    | DATABASE OPERATION
+    |--------------------------------------------------------------------------
+    */
+    public function getAllCustomer(){
+      return $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
+    }
+
+    /* ++++++++++ Vouchar No ++++++++++ */
+    public function vouchar(){
+      $date = Carbon::now()->format('Ymd');
+      $all = CustomerInfo::count();
+      return $vouchar ="SEL-".$date.'00'.$all;
+    }
+
+    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+    public function CustIdWiseCustomerInformation(Request $request){
+      $allCustomer = CustomerInfo::where('status',true)->where('CustId',$request->TradeName)->first();
+      return json_encode($allCustomer);
+    }
+    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+
+
+
 
     public function add(){
        $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
@@ -61,9 +86,10 @@ class CustomerController extends Controller{
             $image = $request->file('Photo');
             $imageName = 'customer_'.$request->CustName.'.'.$image->getClientOriginalExtension();
             Image::make($image)->resize(300,200)->save('uploads/customer/'.$imageName);
+            $saveurl = 'uploads/customer/'.$imageName;
 
             CustomerInfo::where('CustId',$insert)->update([
-                'Photo'=>$imageName,
+                'Photo'=>$saveurl,
             ]);
         }
 
