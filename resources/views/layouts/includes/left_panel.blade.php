@@ -49,11 +49,13 @@
           <span class="menu-item-label">Product Purchase</span>
         </div>
        </a>
+
        {{-- hole Seller --}}
        <a href="{{ route('Product.Hole.Seller') }}" class="sl-menu-link">
         <div class="sl-menu-item">
           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-          <span class="menu-item-label">Hole Seller</span>
+          <span class="menu-item-label">Whole Sell</span>
+
         </div>
        </a>
 
@@ -91,6 +93,21 @@
     </ul>
 
 
+
+    <a href="#" class="sl-menu-link">
+      <div class="sl-menu-item">
+        <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+        <span class="menu-item-label">Address</span>
+        <i class="menu-item-arrow fa fa-angle-down"></i>
+      </div>
+    </a>
+    <!-- sl-menu-link -->
+    <ul class="sl-menu-sub nav flex-column">
+      <li class="nav-item"><a href="{{ route('division.add') }}" class="nav-link">Division Add</a></li>
+      <li class="nav-item"><a href="{{ route('district.add') }}" class="nav-link">District Add</a></li>
+      <li class="nav-item"><a href="{{ route('thana.add') }}" class="nav-link">Thana Add</a></li>
+      <li class="nav-item"><a href="{{ route('union.add') }}" class="nav-link">Union Add</a></li>
+    </ul>
 
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">

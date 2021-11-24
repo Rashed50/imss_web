@@ -132,8 +132,9 @@
                         <div class="col-sm-7">
                             <select class="form-control" name="CustTypeId" id="CustTypeId">
                                 <option value="">Select category</option>
-                                <option value="1">Wholesaler</option>
-                                <option value="2">Retailer</option>
+                                @foreach($allType as $type)
+                                <option value="{{$type->CusTypeId}}">{{$type->TypeName}}</option>
+                                @endforeach
                             </select>
                             @if ($errors->has('CustTypeId'))
                                 <span class="invalid-feedback" role="alert">
@@ -143,30 +144,42 @@
                         </div>
                     </div>
 
+                    <div class="form-group row custom_form_group{{ $errors->has('DiviId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Division Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                          <select class="form-control" id="DiviId" name="DiviId">
+                              <option value="">Select Division</option>
+                              @foreach($Division as $div)
+                              <option value="{{$div->DiviId}}" {{(@$data->DiviId==$div->DiviId)?'selected': ''}}>{{$div->DiviName}}</option>
+                              @endforeach
+                          </select>
+                          @if ($errors->has('DiviId'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('DiviId') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
                     <div class="form-group row custom_form_group{{ $errors->has('DistId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">District :</span></label>
+                        <label class="col-sm-3 control-label">District:</span></label>
                         <div class="col-sm-7">
 
                             <select class="form-control" name="DistId" id="DistId">
-                              <option value="">Select District</option>
-                              @foreach ($District as $data)
-                                <option value="{{ $data->DistId }}">{{ $data->DistName }}</option>
-                              @endforeach
+                                <option value="{{@$data->DistId}}">{{@$data->District->DistName ??''}}</option>
                             </select>
                             @if ($errors->has('DistId'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('DistId') }}</strong>
                                 </span>
                             @endif
-
                         </div>
                     </div>
                     <div class="form-group row custom_form_group{{ $errors->has('ThanId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Thana :</span></label>
+                        <label class="col-sm-3 control-label">Thana:</span></label>
                         <div class="col-sm-7">
 
                             <select class="form-control" name="ThanId" id="ThanId">
-                              <option value="">Select Thana</option>
+                                <option value="{{@$data->ThanId}}">{{@$data->Thana->ThanaName ??''}}</option>
                             </select>
                             @if ($errors->has('ThanId'))
                                 <span class="invalid-feedback" role="alert">
@@ -300,68 +313,6 @@
     </div>
     <!-- end list -->
   </div>
-  {{-- script area --}}
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('select[name="DistId"]').on('change', function(){
-          var DistId = $(this).val();
-          if(DistId) {
-              $.ajax({
-                  url: "{{ route('District-wise-thana') }}",
-                  type:"POST",
-                  dataType:"json",
-                  data: { DistId:DistId },
-                  success:function(data) {
-
-
-                     $('select[name="ThanId"]').empty();
-                     $('select[name="UnioId"]').empty();
-
-                        $.each(data, function(key, value){
-                            $('select[name="ThanId"]').append('<option value="'+ value.ThanId +'">' + value.ThanaName + '</option>');
-                        });
-
-
-                  },
-
-              });
-          } else{
-
-          }
-      });
-      // Union
-      $('select[name="ThanId"]').on('change', function(){
-          var ThanId = $(this).val();
-          if(ThanId) {
-              $.ajax({
-                  url: "{{ route('Thana-wise-union') }}",
-                  type:"POST",
-                  dataType:"json",
-                  data: { ThanId:ThanId },
-                  success:function(data) {
-
-
-                     // $('select[name="ThanId"]').empty();
-                     $('select[name="UnioId"]').empty();
-
-                        $.each(data, function(key, value){
-                            $('select[name="UnioId"]').append('<option value="'+ value.UnioId +'">' + value.UnioName + '</option>');
-                        });
-
-
-                  },
-
-              });
-          } else{
-
-          }
-      });
-
-  });
-  </script>
-
-
-
 
 
 @endsection

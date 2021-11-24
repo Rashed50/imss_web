@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\CustomerInfo;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Admin\CustomerTypeController;
+use App\Http\Controllers\Admin\DivisionController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -41,17 +43,32 @@ class CustomerController extends Controller{
 
 
 
+    public function getAll(){
+
+       return $Customer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
+    }
+
     public function add(){
-       $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
-       $DistrictOBJ = new DistrictController();
-       $District = $DistrictOBJ->getAll();
-       return view('admin.customer.add', compact('allCustomer','District'));
+        $typeObj= new CustomerTypeController;
+        $allType= $typeObj->getAll();
+       
+        $DivisionOBJ = new DivisionController();
+        $Division = $DivisionOBJ->getAll();
+
+       $allCustomer = $this->getAll();
+       return view('admin.customer.add', compact('allCustomer','Division', 'allType'));
     }
 
     public function edit($id){
-        $data = CustomerInfo::where('status',true)->where('CustId',$id)->firstOrFail();
-        $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
-        return view('admin.customer.add', compact('data', 'allCustomer'));
+        $typeObj= new CustomerTypeController;
+        $allType= $typeObj->getAll();
+
+        $DivisionOBJ = new DivisionController();
+        $Division = $DivisionOBJ->getAll();
+
+        $allCustomer = $this->getAll();
+        $data = $allCustomer->where('status',true)->where('CustId',$id)->firstOrFail();
+        return view('admin.customer.add', compact('data', 'allCustomer', 'Division', 'allType'));
     }
 
     public function store(Request $request){

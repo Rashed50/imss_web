@@ -295,7 +295,7 @@
             },
         });
 
-        /* ___________________________ */
+        /* _________ */
       }
       /* ================= Add To Cart Order List ================= */
       function getOrderListInAddToCart(){
@@ -343,7 +343,7 @@
 
             },
         });
-        /* ___________________________ */
+        /* _________ */
       }
       getOrderListInAddToCart();
 
@@ -400,7 +400,7 @@
                               type: 'error',
                               title: data.error
                           })
-					 }
+           }
                     //  end message
             }
         });
@@ -476,7 +476,7 @@
             },
         });
 
-        /* ___________________________ */
+        /* _________ */
       }
       /* ================= Add To Cart Order List ================= */
       function getHoleSellerOrderListInAddToCart(){
@@ -525,7 +525,7 @@
 
             },
         });
-        /* ___________________________ */
+        /* _________ */
       }
       getHoleSellerOrderListInAddToCart();
 
@@ -556,7 +556,7 @@
                               type: 'error',
                               title: data.error
                           })
-					 }
+           }
                     //  end message
             }
         });
@@ -602,11 +602,135 @@
 
 
 
-
-
-
-
-
     </script>
+
+
+     </script>
+     <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[name="DiviId"]').on('change', function(){
+              var DiviId = $(this).val();
+              // alert(DiviId);
+              if(DiviId) {
+
+                  $.ajax({
+                      url: "{{ route('Division-wise-District') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { DiviId:DiviId },
+                      success:function(data) {
+
+
+                          if(data == ""){
+                           $('select[name="DistId"]').empty();
+                           $('select[name="DistId"]').append('<option value="">Data Not Found! </option>');
+
+                            $('select[name="ThanId"]').empty();
+                           $('select[name="ThanId"]').append('<option value="">Data Not Found! </option>');
+
+                         }else{
+                           $('select[name="DistId"]').empty();
+                           $('select[name="DistId"]').append('<option value="">Select District</option>');
+
+                            $('select[name="ThanId"]').empty();
+                           $('select[name="ThanId"]').append('<option value="">Select District</option>');
+
+                           $.each(data, function(key, value){
+                                $('select[name="DistId"]').append('<option value="'+ value.DistId +'">' + value.DistName+ '</option>');
+                            });
+                         }
+
+
+                      },
+
+                  });
+              } else{
+
+              }
+          });
+          // Union
+          $('select[name="DistId"]').on('change', function(){
+              var DistId = $(this).val();
+              // alert(DistId);
+              if(DistId) {
+                  $.ajax({
+                      url: "{{ route('District-wise-thana') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { DistId:DistId },
+                      success:function(data) {
+
+
+                         // $('select[name="DistId"]').empty();
+                         // $('select[name="ThanId"]').empty();
+
+                         if(data == ""){
+
+                           $('select[name="ThanId"]').empty();
+                           $('select[name="ThanId"]').append('<option value="">Data Not Found! </option>');
+
+                         }else{
+
+                           $('select[name="ThanId"]').empty();
+                           $('select[name="ThanId"]').append('<option value="">Select Thana</option>');
+
+
+                           $.each(data, function(key, value){
+                                $('select[name="ThanId"]').append('<option value="'+ value.ThanId +'">' + value.ThanaName + '</option>');
+                            });;
+                         }
+
+
+                      },
+
+                  });
+              } else{
+
+              }
+          });
+
+
+           // Union
+          $('select[name="ThanId"]').on('change', function(){
+              var ThanId = $(this).val();
+              if(ThanId) {
+                  $.ajax({
+                      url: "{{ route('Thana-wise-union') }}",
+                      type:"POST",
+                      dataType:"json",
+                      data: { ThanId:ThanId },
+                      success:function(data) {
+
+
+                         if(data == ""){
+
+                           $('select[name="UnioId"]').empty();
+                           $('select[name="UnioId"]').append('<option value="">Data Not Found! </option>');
+
+                         }else{
+
+                           $('select[name="UnioId"]').empty();
+                           $('select[name="UnioId"]').append('<option value="">Select Union</option>');
+
+
+                           $.each(data, function(key, value){
+                                $('select[name="UnioId"]').append('<option value="'+ value.UnioId +'">' + value.UnioName + '</option>');
+                            });
+                         }
+
+
+
+
+                      },
+
+                  });
+              } else{
+
+              }
+          });
+
+
+      });
+  </script>
   </body>
 </html>
