@@ -27,6 +27,20 @@ class CreateThicknessesTable extends Migration
             $table->foreign('SizeId')->references('SizeId')->on('sizes')->onDelete('cascade');
 
         });
+
+
+        DB::table('thicknesses')->insert([
+            'ThicName' => 'na' ,
+            'CateId' => 1,
+            'BranId' => 2,
+            'SizeId' => 1
+        ]);
+        DB::table('thicknesses')->insert([
+            'ThicName' => 'n/a' ,
+            'CateId' => 1,
+            'BranId' => 2,
+            'SizeId' => 2
+        ]);
     }
 
     /**

@@ -17,8 +17,20 @@ class CreateCategoriesTable extends Migration
             $table->id('CateId');
             $table->string('CateName')->unique();
             $table->boolean('CateStatus')->default(true);
-            $table->timestamps();
+           // $table->timestamps();
         });
+
+
+        DB::table('categories')->insert([
+            'CateName' => 'Road' 
+        ]);
+        DB::table('categories')->insert([
+            'CateName' => 'Cement' 
+        ]);
+        DB::table('categories')->insert([
+            'CateName' => 'Tin' 
+        ]);
+
     }
 
     /**

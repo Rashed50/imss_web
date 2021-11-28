@@ -20,17 +20,52 @@ class CreateBrandsTable extends Migration
             $table->boolean('BranStatus')->default(true);
             $table->foreign('CateId')->references('CateId')->on('categories')->onDelete('cascade');
             $table->timestamps();
-        //    $table->id();
-        //    $table->string('product_type_name')->unique();
-        //    $table->boolean('is_active');
-        //    $table->unsignedBigInteger('provider_id');
-        //    $table->unsignedBigInteger('service_type_id');
-        //   $table->foreign('provider_id')->references('id')->on('service_providers');
-        //   $table->foreign('service_type_id')->references('id')->on('service_types');
-
-
-
         });
+
+
+        // Cement
+        DB::table('brands')->insert([
+            'BranName' => 'Holcim' ,
+            'CateId' => 1
+        ]);
+        DB::table('brands')->insert([
+            'BranName' => 'OPC' ,
+            'CateId' => 1
+        ]);
+        DB::table('brands')->insert([
+            'BranName' => 'Bengle' ,
+            'CateId' => 1
+        ]);
+
+// Rod
+        DB::table('brands')->insert([
+            'BranName' => 'BSRM' ,
+            'CateId' => 2
+        ]);
+        DB::table('brands')->insert([
+            'BranName' => 'PSRM' ,
+            'CateId' => 2
+        ]);
+        DB::table('brands')->insert([
+            'BranName' => 'CSRM' ,
+            'CateId' => 2
+        ]);
+
+// Tin
+        DB::table('brands')->insert([
+            'BranName' => 'Morgi Marka' ,
+            'CateId' => 3
+        ]);
+        DB::table('brands')->insert([
+            'BranName' => 'KY' ,
+            'CateId' => 3
+        ]);
+        DB::table('brands')->insert([
+            'BranName' => 'Horse' ,
+            'CateId' => 3
+        ]);
+
+
     }
 
     /**

@@ -24,6 +24,18 @@ class CreateSizesTable extends Migration
             $table->timestamps();
 
         });
+
+        DB::table('sizes')->insert([
+            'SizeName' => 'n/a' ,
+            'CateId' => 1,
+            'BranId' => 1,
+        ]);
+
+        DB::table('sizes')->insert([
+            'SizeName' => 'na' ,
+            'CateId' => 1,
+            'BranId' => 2,
+        ]);
     }
 
     /**
