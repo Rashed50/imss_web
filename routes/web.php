@@ -9,16 +9,22 @@ use App\Http\Controllers\admin\StockController;
 use App\Http\Controllers\admin\VendorController;
 use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\CustomerTypeController;
+use App\Http\Controllers\admin\CustomerPaymentController;
 use App\Http\Controllers\admin\CompanyInfoController;
 use App\Http\Controllers\admin\HoleSellerController;
+use App\Http\Controllers\admin\RetailSellerController;
 
 use App\Http\Controllers\admin\ThanaController;
 use App\Http\Controllers\admin\ProductPurchaseController;
+
+use App\Http\Controllers\admin\EmployeeInfoController;
 use App\Http\Controllers\admin\DivisionController;
 use App\Http\Controllers\admin\DistrictController;
 use App\Http\Controllers\admin\AjaxController;
 use App\Http\Controllers\admin\UnionController;
 use App\Http\Controllers\admin\LabourRateController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +48,14 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard/add', function () {
     return view('admin.add');
 })->middleware(['auth'])->name('add.here');
+
+/* ++++++++++++++++++++++ Employee ++++++++++++++++++++++ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('employee/add', [EmployeeInfoController::class, 'add'])->name('employee.add');
+    Route::get('employee/edit/{EmplInfoId}', [EmployeeInfoController::class, 'edit'])->name('employee.edit');
+    Route::post('employee/information/store', [EmployeeInfoController::class, 'store'])->name('store-employee.information');
+    Route::post('employee/information/update', [EmployeeInfoController::class, 'update'])->name('update-employee.information');
+});
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -115,6 +129,23 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::post('customer/add', [CustomerController::class, 'store'])->name('customer.store');
     Route::post('customer/edit', [CustomerController::class, 'update'])->name('customer.update');
+    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+    Route::post('customer/information/for/product-purchase', [CustomerController::class, 'CustIdWiseCustomerInformation'])->name('TradeName-wise-Customer.information');
+
+    Route::get('holeseller/customer-list', [CustomerController::class, 'holesellerCustomer'])->name('holeseller-wise.customer');
+    Route::get('retailer/customer-list', [CustomerController::class, 'retailerCustomer'])->name('retailer-wise.customer');
+
+    Route::post('define/customer-due', [CustomerController::class, 'DefineCustomerDue'])->name('customerId-wise-customerdue');
+    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+
+    /* =========== Customer Payment =========== */
+    Route::get('customer/payment/add', [CustomerPaymentController::class, 'add'])->name('customer.payment');
+    Route::get('customer/payment/edit/{CustPaymId}', [CustomerPaymentController::class, 'edit'])->name('customer.payment-edit');
+    Route::get('customer/payment/delete/{CustPaymId}', [CustomerPaymentController::class, 'delete'])->name('customer.payment-delete');
+    Route::post('customer/payment/store', [CustomerPaymentController::class, 'store'])->name('store-customer.payment');
+    Route::post('customer/payment/update', [CustomerPaymentController::class, 'update'])->name('update-customer.payment');
+
+
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -215,6 +246,14 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('product/hole-seller/purchase/decrement-to-cart', [HoleSellerController::class, 'QunatityDecrement'])->name('cartDecrementInHoleSeller');
 
     /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
+    Route::post('product/hole-seller/store', [HoleSellerController::class, 'productSellStore'])->name('product.seller');
+
+});
+
+/* ============ Retailer ============ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('product/retail-seller/purchase', [RetailSellerController::class, 'add'])->name('Product.Retailer.Seller');
+    Route::post('product/retail-seller/purchase/store', [RetailSellerController::class, 'store'])->name('product.purchase-in.retailer');
 });
 
 

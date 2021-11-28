@@ -17,6 +17,55 @@ use Image;
 
 
 class CustomerController extends Controller{
+    /*
+    |--------------------------------------------------------------------------
+    | DATABASE OPERATION
+    |--------------------------------------------------------------------------
+    */
+    public function getAllCustomer(){
+      return $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
+    }
+
+    public function getAllWholeCustomer(){
+      return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
+    }
+
+    public function getRetailCustomer(){
+      return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',2)->get();
+    }
+
+    // Holeseller Customer
+    public function holesellerCustomer(){
+       $holeseller = CustomerInfo::where('CustTypeId',1)->get();
+       return json_encode($holeseller);
+    }
+    // Retailer Customer
+    public function retailerCustomer(){
+       $retailer = CustomerInfo::where('CustTypeId',2)->get();
+       return json_encode($retailer);
+    }
+    // Define Customer Due
+    public function DefineCustomerDue(Request $request){
+       $customerDue = CustomerInfo::where('CustId',$request->Customer)->pluck('DueAmount');
+       return response()->json([ 'customerDue' => $customerDue  ]);
+    }
+
+    /* ++++++++++ Vouchar No ++++++++++ */
+    public function vouchar(){
+      $date = Carbon::now()->format('Ymd');
+      $all = CustomerInfo::count();
+      return $vouchar ="SEL-".$date.'00'.$all;
+    }
+
+    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+    public function CustIdWiseCustomerInformation(Request $request){
+      $allCustomer = CustomerInfo::where('status',true)->where('CustId',$request->TradeName)->first();
+      return json_encode($allCustomer);
+    }
+    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+
+
+
 
     public function getAll(){
 
@@ -26,7 +75,7 @@ class CustomerController extends Controller{
     public function add(){
         $typeObj= new CustomerTypeController;
         $allType= $typeObj->getAll();
-       
+
         $DivisionOBJ = new DivisionController();
         $Division = $DivisionOBJ->getAll();
 
@@ -64,6 +113,7 @@ class CustomerController extends Controller{
         $insert = CustomerInfo::insertGetId([
             'CustName'=>$request['CustName'],
             'TradeName'=>$request['TradeName'],
+            'Customer_type' => $request['CustTypeId'],
             'ContactNumber'=>$request['ContactNumber'],
             'Address'=>$request['Address'],
             'DueAmount'=>$request['DueAmount'],
@@ -78,9 +128,10 @@ class CustomerController extends Controller{
             $image = $request->file('Photo');
             $imageName = 'customer_'.$request->CustName.'.'.$image->getClientOriginalExtension();
             Image::make($image)->resize(300,200)->save('uploads/customer/'.$imageName);
+            $saveurl = 'uploads/customer/'.$imageName;
 
             CustomerInfo::where('CustId',$insert)->update([
-                'Photo'=>$imageName,
+                'Photo'=>$saveurl,
             ]);
         }
 

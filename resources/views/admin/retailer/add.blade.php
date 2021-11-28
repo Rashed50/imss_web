@@ -1,4 +1,6 @@
 @extends('layouts.admin')
+@section('Product-sell') show-sub active @endsection
+@section('Product.Retailer.Seller') active @endsection
 @section('content')
 <!-- ########## START: MAIN PANEL ########## -->
 
@@ -6,18 +8,30 @@
     <div class="card">
         <div class="card-body card_form">
             {{-- Topbar --}}
-            <form action="{{ route('product.seller') }}" method="post">
+            <form action="{{ route('product.purchase-in.retailer') }}" method="post">
               @csrf
             <div class="row">
               <div class="col-md-12">
                 <div class="holeseller__topber">
                   <div class="row">
                       {{-- First --}}
-                      <div class="col-md-5">
+                      <div class="col-md-4">
                         {{-- form input element --}}
+                        <div class="form-group row custom_form_group{{ $errors->has('VoucharNo') ? ' has-error' : '' }}">
+                            <label class="col-sm-5 control-label">Vouchar No:<span class="req_star">*</span></label>
+                            <div class="col-sm-7">
+                              <input type="text" class="form-control" name="VoucharNo" value="{{ $vouchar }}" placeholder="Vouchar No">
+                              @if ($errors->has('VoucharNo'))
+                                  <span class="invalid-feedback" role="alert">
+                                      <strong>{{ $errors->first('VoucharNo') }}</strong>
+                                  </span>
+                              @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row custom_form_group{{ $errors->has('TradeName') ? ' has-error' : '' }}">
-                            <label class="col-sm-4 control-label">Trade Name:<span class="req_star">*</span></label>
-                            <div class="col-sm-6">
+                            <label class="col-sm-5 control-label">Trade Name:<span class="req_star">*</span></label>
+                            <div class="col-sm-7">
                               <select class="form-control" name="TradeName">
                                 <option value="">Select Trade Name</option>
                                 @foreach ($allCustomer as $Customer)
@@ -32,25 +46,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group row custom_form_group{{ $errors->has('ContactNo') ? ' has-error' : '' }}">
-                            <label class="col-sm-4 control-label">Contact No:<span class="req_star">*</span></label>
-                            <div class="col-sm-6">
-                              <input type="text" class="form-control" name="ContactNo" value="{{ old('ContactNo') }}" placeholder="Contact No">
-                              @if ($errors->has('ContactNo'))
+                        <div class="form-group row custom_form_group{{ $errors->has('CustName') ? ' has-error' : '' }}">
+                            <label class="col-sm-5 control-label">Customer Name:<span class="req_star">*</span></label>
+                            <div class="col-sm-7">
+                              <input type="text" class="form-control" name="CustName" value="Customer Name" placeholder="Customer Name">
+                              @if ($errors->has('CustName'))
                                   <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $errors->first('ContactNo') }}</strong>
-                                  </span>
-                              @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row custom_form_group{{ $errors->has('VoucharNo') ? ' has-error' : '' }}">
-                            <label class="col-sm-4 control-label">Vouchar No:<span class="req_star">*</span></label>
-                            <div class="col-sm-6">
-                              <input type="text" class="form-control" name="VoucharNo" value="{{ $vouchar }}" placeholder="Vouchar No">
-                              @if ($errors->has('VoucharNo'))
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $errors->first('VoucharNo') }}</strong>
+                                      <strong>{{ $errors->first('CustName') }}</strong>
                                   </span>
                               @endif
                             </div>
@@ -61,33 +63,29 @@
                       {{-- Second --}}
                       <div class="col-md-5">
                         {{-- form input element --}}
-                        <div class="form-group row custom_form_group{{ $errors->has('SellDate') ? ' has-error' : '' }}">
-                            <label class="col-sm-4 control-label">Sell Date:<span class="req_star">*</span></label>
-                            <div class="col-sm-6">
-                              <input type="date" class="form-control" id="" name="SellDate" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
-                              @if ($errors->has('SellDate'))
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $errors->first('SellDate') }}</strong>
-                                  </span>
-                              @endif
+
+
+                        <div class="form-group row custom_form_group">
+                            <label class="col-sm-4 control-label">Contact No:<span class="req_star">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" placeholder="Contact No" class="form-control" id="" name="ContactNo" value="">
                             </div>
                         </div>
 
-                        <div class="form-group row custom_form_group{{ $errors->has('DebitAccount') ? ' has-error' : '' }}">
-                            <label class="col-sm-4 control-label">Debit Account:<span class="req_star">*</span></label>
-                            <div class="col-sm-6">
-
-                              <select class="form-control" name="DebitAccount">
-                                <option value="">Select Debit Account</option>
-
-                              </select>
-                              @if ($errors->has('DebitAccount'))
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $errors->first('DebitAccount') }}</strong>
-                                  </span>
-                              @endif
+                        <div class="form-group row custom_form_group">
+                            <label class="col-sm-4 control-label">Trade Name:<span class="req_star">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="text" placeholder="Trade Name" class="form-control" id="" name="TradeName" value="">
                             </div>
                         </div>
+
+                        <div class="form-group row custom_form_group">
+                            <label class="col-sm-4 control-label">Address:<span class="req_star">*</span></label>
+                            <div class="col-sm-7">
+                                <textarea name="Address" class="form-control" placeholder="Address"></textarea>
+                            </div>
+                        </div>
+
                         {{-- form input element --}}
                       </div>
                       {{-- Third --}}
@@ -209,11 +207,9 @@
 
                 <div class="col-md-8">
                     <div class="SecondPart">
-
-
                         <div class="row">
                             {{-- First Item --}}
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <div class="form-group row custom_form_group{{ $errors->has('NetAmount') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Net Amount:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
@@ -308,27 +304,48 @@
 
                             </div>
                             {{-- Second Item --}}
-                            <div class="col-md-6">
-                              {{-- <div class="form-check">
+                            <div class="col-md-2">
+                              <div class="form-check" style="margin-top: 90px">
                                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
                                   Set Pay Date
                                 </label>
-                              </div> --}}
+                              </div>
 
                               <div class="form-group row custom_form_group">
-                                  <label class="col-sm-3 control-label">Date:<span class="req_star">*</span></label>
+                                  <div class="" style="margin-left:-5px">
+                                      <input type="date" class="form-control" id="" name="SellingDate" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                                  </div>
+                              </div>
+
+
+                            </div>
+                            {{-- Third Item --}}
+                            <div class="col-md-5">
+
+                              <div class="form-group row custom_form_group">
+                                  <label class="col-sm-5 control-label">Date:<span class="req_star">*</span></label>
                                   <div class="col-sm-6">
                                       <input type="date" class="form-control" id="" name="SellingDate" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                                   </div>
                               </div>
 
                               <div class="form-group row custom_form_group">
-                                  <label class="col-sm-3 control-label">Pre Due:</label>
+                                  <label class="col-sm-5 control-label">Debit Acct:<span class="req_star">*</span></label>
                                   <div class="col-sm-6">
-                                      <input type="text" class="form-control"  id="predueAmount" value="" disabled>
+                                      <select class="form-control" name="DebitAccount">
+                                        <option value="">Pety Cash</option>
+                                      </select>
                                   </div>
                               </div>
+
+                              <div class="form-group row custom_form_group">
+                                  <label class="col-sm-5 control-label">Debit Acct:</label>
+                                  <div class="col-sm-6">
+                                      <input type="text" id="predueAmount" placeholder="Amount" class="form-control" disabled value="">
+                                  </div>
+                              </div>
+
 
 
                             </div>

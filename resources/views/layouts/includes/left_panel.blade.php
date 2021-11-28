@@ -43,6 +43,7 @@
           <span class="menu-item-label">Company Info</span>
         </div>
        </a>
+
        <a href="{{ route('product.purchase.add') }}" class="sl-menu-link">
         <div class="sl-menu-item">
           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
@@ -50,21 +51,27 @@
         </div>
        </a>
 
-       {{-- hole Seller --}}
-       <a href="{{ route('Product.Hole.Seller') }}" class="sl-menu-link">
-        <div class="sl-menu-item">
-          <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-          <span class="menu-item-label">Hole Seller</span>
-
-        </div>
+       <!-- multiple menu -->
+       <a href="#" class="sl-menu-link @yield('Product-sell')">
+         <div class="sl-menu-item">
+           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+           <span class="menu-item-label">Product Sell</span>
+           <i class="menu-item-arrow fa fa-angle-down"></i>
+         </div>
        </a>
+       <!-- sl-menu-link -->
+       <ul class="sl-menu-sub nav flex-column">
+         <li class="nav-item"><a href="{{ route('Product.Hole.Seller') }}" class="nav-link @yield('whole-sell')">Whole Sell</a></li>
+         <li class="nav-item"><a href="{{ route('Product.Retailer.Seller') }}" class="nav-link @yield('retrail-sell')">Retrail Sell</a></li>
+       </ul>
+
 
 
     <!-- single menu -->
 
 
     <!-- multiple menu -->
-    <a href="#" class="sl-menu-link">
+    <a href="#" class="sl-menu-link @yield('customer')">
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
         <span class="menu-item-label">Customer</span>
@@ -73,9 +80,27 @@
     </a>
     <!-- sl-menu-link -->
     <ul class="sl-menu-sub nav flex-column">
-      <li class="nav-item"><a href="{{ route('customer.add') }}" class="nav-link">Customer Add</a></li>
-      <li class="nav-item"><a href="{{ route('customer.type.add') }}" class="nav-link">Customer Type</a></li>
+      <li class="nav-item"><a href="{{ route('customer.add') }}" class="nav-link @yield('customer-add')">Customer Add</a></li>
+      <li class="nav-item"><a href="{{ route('customer.payment') }}" class="nav-link @yield('customer-payment')">Payment</a></li>
+      <li class="nav-item"><a href="{{ route('customer.type.add') }}" class="nav-link @yield('customer-type')">Customer Type</a></li>
     </ul>
+
+
+
+    <!-- multiple menu -->
+    <a href="#" class="sl-menu-link @yield('employee')">
+      <div class="sl-menu-item">
+        <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+        <span class="menu-item-label">Employee</span>
+        <i class="menu-item-arrow fa fa-angle-down"></i>
+      </div>
+    </a>
+    <!-- sl-menu-link -->
+    <ul class="sl-menu-sub nav flex-column">
+      <li class="nav-item"><a href="{{ route('employee.add') }}" class="nav-link @yield('add-employee')">Add Employee</a></li>
+    </ul>
+
+
 
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">

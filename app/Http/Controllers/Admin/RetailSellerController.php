@@ -14,8 +14,7 @@ use Image;
 use Cart;
 use Auth;
 
-
-class HoleSellerController extends Controller{
+class RetailSellerController extends Controller{
   /*
   |--------------------------------------------------------------------------
   |  DATABASE OPERATION
@@ -67,10 +66,16 @@ class HoleSellerController extends Controller{
   /* ++++++++++++ Ajax Method IN Add To Cart ++++++++++++ */
 
 
-  public function productSellStore(Request $request){
-    /* From Validation */
-    $createBy = Auth::user()->id;
-    /* Insert Data IN Database */
+  // product Purchase in retailer
+  public function store(Request $request){
+
+    // form validation
+    $this->validate($request,[
+
+    ],[
+
+    ]);
+    // insert data in database
     $insert = ProductSell::insertGetId([
       'Commission' => $request->Discount,
       'TotalAmount' => $request->TotalCost,
@@ -81,31 +86,31 @@ class HoleSellerController extends Controller{
       'SellingDate' => $request->SellingDate,
       'VoucharNo' => $request->VoucharNo,
       'CarryingCost' => $request->CarryingBill,
-      'CreateById' => $createBy,
+      'CreateById' => Auth::user()->id,
       'TranId' => 1,
       'CustId' => $request->TradeName,
       'created_at' => Carbon::now(),
     ]);
 
-    /* Hole Seller Record */
-
-    $carts = Cart::content();
-    foreach ($carts as $data) {
-      ProductSellRecord::insert([
-        'Quantity' => $data->qty,
-        'Amount' => $data->price,
-        'LabourCost' => $data->holLabourPerUnit,
-        'ProdSellId' => $insert,
-        'CateId' => $data->options->holCategoryId,
-        'BranId' => $data->options->holBranId,
-        'SizeId' => $data->options->holSize,
-        'ThicId' => $data->options->holThickness,
-      ]);
-    }
-    // Cart Destroy
-    Cart::destroy();
-    // Redirect Back
+    // insert sale record
     if($insert){
+      /* Hole Seller Record */
+      $carts = Cart::content();
+      foreach ($carts as $data) {
+        ProductSellRecord::insert([
+          'Quantity' => $data->qty,
+          'Amount' => $data->price,
+          'LabourCost' => $data->holLabourPerUnit,
+          'ProdSellId' => $insert,
+          'CateId' => $data->options->holCategoryId,
+          'BranId' => $data->options->holBranId,
+          'SizeId' => $data->options->holSize,
+          'ThicId' => $data->options->holThickness,
+        ]);
+      }
+      // Cart Destroy
+      Cart::destroy();
+      // Redirect Back
       $notification=array(
           'message'=>'Successfully Purchase Product',
           'alert-type'=>'success'
@@ -114,8 +119,6 @@ class HoleSellerController extends Controller{
     }
 
   }
-
-
 
 
 
@@ -129,12 +132,12 @@ class HoleSellerController extends Controller{
     $allCatg = $CatgOBJ->getAll();
     // Call Customer
     $CustomerOBJ = new CustomerController();
-    $allCustomer = $CustomerOBJ->getAllWholeCustomer();
+    $allCustomer = $CustomerOBJ->getRetailCustomer();
 
     $vouchar = $CustomerOBJ->vouchar();
     // Cart Destroy
     Cart::destroy();
-    return view('admin.holeseller.add',compact('allCatg','allCustomer','vouchar'));
+    return view('admin.retailer.add',compact('allCatg','allCustomer','vouchar'));
   }
 
 
@@ -153,5 +156,4 @@ class HoleSellerController extends Controller{
 
 
   /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
 }
