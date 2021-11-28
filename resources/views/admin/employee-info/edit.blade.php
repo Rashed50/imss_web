@@ -14,13 +14,13 @@
     <div class="col-md-8">
 
 
-      <form class="form-horizontal" id="employee-info-form" method="post" action="{{ route('store-employee.information') }}" enctype="multipart/form-data">
+      <form class="form-horizontal" id="employee-info-form" method="post" action="{{ route('update-employee.information') }}" enctype="multipart/form-data">
         @csrf
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-8">
-                        <h3 class="card-title card_top_title"><i class="fab fa-gg-circle"></i> New Employee Details</h3>
+                        <h3 class="card-title card_top_title"><i class="fab fa-gg-circle"></i> Update Employee</h3>
                     </div>
                     <div class="col-md-4 text-right">
                         <a href="#" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-th"></i> All Employee Information</a>
@@ -29,11 +29,12 @@
                 </div>
             </div>
             <div class="card-body card_form">
-
+              <input type="hidden" name="id" value="{{ $data->EmplInfoId }}">
+              <input type="hidden" name="oldPhoto" value="{{ $data->Photo }}">
               <div class="form-group row custom_form_group{{ $errors->has('emp_name') ? ' has-error' : '' }}">
                   <label class="col-sm-3 control-label">Name:<span class="req_star">*</span></label>
                   <div class="col-sm-7">
-                    <input type="text" placeholder="Input Employee Name Here" class="form-control" id="emp_name" name="emp_name" value="{{old('emp_name')}}">
+                    <input type="text" placeholder="Input Employee Name Here" class="form-control" id="emp_name" name="emp_name" value="{{ $data->Name }}">
                     @if ($errors->has('emp_name'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('emp_name') }}</strong>
@@ -46,7 +47,7 @@
               <div class="form-group row custom_form_group{{ $errors->has('FatherName') ? ' has-error' : '' }}">
                   <label class="col-sm-3 control-label">Father Name:<span class="req_star">*</span></label>
                   <div class="col-sm-7">
-                    <input type="text" placeholder="Input Father Name" class="form-control" id="FatherName" name="FatherName" value="{{old('FatherName')}}">
+                    <input type="text" placeholder="Input Father Name" class="form-control" id="FatherName" name="FatherName" value="{{ $data->FatherName }}">
                     @if ($errors->has('FatherName'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('FatherName') }}</strong>
@@ -60,7 +61,7 @@
               <div class="form-group row custom_form_group{{ $errors->has('mobile_no') ? ' has-error' : '' }}">
                   <label class="col-sm-3 control-label">Mobile No:<span class="req_star">*</span></label>
                   <div class="col-sm-7">
-                    <input type="text" placeholder="Input Mobile Number" class="form-control" name="mobile_no" value="{{ old('mobile_no') }}" unique>
+                    <input type="text" placeholder="Input Mobile Number" class="form-control" name="mobile_no" value="{{ $data->ContactNumber }}">
                     @if ($errors->has('mobile_no'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('mobile_no') }}</strong>
@@ -75,7 +76,6 @@
                   <div class="col-sm-7">
                     <div class="form{{ $errors->has('designation_id') ? ' has-error' : '' }}">
                         <select class="form-control" name="designation_id">
-                            <option value="">Select Designation</option>
                             <option value="1">Manager</option>
                             <option value="2">Supervisor</option>
                             <option value="3">Computer Operator</option>
@@ -97,7 +97,7 @@
                               <select class="form-control" id="DiviId" name="DiviId">
                                   <option value="">Select Division</option>
                                   @foreach($Division as $div)
-                                  <option value="{{$div->DiviId}}">{{$div->DiviName}}</option>
+                                  <option value="{{$div->DiviId}}" {{ $div->DiviId == $data->DiviId?'selected':'' }}>{{$div->DiviName}}</option>
                                   @endforeach
                               </select>
                               @if ($errors->has('DiviId'))
@@ -111,7 +111,7 @@
                             <div class="col-sm-12">
 
                                 <select class="form-control" name="DistId" id="DistId">
-                                    <option value="">Select District</option>
+                                    <option value="{{ $data->District->DistId }}">{{ $data->District->DistName }}</option>
                                 </select>
                                 @if ($errors->has('DistId'))
                                     <span class="invalid-feedback" role="alert">
@@ -124,7 +124,7 @@
                             <div class="col-sm-12">
 
                                 <select class="form-control" name="ThanId" id="ThanId">
-                                    <option value="">Select Thana</option>
+                                    <option value="{{ $data->Thana->ThanId }}">{{ $data->Thana->ThanaName }}</option>
                                 </select>
                                 @if ($errors->has('ThanId'))
                                     <span class="invalid-feedback" role="alert">
@@ -138,7 +138,7 @@
                              <div class="col-sm-12">
 
                                <select class="form-control" name="UnioId" id="UnioId">
-                                 <option value="">Select Union</option>
+                                 <option value="{{ $data->Union->UnioId }}">{{ $data->Union->UnioName }}</option>
                                </select>
 
 
@@ -154,10 +154,10 @@
 
 
                         <div class="form-group">
-                            <input type="text" class="form-control" value="{{ old('PostOffice') }}" id="PostOffice" name="PostOffice" placeholder="Input Post Code">
+                            <input type="text" class="form-control" value="{{ $data->PostOffice }}" id="PostOffice" name="PostOffice" placeholder="Input Post Code">
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" id="Village" name="Village" placeholder="Village Name" >{{ old('Village') }}</textarea>
+                            <textarea class="form-control" id="Village" name="Village" placeholder="Village Name" >{{ $data->Village }}</textarea>
                         </div>
 
                       </div>
@@ -167,7 +167,7 @@
               <div class="form-group row custom_form_group">
                   <label class="col-sm-3 control-label">Joining Date:</label>
                   <div class="col-sm-4">
-                    <input type="date" name="joining_date" class="form-control" max="{{ Carbon\Carbon::now()->format('Y-m-d') }}" value="<?= date("Y-m-d") ?>">
+                    <input type="date" name="joining_date" class="form-control" max="{{ Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->JoinDate }}">
                   </div>
               </div>
 
@@ -183,6 +183,9 @@
                         <input type="text" class="form-control" readonly>
                     </div>
                   </div>
+                  <div class="col-md-4">
+                    <img src="{{ asset($data->Photo) }}" alt="No Photo" class="custom_image">
+                  </div>
                   <div class="col-sm-3">
                       <img id='img-upload4' class="upload_image"/>
                   </div>
@@ -190,58 +193,12 @@
 
             </div>
             <div class="card-footer card_footer_button text-center">
-                <button type="submit" class="btn btn-primary waves-effect">SAVE</button>
+                <button type="submit" class="btn btn-primary waves-effect">UPDATE</button>
             </div>
         </div>
       </form>
-
-
-
     </div>
     <div class="col-md-2"></div>
   </div>
-  {{-- Employee information --}}
-  <div class="row" style="margin-top: 20px">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive">
-              <table id="datatable1" class="table responsive mb-0">
-                  <thead>
-                      <tr>
-                          <th>SL</th>
-                          <th>Photo</th>
-                          <th>Name</th>
-                          <th>Mobile No</th>
-                          <th>Join Date</th>
-                          <th>Address</th>
-                          <th>Manage</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($getAllEmployees as $employee)
-                      <tr>
-                          <td>{{ $loop->iteration }}</td>
-                          <td>
-                            <img src="{{ asset($employee->Photo) }}" alt="No Photo" class="custom_image">
-                          </td>
-                          <td>{{ $employee->Name }}</td>
-                          <td>{{ $employee->ContactNumber }}</td>
-                          <td>{{ $employee->JoinDate }}</td>
-                          <td>{{ $employee->Division->DiviName }},{{ $employee->District->DistName }}</td>
-                          <td>
-                              <a href="{{ route('employee.edit',$employee->EmplInfoId) }}" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
-                              <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
-                          </td>
-                      </tr>
-                    @endforeach
-                  </tbody>
-              </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  {{-- Employee information --}}
 </div>
 @endsection

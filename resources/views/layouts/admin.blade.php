@@ -62,6 +62,8 @@
     <!-- <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.pie.js"></script> -->
 
     <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.resize.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/lib/sweetalert/sweetalert.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/lib/sweetalert/code.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/lib/toast/toast.min.js"></script>
     <script>
       @if(Session::has('message'))
@@ -217,7 +219,10 @@
                       success:function(data) {
                          /* +++++++++++++++++++++++++++++++++++ */
                          $('input[name="ContactNo"]').val(data.ContactNumber);
+                         $('input[name="CustName"]').val(data.CustName);
+                         $('input[name="TradeName"]').val(data.TradeName);
                          $('input[id="predueAmount"]').val(data.DueAmount);
+                         $('textarea[name="Address"]').val(data.Address);
                          $('#holeCustomerImage').prop("src", data.Photo);
                          /* +++++++++++++++++++++++++++++++++++ */
                       },

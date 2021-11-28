@@ -110,7 +110,7 @@ button.toast-close-button {
   overflow: hidden;
   margin: 0 0 6px;
   padding: 15px 15px 15px 50px;
-  width: 300px;
+  width: 450px;
   -moz-border-radius: 3px 3px 3px 3px;
   -webkit-border-radius: 3px 3px 3px 3px;
   border-radius: 3px 3px 3px 3px;
@@ -120,7 +120,7 @@ button.toast-close-button {
   -webkit-box-shadow: 0 0 12px #999999;
   box-shadow: 0 0 12px #999999;
   color: #FFFFFF;
-  opacity: 0.8;
+  opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
   filter: alpha(opacity=80);
 }

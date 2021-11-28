@@ -26,6 +26,30 @@ class CustomerController extends Controller{
       return $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
     }
 
+    public function getAllWholeCustomer(){
+      return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
+    }
+
+    public function getRetailCustomer(){
+      return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',2)->get();
+    }
+
+    // Holeseller Customer
+    public function holesellerCustomer(){
+       $holeseller = CustomerInfo::where('CustTypeId',1)->get();
+       return json_encode($holeseller);
+    }
+    // Retailer Customer
+    public function retailerCustomer(){
+       $retailer = CustomerInfo::where('CustTypeId',2)->get();
+       return json_encode($retailer);
+    }
+    // Define Customer Due
+    public function DefineCustomerDue(Request $request){
+       $customerDue = CustomerInfo::where('CustId',$request->Customer)->pluck('DueAmount');
+       return response()->json([ 'customerDue' => $customerDue  ]);
+    }
+
     /* ++++++++++ Vouchar No ++++++++++ */
     public function vouchar(){
       $date = Carbon::now()->format('Ymd');
@@ -51,7 +75,7 @@ class CustomerController extends Controller{
     public function add(){
         $typeObj= new CustomerTypeController;
         $allType= $typeObj->getAll();
-       
+
         $DivisionOBJ = new DivisionController();
         $Division = $DivisionOBJ->getAll();
 
@@ -89,6 +113,7 @@ class CustomerController extends Controller{
         $insert = CustomerInfo::insertGetId([
             'CustName'=>$request['CustName'],
             'TradeName'=>$request['TradeName'],
+            'Customer_type' => $request['CustTypeId'],
             'ContactNumber'=>$request['ContactNumber'],
             'Address'=>$request['Address'],
             'DueAmount'=>$request['DueAmount'],

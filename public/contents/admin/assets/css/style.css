@@ -64,6 +64,12 @@ div.vouchar_image{
   text-align: left;
 }
 
+img.custom_image {
+	width: 100px;
+	border: 1px solid #ddd;
+	padding: 2px;
+}
+
 div.vouchar_image img{
     width: 200px;
     height: 100px;

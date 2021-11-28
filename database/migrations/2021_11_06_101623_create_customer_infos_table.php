@@ -17,6 +17,7 @@ class CreateCustomerInfosTable extends Migration
             $table->id('CustId');
             $table->string('CustName',50)->nullable();
             $table->string('TradeName')->nullable();
+            $table->integer('CustTypeId');
             $table->string('ContactNumber',50)->nullable();
             $table->text('Address')->nullable();
             // $table->unsignedBigInteger('CustTypeId');

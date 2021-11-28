@@ -18,7 +18,7 @@ class CreateVendorPaymentsTable extends Migration
             $table->unsignedBigInteger('TranId');
             $table->unsignedBigInteger('VendId');
             $table->date('Date');
-            $table->float('Amount',2);
+            $table->float('Amount',11,2);
             $table->integer('DebitToId')->nullable();
             $table->integer('CreditToId')->nullable();
             $table->string('CheckNo',50)->nullable();

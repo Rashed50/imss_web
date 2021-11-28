@@ -38,7 +38,7 @@ class CreateChartOfAccountsTable extends Migration
 
         });
 
-        /* insert data in database */ 
+        /* insert data in database */
     /*
         DB::table('chart_of_accounts')->insert([ // step 01
           'ChartOfAcctId' => 1,
