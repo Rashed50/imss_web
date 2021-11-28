@@ -119,6 +119,7 @@
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+
         <span class="menu-item-label">Address</span>
         <i class="menu-item-arrow fa fa-angle-down"></i>
       </div>
@@ -135,6 +136,7 @@
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
         <span class="menu-item-label">Purchase</span>
+
         <i class="menu-item-arrow fa fa-angle-down"></i>
       </div>
     </a>

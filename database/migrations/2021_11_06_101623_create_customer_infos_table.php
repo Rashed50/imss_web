@@ -20,7 +20,6 @@ class CreateCustomerInfosTable extends Migration
             $table->integer('CustTypeId');
             $table->string('ContactNumber',50)->nullable();
             $table->text('Address')->nullable();
-            // $table->unsignedBigInteger('CustTypeId');
             $table->float('DueAmount')->nullable();
             $table->float('InitialDue')->nullable();
             $table->string('Photo')->nullable();
@@ -30,16 +29,36 @@ class CreateCustomerInfosTable extends Migration
             $table->boolean('status')->default(1);
             $table->timestamps();
 
-            // $table->unsignedBigInteger('DiviId');
-            // $table->unsignedBigInteger('DistId');
-            // $table->unsignedBigInteger('ThanId');
-            // $table->unsignedBigInteger('UnioId');
+            $table->unsignedBigInteger('DiviId');
+            $table->unsignedBigInteger('DistId');
+            $table->unsignedBigInteger('ThanId');
+            $table->unsignedBigInteger('UnioId');
 
             // $table->foreign('DiviId')->references('DiviId')->on('divisions')->onDelete('cascade');
             // $table->foreign('DistId')->references('DistId')->on('districts')->onDelete('cascade');
             // $table->foreign('ThanId')->references('ThanId')->on('thanas')->onDelete('cascade');
             // $table->foreign('UnioId')->references('UnioId')->on('unions')->onDelete('cascade');
         });
+
+        DB::table('customer_infos')->insert([
+            'CustName' => 'Rashed' ,
+            'TradeName' => '',
+            'CustTypeId' => 1,
+            'ContactNumber' => '01731540704',
+            'Address' => 'dhaka',
+            'DueAmount' => 0,
+            'InitialDue' => 0,
+            'Photo' => 'null',
+            'FatherName' => 'na',
+            'NID' => '89328402398432',
+            'CreateById' => 1,
+            'DiviId' => 1,
+            'DistId' => 1,
+            'ThanId' => 1,
+            'UnioId' => 1,
+
+        ]);
+
     }
 
     /**
