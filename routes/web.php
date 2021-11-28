@@ -23,6 +23,7 @@ use App\Http\Controllers\admin\DistrictController;
 use App\Http\Controllers\admin\AjaxController;
 use App\Http\Controllers\admin\UnionController;
 use App\Http\Controllers\admin\LabourRateController;
+use App\Http\Controllers\Admin\DebitVoucherController;
 
 
 
@@ -254,6 +255,11 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('product/retail-seller/purchase', [RetailSellerController::class, 'add'])->name('Product.Retailer.Seller');
     Route::post('product/retail-seller/purchase/store', [RetailSellerController::class, 'store'])->name('product.purchase-in.retailer');
+});
+
+/* ============ Retailer ============ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('debit-voucher', [DebitVoucherController::class, 'index'])->name('DebitVoucher');
 });
 
 

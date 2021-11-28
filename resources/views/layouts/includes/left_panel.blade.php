@@ -65,6 +65,20 @@
          <li class="nav-item"><a href="{{ route('Product.Retailer.Seller') }}" class="nav-link @yield('retrail-sell')">Retrail Sell</a></li>
        </ul>
 
+       <!-- Voucher -->
+       <a href="#" class="sl-menu-link @yield('Voucher')">
+         <div class="sl-menu-item">
+           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+           <span class="menu-item-label">Voucher</span>
+           <i class="menu-item-arrow fa fa-angle-down"></i>
+         </div>
+       </a>
+       <!-- sl-menu-link -->
+       <ul class="sl-menu-sub nav flex-column">
+         <li class="nav-item"><a href="{{ route('DebitVoucher') }}" class="nav-link @yield('debit-voucher')">Debit Voucher</a></li>
+         <li class="nav-item"><a href="{{ route('Product.Retailer.Seller') }}" class="nav-link @yield('credit-voucher')">Credit Voucher</a></li>
+       </ul>
+
 
 
     <!-- single menu -->
