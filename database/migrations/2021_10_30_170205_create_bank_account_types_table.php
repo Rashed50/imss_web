@@ -18,7 +18,13 @@ class CreateBankAccountTypesTable extends Migration
             $table->string('BankAcctTypeName');
         });
 
-
+        DB::table('bank_account_types')->insert([ // step 01
+            'BankAcctTypeName' => 'Saving Account',
+           ]);
+           DB::table('bank_account_types')->insert([ // step 01
+            'BankAcctTypeName' => 'Checking Account',
+           ]);
+           
 
     }
 

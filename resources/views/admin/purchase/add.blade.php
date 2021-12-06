@@ -286,7 +286,7 @@
                                       <div class="form-group row custom_form_group" style="margin-top: 10px">
                                           <div class="col-sm-7">
                                               <select class="form-control" name="VendorId" id="VendorId">
-                                                  <option value="1">Wholesaler</option>
+                                                  <option value="1">Whole Saler</option>
                                                   <option value="2">Retailer</option>
                                               </select>
                                           </div>
@@ -330,9 +330,9 @@
                                                 <th>Brand</th>
                                                 <th>Size</th>
                                                 <th>Thickness</th>
-                                                <th>Rate & Qunatity</th>
+                                                <th>Rate & Quantity</th>
                                                 <th>Amount</th>
-                                                <th>Qunatity</th>
+                                                <th>Quantity</th>
                                                 <th>Manage</th>
                                             </tr>
                                         </thead>

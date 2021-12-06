@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ChartOfAccount extends Model
 {
     use HasFactory;
+    static $timestamp = false;
 }

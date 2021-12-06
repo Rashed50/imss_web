@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DebitCreditController;
+
+
 use Illuminate\Http\Request;
 use App\Models\ProductPurchase;
 use App\Models\PurchaseRecord;
@@ -29,11 +32,31 @@ class ProductPurchaseController extends Controller{
 
   public function store(Request $request){
     // form validation
+
+
+
+    $request['TranAmount'] = 900;
+    $request['TranTypeId'] = 1;
+
+    $transObj = new  TransactionsController();
+    $transId = $transObj->createNewTransaction($request); 
+    
+
+    $request['Amount'] = 600;
+    $request['TranId'] = $transId;
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 1;
+
+    $decrObj = new  DebitCreditController();
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+    
+   // dd($drcrId);
+
     $CreateBy = Auth::user()->id;
 
     // insert data in database
     $insert = ProductPurchase::insertGetId([
-      'TransactionId' => 0,
+      'TransactionId' => $transId,
       'TotalPrice' => $request->PayAmount,
       'PurchaseDate' => $request->PurchaseDate,
       'VendorId' => $request->VendorName,
@@ -77,6 +100,9 @@ class ProductPurchaseController extends Controller{
 
   /* ++++++++++++ Ajax Method IN Add To Cart ++++++++++++ */
   public function productAddToCart(Request $request){
+
+
+
     $id = uniqid();
     Cart::add([
       'id' => $id,

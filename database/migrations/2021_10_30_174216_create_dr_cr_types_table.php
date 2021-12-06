@@ -17,6 +17,16 @@ class CreateDrCrTypesTable extends Migration
             $table->id('DrCrTypeId');
             $table->string('TypeName');
          });
+
+
+         DB::table('dr_cr_types')->insert([
+            'TypeName' => 'Debit'
+        ]);
+
+        DB::table('dr_cr_types')->insert([
+            'TypeName' => 'Credit'
+        ]);
+
     }
 
     /**

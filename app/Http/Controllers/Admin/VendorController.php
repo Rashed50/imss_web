@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\ChartOfAccountController;
+
 use Illuminate\Http\Request;
 use App\Models\Vendor;
 use Illuminate\Support\Str;
@@ -21,12 +23,7 @@ class VendorController extends Controller{
     public function getAll(){
       return $allVendor = Vendor::where('ActiveStatus',true)->orderBy('VendId','DESC')->get();
     }
-
-
-
-
-
-    
+ 
 
     public function add(){
        $allVendor = Vendor::where('ActiveStatus',true)->orderBy('VendId','DESC')->get();
@@ -76,6 +73,23 @@ class VendorController extends Controller{
             'VendName.unique' => 'this vendor name already exists! please another name',
         ]);
 
+
+
+        
+
+
+        $request['ChartOfAcctName'] = $request['VendName'];
+        $request['ChartOfAcctNumber'] = '38439842';
+        $request['BankAcctNumber'] = '4983242';
+        $request['BankId'] = 1;
+        $request['AcctTypeId'] = 1;
+        $request['BankAcctTypeId'] =1 ;
+
+       $chartOfAcc = new  ChartOfAccountController();
+       $vendorAccId = $chartOfAcc->addNewChartOfAccount($request);
+
+       
+
         $date = date('Y-m-d', strtotime($request->OpeningDate));
         $insert = Vendor::insertGetId([
             'VendName'=>$request['VendName'],
@@ -84,8 +98,9 @@ class VendorController extends Controller{
             'OpeningDate'=>$date,
             'Balance'=>$request['Balance'],
             'InitialBalance'=>$request['InitialBalance'],
-            'ChartOfAcctId'=>$request['ChartOfAcctId'],
+            'ChartOfAcctId'=> $vendorAccId ,//request['ChartOfAcctId'],
             'VendAddress'=>$request['VendAddress'],
+            'CreateById' => 1,
             'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
