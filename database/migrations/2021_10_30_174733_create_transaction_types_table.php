@@ -17,6 +17,18 @@ class CreateTransactionTypesTable extends Migration
             $table->id('TranTypeId');
             $table->string('TranTypeName');
         });
+
+        // Cement
+        DB::table('transaction_types')->insert([
+            'TranTypeName' => 'Purchase' ,
+        ]);
+        DB::table('transaction_types')->insert([
+            'TranTypeName' => 'Sell' ,
+        ]);
+        DB::table('transaction_types')->insert([
+            'TranTypeName' => 'Deu Payment' ,
+        ]);
+
     }
 
     /**

@@ -16,6 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id('TranId');
             $table->date('TranDate');
+            $table->float('TranAmount');
             $table->unsignedBigInteger('TranTypeId');
             $table->foreign('TranTypeId')->references('TranTypeId')->on('transaction_types');
         });

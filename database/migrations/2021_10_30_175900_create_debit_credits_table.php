@@ -19,6 +19,7 @@ class CreateDebitCreditsTable extends Migration
             $table->unsignedBigInteger('TranId');
             $table->unsignedBigInteger('ChartOfAcctId');
             $table->unsignedBigInteger('DrCrTypeId');
+            
             $table->foreign('TranId')->references('TranId')->on('transactions');
             $table->foreign('ChartOfAcctId')->references('ChartOfAcctId')->on('chart_of_accounts');
             $table->foreign('DrCrTypeId')->references('DrCrTypeId')->on('dr_cr_types');
