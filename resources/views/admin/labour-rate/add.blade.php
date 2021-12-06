@@ -65,18 +65,18 @@
                         <div class="col-md-2"></div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('CateId') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('idOfcategory') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Category Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="CateId" id="CateId_val">
+                          <select class="form-control" name="idOfcategory" id="idOfcategory">
                             <option value="">Select Category</option>
                             @foreach ($allCate as $cat)
-                             <option value="{{ $cat->CateId }}" {{ (@$data->CateId==$cat->CateId)?'selected': '' }}>{{ $cat->CateName }}</option>
+                             <option value="{{ $cat->CateId }}">{{ $cat->CateName }}</option>
                             @endforeach
                           </select>
-                          @if ($errors->has('CateId'))
+                          @if ($errors->has('idOfcategory'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('CateId') }}</strong>
+                                  <strong>{{ $errors->first('idOfcategory') }}</strong>
                               </span>
                           @endif
                         </div>
@@ -101,18 +101,15 @@
                         </div>
                     </div>
 
-                     <div class="row {{ $errors->has('LaboType') ? ' has-error' : '' }} mt-2 pt-2">
-                        <div class="col-md-2">
-                          <div class="form-check form-check-inline">
-                          </div>
-                        </div>
+                     <div style="color: black; margin-left: 40px; margin-right: 0px; font-size: 15px; display: flex; font-weight: 500;"  class="row {{ $errors->has('LaboType') ? ' has-error' : '' }} mt-2 pt-2">
+                       <label class="col-sm-3 control-label">Labour Type:<span class="req_star">*</span></label> 
                         <div class="col-md-3">
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="LaboType" id="Load" value="Load">
                             <label class="form-check-label" for="Load">Load</label>
                           </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="LaboType" id="Unload" value="Unload">
                             <label class="form-check-label" for="Unload">Unload</label>
@@ -204,15 +201,19 @@
 
   <script>
     $(document).ready(function(){
-        $('#CateId_val[name="CateId"]').on('change', function(){
+
+        $('select[name="idOfcategory"]').on('change', function(){
             var CateId = $(this).val();
             // alert(CateId);
+            
             if(CateId){
                 $.ajax({
-                    url: "{{url('dashboard/stock/labour/getSize')}}/"+CateId,
-                    type: "GET",
-                    dataType: "Json",
+                    url: "{{ route('CategoryIdWiseSize') }}",
+                    type: "POST",
+                    data : { CateId:CateId },
+                    dataType: "json",
                     success: function(data){
+
                         var d = $('#SizeId_val[name="SizeId"]').empty();
                         $.each(data, function(key , value){
                             $('select[name="SizeId"]').append('<option value="'+value.SizeId+'">'+value.SizeName+'</option>');

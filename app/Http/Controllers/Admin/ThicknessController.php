@@ -25,24 +25,30 @@ class ThicknessController extends Controller{
       return json_encode($getThickness);
     }
     // ajax Method
+    public function getAll(){
+           return  $allThickness = Thickness::with('cateInfo','brandInfo','sizeInfo')->where('ThicStatus',true)->orderBy('ThicId','DESC')->get();
+    }
 
     public function add(){
-       $allThickness = Thickness::with('cateInfo','brandInfo','sizeInfo')->where('ThicStatus',true)->orderBy('ThicId','DESC')->get();
-       $allCate = Category::where('CateStatus',true)->orderBy('CateName','ASC')->get();
+       $allThickness= $this->getAll();
+       $CateOBJ= new CategoryController();
+       $allCate= $CateOBJ->getAll();
        return view('admin.thickness.add', compact('allThickness', 'allCate'));
     }
 
     public function edit($id){
-        $data = Thickness::with('cateInfo','brandInfo','sizeInfo')->where('ThicStatus',true)->where('ThicId',$id)->firstOrFail();
-        $allThickness = Thickness::with('cateInfo','brandInfo','sizeInfo')->where('ThicStatus',true)->orderBy('ThicId','DESC')->get();
-        $allCate = Category::where('CateStatus',true)->orderBy('CateName','ASC')->get();
+        $allThickness= $this->getAll();
+        $data = $allThickness->where('ThicId',$id)->firstOrFail();
+        
+        $CateOBJ= new CategoryController();
+        $allCate= $CateOBJ->getAll();
         return view('admin.thickness.add', compact('data', 'allThickness', 'allCate'));
     }
 
 
     public function store(Request $request){
         $this->validate($request,[
-            'ThicName'=>'required|max:150|unique:thicknesses,ThicName',
+            'ThicName'=>'required|max:150',
             'CateId'=>'required',
             'BranId'=>'required',
             'SizeId'=>'required',
@@ -50,15 +56,22 @@ class ThicknessController extends Controller{
             'ThicName.required'=> 'please enter thickness name',
             'SizeId.required'=> 'please select size name',
             'ThicName.max'=> 'max thickness name content is 150 character',
-            'ThicName.unique' => 'this thickness name already exists! please another name',
         ]);
 
+        $ThicName=strtolower($request->ThicName);
+        $Thickness = Thickness::where('SizeId',$request->SizeId)->where('ThicName',$ThicName)->count();
+
+        if($Thickness>0){
+
+            Session::flash('error','this thicknrss allready exit, please another thicknrss.');
+                return redirect()->back();
+        }
 
         $insert = Thickness::insertGetId([
             'CateId'=>$request['CateId'],
             'BranId'=>$request['BranId'],
             'SizeId'=>$request['SizeId'],
-            'ThicName'=>$request['ThicName'],
+            'ThicName'=>$ThicName,
             'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 

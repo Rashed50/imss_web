@@ -18,7 +18,10 @@
             <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
             <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>
             <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li>
-            <li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>
+            <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="waves-effect"><i class="icon ion-power"></i><span>Logout</span></a></li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
           </ul>
         </div><!-- dropdown-menu -->
       </div><!-- dropdown -->

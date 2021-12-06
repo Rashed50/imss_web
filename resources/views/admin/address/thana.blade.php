@@ -62,6 +62,7 @@
 
                             <select class="form-control" name="DistId" id="DistId">
                                 <option value="{{@$data->DistId}}">{{@$data->District->DistName ??''}}</option>
+                                <option value="">Select District</option>
                             </select>
                             @if ($errors->has('DistId'))
                                 <span class="invalid-feedback" role="alert">

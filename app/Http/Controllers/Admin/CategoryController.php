@@ -42,10 +42,10 @@ class CategoryController extends Controller{
             'CateName.max'=> 'max category name content is 200 character',
             'CateName.unique' => 'this category name already exists! please another name',
         ]);
-
+        $catName=strtolower($request->CateName);
+        
         $insert = Category::insertGetId([
-            'CateName'=>$request['CateName'],
-            'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            'CateName'=>$catName,
         ]);
 
         if($insert){
@@ -70,7 +70,6 @@ class CategoryController extends Controller{
 
         $insert = Category::where('CateStatus',true)->where('CateId',$id)->update([
             'CateName'=>$request['CateName'],
-            'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         if($insert){
