@@ -153,19 +153,23 @@
                       data: { BranId:BranId },
                       success:function(data) {
                          if(data == ""){
+                         
                            $('select[name="Size"]').empty();
-                           $('select[name="Size"]').append('<option value="">Data Not Found! </option>');
+                           $('select[name="Size"]').append('<option value="">Data Not Found!</option>');
 
                            $('select[name="Thickness"]').empty();
                            $('select[name="Thickness"]').append('<option value="">Data Not Found!</option>');
+
                          }else{
+                          
                            $('select[name="Size"]').empty();
                            $('select[name="Size"]').append('<option value="">Select Size</option>');
 
                            $('select[name="Thickness"]').empty();
                            $('select[name="Thickness"]').append('<option value="">Select Thickness</option>');
+
                            $.each(data, function(key, value){
-                              $('select[name="Size"]').append('<option value="'+ value.SizeId+'">' + value.SizeName+ '</option>');
+                              $('select[name="BranId"]').append('<option value="'+ value.BranId+'">' + value.BranName + '</option>');
                            });
                          }
 
@@ -186,13 +190,17 @@
                       data: { Size:Size },
                       success:function(data) {
                          if(data == ""){
+                          
                            $('select[name="Thickness"]').empty();
-                           $('select[name="Thickness"]').append('<option value="">Data Not Found! </option>');
+                           $('select[name="Thickness"]').append('<option value="">Data Not Found!</option>');
+
                          }else{
+                          
                            $('select[name="Thickness"]').empty();
-                           $('select[name="Thickness"]').append('<option value="">Select Size</option>');
+                           $('select[name="Thickness"]').append('<option value="">Select Thickness</option>');
+
                            $.each(data, function(key, value){
-                              $('select[name="Thickness"]').append('<option value="'+ value.ThicId+'">' + value.ThicName+ '</option>');
+                              $('select[name="BranId"]').append('<option value="'+ value.BranId+'">' + value.BranName + '</option>');
                            });
                          }
 

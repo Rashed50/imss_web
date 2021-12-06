@@ -18,12 +18,6 @@ use Image;
 
 class StockController extends Controller{
 
-    public function add(){
-       $allCate = Category::where('CateStatus',true)->orderBy('CateName','ASC')->get();
-       $allStock = Stock::with('cateInfo', 'brandInfo', 'sizeInfo', 'thickInfo')->orderBy('StocId','DESC')->get();
-       return view('admin.stock.add', compact('allStock', 'allCate'));
-    }
-
     public function getBrand($id){
          $data = Brand::where('BranStatus',true)->where('CateId',$id)->orderBy('BranName','DESC')->get();
         return response()->json($data);
@@ -39,10 +33,24 @@ class StockController extends Controller{
         return response()->json($data);
     }
 
+    public function getAll(){
+        return $allStock = Stock::with('cateInfo', 'brandInfo', 'sizeInfo', 'thickInfo')->orderBy('StocId','DESC')->get();
+    }
+
+     public function add(){
+       $allStock= $this->getAll();
+       $CateOBJ= new CategoryController();
+       $allCate = $CateOBJ->getAll();
+       
+       return view('admin.stock.add', compact('allStock', 'allCate'));
+    }
+
     public function edit($id){
-        $allStock = Stock::with('cateInfo', 'brandInfo', 'sizeInfo', 'thickInfo')->orderBy('StocId','DESC')->get();
-        $data = Stock::with('cateInfo', 'brandInfo', 'sizeInfo', 'thickInfo')->where('StocId',$id)->firstOrFail();
-        $allCate = Category::where('CateStatus',true)->orderBy('CateName','ASC')->get();
+        $allStock= $this->getAll();
+        $CateOBJ= new CategoryController();
+        $allCate = $CateOBJ->getAll();
+
+        $data = $allStock->where('StocId',$id)->firstOrFail();
         return view('admin.stock.add', compact('data','allCate', 'allStock'));
     }
 

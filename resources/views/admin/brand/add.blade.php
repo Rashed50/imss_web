@@ -94,29 +94,6 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-7">
-                            @if(Session::has('success_soft'))
-                              <div class="alert alert-success alertsuccess" role="alert">
-                                 <strong>Successfully!</strong> delete brand information.
-                              </div>
-                            @endif
-
-                            @if(Session::has('success_update'))
-                              <div class="alert alert-success alertsuccess" role="alert">
-                                 <strong>Successfully!</strong> update brand information.
-                              </div>
-                            @endif
-
-                            @if(Session::has('error'))
-                              <div class="alert alert-warning alerterror" role="alert">
-                                 <strong>Opps!</strong> please try again.
-                              </div>
-                            @endif
-                        </div>
-                        <div class="col-md-2"></div>
-                    </div>
-                    <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
                                 <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
@@ -138,7 +115,7 @@
                                             <td>{{ $brand->BranName ??'' }}</td>
                                             <td>
                                                 <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
-                                                <a href="{{ route('brand.edit',$brand->CateId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
+                                                <a href="{{ route('brand.edit',$brand->BranId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                             </td>
                                         </tr>

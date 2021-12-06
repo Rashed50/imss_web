@@ -37,9 +37,10 @@ class LabourRateController extends Controller{
     }
 
 
-     public function getSize($id){
-        return $data = Size::where('SizeStatus',true)->where('CateId',$id)->orderBy('SizeName','DESC')->get();
-        return response()->json($data);
+     public function getSize(Request $request){
+        $data = Size::where('SizeStatus',true)->where('CateId',$request->CateId)->orderBy('SizeName','DESC')->get();
+        // return response()->json([ 'data' => $data ]);
+        return json_encode($data);
     }
 
     public function store(Request $request){

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Brand;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Admin\CategoryController;
 use Carbon\Carbon;
 use Session;
 use Image;
@@ -26,54 +27,65 @@ class BrandController extends Controller{
     }
     // ajax Method
 
-
-
-
-
-
+    public function getAll(){
+       return $allBrand = Brand::with('cateInfo')->where('BranStatus',true)->orderBy('BranId','DESC')->get();
+    }
     /*
     |--------------------------------------------------------------------------
     | BLADE OPERATION
     |--------------------------------------------------------------------------
     */
-
     public function add(){
-       $allCate = Category::where('CateStatus',true)->orderBy('CateName','ASC')->get();
-       $allBrand = Brand::with('cateInfo')->where('BranStatus',true)->orderBy('BranId','DESC')->get();
+       $allBrand = $this->getAll();
+       $CategoryOBJ = new CategoryController();
+       $allCate = $CategoryOBJ->getAll();
        return view('admin.brand.add', compact('allCate', 'allBrand'));
     }
 
     public function edit($id){
-        $allBrand = Brand::with('cateInfo')->where('BranStatus',true)->orderBy('BranId','DESC')->get();
-        $data = Brand::with('cateInfo')->where('BranStatus',true)->where('BranId',$id)->firstOrFail();
-        $allCate = Category::where('CateStatus',true)->orderBy('CateName','ASC')->get();
+        $allBrand = $this->getAll();
+        $data = $allBrand->where('BranId',$id)->firstOrFail();
+        $CategoryOBJ = new CategoryController();
+        $allCate = $CategoryOBJ->getAll();
         return view('admin.brand.add', compact('data', 'allCate', 'allBrand'));
     }
 
+
     public function store(Request $request){
+ 
         $this->validate($request,[
-            'BranName'=>'required|unique:brands,BranName|max:150',
+            'BranName'=>'required|max:150',
             'CateId'=>'required',
         ],[
             'BranName.required'=> 'please enter brand name',
             'CateId.required'=> 'please select category name',
             'BranName.max'=> 'max brand name content is 150 character',
-            'BranName.unique' => 'this brand name already exists! please another name',
         ]);
 
-        $insert = Brand::insertGetId([
+        $BranName=strtolower($request->BranName);
+        $brands = Brand::where('CateId',$request->CateId)->where('BranName',$BranName)->count();
+
+        if($brands>0){
+
+            Session::flash('error','this name already exit, please another name.');
+                return redirect()->back();
+        }else{
+            $insert = Brand::insertGetId([
             'CateId'=>$request['CateId'],
-            'BranName'=>$request['BranName'],
+            'BranName'=>$BranName,
             'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         if($insert){
             Session::flash('success','new brand store Successfully.');
                 return redirect()->route('brand.add');
-        }else{
-            Session::flash('error','please try again.');
-                return redirect()->back();
+            }else{
+                Session::flash('error','please try again.');
+                    return redirect()->back();
+            }
+
         }
+              
 
     }
 
@@ -82,6 +94,7 @@ class BrandController extends Controller{
         $id= $request->BranId;
         $this->validate($request,[
             'BranName'=>'required|max:150|unique:brands,BranName,'.$id.',BranId',
+            // 'BranName'=>'required|unique:brands,BranName,'.$id.',BranId,CateId,'.$CateId,
             'CateId'=>'required',
         ],[
             'BranName.required'=> 'please enter brand name',
