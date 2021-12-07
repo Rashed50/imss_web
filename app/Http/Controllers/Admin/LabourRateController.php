@@ -17,23 +17,7 @@ use Image;
 class LabourRateController extends Controller{
     
  public function getAll(){
-      return $all = LabourRate::orderBy('LaboId','DESC')->get();
-    }
-
-
-    public function add(){
-        $categoryOBJ = new CategoryController();
-        $allCate = $categoryOBJ->getAll();
-
-       $allLabour = $this->getAll();
-        return view('admin.labour-rate.add', compact('allLabour', 'allCate'));
-    }
-
-   
-    public function edit($id){
-        $allLabour = $this->getAll();
-        $data = $allLabour->where('CateStatus',true)->where('LaboId',$id)->firstOrFail();
-        return view('admin.labour-rate.add', compact('data', 'allLabour'));
+      return $all = LabourRate::with('cateInfo','sizeInfo')->orderBy('LaboId','DESC')->get();
     }
 
 
@@ -43,25 +27,82 @@ class LabourRateController extends Controller{
         return json_encode($data);
     }
 
+
+
+    public function add(){
+        $categoryOBJ = new CategoryController();
+        $allCate = $categoryOBJ->getAll();
+        $allLabour = $this->getAll();
+        return view('admin.labour-rate.add', compact('allLabour', 'allCate'));
+    }
+
+   
+    public function edit($id){
+        $categoryOBJ = new CategoryController();
+        $allCate = $categoryOBJ->getAll();
+        $allLabour = $this->getAll();
+        $data = $allLabour->where('LaboId',$id)->firstOrFail();
+        return view('admin.labour-rate.add', compact('data', 'allLabour', 'allCate'));
+    }
+
+
     public function store(Request $request){
-       dd($request->all());
-        $insert = LabourRate::insertGetId([
-            'CateId'=>$request['CateId'],
-            'SizeId'=>$request['SizeId'],
+
+         $sizes = LabourRate::where('CateId',$request->idOfcategory)->where('sizeId',$request->sizeID)->where('LaboType',$request->LaboType)->count();
+
+        if($sizes>0){
+            Session::flash('error','this labour cost already exit.');
+                return redirect()->back();
+        }else{
+            $insert = LabourRate::insertGetId([
+            'CateId'=>$request['idOfcategory'],
+            'SizeId'=>$request['sizeID'],
             'LaboType'=>$request['LaboType'],
             'Amount'=>$request['Amount'],
-            'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString()
+            // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         if($insert){
-            Session::flash('success','new labour cost store Successfully.');
-                return redirect()->route('labour.add');
-        }else{
-            Session::flash('error','please try again.');
-                return redirect()->back();
+                Session::flash('success','new labour cost store Successfully.');
+                    return redirect()->route('labour.add');
+            }else{
+                Session::flash('error','please try again.');
+                    return redirect()->back();
+            }
         }
+    
 
     }
+
+
+
+
+    // public function update(Request $request){
+
+    //      $sizes = LabourRate::where('CateId',$request->idOfcategory)->where('sizeId',$request->sizeID)->where('LaboType',$request->LaboType)->count();
+
+    //     if($sizes>0){
+    //         Session::flash('error','this labour cost already exit.');
+    //             return redirect()->back();
+    //     }else{
+    //         $insert = LabourRate::insertGetId([
+    //         'CateId'=>$request['idOfcategory'],
+    //         'SizeId'=>$request['sizeID'],
+    //         'LaboType'=>$request['LaboType'],
+    //         'Amount'=>$request['Amount'],
+    //         // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+    //     ]);
+
+    //     if($insert){
+    //             Session::flash('success','new labour cost store Successfully.');
+    //                 return redirect()->route('labour.add');
+    //         }else{
+    //             Session::flash('error','please try again.');
+    //                 return redirect()->back();
+    //         }
+    //     } 
+
+    // }
 
 
 }

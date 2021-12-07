@@ -55,23 +55,22 @@ class BrandController extends Controller{
  
         $this->validate($request,[
             'BranName'=>'required|max:150',
-            'CateId'=>'required',
+            'CategoryID'=>'required',
         ],[
             'BranName.required'=> 'please enter brand name',
-            'CateId.required'=> 'please select category name',
+            'CategoryID.required'=> 'please select category name',
             'BranName.max'=> 'max brand name content is 150 character',
         ]);
 
         $BranName=strtolower($request->BranName);
-        $brands = Brand::where('CateId',$request->CateId)->where('BranName',$BranName)->count();
+        $brands = Brand::where('CateId',$request->CategoryID)->where('BranName',$BranName)->count();
 
-        if($brands>0){
-
+        if($brands>0) {
             Session::flash('error','this name already exit, please another name.');
                 return redirect()->back();
         }else{
             $insert = Brand::insertGetId([
-            'CateId'=>$request['CateId'],
+            'CateId'=>$request['CategoryID'],
             'BranName'=>$BranName,
             'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);

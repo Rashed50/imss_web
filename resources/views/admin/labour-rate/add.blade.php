@@ -16,29 +16,6 @@
               @csrf
               <div class="card">
                   <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-7">
-                            @if(Session::has('success_soft'))
-                              <div class="alert alert-success alertsuccess" role="alert">
-                                 <strong>Successfully!</strong> delete Labour Cost information.
-                              </div>
-                            @endif
-
-                            @if(Session::has('success_update'))
-                              <div class="alert alert-success alertsuccess" role="alert">
-                                 <strong>Successfully!</strong> update Labour Cost information.
-                              </div>
-                            @endif
-
-                            @if(Session::has('error'))
-                              <div class="alert alert-warning alerterror" role="alert">
-                                 <strong>Opps!</strong> please try again.
-                              </div>
-                            @endif
-                        </div>
-                        <div class="col-md-2"></div>
-                    </div>
                       <div class="row">
                           <div class="col-md-12">
                               <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Labour Cost Information</h3>
@@ -71,7 +48,7 @@
                           <select class="form-control" name="idOfcategory" id="idOfcategory">
                             <option value="">Select Category</option>
                             @foreach ($allCate as $cat)
-                             <option value="{{ $cat->CateId }}">{{ $cat->CateName }}</option>
+                             <option value="{{ $cat->CateId }}" {{ ($data->CateId==$cat->CateId)? 'selected' : ''}}>{{ $cat->CateName }}</option>
                             @endforeach
                           </select>
                           @if ($errors->has('idOfcategory'))
@@ -105,13 +82,13 @@
                        <label class="col-sm-3 control-label">Labour Type:<span class="req_star">*</span></label> 
                         <div class="col-md-3">
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="LaboType" id="Load" value="Load">
+                            <input class="form-check-input" type="radio" name="LaboType" id="Load" value="Load" {{(@$data->LaboType=='Load')? 'checked':''}}>
                             <label class="form-check-label" for="Load">Load</label>
                           </div>
                         </div>
                         <div class="col-md-3">
                           <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="LaboType" id="Unload" value="Unload">
+                            <input class="form-check-input" type="radio" name="LaboType" id="Unload" value="Unload"{{(@$data->LaboType=='Unload')? 'checked':''}}>
                             <label class="form-check-label" for="Unload">Unload</label>
                           </div>
                         </div>
@@ -166,9 +143,10 @@
                                     <thead>
                                         <tr>
                                             <th>SL NO.</th>
-                                            <th>category</th>
+                                            <th>Category</th>
                                             <th>Size</th>
-                                            <th>Thickness</th>
+                                            <th>Labour Type</th>
+                                            <th>Amount</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -178,7 +156,8 @@
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $labour->cateInfo->CateName ??'' }}</td>
                                             <td>{{ $labour->sizeInfo->SizeName ??'' }}</td>
-                                            <td>{{ $labour->ThicName ??'' }}</td>
+                                            <td>{{ $labour->LaboType ??'' }}</td>
+                                            <td>{{ $labour->Amount ??'' }}</td>
                                             <td>
                                                 <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
                                                 <a href="{{ route('labour.edit',$labour->LaboId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
@@ -217,14 +196,11 @@
                          
                            $('#IdOfSize[name="sizeID"]').empty();
                            $('#IdOfSize[name="sizeID"]').append('<option value="">Data Not Found!</option>');
-
-                         
                         }else{
-                         
                            $('#IdOfSize[name="sizeID"]').empty();
                            $('#IdOfSize[name="sizeID"]').append('<option value="">Select Size</option>');
                            $.each(data, function(key , value){
-                                $('#IdOfSize[name="sizeID"]').append('<option value="'+value.SizeId+'">'+value.SizeName+'</option>');
+                           $('#IdOfSize[name="sizeID"]').append('<option value="'+value.SizeId+'">'+value.SizeName+'</option>');
                             });
 
                         }

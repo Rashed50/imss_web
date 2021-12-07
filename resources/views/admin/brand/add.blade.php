@@ -42,18 +42,18 @@
                         <div class="col-md-2"></div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('CateId') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('CategoryID') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Category Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="CateId" id="CateId">
+                          <select class="form-control" name="CategoryID">
                             <option value="">Select Category</option>
                             @foreach ($allCate as $cat)
                              <option value="{{ $cat->CateId }}" {{ (@$data->CateId==$cat->CateId)?'selected': '' }}>{{ $cat->CateName }}</option>
                             @endforeach
                           </select>
-                          @if ($errors->has('CateId'))
+                          @if ($errors->has('CategoryID'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('CateId') }}</strong>
+                                  <strong>{{ $errors->first('CategoryID') }}</strong>
                               </span>
                           @endif
                         </div>

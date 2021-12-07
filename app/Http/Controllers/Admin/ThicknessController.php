@@ -49,17 +49,18 @@ class ThicknessController extends Controller{
     public function store(Request $request){
         $this->validate($request,[
             'ThicName'=>'required|max:150',
-            'CateId'=>'required',
-            'BranId'=>'required',
-            'SizeId'=>'required',
+            'CategoryID'=>'required',
+            'BranID'=>'required',
+            'SizeID'=>'required',
         ],[
-            'ThicName.required'=> 'please enter thickness name',
-            'SizeId.required'=> 'please select size name',
+            'CategoryID.required'=> 'please enter category name',
+            'BranID.required'=> 'please enter thickness name',
+            'SizeID.required'=> 'please select size name',
             'ThicName.max'=> 'max thickness name content is 150 character',
         ]);
 
         $ThicName=strtolower($request->ThicName);
-        $Thickness = Thickness::where('SizeId',$request->SizeId)->where('ThicName',$ThicName)->count();
+        $Thickness = Thickness::where('CateId',$request->CategoryID)->where('BranId',$request->BranID)->where('SizeId',$request->SizeID)->where('ThicName',$ThicName)->count();
 
         if($Thickness>0){
 
@@ -68,9 +69,9 @@ class ThicknessController extends Controller{
         }
 
         $insert = Thickness::insertGetId([
-            'CateId'=>$request['CateId'],
-            'BranId'=>$request['BranId'],
-            'SizeId'=>$request['SizeId'],
+            'CateId'=>$request['CategoryID'],
+            'BranId'=>$request['BranID'],
+            'SizeId'=>$request['SizeID'],
             'ThicName'=>$ThicName,
             'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);

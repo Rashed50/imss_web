@@ -56,16 +56,16 @@ class SizeController extends Controller{
     public function store(Request $request){
         $this->validate($request,[
             'SizeName'=>'required|max:150',
-            'BranId'=>'required',
-            'CateId'=>'required',
+            'BranID'=>'required',
+            'CategoryID'=>'required',
         ],[
             'SizeName.required'=> 'please enter size name',
-            'BranId.required'=> 'please select brand name',
+            'BranID.required'=> 'please select brand name',
             'SizeName.max'=> 'max size name content is 150 character',
         ]);
 
         $SizeName=strtolower($request->SizeName);
-        $sizes = Size::where('BranId',$request->BranId)->where('SizeName',$SizeName)->count();
+        $sizes = Size::where('CateId',$request->CategoryID)->where('BranId',$request->BranID)->where('SizeName',$SizeName)->count();
 
         if($sizes>0){
 
@@ -73,8 +73,8 @@ class SizeController extends Controller{
                 return redirect()->back();
         }else{
            $insert = Size::insertGetId([
-            'CateId'=>$request['CateId'],
-            'BranId'=>$request['BranId'],
+            'CateId'=>$request['CategoryID'],
+            'BranId'=>$request['BranID'],
             'SizeName'=>$SizeName,
             'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);

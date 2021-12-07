@@ -119,16 +119,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('labour-rate/add', [LabourRateController::class, 'add'])->name('labour.add');
     Route::get('labour-rate/edit/{id}', [LabourRateController::class, 'edit'])->name('labour.edit');
-
-
-
-
     Route::post('stock/labour/getSize', [LabourRateController::class, 'getSize'])->name('CategoryIdWiseSize');
-
-
-
-
-
     Route::post('labour-rate/add', [LabourRateController::class, 'store'])->name('labour.store');
     Route::post('labour-rate/edit', [LabourRateController::class, 'update'])->name('labour.update');
 });
