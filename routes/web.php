@@ -24,6 +24,7 @@ use App\Http\Controllers\admin\AjaxController;
 use App\Http\Controllers\admin\UnionController;
 use App\Http\Controllers\admin\LabourRateController;
 use App\Http\Controllers\Admin\DebitVoucherController;
+use App\Http\Controllers\Admin\DuePaymentController;
 
 
 
@@ -150,12 +151,19 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 });
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('payment/due/add', [DuePaymentController::class, 'add'])->name('due.payment.add');
+    Route::get('payment/due/edit/{id}', [DuePaymentController::class, 'edit'])->name('due.payment.edit');
+    Route::post('payment/due/add', [DuePaymentController::class, 'store'])->name('due.payment.store');
+    Route::post('payment/due/edit', [DuePaymentController::class, 'update'])->name('due.payment.update');
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('customer/type/add', [CustomerTypeController::class, 'add'])->name('customer.type.add');
     Route::get('customer/type/edit/{id}', [CustomerTypeController::class, 'edit'])->name('customer.type.edit');
     Route::post('customer/type/add', [CustomerTypeController::class, 'store'])->name('customer.type.store');
     Route::post('customer/type/edit', [CustomerTypeController::class, 'update'])->name('customer.type.update');
 });
-
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {

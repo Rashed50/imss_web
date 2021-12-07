@@ -141,12 +141,45 @@
                         <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">AC Header:</span></label>
                             <div class="col-sm-7">
-                            <input type="text" placeholder="AC Header" class="form-control" id="ChartOfAcctId" name="ChartOfAcctId" value="{{(@$data)?@$data->ChartOfAcctId:old('ChartOfAcctId')}}" required>
-                            @if ($errors->has('ChartOfAcctId'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('ChartOfAcctId') }}</strong>
-                                </span>
-                            @endif
+                              <input type="text" placeholder="AC Header" class="form-control" id="ChartOfAcctId" name="ChartOfAcctId" value="{{(@$data)?@$data->ChartOfAcctId:old('ChartOfAcctId')}}" required>
+                                @if ($errors->has('ChartOfAcctId'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('ChartOfAcctId') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
+                            <label class="col-sm-3 control-label">Select Item 1:</span></label>
+                            <div class="col-sm-7">
+                               <select class="form-control" name="ChartOfAcctId">
+                                   <option>Select Item 1</option>
+                                   <option>Select Item 2</option>
+                                   <option>Select Item 3</option>
+                                   <option>Select Item 4</option>
+                               </select>
+                                @if ($errors->has('ChartOfAcctId'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('ChartOfAcctId') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                         <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
+                            <label class="col-sm-3 control-label">Select Item 2:</span></label>
+                            <div class="col-sm-7">
+                               <select class="form-control" name="ChartOfAcctId">
+                                   <option>Select Item 1</option>
+                                   <option>Select Item 2</option>
+                                   <option>Select Item 3</option>
+                                   <option>Select Item 4</option>
+                               </select>
+                                @if ($errors->has('ChartOfAcctId'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('ChartOfAcctId') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 

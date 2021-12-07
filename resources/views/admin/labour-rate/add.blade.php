@@ -48,7 +48,7 @@
                           <select class="form-control" name="idOfcategory" id="idOfcategory">
                             <option value="">Select Category</option>
                             @foreach ($allCate as $cat)
-                             <option value="{{ $cat->CateId }}" {{ ($data->CateId==$cat->CateId)? 'selected' : ''}}>{{ $cat->CateName }}</option>
+                             <option value="{{ @$cat->CateId }}" {{ (@$data->CateId==$cat->CateId)? 'selected' : ''}}>{{ @$cat->CateName }}</option>
                             @endforeach
                           </select>
                           @if ($errors->has('idOfcategory'))
