@@ -83,19 +83,19 @@
                     </div>
 
                  
-                    <div class="form-group row custom_form_group{{ $errors->has('SizeId') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('sizeID') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Size Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="SizeId" id="SizeId_val">
+                          <select class="form-control" name="sizeID" id="IdOfSize">
                             @if(@$data)
                             <option value="{{ @$data->SizeId }}">{{ @$data->sizeInfo->SizeName }}</option>
                             @else
                             <option value="">Select Size</option>
                             @endif
                           </select>
-                          @if ($errors->has('SizeId'))
+                          @if ($errors->has('sizeID'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('SizeId') }}</strong>
+                                  <strong>{{ $errors->first('sizeID') }}</strong>
                               </span>
                           @endif
                         </div>
@@ -213,12 +213,22 @@
                     data : { CateId:CateId },
                     dataType: "json",
                     success: function(data){
+                        if (data=="") {
+                         
+                           $('#IdOfSize[name="sizeID"]').empty();
+                           $('#IdOfSize[name="sizeID"]').append('<option value="">Data Not Found!</option>');
 
-                        var d = $('#SizeId_val[name="SizeId"]').empty();
-                        $.each(data, function(key , value){
-                            $('select[name="SizeId"]').append('<option value="'+value.SizeId+'">'+value.SizeName+'</option>');
-                        });
+                         
+                        }else{
+                         
+                           $('#IdOfSize[name="sizeID"]').empty();
+                           $('#IdOfSize[name="sizeID"]').append('<option value="">Select Size</option>');
+                           $.each(data, function(key , value){
+                                $('#IdOfSize[name="sizeID"]').append('<option value="'+value.SizeId+'">'+value.SizeName+'</option>');
+                            });
 
+                        }
+                        
                     },
                 });
             }else{

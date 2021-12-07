@@ -120,46 +120,46 @@
                         </div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('BranId') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('BranID') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Brand:<span class="req_star">*</span></label>
                         <div class="col-sm-8">
 
-                          <select class="form-control" name="BranId">
+                          <select class="form-control" name="BranID" id="BranId_val">
                             <option value="">Select Brand</option>
                           </select>
-                          @if ($errors->has('BranId'))
+                          @if ($errors->has('BranID'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('BranId') }}</strong>
+                                  <strong>{{ $errors->first('BranID') }}</strong>
                               </span>
                           @endif
                         </div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('Size') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('SizeID') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Size:<span class="req_star">*</span></label>
                         <div class="col-sm-8">
 
-                          <select class="form-control" name="Size">
+                          <select class="form-control" name="SizeID" id="SizeId_val">
                             <option value="">Select Size</option>
                           </select>
-                          @if ($errors->has('Size'))
+                          @if ($errors->has('SizeID'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('Size') }}</strong>
+                                  <strong>{{ $errors->first('SizeID') }}</strong>
                               </span>
                           @endif
                         </div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('Thickness') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('ThicID') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Thickness:<span class="req_star">*</span></label>
                         <div class="col-sm-8">
 
-                          <select class="form-control" name="Thickness">
+                          <select class="form-control" name="ThicID" id="ThicId_val">
                             <option value="">Select Thickness</option>
                           </select>
-                          @if ($errors->has('Thickness'))
+                          @if ($errors->has('ThicID'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('Thickness') }}</strong>
+                                  <strong>{{ $errors->first('ThicID') }}</strong>
                               </span>
                           @endif
                         </div>

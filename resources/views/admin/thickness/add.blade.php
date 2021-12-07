@@ -42,54 +42,54 @@
                         <div class="col-md-2"></div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('CateId') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('CategoryID') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Category Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="CateId" id="CateId_val">
+                          <select class="form-control" name="CategoryID" id="CateId_val">
                             <option value="">Select Category</option>
                             @foreach ($allCate as $cat)
                              <option value="{{ $cat->CateId }}" {{ (@$data->CateId==$cat->CateId)?'selected': '' }}>{{ $cat->CateName }}</option>
                             @endforeach
                           </select>
-                          @if ($errors->has('CateId'))
+                          @if ($errors->has('CategoryID'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('CateId') }}</strong>
+                                  <strong>{{ $errors->first('CategoryID') }}</strong>
                               </span>
                           @endif
                         </div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('BranId') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('BranID') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Brand Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="BranId" id="BranId_val">
+                          <select class="form-control" name="BranID" id="BranId_val">
                             @if(@$data)
                             <option value="{{ @$data->BranId }}">{{ @$data->brandInfo->BranName }}</option>
                             @else
                             <option value="">Select Brand</option>
                             @endif
                           </select>
-                          @if ($errors->has('BranId'))
+                          @if ($errors->has('BranID'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('BranId') }}</strong>
+                                  <strong>{{ $errors->first('BranID') }}</strong>
                               </span>
                           @endif
                         </div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('SizeId') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('SizeID') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Size Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <select class="form-control" name="SizeId" id="SizeId_val">
+                          <select class="form-control" name="SizeID" id="SizeId_val">
                             @if(@$data)
                             <option value="{{ @$data->SizeId }}">{{ @$data->sizeInfo->SizeName }}</option>
                             @else
                             <option value="">Select Size</option>
                             @endif
                           </select>
-                          @if ($errors->has('SizeId'))
+                          @if ($errors->has('SizeID'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('SizeId') }}</strong>
+                                  <strong>{{ $errors->first('SizeID') }}</strong>
                               </span>
                           @endif
                         </div>
@@ -171,70 +171,4 @@
     <!-- end list -->
   </div>
   <!-- sl-pagebody -->
-
-  <script>
-    $(document).ready(function(){
-        $('#CateId_val[name="CateId"]').on('change', function(){
-            var CateId = $(this).val();
-            if(CateId){
-                $.ajax({
-                    url: "{{url('dashboard/stock/getBrand')}}/"+CateId,
-                    type: "GET",
-                    dataType: "Json",
-                    success: function(data){
-                        var d = $('#BranId_val[name="BranId"]').empty();
-                        $.each(data, function(key , value){
-                            $('select[name="BranId"]').append('<option value="'+value.BranId+'">'+value.BranName+'</option>');
-                        });
-
-                    },
-                });
-            }else{
-                alert('Please select brand');
-            }
-        });
-
-        $('#BranId_val[name="BranId"]').on('change', function(){
-            var BranId = $(this).val();
-            if(BranId){
-                $.ajax({
-                    url: "{{url('dashboard/stock/getSize')}}/"+BranId,
-                    type: "GET",
-                    dataType: "Json",
-                    success: function(data){
-                        var d = $('#SizeId_val[name="SizeId"]').empty();
-                        $.each(data, function(key , value){
-                            $('select[name="SizeId"]').append('<option value="'+value.SizeId+'">'+value.SizeName+'</option>');
-                        });
-
-                    },
-                });
-            }else{
-                alert('Please select size');
-            }
-        });
-
-        $('#SizeId_val[name="SizeId"]').on('change', function(){
-            var SizeId = $(this).val();
-            if(SizeId){
-                $.ajax({
-                    url: "{{url('dashboard/stock/getThick')}}/"+SizeId,
-                    type: "GET",
-                    dataType: "Json",
-                    success: function(data){
-                        var d = $('#ThicId_val[name="ThicId"]').empty();
-                        $.each(data, function(key , value){
-                            $('select[name="ThicId"]').append('<option value="'+value.ThicId+'">'+value.ThicName+'</option>');
-                        });
-
-                    },
-                });
-            }else{
-                alert('Please select thickness');
-            }
-        });
-
-    });
-
- </script>
 @endsection

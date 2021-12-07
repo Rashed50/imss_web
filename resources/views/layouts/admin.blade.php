@@ -111,27 +111,24 @@
                       data: { CategoryID:CategoryID },
                       success:function(data) {
                          if(data == ""){
-                           $('select[name="BranId"]').empty();
-                           $('select[name="BranId"]').append('<option value="">Data Not Found! </option>');
-
-                           $('select[name="Size"]').empty();
-                           $('select[name="Size"]').append('<option value="">Data Not Found!</option>');
-
-                           $('select[name="Thickness"]').empty();
-                           $('select[name="Thickness"]').append('<option value="">Data Not Found!</option>');
+                           $('#BranId_val[name="BranID"]').empty();
+                           $('#BranId_val[name="BranID"]').append('<option value="">Data Not Found! </option>');
+                           $('#SizeId_val[name="SizeID"]').empty();
+                           $('#SizeId_val[name="SizeID"]').append('<option value="">Data Not Found!</option>');
+                           $('#ThicId_val[name="ThicID"]').empty();
+                           $('#ThicId_val[name="ThicID"]').append('<option value="">Data Not Found!</option>');
 
                          }else{
-                           $('select[name="BranId"]').empty();
-                           $('select[name="BranId"]').append('<option value="">Select Brand</option>');
+                           $('#BranId_val[name="BranID"]').empty();
+                           $('#BranId_val[name="BranID"]').append('<option value="">Select Brand</option>');
+                           $('#SizeId_val[name="SizeID"]').empty();
+                           $('#SizeId_val[name="SizeID"]').append('<option value="">Select Size</option>');
+                           $('#ThicId_val[name="ThicID"]').empty();
+                           $('#ThicId_val[name="ThicID"]').append('<option value="">Select Thickness</option>');
 
-                           $('select[name="Size"]').empty();
-                           $('select[name="Size"]').append('<option value="">Select Size</option>');
-
-                           $('select[name="Thickness"]').empty();
-                           $('select[name="Thickness"]').append('<option value="">Select Thickness</option>');
-
+                       
                            $.each(data, function(key, value){
-                              $('select[name="BranId"]').append('<option value="'+ value.BranId+'">' + value.BranName + '</option>');
+                              $('#BranId_val[name="BranID"]').append('<option value="'+ value.BranId+'">' + value.BranName + '</option>');
                            });
                          }
 
@@ -143,7 +140,7 @@
               }
           });
           // Brand Wise productSize
-          $('select[name="BranId"]').on('change', function(){
+          $('#BranId_val[name="BranID"]').on('change', function(){
               var BranId = $(this).val();
               if(BranId) {
                   $.ajax({
@@ -154,22 +151,20 @@
                       success:function(data) {
                          if(data == ""){
                          
-                           $('select[name="Size"]').empty();
-                           $('select[name="Size"]').append('<option value="">Data Not Found!</option>');
-
-                           $('select[name="Thickness"]').empty();
-                           $('select[name="Thickness"]').append('<option value="">Data Not Found!</option>');
+                           $('#SizeId_val[name="SizeID"]').empty();
+                           $('#SizeId_val[name="SizeID"]').append('<option value="">Data Not Found!</option>');
+                           $('#ThicId_val[name="ThicID"]').empty();
+                           $('#ThicId_val[name="ThicID"]').append('<option value="">Data Not Found!</option>');
 
                          }else{
                           
-                           $('select[name="Size"]').empty();
-                           $('select[name="Size"]').append('<option value="">Select Size</option>');
-
-                           $('select[name="Thickness"]').empty();
-                           $('select[name="Thickness"]').append('<option value="">Select Thickness</option>');
+                           $('#SizeId_val[name="SizeID"]').empty();
+                           $('#SizeId_val[name="SizeID"]').append('<option value="">Select Size</option>');
+                           $('#ThicId_val[name="ThicID"]').empty();
+                           $('#ThicId_val[name="ThicID"]').append('<option value="">Select Thickness</option>');
 
                            $.each(data, function(key, value){
-                              $('select[name="BranId"]').append('<option value="'+ value.BranId+'">' + value.BranName + '</option>');
+                              $('#SizeId_val[name="SizeID"]').append('<option value="'+ value.SizeId+'">' + value.SizeName + '</option>');
                            });
                          }
 
@@ -180,7 +175,7 @@
               }
           });
           // product Size Wise Thickness
-          $('select[name="Size"]').on('change', function(){
+          $('select[name="SizeID"]').on('change', function(){
               var Size = $(this).val();
               if(Size) {
                   $.ajax({
@@ -191,16 +186,16 @@
                       success:function(data) {
                          if(data == ""){
                           
-                           $('select[name="Thickness"]').empty();
-                           $('select[name="Thickness"]').append('<option value="">Data Not Found!</option>');
+                           $('#ThicId_val[name="ThicID"]').empty();
+                           $('#ThicId_val[name="ThicID"]').append('<option value="">Data Not Found!</option>');
 
                          }else{
                           
-                           $('select[name="Thickness"]').empty();
-                           $('select[name="Thickness"]').append('<option value="">Select Thickness</option>');
+                           $('#ThicId_val[name="ThicID"]').empty();
+                           $('#ThicId_val[name="ThicID"]').append('<option value="">Select Thickness</option>');
 
                            $.each(data, function(key, value){
-                              $('select[name="BranId"]').append('<option value="'+ value.BranId+'">' + value.BranName + '</option>');
+                              $('#ThicId_val[name="ThicID"]').append('<option value="'+ value.ThicId+'">' + value.ThicName + '</option>');
                            });
                          }
 
