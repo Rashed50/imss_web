@@ -57,24 +57,24 @@ class StockController extends Controller{
     public function store(Request $request){
         $this->validate($request,[
             'StocValue'=>'required|max:30',
-            'CateId'=>'required',
-            'BranId'=>'required',
-            'SizeId'=>'required',
-            'ThicId'=>'required',
+            'CategoryID'=>'required',
+            'BranID'=>'required',
+            'SizeID'=>'required',
+            'ThicID'=>'required',
         ],[
             'StocValue.required'=> 'please enter stock amount',
-            'CateId.required'=> 'please select category name',
-            'BranId.required'=> 'please select brand name',
-            'SizeId.required'=> 'please select size',
-            'ThicId.required'=> 'please select thickness',
+            'CategoryID.required'=> 'please select category name',
+            'BranID.required'=> 'please select brand name',
+            'SizeID.required'=> 'please select size',
+            'ThicID.required'=> 'please select thickness',
             'StocValue.max'=> 'max stock amount content is 30 number',
         ]);
 
         $update = Stock::insertGetId([
-            'CateId'=>$request['CateId'],
-            'BranId'=>$request['BranId'],
-            'SizeId'=>$request['SizeId'],
-            'ThicId'=>$request['ThicId'],
+            'CateId'=>$request['CategoryID'],
+            'BranId'=>$request['BranID'],
+            'SizeId'=>$request['SizeID'],
+            'ThicId'=>$request['ThicID'],
             'StocValue'=>$request['StocValue'],
             'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
