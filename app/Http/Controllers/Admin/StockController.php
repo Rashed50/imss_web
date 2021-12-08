@@ -70,21 +70,40 @@ class StockController extends Controller{
             'StocValue.max'=> 'max stock amount content is 30 number',
         ]);
 
-        $update = Stock::insertGetId([
-            'CateId'=>$request['CategoryID'],
-            'BranId'=>$request['BranID'],
-            'SizeId'=>$request['SizeID'],
-            'ThicId'=>$request['ThicID'],
-            'StocValue'=>$request['StocValue'],
-            'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
+        $Stock = Stock::where('CateId',$request->CategoryID)->where('BranId',$request->BranID)->where('SizeId',$request->SizeID)->where('ThicId',$request->ThicID)->first();
 
-        if($update){
-            Session::flash('success','new stock amount store Successfully.');
-                return redirect()->route('stock.add');
+        if($Stock==NULL){
+
+             $insert = Stock::insertGetId([
+                'CateId'=>$request['CategoryID'],
+                'BranId'=>$request['BranID'],
+                'SizeId'=>$request['SizeID'],
+                'ThicId'=>$request['ThicID'],
+                'StocValue'=>$request['StocValue']
+            ]);
+
+            if($insert){
+                Session::flash('success','new stock amount store Successfully.');
+                    return redirect()->route('stock.add');
+            }else{
+                Session::flash('error','please try again.');
+                    return redirect()->back();
+            }
+           
         }else{
-            Session::flash('error','please try again.');
-                return redirect()->back();
+
+              $id= $Stock->StocId;
+              $totalStock= $Stock->StocValue+$request->StocValue;
+             $sameUpdate = Stock::where('StocId',$id)->update([
+                'StocValue'=>$totalStock,
+            ]);
+            if($sameUpdate){
+                Session::flash('success','stock amount update Successfully with same category brand size & thickness.');
+                    return redirect()->route('stock.add');
+            }else{
+                Session::flash('error','please try again.');
+                    return redirect()->back();
+            } 
         }
 
     }
@@ -108,10 +127,10 @@ class StockController extends Controller{
         ]);
 
         $update = Stock::where('StocId',$id)->update([
-            'CateId'=>$request['SizeId'],
-            'BranId'=>$request['BranId'],
-            'SizeId'=>$request['SizeId'],
-            'ThicId'=>$request['ThicId'],
+            'CateId'=>$request['CategoryID'],
+            'BranId'=>$request['BranID'],
+            'SizeId'=>$request['SizeID'],
+            'ThicId'=>$request['ThicID'],
             'StocValue'=>$request['StocValue'],
             'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);

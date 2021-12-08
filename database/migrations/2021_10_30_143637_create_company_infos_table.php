@@ -18,11 +18,13 @@ class CreateCompanyInfosTable extends Migration
             $table->string('CompTitle');
             $table->string('BengleTitle')->nullable();
             $table->string('CompName');
+            $table->string('ownerName');
             $table->string('BengleName')->nullable();
             $table->string('CompAddress');
             $table->string('Mobile1');
             $table->string('Mobile2')->nullable();
-            $table->string('Mobile3')->nullable();
+            $table->string('TelPhone')->nullable();
+            $table->string('Fax')->nullable();
             $table->string('Logo');
             $table->string('Website')->nullable();
             $table->string('Email');

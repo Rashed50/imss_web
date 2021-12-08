@@ -24,26 +24,28 @@ class CompanyInfoController extends Controller{
      }
  
      public function store(Request $request){
-        //  $this->validate($request,[
-        //      'BranName'=>'required|unique:brands,BranName|max:150',
-        //      'CateId'=>'required',
-        //  ],[
-        //      'BranName.required'=> 'please enter brand name',
-        //      'CateId.required'=> 'please select category name',
-        //      'BranName.max'=> 'max brand name content is 150 character',
-        //      'BranName.unique' => 'this brand name already exists! please another name',
-        //  ]);
+
+         $this->validate($request,[
+             'CompTitle'=>'required|max:150',
+             'CompName'=>'required|max:50',
+             'ownerName'=>'required|max:150',
+             'CompTitle'=>'required|max:150',
+         ],[
+             
+         ]);
  
          $insert = CompanyInfo::insertGetId([
-             'CompTitle'=>$request['title'],
-             'BengleTitle'=>$request['bengleTitle'],
-             'CompName'=>$request['name'],
-             'BengleName'=>$request['bengleName'],
-             'CompAddress'=>$request['address'],
+             'CompTitle'=>$request['CompTitle'],
+             'BengleTitle'=>$request['BengleTitle'],
+             'CompName'=>$request['CompName'],
+             'BengleName'=>$request['BengleName'],
+             'CompAddress'=>$request['CompAddress'],
              'Mobile1'=>$request['Mobile1'],
              'Mobile2'=>$request['Mobile2'],
-             'Mobile3'=>$request['Mobile3'],
-             'Logo'=>$request['Logo'],
+             'Fax'=>$request['Fax'],
+             'TelPhone'=>$request['TelPhone'],
+             'ownerName'=>$request['ownerName'],
+             'Logo'=>'',
              'Website'=>$request['Website'],
              'Email'=>$request['Email'],
              //'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
@@ -61,35 +63,35 @@ class CompanyInfoController extends Controller{
  
  
      public function update(Request $request){
-         $id= $request->BranId;
-        //  $this->validate($request,[
-        //      'BranName'=>'required|max:150|unique:brands,BranName,'.$id.',BranId',
-        //      'CateId'=>'required',
-        //  ],[
-        //      'BranName.required'=> 'please enter brand name',
-        //      'CateId.required'=> 'please select category name',
-        //      'BranName.max'=> 'max brand name content is 150 character',
-        //      'BranName.unique' => 'this brand name already exists! please another name',
-        //  ]);
+         $id= $request->CompId;
+        $this->validate($request,[
+             'CompTitle'=>'required|max:150',
+             'CompName'=>'required|max:50',
+             'ownerName'=>'required|max:150',
+             'CompTitle'=>'required|max:150',
+         ],[
+             
+         ]);
  
          $update = CompanyInfo::where('CompId',$id)->update([
-            'CompTitle'=>$request['title'],
-            'BengleTitle'=>$request['bengleTitle'],
-            'CompName'=>$request['name'],
-            'BengleName'=>$request['bengleName'],
-            'CompAddress'=>$request['address'],
-            'Mobile1'=>$request['Mobile1'],
-            'Mobile2'=>$request['Mobile2'],
-            'Mobile3'=>$request['Mobile3'],
-            'Logo'=>$request['Logo'],
-            'Website'=>$request['Website'],
-            'Email'=>$request['Email'],
-             //'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+             'CompTitle'=>$request['CompTitle'],
+             'BengleTitle'=>$request['BengleTitle'],
+             'CompName'=>$request['CompName'],
+             'BengleName'=>$request['BengleName'],
+             'CompAddress'=>$request['CompAddress'],
+             'Mobile1'=>$request['Mobile1'],
+             'Mobile2'=>$request['Mobile2'],
+             'Fax'=>$request['Fax'],
+             'TelPhone'=>$request['TelPhone'],
+             'ownerName'=>$request['ownerName'],
+             'Logo'=>'',
+             'Website'=>$request['Website'],
+             'Email'=>$request['Email']
          ]);
  
          if($update){
-             Session::flash('success','brand updated Successfully.');
-                 return redirect()->route('brand.add');
+             // Session::flash('success_up','brand updated Successfully.');
+                 return redirect()->route('company.add');
          }else{
              Session::flash('error','please try again.');
                  return redirect()->back();
