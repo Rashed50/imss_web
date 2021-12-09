@@ -35,22 +35,26 @@ class ProductPurchaseController extends Controller{
 
 
 
-    $request['TranAmount'] = 900;
+    $request['TranAmount'] = $request->PayAmount900;
     $request['TranTypeId'] = 1;
 
     $transObj = new  TransactionsController();
     $transId = $transObj->createNewTransaction($request); 
     
 
-    $request['Amount'] = 600;
+    // Credit Transaction
+    $request['Amount'] = $request->PayAmount;
     $request['TranId'] = $transId;
     $request['ChartOfAcctId'] = 1;
     $request['DrCrTypeId'] = 1;
-
     $decrObj = new  DebitCreditController();
     $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+ 
+    // Debit Transaction
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 2;
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
     
-   // dd($drcrId);
 
     $CreateBy = Auth::user()->id;
 
@@ -92,15 +96,11 @@ class ProductPurchaseController extends Controller{
       Session::flash('success','value');
       return redirect()->back();
     }
-
-
-
   }
 
 
   /* ++++++++++++ Ajax Method IN Add To Cart ++++++++++++ */
   public function productAddToCart(Request $request){
-
 
 
     $id = uniqid();

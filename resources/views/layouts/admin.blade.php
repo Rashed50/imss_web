@@ -240,15 +240,16 @@
       function addToCart(){
         /* ====== Catch Value ====== */
         var CategoryId = $('select[name="CategoryID"]').val();
-        var BranId = $('select[name="BranId"]').val();
-        var Size = $('select[name="Size"]').val();
-        var Thickness = $('select[name="Thickness"]').val();
+        var BranId = $('select[name="BranID"]').val();
+        var Size = $('select[name="SizeID"]').val();
+        var Thickness = $('select[name="ThicID"]').val();
 
+       // alert(BradId);
         // Name
         var CategoryName = $('select[name="CategoryID"] option:selected').text();
-        var BrandName = $('select[name="BranId"] option:selected').text();
-        var SizeName = $('select[name="Size"] option:selected').text();
-        var ThicknessName = $('select[name="Thickness"] option:selected').text();
+        var BrandName = $('select[name="BranID"] option:selected').text();
+        var SizeName = $('select[name="SizeID"] option:selected').text();
+        var ThicknessName = $('select[name="ThicID"] option:selected').text();
 
 
 
@@ -414,18 +415,18 @@
         });
       }
       /* ======================= Hole Seller Add to Cart ======================= */
-      function holeSelleraddToCart() {
+      function wholeSelleraddToCart() {
         /* ====== Catch Value ====== */
         var CategoryId = $('select[name="CategoryID"]').val();
-        var BranId = $('select[name="BranId"]').val();
-        var Size = $('select[name="Size"]').val();
-        var Thickness = $('select[name="Thickness"]').val();
+        var BranId = $('select[name="BranID"]').val();
+        var Size = $('select[name="SizeID"]').val();
+        var Thickness = $('select[name="ThicID"]').val();
 
         // Name
         var CategoryName = $('select[name="CategoryID"] option:selected').text();
-        var BrandName = $('select[name="BranId"] option:selected').text();
-        var SizeName = $('select[name="Size"] option:selected').text();
-        var ThicknessName = $('select[name="Thickness"] option:selected').text();
+        var BrandName = $('select[name="BranID"] option:selected').text();
+        var SizeName = $('select[name="SizeID"] option:selected').text();
+        var ThicknessName = $('select[name="ThicID"] option:selected').text();
 
 
 
