@@ -25,6 +25,8 @@ use App\Http\Controllers\admin\UnionController;
 use App\Http\Controllers\admin\LabourRateController;
 use App\Http\Controllers\Admin\DebitVoucherController;
 use App\Http\Controllers\Admin\DuePaymentController;
+use App\Http\Controllers\Admin\CreditVoucherController;
+use App\Http\Controllers\Admin\CreditTypeController;
 
 
 
@@ -54,6 +56,7 @@ Route::get('/dashboard/add', function () {
 /* ++++++++++++++++++++++ Employee ++++++++++++++++++++++ */
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('employee/add', [EmployeeInfoController::class, 'add'])->name('employee.add');
+    Route::get('employee', [EmployeeInfoController::class, 'creditFoEmployee'])->name('employee.credit');
     Route::get('employee/edit/{EmplInfoId}', [EmployeeInfoController::class, 'edit'])->name('employee.edit');
     Route::post('employee/information/store', [EmployeeInfoController::class, 'store'])->name('store-employee.information');
     Route::post('employee/information/update', [EmployeeInfoController::class, 'update'])->name('update-employee.information');
@@ -265,10 +268,22 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('product/retail-seller/purchase/store', [RetailSellerController::class, 'store'])->name('product.purchase-in.retailer');
 });
 
-/* ============ Retailer ============ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('credit/type', [CreditTypeController::class, 'add'])->name('credit.type');
+    Route::post('credit/type', [CreditTypeController::class, 'store'])->name('credit.type.store');
+});
+
+/* ============ debit-voucher ============ */
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('debit-voucher', [DebitVoucherController::class, 'index'])->name('DebitVoucher');
 });
+
+/* ============ credit-voucher ============ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('credit-voucher.add', [CreditVoucherController::class, 'index'])->name('CreitVoucher.add');
+    Route::post('credit-voucher.add', [CreditVoucherController::class, 'store'])->name('CreitVoucher.store');
+});
+
 
 
 require __DIR__.'/auth.php';

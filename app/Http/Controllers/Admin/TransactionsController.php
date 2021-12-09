@@ -9,19 +9,10 @@ use Carbon\Carbon;
 
 
 
-class TransactionsController extends Controller
-{
-    //
+class TransactionsController extends Controller{
 
 
     public function createNewTransaction(Request $request){
-
-
-
-        // $table->id('TranId');
-        // $table->date('TranDate');
-        // $table->float('TranAmount');
-        // $table->unsignedBigInteger('TranTypeId');
 
         $insert = Transactions::insertGetId([
             'TranAmount'=>$request['TranAmount'],

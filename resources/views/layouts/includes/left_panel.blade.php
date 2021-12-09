@@ -102,7 +102,7 @@
        <!-- sl-menu-link -->
        <ul class="sl-menu-sub nav flex-column">
          <li class="nav-item"><a href="{{ route('DebitVoucher') }}" class="nav-link @yield('debit-voucher')">Debit Voucher</a></li>
-         <li class="nav-item"><a href="{{ route('Product.Retailer.Seller') }}" class="nav-link @yield('credit-voucher')">Credit Voucher</a></li>
+         <li class="nav-item"><a href="{{ route('CreitVoucher.add') }}" class="nav-link @yield('credit-voucher')">Credit Voucher</a></li>
        </ul>
 
 

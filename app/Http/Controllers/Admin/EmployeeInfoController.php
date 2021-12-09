@@ -25,7 +25,11 @@ class EmployeeInfoController extends Controller{
     return $edit = EmployeeInformation::where('EmplInfoId',$id)->first();
   }
 
+
+
+
   /* ============== insert Employee Information in DATABASE ============== */
+
   public function store(Request $request){
     $this->validate($request,[
       'emp_name' => 'required'
