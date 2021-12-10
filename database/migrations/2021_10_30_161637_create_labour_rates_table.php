@@ -18,7 +18,7 @@ class CreateLabourRatesTable extends Migration
             $table->unsignedBigInteger('CateId');
             $table->unsignedBigInteger('SizeId');
             $table->string('LaboType',6); // load , unload
-            $table->integer('Amount')->default(0);
+            $table->float('Amount')->default(0);
             $table->foreign('CateId')->references('CateId')->on('categories')->onDelete('cascade');
             $table->foreign('SizeId')->references('SizeId')->on('sizes')->onDelete('cascade');
 

@@ -122,10 +122,12 @@ class ProductPurchaseController extends Controller{
       return response()->json(['success' => 'Successfully Added Cart On Item']);
   }
 
+  // Order list in Add To Card
   public function getOrderList(){
     $carts = Cart::content();
     $cartQty = Cart::count();
     $cartTotal = Cart::total();
+    
     return response()->json(array(
       'carts' => $carts,
       'cartQty' => $cartQty,

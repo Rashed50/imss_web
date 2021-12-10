@@ -462,7 +462,7 @@
               $('#Thickness').val('');
               $('#UnitPrice').val('');
               $('#Qunatity').val('');
-              $('#LabourPerUnit').val('');
+              $('#LabourPerUnit').val('0');
               //  start message
               const Toast = Swal.mixin({
                 toast: true,
@@ -495,11 +495,11 @@
             type:"GET",
             dataType:"json",
             success:function(response) {
-              $('input[id="NetAmount"]').val(response.cartTotal);
-              $('input[id="TotalCost"]').val(response.cartTotal);
-              $('input[id="temporaryField"]').val(response.cartTotal);
+             
               var rows = "";
+              var totalLabourCost = 0;
               $.each(response.carts,function(key, value){
+                totalLabourCost = totalLabourCost + value.options.holLabourPerUnit*value.qty;
                 rows += `
                 <tr>
                   <td>${value.options.holCategoryName}</td>
@@ -508,7 +508,7 @@
                   <td>${value.options.holThicknessName}</td>
                   <td>${value.price} * ${value.qty}</td>
                   <td> ${value.subtotal} </td>
-                  <td> ${value.options.holLabourPerUnit} </td>
+                  <td> ${(value.options.holLabourPerUnit * value.qty).toFixed(2)} </td>
                   <td>
 
 
@@ -530,6 +530,13 @@
 
                 `
               });
+
+              totalLabourCost = Math.round(totalLabourCost);
+              var totalCost = totalLabourCost + parseFloat(response.cartTotal);
+              $('input[id="LabourCost"]').val(totalLabourCost);
+              $('input[id="NetAmount"]').val(totalCost);
+              $('input[id="TotalCost"]').val(totalCost);
+              $('input[id="temporaryField"]').val(totalCost);
               $('#holeSellerOrderList').html(rows);
 
             },

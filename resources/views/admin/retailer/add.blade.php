@@ -163,18 +163,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('UnitPrice') ? ' has-error' : '' }}">
-                        <label class="col-sm-4 control-label">Unit Price:<span class="req_star">*</span></label>
-                        <div class="col-sm-6">
-                          <input type="text" class="form-control" name="UnitPrice" value="{{ old('UnitPrice') }}" placeholder="Unit Price">
-                          @if ($errors->has('UnitPrice'))
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('UnitPrice') }}</strong>
-                              </span>
-                          @endif
-                        </div>
-                    </div>
-
                     <div class="form-group row custom_form_group{{ $errors->has('LabourPerUnit') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Labour Cost:<span class="req_star">*</span></label>
                         <div class="col-sm-6">
@@ -182,6 +170,18 @@
                           @if ($errors->has('LabourPerUnit'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('LabourPerUnit') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row custom_form_group{{ $errors->has('UnitPrice') ? ' has-error' : '' }}">
+                        <label class="col-sm-4 control-label">Unit Price:<span class="req_star">*</span></label>
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" name="UnitPrice" value="{{ old('UnitPrice') }}" placeholder="Unit Price">
+                          @if ($errors->has('UnitPrice'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('UnitPrice') }}</strong>
                               </span>
                           @endif
                         </div>

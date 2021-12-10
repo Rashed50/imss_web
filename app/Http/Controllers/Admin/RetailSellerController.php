@@ -69,12 +69,65 @@ class RetailSellerController extends Controller{
   // product Purchase in retailer
   public function store(Request $request){
 
+   // dd($request);
     // form validation
     $this->validate($request,[
 
     ],[
 
     ]);
+
+    $request['TranAmount'] = $request->PayAmount;
+    $request['TranTypeId'] = 1;
+
+    $transObj = new  TransactionsController();
+    $transId = $transObj->createNewTransaction($request); 
+    
+   
+    // Credit Transaction
+    $request['Amount'] = $request->PayAmount;
+    $request['TranId'] = $transId;
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 1;
+    $decrObj = new  DebitCreditController();
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+ 
+    // Debit Transaction
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 2;
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+
+
+    $custObj = new  CustomerController();
+    $aCustomer = $custObj->updateRetailerCustomerBalance(null,$request->DueAmount,$request->CustName,
+    $request->TradeName,$request->ContactNo,$request->Address); 
+    
+
+
+    // "VoucharNo" => "SEL-20211210002"
+    // "TradeName" => "n/a"
+    // "CustName" => "Abul Hossain"
+    // "ContactNo" => "01796410756"
+    // "Address" => "dhaka, rajbari"
+    // "CategoryID" => "1"
+    // "BranID" => "1"
+    // "SizeID" => "1"
+    // "ThicID" => "1"
+    // "LabourPerUnit" => "0"
+    // "UnitPrice" => "10"
+    // "Qunatity" => "10"
+    // "NetAmount" => "106"
+    // "LabourCost" => "6"
+    // "CarryingBill" => "0"
+    // "TotalCost" => "106"
+    // "PayAmount" => "6"
+    // "Discount" => "0"
+    // "DueAmount" => "100"
+    // "SellingDate" => "2021-12-10"
+    // "DebitAccount" => null
+
+
+
     // insert data in database
     $insert = ProductSell::insertGetId([
       'Commission' => $request->Discount,
@@ -88,13 +141,15 @@ class RetailSellerController extends Controller{
       'CarryingCost' => $request->CarryingBill,
       'CreateById' => Auth::user()->id,
       'TranId' => 1,
-      'CustId' => $request->TradeName,
+      'CustId' => $aCustomer,
       'created_at' => Carbon::now(),
     ]);
-
+   
     // insert sale record
     if($insert){
       /* Hole Seller Record */
+      $stockConObj = new  StockController();
+
       $carts = Cart::content();
       foreach ($carts as $data) {
         ProductSellRecord::insert([
@@ -107,6 +162,12 @@ class RetailSellerController extends Controller{
           'SizeId' => $data->options->holSize,
           'ThicId' => $data->options->holThickness,
         ]);
+
+        $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
+          $data->options->holCategoryId,$data->options->holBranId
+          ,$data->options->holSize,$data->options->holThickness,$data->qty*(-1)); 
+
+
       }
       // Cart Destroy
       Cart::destroy();

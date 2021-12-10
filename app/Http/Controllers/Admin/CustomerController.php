@@ -212,23 +212,39 @@ class CustomerController extends Controller{
             $aCust = CustomerInfo::where('CustId',$customerId)->update([
                 'DueAmount'=>$aCust->DueAmount,
             ]);
+    }
 
+    public function updateRetailerCustomerBalance($customerId,$amount,$customerName,$cusTrade,$phone,$address)
+    {
 
-
-
-            // $insert = CustomerInfo::where('status',true)->where('CustId',$id)->update([
-            //     'CustName'=>$request['CustName'],
-            //     'TradeName'=>$request['TradeName'],
-            //     'ContactNumber'=>$request['ContactNumber'],
-            //     'Address'=>$request['Address'],
-            //     'DueAmount'=>$request['DueAmount'],
-            //     'InitialDue'=>$request['InitialDue'],
-            //     'FatherName'=>$request['FatherName'],
-            //     'NID'=>$request['NID'],
-            //     // 'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
-            // ]);
-
-
+            if($customerId != null){ 
+            $aCust = CustomerInfo::where('CustId',$customerId)->first();
+            $aCust->DueAmount = $aCust->DueAmount + $amount;
+           
+          return  $aCust = CustomerInfo::where('CustId',$customerId)->update([
+                'DueAmount'=>$aCust->DueAmount,
+            ]);
+        }else {
+            $creator = Auth::user()->id;
+          return  $insert = CustomerInfo::insertGetId([
+                'CustName'=>$customerName,
+                'TradeName'=>$cusTrade,
+                'CustTypeId' => 2, 
+                'ContactNumber'=>$phone,
+                'Address'=>$address,
+                'DueAmount'=>$amount,
+                'InitialDue'=>$amount,
+                'FatherName'=>'',
+                'NID'=>'',
+                'Photo'=>'',
+                'CreateById'=>$creator,
+                "DiviId" => 1,
+                "DistId" => 1,
+                "ThanId" => 1,
+                "UnioId" => 1,
+                'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            ]);
+        }
     }
 
 

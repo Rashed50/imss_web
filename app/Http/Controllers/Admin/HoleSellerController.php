@@ -110,10 +110,6 @@ class HoleSellerController extends Controller{
       'created_at' => Carbon::now(),
     ]);
 
-    $custObj = new  CustomerController();
-    $aCustomer = $custObj->updateCustomerBalance($request->TradeName,$request->DueAmount); 
-    
-
     /* Hole Seller Record */
 
     $stockConObj = new  StockController();
@@ -172,6 +168,8 @@ class HoleSellerController extends Controller{
 
 
 
+  
+
 
 
 
@@ -182,6 +180,7 @@ class HoleSellerController extends Controller{
   */
 
 
+    
 
 
 
