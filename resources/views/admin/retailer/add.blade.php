@@ -178,7 +178,7 @@
                     <div class="form-group row custom_form_group{{ $errors->has('LabourPerUnit') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Labour Cost:<span class="req_star">*</span></label>
                         <div class="col-sm-6">
-                          <input type="text" class="form-control" name="LabourPerUnit" value="{{ old('LabourPerUnit') }}" placeholder="Per Unit">
+                          <input type="text" class="form-control" id="LabourPerUnit" name="LabourPerUnit" value="{{ old('LabourPerUnit') }}" placeholder="Per Unit">
                           @if ($errors->has('LabourPerUnit'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('LabourPerUnit') }}</strong>
@@ -401,6 +401,37 @@
     </div>
   </div>
   {{-- script --}}
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('select[name="SizeID"]').on('change', function(){
+            var SizeId=$(this).val();
+            var CateId=$('select[name="CategoryID"]').val();
+
+            // alert(SizeId+'-'+CateId);
+
+            $.ajax({
+                url: "{{ route('Category.sizeWise.LabourCost')}}",
+                type: "POST",
+                dataType: "json",
+                data: {SizeId:SizeId, CateId:CateId},
+                success: function(data){
+                    if (data=='') {
+                        $('#LabourPerUnit').empty();
+                        $('#LabourPerUnit').val(0);
+                    }else{
+                         $('#LabourPerUnit').empty();
+                        $('#LabourPerUnit').val(data.Amount);
+                    }
+                }
+            })
+        });
+
+    })
+
+</script>
+
+
   <script type="text/javascript">
     // Attend Labour Cost
     function addedLabourCost(){
