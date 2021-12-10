@@ -41,27 +41,7 @@ class ProductPurchaseController extends Controller{
     // form validation
 
 
-
-    $request['TranAmount'] = $request->PayAmount;
-    $request['TranTypeId'] = 1;
-
-    $transObj = new  TransactionsController();
-    $transId = $transObj->createNewTransaction($request); 
-    
-
-    // Credit Transaction
-    $request['Amount'] = $request->PayAmount;
-    $request['TranId'] = $transId;
-    $request['ChartOfAcctId'] = 1;
-    $request['DrCrTypeId'] = 1;
-    $decrObj = new  DebitCreditController();
-    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
  
-    // Debit Transaction
-    $request['ChartOfAcctId'] = 1;
-    $request['DrCrTypeId'] = 2;
-    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
-    
 
     $CreateBy = Auth::user()->id;
 
@@ -81,7 +61,11 @@ class ProductPurchaseController extends Controller{
       'CreateById' => $CreateBy,
       'created_at' => Carbon::now(),
     ]);
-
+ 
+    // update Vendor Due Amount
+    $vendorObj = new  VendorController();
+    $aVendor = $vendorObj->updateVendorBalance($request->VendorName,$request->PayAmount); 
+    
     // insert Cart Content
     $stockConObj = new  StockController();
     $carts = Cart::content();
@@ -96,11 +80,12 @@ class ProductPurchaseController extends Controller{
               'SizeId' => $data->options->Size,
               'ThicId' => $data->options->Thickness,
             ]);
-          $drcrId = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
+           $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
             $data->options->CategoryId,$data->options->BranId
             ,$data->options->Size,$data->options->Thickness,$data->qty); 
 
     }
+
     // Cart Destroy
     Cart::destroy();
     // Redirect Back

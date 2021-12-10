@@ -68,6 +68,29 @@ class HoleSellerController extends Controller{
 
 
   public function productSellStore(Request $request){
+
+
+    $request['TranAmount'] = $request->PayAmount;
+    $request['TranTypeId'] = 1;
+
+    $transObj = new  TransactionsController();
+    $transId = $transObj->createNewTransaction($request); 
+    
+
+    // Credit Transaction
+    $request['Amount'] = $request->PayAmount;
+    $request['TranId'] = $transId;
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 1;
+    $decrObj = new  DebitCreditController();
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+ 
+    // Debit Transaction
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 2;
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+    
+
     /* From Validation */
     $createBy = Auth::user()->id;
     /* Insert Data IN Database */
@@ -82,25 +105,35 @@ class HoleSellerController extends Controller{
       'VoucharNo' => $request->VoucharNo,
       'CarryingCost' => $request->CarryingBill,
       'CreateById' => $createBy,
-      'TranId' => 1,
+      'TranId' => $transId,
       'CustId' => $request->TradeName,
       'created_at' => Carbon::now(),
     ]);
 
+    $custObj = new  CustomerController();
+    $aCustomer = $custObj->updateCustomerBalance($request->TradeName,$request->DueAmount); 
+    
+
     /* Hole Seller Record */
+
+    $stockConObj = new  StockController();
 
     $carts = Cart::content();
     foreach ($carts as $data) {
-      ProductSellRecord::insert([
-        'Quantity' => $data->qty,
-        'Amount' => $data->price,
-        'LabourCost' => $data->holLabourPerUnit,
-        'ProdSellId' => $insert,
-        'CateId' => $data->options->holCategoryId,
-        'BranId' => $data->options->holBranId,
-        'SizeId' => $data->options->holSize,
-        'ThicId' => $data->options->holThickness,
-      ]);
+        ProductSellRecord::insert([
+          'Quantity' => $data->qty,
+          'Amount' => $data->price,
+          'LabourCost' => $data->holLabourPerUnit,
+          'ProdSellId' => $insert,
+          'CateId' => $data->options->holCategoryId,
+          'BranId' => $data->options->holBranId,
+          'SizeId' => $data->options->holSize,
+          'ThicId' => $data->options->holThickness,
+        ]);
+        $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
+          $data->options->holCategoryId,$data->options->holBranId
+          ,$data->options->holSize,$data->options->holThickness,$data->qty*(-1)); 
+
     }
     // Cart Destroy
     Cart::destroy();

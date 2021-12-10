@@ -185,4 +185,40 @@ class VendorController extends Controller{
 
     }
 
+
+
+
+
+    public function updateVendorBalance($vendorId,$amount)
+    {
+            $aVendor = Vendor::where('VendId',$vendorId)->first();
+            $aVendor->Balance = $aVendor->Balance + $amount;
+            $aVendor = Vendor::where('VendId',$vendorId)->update([
+                'Balance'=>$aVendor->Balance,
+            ]);
+    }
+
+    public function updateProductStockByCategoryBrandSizeThicknessId($categoryId,$branId,$sizeId,$thicId,$quantity){
+
+        $Stock = Stock::where('CateId',$categoryId)->where('BranId',$branId)->where('SizeId',$sizeId)->where('ThicId',$thicId)->first();
+
+            if($Stock != null){  
+                    $id= $Stock->StocId;
+                    $totalStock= $Stock->StocValue + $quantity;
+                    $sameUpdate = Stock::where('StocId',$id)->update([
+                        'StocValue'=>$totalStock,
+                    ]);
+            }else {
+
+                $insert = Stock::insertGetId([
+                    'CateId'=>$categoryId,
+                    'BranId'=>$branId,
+                    'SizeId'=>$sizeId,
+                    'ThicId'=>$thicId,
+                    'StocValue'=>$quantity
+                ]);
+            }
+    }
+
+
 }

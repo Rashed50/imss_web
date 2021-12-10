@@ -222,7 +222,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('PurchaseDate') ? ' has-error' : '' }}">
                                     <label class="col-sm-5 control-label">Purchase Date:<span class="req_star">*</span></label>
                                     <div class="col-sm-7">
-                                        <input type="text" id="datepicker" class="form-control" name="PurchaseDate" value="{{ date('m/d/Y', strtotime(Carbon\Carbon::now()))}}">
+                                        <input type="text" id="datepicker" class="form-control" name="PurchaseDate" value="{{ date('Y-m-d', strtotime(Carbon\Carbon::now()))}}">
                                         @if ($errors->has('PurchaseDate'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('PurchaseDate') }}</strong>

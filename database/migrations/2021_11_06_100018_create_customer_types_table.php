@@ -17,6 +17,13 @@ class CreateCustomerTypesTable extends Migration
             $table->id('CusTypeId');
             $table->string('TypeName',50)->nullable();
         });
+
+        DB::table('customer_types')->insert([
+            'TypeName' => 'ReSeller'
+         ]);
+         DB::table('customer_types')->insert([
+            'TypeName' => 'User'
+         ]);
     }
 
     /**

@@ -109,11 +109,14 @@ class CustomerController extends Controller{
             'CateName.required'=> 'please enter customer name',
             'CateName.max'=> 'max customer name content is 200 character',
         ]);
+
+      //  dd($request);
+
         $creator= Auth::user()->id;
         $insert = CustomerInfo::insertGetId([
             'CustName'=>$request['CustName'],
             'TradeName'=>$request['TradeName'],
-            'Customer_type' => $request['CustTypeId'],
+            'CustTypeId' => $request['CustTypeId'],
             'ContactNumber'=>$request['ContactNumber'],
             'Address'=>$request['Address'],
             'DueAmount'=>$request['DueAmount'],
@@ -122,8 +125,15 @@ class CustomerController extends Controller{
             'NID'=>$request['NID'],
             'Photo'=>'',
             'CreateById'=>$creator,
+            "DiviId" => $request['DiviId'],
+            "DistId" => $request['DistId'],
+            "ThanId" => $request['ThanId'],
+            "UnioId" => $request['UnioId'],
             // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
+ 
+
+
         if($request->hasFile('Photo')){
             $image = $request->file('Photo');
             $imageName = 'customer_'.$request->CustName.'.'.$image->getClientOriginalExtension();
@@ -192,5 +202,35 @@ class CustomerController extends Controller{
         }
 
     }
+
+
+    public function updateCustomerBalance($customerId,$amount)
+    {
+            $aCust = CustomerInfo::where('CustId',$customerId)->first();
+            $aCust->DueAmount = $aCust->DueAmount + $amount;
+           
+            $aCust = CustomerInfo::where('CustId',$customerId)->update([
+                'DueAmount'=>$aCust->DueAmount,
+            ]);
+
+
+
+
+            // $insert = CustomerInfo::where('status',true)->where('CustId',$id)->update([
+            //     'CustName'=>$request['CustName'],
+            //     'TradeName'=>$request['TradeName'],
+            //     'ContactNumber'=>$request['ContactNumber'],
+            //     'Address'=>$request['Address'],
+            //     'DueAmount'=>$request['DueAmount'],
+            //     'InitialDue'=>$request['InitialDue'],
+            //     'FatherName'=>$request['FatherName'],
+            //     'NID'=>$request['NID'],
+            //     // 'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            // ]);
+
+
+    }
+
+
 
 }
