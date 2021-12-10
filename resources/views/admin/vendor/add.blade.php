@@ -81,7 +81,7 @@
                         <div class="form-group row custom_form_group{{ $errors->has('OpeningDate') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Opening Date:</label>
                             <div class="col-sm-7">
-                            <input type="text" class="form-control" id="datepicker" name="OpeningDate" value="{{(@$data)? date('d-F-Y',strtotime(@$data->OpeningDatedate)):date('m/d/Y',strtotime(Carbon\Carbon::now())) }}" required autocomplete="off">
+                            <input type="text" class="form-control" id="datepicker" name="OpeningDate" value="{{(@$data)? date('m/d/Y',strtotime(@$data->OpeningDatedate)):date('m/d/Y',strtotime(Carbon\Carbon::now())) }}" required autocomplete="off">
                             @if ($errors->has('OpeningDate'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('OpeningDate') }}</strong>

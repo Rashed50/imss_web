@@ -284,6 +284,8 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('credit-voucher.add', [CreditVoucherController::class, 'store'])->name('CreitVoucher.store');
 });
 
-
-
+/* ============ Category & size wise labour cost ============ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::post('category-size/wise/labour/cost', [AjaxController::class, 'getLabourCost'])->name('Category.sizeWise.LabourCost');
+});
 require __DIR__.'/auth.php';
