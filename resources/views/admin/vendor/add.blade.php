@@ -149,39 +149,52 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Select Item 1:</span></label>
+                        <div class="form-group row custom_form_group{{ $errors->has('BankId') ? ' has-error' : '' }}">
+                            <label class="col-sm-3 control-label">Bank Name:</span></label>
                             <div class="col-sm-7">
-                               <select class="form-control" name="ChartOfAcctId">
-                                   <option>Select Item 1</option>
-                                   <option>Select Item 2</option>
-                                   <option>Select Item 3</option>
-                                   <option>Select Item 4</option>
+                               <select class="form-control" name="BankId">
+                                   <option value="">Select Bank</option>
+                                   @foreach($allBank as $bank)
+                                    <option value="{{$bank->BankId}}">{{$bank->BankName}}</option>
+                                   @endforeach
                                </select>
-                                @if ($errors->has('ChartOfAcctId'))
+                                @if ($errors->has('BankId'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('ChartOfAcctId') }}</strong>
+                                        <strong>{{ $errors->first('BankId') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                          <div class="form-group row custom_form_group{{ $errors->has('AccountNo') ? ' has-error' : '' }}">
+                            <label class="col-sm-3 control-label">Account No.:</span></label>
+                            <div class="col-sm-7">
+                               <input class="form-control" type="text" name="AccountNo">
+                                @if ($errors->has('AccountNo'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('AccountNo') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
-                         <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Select Item 2:</span></label>
+                         <div class="form-group row custom_form_group{{ $errors->has('AcctTypeId') ? ' has-error' : '' }}">
+                            <label class="col-sm-3 control-label">Account Type:</span></label>
                             <div class="col-sm-7">
-                               <select class="form-control" name="ChartOfAcctId">
-                                   <option>Select Item 1</option>
-                                   <option>Select Item 2</option>
-                                   <option>Select Item 3</option>
-                                   <option>Select Item 4</option>
+                               <select class="form-control" name="AcctTypeId">
+                                   <option>Select Type</option>
+                                   @foreach($allType as $AType)
+                                    <option value="{{$AType->AcctTypeId}}">{{$AType->AcctTypeName}}</option>
+                                   @endforeach
                                </select>
-                                @if ($errors->has('ChartOfAcctId'))
+                                @if ($errors->has('AcctTypeId'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('ChartOfAcctId') }}</strong>
+                                        <strong>{{ $errors->first('AcctTypeId') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
+
+                      
 
                     </div>
                 </div>
@@ -210,29 +223,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-7">
-                            @if(Session::has('success_soft'))
-                              <div class="alert alert-success alertsuccess" role="alert">
-                                 <strong>Successfully!</strong> delete Vendor information.
-                              </div>
-                            @endif
-
-                            @if(Session::has('success_update'))
-                              <div class="alert alert-success alertsuccess" role="alert">
-                                 <strong>Successfully!</strong> update Vendor information.
-                              </div>
-                            @endif
-
-                            @if(Session::has('error'))
-                              <div class="alert alert-warning alerterror" role="alert">
-                                 <strong>Opps!</strong> please try again.
-                              </div>
-                            @endif
-                        </div>
-                        <div class="col-md-2"></div>
-                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">

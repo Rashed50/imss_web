@@ -63,9 +63,9 @@ class DivisionController extends Controller{
             'DiviName.max'=> 'max division name content is 50 character',
             'DiviName.unique' => 'this division already exists! please another name',
         ]);
-
+        $Division= strtolower($request->DiviName);
         $update = Division::where('DiviId',$id)->update([
-            'DiviName'=>$request['DiviName']
+            'DiviName'=>$Division,
         ]);
 
         if($update){

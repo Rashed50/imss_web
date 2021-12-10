@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-class AccountTypeController extends Controller
-{
-    //
+use App\Models\AccountType;
+class AccountTypeController extends Controller{
+    
+    public function getAll(){
+        return $type= AccountType::orderBy('AcctTypeId','ASC')->get();
+    }
 }

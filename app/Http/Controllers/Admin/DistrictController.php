@@ -50,9 +50,10 @@ class DistrictController extends Controller{
             'DistName.unique' => 'this district already exists! please another name',
         ]);
         
+        $District= strtolower($request->DistName);
 
         $insert = District::insertGetId([
-            'DistName'=>$request['DistName'],
+            'DistName'=>$District,
             'DiviId'=>$request['DiviId']
             // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
@@ -82,9 +83,10 @@ class DistrictController extends Controller{
         ]);
 
 
-
+        $District= strtolower($request->DistName);
+        
         $update = District::where('DistId',$id)->update([
-            'DistName'=>$request['DistName'],
+            'DistName'=>$District,
             'DiviId'=>$request['DiviId']
         ]);
 
