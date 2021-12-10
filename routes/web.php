@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\DebitVoucherController;
 use App\Http\Controllers\Admin\DuePaymentController;
 use App\Http\Controllers\Admin\CreditVoucherController;
 use App\Http\Controllers\Admin\CreditTypeController;
+use App\Http\Controllers\Admin\SellerController;
 
 
 
@@ -282,6 +283,11 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('credit-voucher.add', [CreditVoucherController::class, 'index'])->name('CreitVoucher.add');
     Route::post('credit-voucher.add', [CreditVoucherController::class, 'store'])->name('CreitVoucher.store');
+});
+
+/* ============ credit-voucher ============ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('sell-info', [SellerController::class, 'index'])->name('sell.info');
 });
 
 /* ============ Category & size wise labour cost ============ */

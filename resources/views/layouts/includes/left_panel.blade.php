@@ -89,6 +89,7 @@
        <ul class="sl-menu-sub nav flex-column">
          <li class="nav-item"><a href="{{ route('Product.Hole.Seller') }}" class="nav-link @yield('whole-sell')">Whole Sell</a></li>
          <li class="nav-item"><a href="{{ route('Product.Retailer.Seller') }}" class="nav-link @yield('retrail-sell')">Retrail Sell</a></li>
+         <li class="nav-item"><a href="{{ route('sell.info') }}" class="nav-link @yield('sell-info')">Sell Info</a></li>
        </ul>
 
        <!-- Voucher -->
