@@ -140,7 +140,7 @@
               }
           });
           // Brand Wise productSize
-          $('#BranId_val[name="BranID"]').on('change', function(){
+          $('select[name="BranID"]').on('change', function(){
               var BranId = $(this).val();
               if(BranId) {
                   $.ajax({

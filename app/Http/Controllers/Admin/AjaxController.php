@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\District;
 use App\Models\Thana;
 use App\Models\Union;
+use App\Models\LabourRate;
 
 class AjaxController extends Controller{
     
@@ -27,5 +28,14 @@ class AjaxController extends Controller{
       $union = Union::where('ThanId',$ThanId)->orderBy('UnioId','DESC')->get();
       return json_encode($union);
     }
+
+    public function getLabourCost(Request $request){
+      $SizeId= $request->SizeId;
+      $CateId= $request->CateId;
+      $LabourCost = LabourRate::with('cateInfo','sizeInfo')
+     ->where('SizeId',$SizeId)->where('CateId',$CateId)->first();
+      return json_encode($LabourCost);
+    }
+
 
 }

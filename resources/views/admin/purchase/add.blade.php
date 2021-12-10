@@ -87,11 +87,22 @@
                           @endif
                         </div>
                     </div>
+                    <div class="form-group row custom_form_group{{ $errors->has('UnitLabourCost') ? ' has-error' : '' }}">
+                        <label class="col-sm-4 control-label">Unit Labour Cost:<span class="req_star">*</span></label>
+                        <div class="col-sm-8">
+                          <input type="number" class="form-control" name="UnitLabourCost" id="UnitLabourCost" value="{{ old('UnitLabourCost') }}" placeholder="Input Amount">
+                          @if ($errors->has('UnitLabourCost'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('UnitLabourCost') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
 
                     <div class="form-group row custom_form_group{{ $errors->has('UnitPrice') ? ' has-error' : '' }}">
                         <label class="col-sm-4 control-label">Unit Price:<span class="req_star">*</span></label>
                         <div class="col-sm-8">
-                          <input type="text" class="form-control" name="UnitPrice" value="{{ old('UnitPrice') }}" placeholder="Input Amount">
+                          <input type="number" class="form-control" name="UnitPrice" value="{{ old('UnitPrice') }}" placeholder="Input Amount">
                           @if ($errors->has('UnitPrice'))
                               <span class="invalid-feedback" role="alert">
                                   <strong>{{ $errors->first('UnitPrice') }}</strong>
@@ -129,7 +140,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('NetAmount') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Net Amount:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="NetAmount" name="NetAmount" value="{{ old('NetAmount') }}" required>
+                                        <input type="number" placeholder="Input Amount" class="form-control" id="NetAmount" name="NetAmount" value="{{ old('NetAmount') }}" required>
                                         @if ($errors->has('NetAmount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('NetAmount') }}</strong>
@@ -141,7 +152,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('LabourCost') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Labour Cost:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="LabourCost" name="LabourCost" onkeyup="addedLabourCost()" value="{{ old('LabourCost') }}" required>
+                                        <input type="number" placeholder="Input Amount" class="form-control" id="LabourCost" name="LabourCost" onkeyup="addedLabourCost()" value="{{ old('LabourCost') }}" required>
                                         @if ($errors->has('LabourCost'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('LabourCost') }}</strong>
@@ -153,7 +164,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('CarryingBill') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Carrying Bill:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="CarryingBill" name="CarryingBill" onkeyup="CarryingBillCost()" value="{{ old('CarryingBill') }}" required>
+                                        <input type="number" placeholder="Input Amount" class="form-control" id="CarryingBill" name="CarryingBill" onkeyup="CarryingBillCost()" value="{{ old('CarryingBill') }}" required>
                                         @if ($errors->has('CarryingBill'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('CarryingBill') }}</strong>
@@ -168,7 +179,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('Discount') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Discount:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="discountpersent" name="Discount" value="{{ old('Discount') }}" onkeyup="DiscountAmount()" required>
+                                        <input type="number" placeholder="Input Amount" class="form-control" id="discountpersent" name="Discount" value="{{ old('Discount') }}" onkeyup="DiscountAmount()" required>
                                         @if ($errors->has('Discount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('Discount') }}</strong>
@@ -180,7 +191,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('PayAmount') ? ' has-error' : '' }}">
                                     <label class="col-sm-6 control-label">Pay PayAmount:<span class="req_star">*</span></label>
                                     <div class="col-sm-6">
-                                        <input type="text" placeholder="Input Amount" class="form-control" id="PayAmount" name="PayAmount" value="{{ old('PayAmount') }}" required>
+                                        <input type="number" placeholder="Input Amount" class="form-control" id="PayAmount" name="PayAmount" value="{{ old('PayAmount') }}" required>
                                         @if ($errors->has('PayAmount'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('PayAmount') }}</strong>
@@ -353,6 +364,37 @@
 
   </div>
   {{-- script --}}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[name="SizeID"]').on('change', function(){
+            var SizeId=$(this).val();
+            var CateId=$('select[name="CategoryID"]').val();
+
+            // alert(SizeId+'-'+CateId);
+
+            $.ajax({
+                url: "{{ route('Category.sizeWise.LabourCost')}}",
+                type: "POST",
+                dataType: "json",
+                data: {SizeId:SizeId, CateId:CateId},
+                success: function(data){
+                    if (data=='') {
+                        $('#UnitLabourCost').empty();
+                        $('#UnitLabourCost').val(0);
+                    }else{
+                         $('#UnitLabourCost').empty();
+                        $('#UnitLabourCost').val(data.Amount);
+                    }
+                }
+            })
+        });
+
+    })
+
+</script>
+
+
   <script type="text/javascript">
     // Attend Labour Cost
     function addedLabourCost(){
