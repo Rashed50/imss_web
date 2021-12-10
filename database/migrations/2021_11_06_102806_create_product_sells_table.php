@@ -23,8 +23,8 @@ class CreateProductSellsTable extends Migration
             $table->float('LabourCost',11,2)->default(0);
             $table->date('SellingDate')->nullable();
             $table->string('VoucharNo',15)->default(0);
-            $table->float('CarryingCost',11,2)->default(0);;
-            $table->boolean('status')->nullable();
+            $table->float('CarryingCost',11,2)->default(0);
+            $table->boolean('status')->default(1);
             $table->unsignedBigInteger('CreateById');
             $table->timestamps();
 
@@ -32,8 +32,8 @@ class CreateProductSellsTable extends Migration
             $table->unsignedBigInteger('CustId');
 
 
-          //  $table->foreign('TranId')->references('TranId')->on('transactions')->onDelete('cascade');
-         //    $table->foreign('CustId')->references('CustId')->on('customer_infos')->onDelete('cascade');
+            $table->foreign('TranId')->references('TranId')->on('transactions');//->onDelete('cascade');
+            $table->foreign('CustId')->references('CustId')->on('customer_infos');//->onDelete('cascade');
         });
     }
 
