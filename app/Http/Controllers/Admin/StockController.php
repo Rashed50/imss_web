@@ -49,7 +49,7 @@ class StockController extends Controller{
         $allStock= $this->getAll();
         $CateOBJ= new CategoryController();
         $allCate = $CateOBJ->getAll();
-
+       
         $data = $allStock->where('StocId',$id)->firstOrFail();
         return view('admin.stock.add', compact('data','allCate', 'allStock'));
     }
@@ -92,18 +92,23 @@ class StockController extends Controller{
            
         }else{
 
-            $id= $Stock->StocId;
-            $totalStock= $Stock->StocValue+$request->StocValue;
-            $sameUpdate = Stock::where('StocId',$id)->update([
-                'StocValue'=>$totalStock,
-            ]);
-            if($sameUpdate){
-                Session::flash('success','stock amount update Successfully');
-                    return redirect()->route('stock.add');
-            }else{
-                Session::flash('error','please try again.');
-                    return redirect()->back();
-            } 
+            Session::flash('error','This Product Already Exist.');
+              return redirect()->back();
+
+            // $id= $Stock->StocId;
+            // $totalStock= $Stock->StocValue+$request->StocValue;
+            // $sameUpdate = Stock::where('StocId',$id)->update([
+            //     'StocValue'=>$totalStock,
+            // ]);
+            // if($sameUpdate){
+            //     Session::flash('success','stock amount update Successfully');
+            //         return redirect()->route('stock.add');
+            // }else{
+            //     Session::flash('error','please try again.');
+            //         return redirect()->back();
+            // } 
+
+
         }
 
     }
@@ -111,12 +116,14 @@ class StockController extends Controller{
 
     public function update(Request $request){
         $id= $request->StocId;
+
+     
         $this->validate($request,[
             'StocValue'=>'required|max:30',
-            'CateId'=>'required',
-            'BranId'=>'required',
-            'SizeId'=>'required',
-            'ThicId'=>'required',
+            'CategoryID'=>'required',
+            'BranID'=>'required',
+            'SizeID'=>'required',
+            'ThicID'=>'required',
         ],[
             'StocValue.required'=> 'please enter stock amount',
             'CateId.required'=> 'please select category name',
@@ -126,6 +133,7 @@ class StockController extends Controller{
             'StocValue.max'=> 'max stock amount content is 30 number',
         ]);
 
+       
         $update = Stock::where('StocId',$id)->update([
             'CateId'=>$request['CategoryID'],
             'BranId'=>$request['BranID'],
@@ -134,7 +142,6 @@ class StockController extends Controller{
             'StocValue'=>$request['StocValue'],
             'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
-
         if($update){
             Session::flash('success','stock amount update Successfully.');
                 return redirect()->route('stock.add');
@@ -158,7 +165,6 @@ class StockController extends Controller{
     public function updateProductStockByStockId($stockId,$quantity)
     {
             $Stock = Stock::where('StocId',$stockId)->first();
-
             $id = $Stock->StocId;
             $totalStock= $Stock->StocValue+$request->StocValue;
             $sameUpdate = Stock::where('StocId',$id)->update([
@@ -170,11 +176,22 @@ class StockController extends Controller{
 
         $Stock = Stock::where('CateId',$categoryId)->where('BranId',$branId)->where('SizeId',$sizeId)->where('ThicId',$thicId)->first();
 
-        $id= $Stock->StocId;
-        $totalStock= $Stock->StocValue+$request->StocValue;
-        $sameUpdate = Stock::where('StocId',$id)->update([
-            'StocValue'=>$totalStock,
-        ]);
+            if($Stock != null){  
+                    $id= $Stock->StocId;
+                    $totalStock= $Stock->StocValue + $quantity;
+                    $sameUpdate = Stock::where('StocId',$id)->update([
+                        'StocValue'=>$totalStock,
+                    ]);
+            }else {
+
+                $insert = Stock::insertGetId([
+                    'CateId'=>$categoryId,
+                    'BranId'=>$branId,
+                    'SizeId'=>$sizeId,
+                    'ThicId'=>$thicId,
+                    'StocValue'=>$quantity
+                ]);
+            }
     }
 
 }

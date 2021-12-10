@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DebitCreditController;
+use App\Http\Controllers\Admin\StockController;
+
+
+
+
 
 
 use Illuminate\Http\Request;
@@ -78,20 +83,23 @@ class ProductPurchaseController extends Controller{
     ]);
 
     // insert Cart Content
+    $stockConObj = new  StockController();
     $carts = Cart::content();
     foreach ($carts as $data) {
-      PurchaseRecord::insert([
-        'Quantity' => $data->qty,
-        'UnitPrice' => $data->price,
-        'Amount' => $data->subtotal,
-        'ProdPurcId' => $insert,
-        'CateId' => $data->options->CategoryId,
-        'BranId' => $data->options->BranId,
-        'SizeId' => $data->options->Size,
-        'ThicId' => $data->options->Thickness,
-      ]);
+            PurchaseRecord::insert([
+              'Quantity' => $data->qty,
+              'UnitPrice' => $data->price,
+              'Amount' => $data->subtotal,
+              'ProdPurcId' => $insert,
+              'CateId' => $data->options->CategoryId,
+              'BranId' => $data->options->BranId,
+              'SizeId' => $data->options->Size,
+              'ThicId' => $data->options->Thickness,
+            ]);
+          $drcrId = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
+            $data->options->CategoryId,$data->options->BranId
+            ,$data->options->Size,$data->options->Thickness,$data->qty); 
 
-      
     }
     // Cart Destroy
     Cart::destroy();

@@ -114,7 +114,7 @@
                     </div>
 
                     <div class="form-group row custom_form_group{{ $errors->has('StocValue') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Stock Name:<span class="req_star">*</span></label>
+                        <label class="col-sm-3 control-label">Initial Stock :<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                           <input type="number" placeholder="Stock Value" class="form-control" id="StocValue" name="StocValue" value="{{(@$data)?@$data->StocValue:old('StocValue')}}" required>
                           <input type="hidden" name="StocId" value="{{@$data->StocId ?? ''}}">
