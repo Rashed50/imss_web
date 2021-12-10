@@ -198,7 +198,7 @@
                           @endif
                         </div>
                         <div class="col-md-4">
-                          <p style="margin-top:10px; display:inline" class="btn btn-primary waves-effect" onclick="holeSelleraddToCart()">Add To Cart</p>
+                          <p style="margin-top:10px; display:inline" class="btn btn-primary waves-effect" onclick="wholeSelleraddToCart()">Add To Cart</p>
                         </div>
                     </div>
                 </div>

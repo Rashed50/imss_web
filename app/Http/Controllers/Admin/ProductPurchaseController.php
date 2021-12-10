@@ -30,27 +30,33 @@ class ProductPurchaseController extends Controller{
     return $all = ProductPurchase::where('status',true)->orderBy('ProdPurcId','DESC')->get();
   }
 
+
+  // Produt Purchase Form Save Button Action
   public function store(Request $request){
     // form validation
 
 
 
-    $request['TranAmount'] = 900;
+    $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
 
     $transObj = new  TransactionsController();
     $transId = $transObj->createNewTransaction($request); 
     
 
-    $request['Amount'] = 600;
+    // Credit Transaction
+    $request['Amount'] = $request->PayAmount;
     $request['TranId'] = $transId;
     $request['ChartOfAcctId'] = 1;
     $request['DrCrTypeId'] = 1;
-
     $decrObj = new  DebitCreditController();
     $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+ 
+    // Debit Transaction
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 2;
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
     
-   // dd($drcrId);
 
     $CreateBy = Auth::user()->id;
 
@@ -84,6 +90,8 @@ class ProductPurchaseController extends Controller{
         'SizeId' => $data->options->Size,
         'ThicId' => $data->options->Thickness,
       ]);
+
+      
     }
     // Cart Destroy
     Cart::destroy();
@@ -92,15 +100,11 @@ class ProductPurchaseController extends Controller{
       Session::flash('success','value');
       return redirect()->back();
     }
-
-
-
   }
 
 
   /* ++++++++++++ Ajax Method IN Add To Cart ++++++++++++ */
   public function productAddToCart(Request $request){
-
 
 
     $id = uniqid();
