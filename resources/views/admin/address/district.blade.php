@@ -40,7 +40,7 @@
                   </div>
                   <div class="card-body card_form">
 
-                    <div class="form-group row custom_form_group{{ $errors->has('DistName') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('DiviId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Division Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                           <select class="form-control" id="DiviId" name="DiviId">
@@ -49,9 +49,9 @@
                               <option value="{{$div->DiviId}}" {{(@$data->DiviId==$div->DiviId)?'selected': ''}}>{{$div->DiviName}}</option>
                               @endforeach
                           </select>
-                          @if ($errors->has('DistName'))
+                          @if ($errors->has('DiviId'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('DistName') }}</strong>
+                                  <strong>{{ $errors->first('DiviId') }}</strong>
                               </span>
                           @endif
                         </div>

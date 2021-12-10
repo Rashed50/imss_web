@@ -37,8 +37,9 @@ class DivisionController extends Controller{
             'DiviName.unique' => 'this division already exists! please another name',
         ]);
 
+        $Division= strtolower($request->DiviName);
         $insert = Division::insertGetId([
-            'DiviName'=>$request['DiviName'],
+            'DiviName'=>$Division,
             // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
@@ -62,9 +63,9 @@ class DivisionController extends Controller{
             'DiviName.max'=> 'max division name content is 50 character',
             'DiviName.unique' => 'this division already exists! please another name',
         ]);
-
+        $Division= strtolower($request->DiviName);
         $update = Division::where('DiviId',$id)->update([
-            'DiviName'=>$request['DiviName']
+            'DiviName'=>$Division,
         ]);
 
         if($update){

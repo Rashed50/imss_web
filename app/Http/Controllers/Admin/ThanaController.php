@@ -39,31 +39,40 @@ class ThanaController extends Controller{
     public function store(Request $request){
       // dd($request->all());
         $this->validate($request,[
-            'ThanaName'=>'required|unique:thanas,ThanaName|max:50',
+            'ThanaName'=>'required|max:50',
             'DistId'=>'required',
             'DiviId'=>'required'
         ],[
             'DiviId.required'=> 'please enter division name',
             'DistId.required'=> 'please enter district name',
-            'ThanaName.required'=> 'please enter district name',
-            'ThanaName.max'=> 'max district name content is 50 character',
-            'ThanaName.unique' => 'this district already exists! please another name',
+            'ThanaName.required'=> 'please enter thana name',
+            'ThanaName.max'=> 'max thana name content is 50 character',
         ]);
         
+        $Thana= strtolower($request->ThanaName);
 
-        $insert = Thana::insertGetId([
-            'ThanaName'=>$request['ThanaName'],
-            'DistId'=>$request['DistId'],
-            'DiviId'=>$request['DiviId']
-            // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
-
-        if($insert){
-            Session::flash('success','new Thana name store Successfully.');
-                return redirect()->route('thana.add');
-        }else{
-            Session::flash('error','please try again.');
+        $availabl=Thana::where('DistId',$request['DistId'])
+        ->where('DiviId',$request['DiviId'])->where('ThanaName',$Thana)
+        ->count();
+        
+        if($availabl){
+            Session::flash('error','this Thana already exists! please another name.');
                 return redirect()->back();
+        }else{
+            $insert = Thana::insertGetId([
+                'ThanaName'=>$Thana,
+                'DistId'=>$request['DistId'],
+                'DiviId'=>$request['DiviId']
+                // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            ]);
+
+            if($insert){
+                Session::flash('success','new Thana name store Successfully.');
+                    return redirect()->route('thana.add');
+            }else{
+                Session::flash('error','please try again.');
+                    return redirect()->back();
+            }
         }
 
     }
@@ -74,20 +83,20 @@ class ThanaController extends Controller{
         $id= $request->ThanId;
 
         $this->validate($request,[
-            'ThanaName'=>'required|max:50|unique:thanas,ThanaName,'.$id.',ThanId',
+            'ThanaName'=>'required|max:50',
             'DistId'=>'required',
             'DiviId'=>'required'
         ],[
             'DiviId.required'=> 'please enter division name',
             'ThanaName.required'=> 'please enter Thana name',
             'ThanaName.max'=> 'max Thana name content is 50 character',
-            'ThanaName.unique' => 'this Thana already exists! please another name',
         ]);
 
 
+        $Thana= strtolower($request->ThanaName);
 
         $update = Thana::where('ThanId',$id)->update([
-            'ThanaName'=>$request['ThanaName'],
+            'ThanaName'=>$Thana,
             'DistId'=>$request['DistId'],
             'DiviId'=>$request['DiviId']
         ]);

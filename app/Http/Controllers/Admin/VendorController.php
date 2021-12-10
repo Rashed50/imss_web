@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\ChartOfAccountController;
+use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\AccountTypeController;
 
 use Illuminate\Http\Request;
 use App\Models\Vendor;
@@ -26,14 +28,26 @@ class VendorController extends Controller{
  
 
     public function add(){
-       $allVendor = Vendor::where('ActiveStatus',true)->orderBy('VendId','DESC')->get();
-        return view('admin.vendor.add', compact('allVendor'));
+       $allVendor= $this->getAll();
+
+       $AcTypeOBJ= new AccountTypeController;
+       $allType=$AcTypeOBJ->getAll();
+
+       $bankOBJ= new BankController;
+       $allBank= $bankOBJ->getAll();
+        return view('admin.vendor.add', compact('allVendor', 'allBank', 'allType'));
     }
 
     public function edit($id){
+        $allVendor= $this->getAll();
+
+        $AcTypeOBJ= new AccountTypeController;
+        $allType=$AcTypeOBJ->getAll();
+
+        $bankOBJ= new BankController;
+        $allBank= $bankOBJ->getAll();
         $data = Vendor::where('ActiveStatus',true)->where('VendId',$id)->firstOrFail();
-        $allVendor = Vendor::where('ActiveStatus',true)->orderBy('VendId','DESC')->get();
-        return view('admin.vendor.add', compact('data', 'allVendor'));
+        return view('admin.vendor.add', compact('data', 'allVendor', 'allBank', 'allType'));
     }
 
     public function store(Request $request){
@@ -74,15 +88,11 @@ class VendorController extends Controller{
         ]);
 
 
-
-        
-
-
         $request['ChartOfAcctName'] = $request['VendName'];
         $request['ChartOfAcctNumber'] = '38439842';
-        $request['BankAcctNumber'] = '4983242';
-        $request['BankId'] = 1;
-        $request['AcctTypeId'] = 1;
+        $request['BankAcctNumber'] = $request['AccountNo'];
+        $request['BankId'] = $request['BankId'];
+        $request['AcctTypeId'] = $request['AcctTypeId'];
         $request['BankAcctTypeId'] =1 ;
 
        $chartOfAcc = new  ChartOfAccountController();

@@ -38,36 +38,44 @@ class UnionController extends Controller{
     public function store(Request $request){
       // dd($request->all());
         $this->validate($request,[
-            'UnioName'=>'required|unique:unions,UnioName|max:50',
+            'UnioName'=>'required|max:50',
             'DistId'=>'required',
             'DiviId'=>'required',
             'ThanId'=>'required'
         ],[
             'DiviId.required'=> 'please enter division name',
-            // 'DistId.required'=> 'please enter district name',
+            'DistId.required'=> 'please enter district name',
             'ThanId.required'=> 'please enter thana name',
-            'UnioName.required'=> 'please enter district name',
-            'UnioName.max'=> 'max district name content is 50 character',
-            'UnioName.unique' => 'this district already exists! please another name',
+            'UnioName.required'=> 'please enter union name',
+            'UnioName.max'=> 'max union name content is 50 character',
         ]);
         
+        $Union= strtolower($request->UnioName);
 
-        $insert = Union::insertGetId([
-            'UnioName'=>$request['UnioName'],
-            'DistId'=>$request['DistId'],
-            'DiviId'=>$request['DiviId'],
-            'ThanId'=>$request['ThanId']
-            // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
+        $count=Union::where('DistId',$request['DistId'])->where('DiviId',$request['DiviId'])
+        ->where('ThanId',$request['ThanId'])->where('UnioName',$Union)->count();
 
-        if($insert){
-            Session::flash('success','new Thana name store Successfully.');
-                return redirect()->route('union.add');
+        if($count){
+             Session::flash('error','this union already exists! please another name.');
+                    return redirect()->back();
         }else{
-            Session::flash('error','please try again.');
-                return redirect()->back();
-        }
+            $insert = Union::insertGetId([
+                'UnioName'=>$Union,
+                'DistId'=>$request['DistId'],
+                'DiviId'=>$request['DiviId'],
+                'ThanId'=>$request['ThanId']
+                // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            ]);
 
+            if($insert){
+                Session::flash('success','new union name store Successfully.');
+                    return redirect()->route('union.add');
+            }else{
+                Session::flash('error','please try again.');
+                    return redirect()->back();
+            }
+        }
+        
     }
 
 
@@ -76,7 +84,7 @@ class UnionController extends Controller{
         $id= $request->UnioId;
 
         $this->validate($request,[
-            'UnioName'=>'required|max:50|unique:unions,UnioName,'.$id.',UnioId',
+            'UnioName'=>'required|max:50',
             'DistId'=>'required',
             'DiviId'=>'required',
             'ThanId'=>'required'
@@ -84,15 +92,15 @@ class UnionController extends Controller{
             'DiviId.required'=> 'please enter division name',
             'DistId.required'=> 'please enter district name',
             'ThanId.required'=> 'please enter thana name',
-            'UnioName.required'=> 'please enter Thana name',
-            'UnioName.max'=> 'max Thana name content is 50 character',
-            'UnioName.unique' => 'this Thana already exists! please another name',
+            'UnioName.required'=> 'please enter union name',
+            'UnioName.max'=> 'max union name content is 50 character',
         ]);
 
 
+        $Union= strtolower($request->UnioName);
 
         $update = Union::where('UnioId',$id)->update([
-            'UnioName'=>$request['UnioName'],
+            'UnioName'=>$Union,
             'DistId'=>$request['DistId'],
             'DiviId'=>$request['DiviId'],
             'ThanId'=>$request['ThanId']
