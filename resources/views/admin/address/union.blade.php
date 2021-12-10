@@ -61,6 +61,7 @@
                         <div class="col-sm-7">
 
                             <select class="form-control" name="DistId" id="DistId">
+                                <option value="">Select District</option>
                                 <option value="{{@$data->DistId}}">{{@$data->District->DistName ??''}}</option>
                             </select>
                             @if ($errors->has('DistId'))
@@ -75,6 +76,7 @@
                         <div class="col-sm-7">
 
                             <select class="form-control" name="ThanId" id="ThanId">
+                                <option value="">Select Thana</option>
                                 <option value="{{@$data->ThanId}}">{{@$data->Thana->ThanaName ??''}}</option>
                             </select>
                             @if ($errors->has('ThanId'))
