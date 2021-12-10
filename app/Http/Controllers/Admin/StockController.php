@@ -92,13 +92,13 @@ class StockController extends Controller{
            
         }else{
 
-              $id= $Stock->StocId;
-              $totalStock= $Stock->StocValue+$request->StocValue;
-             $sameUpdate = Stock::where('StocId',$id)->update([
+            $id= $Stock->StocId;
+            $totalStock= $Stock->StocValue+$request->StocValue;
+            $sameUpdate = Stock::where('StocId',$id)->update([
                 'StocValue'=>$totalStock,
             ]);
             if($sameUpdate){
-                Session::flash('success','stock amount update Successfully with same category brand size & thickness.');
+                Session::flash('success','stock amount update Successfully');
                     return redirect()->route('stock.add');
             }else{
                 Session::flash('error','please try again.');
@@ -143,6 +143,38 @@ class StockController extends Controller{
                 return redirect()->back();
         }
 
+    }
+
+
+
+
+
+
+
+
+
+// Database Operation Methods
+
+    public function updateProductStockByStockId($stockId,$quantity)
+    {
+            $Stock = Stock::where('StocId',$stockId)->first();
+
+            $id = $Stock->StocId;
+            $totalStock= $Stock->StocValue+$request->StocValue;
+            $sameUpdate = Stock::where('StocId',$id)->update([
+                'StocValue'=>$totalStock,
+            ]);
+    }
+
+    public function updateProductStockByCategoryBrandSizeThicknessId($categoryId,$branId,$sizeId,$thicId,$quantity){
+
+        $Stock = Stock::where('CateId',$categoryId)->where('BranId',$branId)->where('SizeId',$sizeId)->where('ThicId',$thicId)->first();
+
+        $id= $Stock->StocId;
+        $totalStock= $Stock->StocValue+$request->StocValue;
+        $sameUpdate = Stock::where('StocId',$id)->update([
+            'StocValue'=>$totalStock,
+        ]);
     }
 
 }

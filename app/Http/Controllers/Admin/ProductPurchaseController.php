@@ -30,12 +30,14 @@ class ProductPurchaseController extends Controller{
     return $all = ProductPurchase::where('status',true)->orderBy('ProdPurcId','DESC')->get();
   }
 
+
+  // Produt Purchase Form Save Button Action
   public function store(Request $request){
     // form validation
 
 
 
-    $request['TranAmount'] = $request->PayAmount900;
+    $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
 
     $transObj = new  TransactionsController();
@@ -88,6 +90,8 @@ class ProductPurchaseController extends Controller{
         'SizeId' => $data->options->Size,
         'ThicId' => $data->options->Thickness,
       ]);
+
+      
     }
     // Cart Destroy
     Cart::destroy();
