@@ -10,17 +10,23 @@ use App\Http\Controllers\Admin\TransactionsController;
 use App\Http\Controllers\Admin\DebitCreditController;
 use App\Models\CrType;
 use App\Models\CrVoucher;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
 
 class CreditVoucherController extends Controller{
 
-    
+    public function getAll(){
+        return $data= CrVoucher::orderBy('CrVoucId','DESC')->get();
+      }
+
+      
     public function index(){
+        $allDrVouchar = $this->getAll();
+
         $TType=CrType::orderBy('CrTypeName','ASC')->get();
         $getAllEmployees= EmployeeInformation::orderBy('EmplInfoId','DESC')->get();
-       return view('admin.voucher.credit.add', compact('getAllEmployees', 'TType'));
+       return view('admin.voucher.credit.add', compact('getAllEmployees', 'TType', 'allDrVouchar'));
       }
 
 

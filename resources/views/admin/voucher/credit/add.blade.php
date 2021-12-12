@@ -178,15 +178,34 @@
                             <div class="table-responsive">
                                 <table id="datatable1" class="table responsive mb-0">
                                     <thead>
-                                        <tr>
-
+                                    <tr>
                                             <th>SL NO.</th>
-                                            <th>Category Name</th>
+                                            <th>Transaction Name</th>
+                                            <th>CrType</th>
+                                            <th>ExpenseDate</th>
+                                            <th>Amount</th>
+                                            <th>DebitedTold</th>
+                                            <th>CreditedFromId</th>
+                                            <th>VoucherId</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     
+                                    @foreach($allDrVouchar as $key=> $vouchar)
+                                     <tr>
+                                         <td>{{$key+1}}</td>
+                                         <td>{{$vouchar->TransactionId}}</td>
+                                         <td>{{$vouchar->CrTypeId}}</td>
+                                         <td>{{$vouchar->ExpenseDate}}</td>
+                                         <td>{{$vouchar->Amount}}</td>
+                                         <td>{{$vouchar->DebitedTold}}</td>
+                                         <td>{{$vouchar->CreditedFromId}}</td>
+                                         <td>{{$vouchar->VoucherId}}</td>
+                                         <td>
+                                             
+                                         </td>
+                                     </tr>
+                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -200,16 +219,20 @@
   </div>
   
 <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" style="width:600px!important">
+      <div class="modal-content tx-size-sm">
+         <div class="modal-header pd-x-20">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">credit Type Add</h6>
+                
+            </div>
+        <div class="modal-body pd-20">
             <form action="{{route('credit.type.store')}}" method="post">
                 @csrf
                 <div class="form-group row custom_form_group">
                     <label class="col-sm-3 control-label">Name</label>
                     <div class="col-sm-7">
-                    <input type="text" placeholder="Credit Type Name" class="form-control" name="CrTypeName" required>
+                    <input type="text" placeholder="credit Type Name" class="form-control" name="CrTypeName" required>
                     </div>
                 </div>
             

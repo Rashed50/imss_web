@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\EmployeeInfoController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\ChartOfAccountController;
+use App\Http\Controllers\Admin\TransactionsController;
+use App\Http\Controllers\Admin\DebitCreditController;
 use App\Models\CustomerPayment;
 use App\Models\CustomerInfo;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerPaymentController extends Controller{
   /*
@@ -40,6 +43,25 @@ class CustomerPaymentController extends Controller{
     $currentDue = ( $request->CurrentDue - ($request->PayAmount + $request->Discount) );
     $creator = Auth::user()->id;
     /* data insert */
+
+
+
+    $request['TranAmount'] = 900;
+    $request['TranTypeId'] = 1;
+
+    $transObj = new  TransactionsController();
+    $transId = $transObj->createNewTransaction($request); 
+    
+
+    $request['Amount'] = 600;
+    $request['TranId'] = $transId;
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 1;
+
+    $decrObj = new  DebitCreditController();
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+
+
     $insert = CustomerPayment::insert([
       'PaymentDate' => $request->PaymentDate,
       'PaymentAmount' => $request->PayAmount,
@@ -50,7 +72,7 @@ class CustomerPaymentController extends Controller{
       'CreateById' => $creator,
       'CustId' => $request->Customer,
       'TranId' => 1,
-      'created_at' => Carbon::now(),
+      'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
     ]);
     // Redirect Back
     if($insert){

@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\DuePaymentController;
 use App\Http\Controllers\Admin\CreditVoucherController;
 use App\Http\Controllers\Admin\CreditTypeController;
 use App\Http\Controllers\Admin\SellerController;
+use App\Http\Controllers\Admin\DebitTypeController;
 
 
 
@@ -274,10 +275,12 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('credit/type', [CreditTypeController::class, 'store'])->name('credit.type.store');
 });
 
-/* ============ debit-voucher ============ */
+
 Route::middleware('auth')->prefix('dashboard')->group(function () {
-    Route::get('debit-voucher', [DebitVoucherController::class, 'index'])->name('DebitVoucher');
+    Route::get('debit/type', [DebitTypeController::class, 'add'])->name('debit.type');
+    Route::post('debit/type', [DebitTypeController::class, 'store'])->name('debit.type.store');
 });
+
 
 /* ============ credit-voucher ============ */
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -285,7 +288,13 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('credit-voucher.add', [CreditVoucherController::class, 'store'])->name('CreitVoucher.store');
 });
 
-/* ============ credit-voucher ============ */
+/* ============ debit-voucher ============ */
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('debit-voucher.add', [DebitVoucherController::class, 'index'])->name('DebitVoucher.add');
+    Route::post('debit-voucher.add', [DebitVoucherController::class, 'store'])->name('DebitVoucher.store');
+});
+
+/* ============ cseller controller ============ */
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('sell-info', [SellerController::class, 'index'])->name('sell.info');
 });

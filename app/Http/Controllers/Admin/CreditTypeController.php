@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CrType;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class CreditTypeController extends Controller{
 
