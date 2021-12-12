@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\CreditVoucherController;
 use App\Http\Controllers\Admin\CreditTypeController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\DebitTypeController;
+use App\Http\Controllers\Admin\SellReturnController;
 
 
 
@@ -298,6 +299,14 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('sell-info', [SellerController::class, 'index'])->name('sell.info');
 });
+
+
+
+// ========######### Sell Return ##########===========
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('sell-return', [SellReturnController::class, 'index'])->name('sell.return');
+});
+
 
 /* ============ Category & size wise labour cost ============ */
 Route::middleware('auth')->prefix('dashboard')->group(function () {

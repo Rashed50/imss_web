@@ -153,17 +153,57 @@
             </div>
         </div>
       </form>
-
-
-
     </div>
     <div class="col-md-2"></div>
   </div>
+
+  {{-- Employee information --}}
+  <div class="row" style="margin-top: 20px">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+              <table id="datatable1" class="table responsive mb-0">
+                  <thead>
+                      <tr>
+                          <th>SL</th>
+                          <th>Date</th>
+                          <th>Customer Name</th>
+                          <th>Payment</th>
+                          <th>Discount</th>
+                          <th>Money Recive</th>
+                          <th>Manage</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($getAllPaymentCustomer as $data)
+                      <tr>
+                       <td>{{ $loop->iteration }}</td>
+                       <td>{{ $data->PaymentDate }}</td>
+                       <td>{{ $data->Customer->CustName ?? ''}}</td>
+                       <td>{{ $data->PaymentAmount }}</td>
+                       <td>{{ $data->Discount }}</td>
+                       <td>{{ $data->Employee->Name ?? '' }}</td>
+                       <td>
+                         <a href="{{ route('customer.payment-edit',$data->CustPaymId ) }}" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
+                         <a href="{{ route('customer.payment-delete',$data->CustPaymId ) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                       </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{-- Employee information --}}
+
 </div>
 {{-- holeseller --}}
 <script type="text/javascript">
   function holeseller(){
-    {{-- ajax call --}}
+    // {{-- ajax call --}}
     $.ajax({
         url: "{{ route('holeseller-wise.customer') }}",
         type:"GET",
@@ -185,7 +225,7 @@
   }
 
   function retailer(){
-    {{-- ajax call --}}
+    // {{-- ajax call --}}
     $.ajax({
         url: "{{ route('retailer-wise.customer') }}",
         type:"GET",
@@ -205,7 +245,7 @@
     });
     /* ++++++++++++++++++ */
   }
-  {{-- Select Value --}}
+  // {{-- Select Value --}}
   $(document).ready(function(){
 
     $('select[name="Customer"]').on('change', function(){
@@ -231,7 +271,7 @@
   });
 
 
-  {{-- end script tags --}}
+  // {{-- end script tags --}}
 </script>
 
 @endsection

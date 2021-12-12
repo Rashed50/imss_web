@@ -37,6 +37,25 @@ class CustomerPaymentController extends Controller{
     return Redirect()->back()->with($notification);
   }
 
+
+
+  public function add(){
+    $getAllPaymentCustomer = $this->getAllPaymentCustomer();
+    // Call Employee Controller
+    $employeeOBJ = new EmployeeInfoController();
+    $employee = $employeeOBJ->getAllEmployees();
+    return view('admin.customer.payment.add',compact('employee','getAllPaymentCustomer'));
+  }
+
+  public function edit($id){
+    $getAllPaymentCustomer = $this->getAllPaymentCustomer();
+    $data = $this->findPaymentCustomer($id);
+    // Call Employee Controller
+    $employeeOBJ = new EmployeeInfoController();
+    $employee = $employeeOBJ->getAllEmployees();
+    return view('admin.customer.payment.edit',compact('employee','data', 'getAllPaymentCustomer'));
+  }
+
   /* ============== insert Employee Information in DATABASE ============== */
   public function store(Request $request){
     // dd($request->all());
@@ -92,6 +111,23 @@ class CustomerPaymentController extends Controller{
   public function update(Request $request){
     $currentDue = ( $request->CurrentDue - ($request->PayAmount + $request->Discount) );
     $creator = Auth::user()->id;
+
+    
+    $request['TranAmount'] = 900;
+    $request['TranTypeId'] = 1;
+
+    $transObj = new  TransactionsController();
+    $transId = $transObj->createNewTransaction($request); 
+    
+
+    $request['Amount'] = 600;
+    $request['TranId'] = $transId;
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 1;
+
+    $decrObj = new  DebitCreditController();
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+
     /* data insert */
     $update = CustomerPayment::where('CustPaymId',$request->id)->update([
       'PaymentDate' => $request->PaymentDate,
@@ -128,21 +164,7 @@ class CustomerPaymentController extends Controller{
   |--------------------------------------------------------------------------
   */
 
-  public function add(){
-    $getAllPaymentCustomer = $this->getAllPaymentCustomer();
-    // Call Employee Controller
-    $employeeOBJ = new EmployeeInfoController();
-    $employee = $employeeOBJ->getAllEmployees();
-    return view('admin.customer.payment.add',compact('employee','getAllPaymentCustomer'));
-  }
-
-  public function edit($id){
-    $data = $this->findPaymentCustomer($id);
-    // Call Employee Controller
-    $employeeOBJ = new EmployeeInfoController();
-    $employee = $employeeOBJ->getAllEmployees();
-    return view('admin.customer.payment.edit',compact('employee','data'));
-  }
+ 
 
 
 

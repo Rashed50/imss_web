@@ -104,7 +104,10 @@
                             <label class="col-sm-3 control-label">Collected by:<span class="req_star">*</span></label>
                             <div class="col-sm-7">
                               <select class="form-control" name="">
-                                  <option value="{{Auth::user()->id}}">{{Auth::user()->name}}</option>
+                                <option value=""> Selecte Name</option>
+                              @foreach ($employee as $emp)
+                                <option value="{{ $emp->EmplInfoId }}">{{ $emp->Name }}</option>
+                              @endforeach
                               </select>
                               @if ($errors->has('collected'))
                                   <span class="invalid-feedback" role="alert">
@@ -142,7 +145,7 @@
 {{-- holeseller --}}
 <script type="text/javascript">
   function holeseller(){
-    {{-- ajax call --}}
+    // {{-- ajax call --}}
     $.ajax({
         url: "{{ route('holeseller-wise.customer') }}",
         type:"GET",
@@ -164,7 +167,7 @@
   }
 
   function retailer(){
-    {{-- ajax call --}}
+    // {{-- ajax call --}}
     $.ajax({
         url: "{{ route('retailer-wise.customer') }}",
         type:"GET",
@@ -184,7 +187,7 @@
     });
     /* ++++++++++++++++++ */
   }
-  {{-- Select Value --}}
+  // {{-- Select Value --}}
   $(document).ready(function(){
 
     $('select[name="Customer"]').on('change', function(){
@@ -207,7 +210,7 @@
 
   });
 
-  {{-- end script tags --}}
+  // {{-- end script tags --}}
 </script>
 
 @endsection

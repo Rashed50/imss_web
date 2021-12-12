@@ -63,6 +63,14 @@
         </div>
        </a>
 
+       
+       <a href="{{ route('sell.return') }}" class="sl-menu-link">
+        <div class="sl-menu-item">
+          <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+          <span class="menu-item-label">Sell Return</span>
+        </div>
+       </a>
+
         <a href="{{ route('labour.add') }}" class="sl-menu-link">
         <div class="sl-menu-item">
           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
@@ -102,7 +110,7 @@
        </a>
        <!-- sl-menu-link -->
        <ul class="sl-menu-sub nav flex-column">
-         <li class="nav-item"><a href="{{ route('DebitVoucher') }}" class="nav-link @yield('debit-voucher')">Debit Voucher</a></li>
+         <li class="nav-item"><a href="{{ route('DebitVoucher.add') }}" class="nav-link @yield('debit-voucher')">Debit Voucher</a></li>
          <li class="nav-item"><a href="{{ route('CreitVoucher.add') }}" class="nav-link @yield('credit-voucher')">Credit Voucher</a></li>
        </ul>
 
