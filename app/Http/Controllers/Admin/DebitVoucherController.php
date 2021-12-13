@@ -41,6 +41,23 @@ public function getAll(){
     return view('admin.voucher.debit.index', compact('getAllEmployees', 'TType', 'allDrVouchar'));
   }
 
+
+  public function edit( $id){
+    dd('ookk');
+     $allDrVouchar = $this->getAll();
+     $data=  $allDrVouchar->where('DrVoucId',$id)->first();
+     $TType=DrType::orderBy('DrTypeName','ASC')->get();
+     $getAllEmployees= EmployeeInformation::orderBy('EmplInfoId','DESC')->get();
+
+     return response()->json(array(
+       'data'=>$data,
+       'getAllEmployees'=>$getAllEmployees,
+       'TType'=>$TType,
+       'allDrVouchar'=>$allDrVouchar,
+     ));
+    
+   }
+
   public function store(Request $request){
 
     $request['TranAmount'] = 900;
@@ -60,8 +77,8 @@ public function getAll(){
 
     $insert= DrVoucher::insertGetId([
         'TransactionId'=>$transId,
-        'DrTypeId'=>1,
-        'ExpenseDate'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+        'DrTypeId'=>$request['Purpose'],
+        'ExpenseDate'=>$request['Date'],
         'Amount'=>$request['Amount'],
         'DebitedTold'=>1,
         'CreditedFromId'=>$request['CreditedFromId'],
