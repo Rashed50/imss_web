@@ -30,7 +30,18 @@ class CreditVoucherController extends Controller{
       }
 
 
+      public function edit($id){
+        $allDrVouchar = $this->getAll();
+        $data=$allDrVouchar->where('CrVoucId',$id)->first();
+
+        $TType=CrType::orderBy('CrTypeName','ASC')->get();
+        $getAllEmployees= EmployeeInformation::orderBy('EmplInfoId','DESC')->get();
+       return view('admin.voucher.credit.add', compact('getAllEmployees', 'TType', 'allDrVouchar', 'data'));
+      }
+
+
     public function store(Request $request){
+        // dd($request->all());
 
         $request['TranAmount'] = 900;
         $request['TranTypeId'] = 1;
@@ -50,7 +61,7 @@ class CreditVoucherController extends Controller{
         $insert= CrVoucher::insertGetId([
             'TransactionId'=>$transId,
             'CrTypeId'=>$request['CrTypeId'],
-            'ExpenseDate'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            'ExpenseDate'=>$request['Date'],
             'Amount'=>$request['Amount'],
             'DebitedTold'=>1,
             'CreditedFromId'=>$request['Credited'],

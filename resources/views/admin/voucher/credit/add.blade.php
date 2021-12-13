@@ -46,13 +46,13 @@
                            <label class="col-sm-3 control-label">Credit Type:<span class="req_star">*</span></label> 
                             <div class="col-md-3">
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="CreditType" id="Employee" value="Employee" checked {{(@$data->CreditType=='Employee')? 'checked':''}}>
+                                <input class="form-check-input" type="radio" name="CreditType" id="Employee" value="1" checked {{(@$data->CreditType=='1')? 'checked':''}}>
                                 <label class="form-check-label" for="Employee">Employee</label>
                               </div>
                             </div>
                             <div class="col-md-3">
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="CreditType" id="Transaction" value="Transaction"{{(@$data->CreditType=='Transaction')? 'checked':''}}>
+                                <input class="form-check-input" type="radio" name="CreditType" id="Transaction" value="2"{{(@$data->CreditType=='2')? 'checked':''}}>
                                 <label class="form-check-label" for="Transaction">Transaction</label>
                               </div>
                             </div>
@@ -86,7 +86,7 @@
                                <select name="CrTypeId" class="form-control">
                                <option>Select Purpose</option>
                                @foreach($TType as $type)
-                               <option value="{{$type->CrTypeId}}">{{$type->CrTypeName}}</option>
+                               <option value="{{$type->CrTypeId}}" {{ @$data->CrTypeId==$type->CrTypeId ? 'selected' : ''}}>{{$type->CrTypeName}}</option>
                                @endforeach
                             </select>
                             @if ($errors->has('CrTypeId'))
@@ -102,7 +102,7 @@
                         <div class="form-group row custom_form_group{{ $errors->has('VoucharNo') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Vouchar No:<span class="req_star">*</span></label>
                             <div class="col-sm-7">
-                            <input type="text" placeholder="Vouchar No" class="form-control" id="VoucharNo" name="VoucharNo" value="{{(@$data)?@$data->VoucharNo:old('VoucharNo')}}" required>
+                            <input type="text" placeholder="Vouchar No" class="form-control" id="VoucharNo" name="VoucharNo" value="{{(@$data)?@$data->VoucherId:old('VoucharNo')}}" required>
                             @if ($errors->has('VoucharNo'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('VoucharNo') }}</strong>
@@ -113,7 +113,7 @@
                         <div class="form-group row custom_form_group{{ $errors->has('Amount') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Amount :</label>
                             <div class="col-sm-7">
-                            <input type="text" placeholder="Amount is 0.00 TK" class="form-control" id="Amount" name="Amount" value="{{(@$data)?@$data->Amount:old('Amount')}}" required>
+                            <input type="text" placeholder="Amount" class="form-control" id="Amount" name="Amount" value="{{(@$data)?@$data->Amount:old('Amount')}}" required>
                             @if ($errors->has('Amount'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('Amount') }}</strong>
@@ -124,7 +124,7 @@
                         <div class="form-group row custom_form_group{{ $errors->has('Date') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Date:</label>
                             <div class="col-sm-7">
-                            <input type="text" class="form-control" id="datepicker" name="Date" value="{{(@$data)? date('d-F-Y',strtotime(@$data->date)):date('d-F-Y',strtotime(Carbon\Carbon::now())) }}" required autocomplete="off">
+                            <input type="text" class="form-control" id="datepicker" name="Date" value="{{(@$data)? date('Y-m-d',strtotime(@$data->ExpenseDate)):date('Y-m-d',strtotime(Carbon\Carbon::now())) }}" required autocomplete="off">
                             @if ($errors->has('Date'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('Date') }}</strong>
@@ -199,11 +199,12 @@
                                          <td>{{$vouchar->ExpenseDate}}</td>
                                          <td>{{$vouchar->Amount}}</td>
                                          <td>{{$vouchar->DebitedTold}}</td>
-                                         <td>{{$vouchar->CreditedFromId}}</td>
+                                         <td>{{$vouchar->CreditedFromId}}</td>     
                                          <td>{{$vouchar->VoucherId}}</td>
                                          <td>
-                                             
-                                         </td>
+                                            <a href="{{ route('CreitVoucher.edit',$vouchar->CrVoucId) }}" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
+                                            <a href="{{ route('CreitVoucher.delete',$vouchar->CrVoucId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                                        </td>
                                      </tr>
                                      @endforeach
                                     </tbody>

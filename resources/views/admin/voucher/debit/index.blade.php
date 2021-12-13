@@ -103,11 +103,16 @@
                       </div>
                   </div>
 
-                  <div class="form-group row custom_form_group">
+                  <div class="form-group row custom_form_group {{ $errors->has('Date') ? ' has-error' : '' }}">
                       <label class="col-sm-4 control-label">Date:<span class="req_star">*</span></label>
                       <div class="col-sm-7">
                       <input type="date" class="form-control" name="Date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
-                      </div>
+                      @if ($errors->has('Date'))
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $errors->first('Date') }}</strong>
+                          </span>
+                      @endif
+                    </div>
                   </div>
 
                   <div class="form-group row custom_form_group{{ $errors->has('CreditedFromId') ? ' has-error' : '' }}">
@@ -220,8 +225,9 @@
                                          <td>{{$vouchar->CreditedFromId}}</td>
                                          <td>{{$vouchar->VoucherId}}</td>
                                          <td>
-                                             
-                                         </td>
+                                            <a href="#" title="edit"><i class="fas fa-edit fa-lg edit_icon" data-toggle="modal" data-target="#AddNewVoucher" id="{{$vouchar->DrVoucId}}"  onclick="updateDrVouchar(this.id)"></i></a>
+                                            <a href="{{ route('DebitVoucher.delete',$vouchar->DrVoucId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                                        </td>
                                      </tr>
                                      @endforeach
                                     </tbody>

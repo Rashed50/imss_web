@@ -747,6 +747,23 @@
 
 
       });
+      
+  </script>
+
+
+  <script>
+    function updateDrVouchar(id){
+        // alert(id);
+        $.ajax({
+          type: 'GET',
+          url: "debit-voucher/edit/"+id,
+          dataType: 'json',
+          success: function(data){
+            console.log(data);
+          }
+        })
+      }
+      updateDrVouchar();
   </script>
   </body>
 </html>
