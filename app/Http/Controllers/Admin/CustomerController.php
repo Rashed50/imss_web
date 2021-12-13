@@ -204,6 +204,7 @@ class CustomerController extends Controller{
     }
 
 
+    // Wholeseller customer
     public function updateCustomerBalance($customerId,$amount)
     {
             $aCust = CustomerInfo::where('CustId',$customerId)->first();
@@ -214,14 +215,15 @@ class CustomerController extends Controller{
             ]);
     }
 
+    // 
     public function updateRetailerCustomerBalance($customerId,$amount,$customerName,$cusTrade,$phone,$address)
     {
 
-            if($customerId != null){ 
+        if($customerId != null){ 
             $aCust = CustomerInfo::where('CustId',$customerId)->first();
             $aCust->DueAmount = $aCust->DueAmount + $amount;
            
-          return  $aCust = CustomerInfo::where('CustId',$customerId)->update([
+              return  $aCust = CustomerInfo::where('CustId',$customerId)->update([
                 'DueAmount'=>$aCust->DueAmount,
             ]);
         }else {
