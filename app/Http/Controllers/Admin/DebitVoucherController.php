@@ -42,10 +42,9 @@ public function getAll(){
   }
 
 
-  public function edit( $id){
-    dd('ookk');
+  public function edit(Request $request){
      $allDrVouchar = $this->getAll();
-     $data=  $allDrVouchar->where('DrVoucId',$id)->first();
+     $data=  DrVoucher::where('DrVoucId',$request->id)->first();
      $TType=DrType::orderBy('DrTypeName','ASC')->get();
      $getAllEmployees= EmployeeInformation::orderBy('EmplInfoId','DESC')->get();
 
@@ -97,6 +96,46 @@ public function getAll(){
 
 }
 
+
+
+public function update(Request $request){
+
+  $request['TranAmount'] = 900;
+  $request['TranTypeId'] = 1;
+
+  $transObj = new  TransactionsController();
+  $transId = $transObj->createNewTransaction($request); 
+  
+
+  $request['Amount'] = 600;
+  $request['TranId'] = $transId;
+  $request['ChartOfAcctId'] = 1;
+  $request['DrCrTypeId'] = 1;
+
+  $decrObj = new  DebitCreditController();
+  $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+
+  $update= DrVoucher::where('DrVoucId',$request->id)->update([
+      'TransactionId'=>$transId,
+      'DrTypeId'=>$request['Purpose'],
+      'ExpenseDate'=>$request['Date'],
+      'Amount'=>$request['Amount'],
+      'DebitedTold'=>1,
+      'CreditedFromId'=>$request['CreditedFromId'],
+      'VoucherId'=>$request['VoucharNo'],
+      'CreateById'=>1,
+  ]);
+
+
+  if ($update) {
+      Session::flash('success', 'successfully update data information');
+      return redirect()->back();
+  }else{
+      Session::flash('error', 'Please try again');
+      return redirect()->back();
+  }
+
+}
 
 
 

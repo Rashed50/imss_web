@@ -755,15 +755,29 @@
     function updateDrVouchar(id){
         // alert(id);
         $.ajax({
-          type: 'GET',
-          url: "debit-voucher/edit/"+id,
+          type: 'POST',
+          url: "{{ route('DebitVoucher.edit') }}",
           dataType: 'json',
-          success: function(data){
-            console.log(data);
+          data: { id:id },
+          success: function(response){
+            $('input[id="VoucharNo"]').val(response.data.VoucherId);
+            $('input[id="Amount"]').val(response.data.Amount);
+            $('input[id="Date"]').val(response.data.	ExpenseDate);
+            $('input[id="id"]').val(response.data.	DrVoucId);
+           
+            $('select[name="Purpose"]').empty();
+            $('select[name="Purpose"]').append('<option value="'+ response.data.DrTypeId +'">' + response.data.DrTypeId + '</option>');
+           
+            $('select[name="DebitedTo"]').empty();
+            $('select[name="DebitedTo"]').append('<option value="'+ response.data.DebitedTold +'">' + response.data.DebitedTold + '</option>');
+            
+            $('select[name="CreditedFromId"]').empty();
+            $('select[name="CreditedFromId"]').append('<option value="'+ response.data.CreditedFromId +'">' + response.data.CreditedFromId + '</option>');
+
+
           }
         })
       }
-      updateDrVouchar();
   </script>
   </body>
 </html>
