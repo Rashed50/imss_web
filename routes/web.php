@@ -295,7 +295,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 /* ============ debit-voucher ============ */
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('debit-voucher/add', [DebitVoucherController::class, 'index'])->name('DebitVoucher.add');
-    Route::get('debit-voucher/edit/{id}', [DebitVoucherController::class, 'edit'])->name('DebitVoucher.edit');
+
+    Route::post('debit-voucher/edit/', [DebitVoucherController::class, 'edit'])->name('DebitVoucher.edit');
+
     Route::get('debit-voucher/delete/{id}', [DebitVoucherController::class, 'delete'])->name('DebitVoucher.delete');
     Route::post('debit-voucher/add', [DebitVoucherController::class, 'store'])->name('DebitVoucher.store');
     Route::post('debit-voucher/update', [DebitVoucherController::class, 'update'])->name('DebitVoucher.update');

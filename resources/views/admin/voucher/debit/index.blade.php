@@ -83,7 +83,7 @@
                   <div class="form-group row custom_form_group{{ $errors->has('VoucharNo') ? ' has-error' : '' }}">
                       <label class="col-sm-4 control-label">Vouchar No:<span class="req_star">*</span></label>
                       <div class="col-sm-7">
-                      <input type="text" placeholder="VoucharNo" class="form-control" id="VoucharNo" name="VoucharNo" value="{{ old('VoucharNo') }}" required>
+                      <input type="text" placeholder="VoucharNo" class="form-control" id="VoucharNo" name="VoucharNo" value="" required>
                       @if ($errors->has('VoucharNo'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('VoucharNo') }}</strong>
@@ -106,7 +106,7 @@
                   <div class="form-group row custom_form_group {{ $errors->has('Date') ? ' has-error' : '' }}">
                       <label class="col-sm-4 control-label">Date:<span class="req_star">*</span></label>
                       <div class="col-sm-7">
-                      <input type="date" class="form-control" name="Date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                      <input type="date" class="form-control" id="Date" name="Date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                       @if ($errors->has('Date'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('Date') }}</strong>
@@ -146,7 +146,119 @@
 
 
 
+<!-- ====update modal===== -->
 
+<div id="UpdateNewVoucher" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document" style="width:600px!important">
+        <div class="modal-content tx-size-sm">
+            <div class="modal-header pd-x-20">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Debit Voucher Information</h6>
+              
+            </div>
+            <div class="modal-body pd-20">
+
+              <div class="card pd-20 pd-sm-40 form-layout form-layout-5">
+                <form class="" action="{{ route('DebitVoucher.update') }}" method="post">
+                    @csrf
+                  {{-- input element --}}
+                  <div class="form-group row custom_form_group{{ $errors->has('Purpose') ? ' has-error' : '' }}">
+                      <label class="col-sm-4 control-label">Purpose:<span class="req_star">*</span></label>
+                      <div class="col-sm-7">
+                        <select class="form-control" name="Purpose" required>
+                          <option value="">Select Purpose</option>
+                          @foreach($TType as $type)
+                          <option value="{{$type->DrTypeId}}">{{$type->DrTypeName}}</option>
+                          @endforeach
+                        </select>
+                        @if ($errors->has('Purpose'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('Purpose') }}</strong>
+                            </span>
+                        @endif
+                      </div>
+                  </div>
+
+                  <div class="form-group row custom_form_group{{ $errors->has('DebitedTo') ? ' has-error' : '' }}">
+                      <label class="col-sm-4 control-label">Debited To:<span class="req_star">*</span></label>
+                      <div class="col-sm-7">
+                        <select class="form-control" name="DebitedTo" required>
+                          <option value="">Select Here</option>
+                          <option value="1">1 Here</option>
+                          <option value="2">2 Here</option>
+                        </select>
+                        @if ($errors->has('DebitedTo'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('DebitedTo') }}</strong>
+                            </span>
+                        @endif
+                      </div>
+                  </div>
+
+                  <div class="form-group row custom_form_group{{ $errors->has('VoucharNo') ? ' has-error' : '' }}">
+                      <label class="col-sm-4 control-label">Vouchar No:<span class="req_star">*</span></label>
+                      <div class="col-sm-7">
+                      <input type="hidden" id="id" name="id" value="">
+                      <input type="text" placeholder="VoucharNo" class="form-control" id="VoucharNo" name="VoucharNo" value="" required>
+                      @if ($errors->has('VoucharNo'))
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $errors->first('VoucharNo') }}</strong>
+                          </span>
+                      @endif
+                      </div>
+                  </div>
+                  <div class="form-group row custom_form_group{{ $errors->has('Amount') ? ' has-error' : '' }}">
+                      <label class="col-sm-4 control-label">Amount:<span class="req_star">*</span></label>
+                      <div class="col-sm-7">
+                      <input type="text" placeholder="Amount" class="form-control" id="Amount" name="Amount" value="{{ old('Amount') }}" required>
+                      @if ($errors->has('Amount'))
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $errors->first('Amount') }}</strong>
+                          </span>
+                      @endif
+                      </div>
+                  </div>
+
+                  <div class="form-group row custom_form_group {{ $errors->has('Date') ? ' has-error' : '' }}">
+                      <label class="col-sm-4 control-label">Date:<span class="req_star">*</span></label>
+                      <div class="col-sm-7">
+                      <input type="date" class="form-control" id="Date" name="Date" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                      @if ($errors->has('Date'))
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $errors->first('Date') }}</strong>
+                          </span>
+                      @endif
+                    </div>
+                  </div>
+
+                  <div class="form-group row custom_form_group{{ $errors->has('CreditedFromId') ? ' has-error' : '' }}">
+                      <label class="col-sm-4 control-label">Creditted From:<span class="req_star">*</span></label>
+                      <div class="col-sm-7">
+                        <select class="form-control" name="CreditedFromId" required>
+                          <option value="">Select Here</option>
+                          <option value="1"> Here 1</option>
+                          <option value="2"> Here 2</option>
+                        </select>
+                        @if ($errors->has('CreditedFromId'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('CreditedFromId') }}</strong>
+                            </span>
+                        @endif
+                      </div>
+                  </div>
+                  {{-- input element --}}
+                
+              </div>
+            </div>
+            <!-- modal-body -->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-info pd-x-20">UPDATE</button>
+                <button type="button" class="btn btn-secondary pd-x-20" data-dismiss="modal">Cencel</button>
+            </div>
+            </form>
+        </div>
+    </div>
+  </div>
+<!-- ====update modal===== -->
   <!-- Modal -->
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document" style="width:600px!important">
@@ -188,7 +300,7 @@
                         </div>
                         <div class="col-md-4 text-right">
                         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus-circle mr-2"></i> ADD </button>
-                        <button class="btn btn-md btn-primary waves-effect card_top_button" data-toggle="modal" data-target="#AddNewVoucher"><i class="fa fa-plus-circle mr-2"></i>Add New Banner</button>
+                        <button class="btn btn-md btn-primary waves-effect card_top_button" data-toggle="modal" data-target="#AddNewVoucher"><i class="fa fa-plus-circle mr-2"></i>Add New Vouchar</button>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -225,7 +337,7 @@
                                          <td>{{$vouchar->CreditedFromId}}</td>
                                          <td>{{$vouchar->VoucherId}}</td>
                                          <td>
-                                            <a href="#" title="edit"><i class="fas fa-edit fa-lg edit_icon" data-toggle="modal" data-target="#AddNewVoucher" id="{{$vouchar->DrVoucId}}"  onclick="updateDrVouchar(this.id)"></i></a>
+                                            <a href="#" title="edit"><i class="fas fa-edit fa-lg edit_icon" data-toggle="modal" data-target="#UpdateNewVoucher" id="{{$vouchar->DrVoucId}}"  onclick="updateDrVouchar(this.id)"></i></a>
                                             <a href="{{ route('DebitVoucher.delete',$vouchar->DrVoucId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                         </td>
                                      </tr>
