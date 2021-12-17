@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\CustomerTypeController;
 use App\Http\Controllers\Admin\DivisionController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 

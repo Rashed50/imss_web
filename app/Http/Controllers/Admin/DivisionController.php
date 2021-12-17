@@ -8,7 +8,7 @@ use App\Models\Division;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 class DivisionController extends Controller{

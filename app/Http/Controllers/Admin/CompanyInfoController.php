@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\CompanyInfo;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 class CompanyInfoController extends Controller{

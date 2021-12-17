@@ -6,22 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DebitCreditController;
 use App\Http\Controllers\Admin\StockController;
-
-
-
-
-
-
 use Illuminate\Http\Request;
 use App\Models\ProductPurchase;
 use App\Models\PurchaseRecord;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 use Cart;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProductPurchaseController extends Controller{

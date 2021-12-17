@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductSell;
 use App\Models\ProductSellRecord;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 use Cart;
 use Auth;

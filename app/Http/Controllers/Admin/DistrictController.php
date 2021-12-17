@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\DivisionController;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 class DistrictController extends Controller{
