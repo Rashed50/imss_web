@@ -59,6 +59,79 @@ class CreateCustomerInfosTable extends Migration
 
         ]);
 
+        DB::table('customer_infos')->insert([
+            'CustName' => 'Salam' ,
+            'TradeName' => '',
+            'CustTypeId' => 2,
+            'ContactNumber' => '01987654321',
+            'Address' => 'dhaka',
+            'DueAmount' => 0,
+            'InitialDue' => 0,
+            'Photo' => 'null',
+            'FatherName' => 'na',
+            'NID' => '89328402398432',
+            'CreateById' => 1,
+            'DiviId' => 1,
+            'DistId' => 1,
+            'ThanId' => 1,
+            'UnioId' => 1,
+
+        ]);
+        DB::table('customer_infos')->insert([
+            'CustName' => 'Masud' ,
+            'TradeName' => '',
+            'CustTypeId' => 1,
+            'ContactNumber' => '01987654321',
+            'Address' => 'dhaka',
+            'DueAmount' => 0,
+            'InitialDue' => 0,
+            'Photo' => 'null',
+            'FatherName' => 'na',
+            'NID' => '89328402398432',
+            'CreateById' => 1,
+            'DiviId' => 1,
+            'DistId' => 1,
+            'ThanId' => 1,
+            'UnioId' => 1,
+
+        ]);
+        DB::table('customer_infos')->insert([
+            'CustName' => 'Jafor' ,
+            'TradeName' => '',
+            'CustTypeId' => 2,
+            'ContactNumber' => '01987654321',
+            'Address' => 'dhaka',
+            'DueAmount' => 0,
+            'InitialDue' => 0,
+            'Photo' => 'null',
+            'FatherName' => 'na',
+            'NID' => '89328402398432',
+            'CreateById' => 1,
+            'DiviId' => 1,
+            'DistId' => 1,
+            'ThanId' => 1,
+            'UnioId' => 1,
+
+        ]);
+        DB::table('customer_infos')->insert([
+            'CustName' => 'kalam' ,
+            'TradeName' => '',
+            'CustTypeId' => 1,
+            'ContactNumber' => '01987654321',
+            'Address' => 'dhaka',
+            'DueAmount' => 0,
+            'InitialDue' => 0,
+            'Photo' => 'null',
+            'FatherName' => 'na',
+            'NID' => '89328402398432',
+            'CreateById' => 1,
+            'DiviId' => 1,
+            'DistId' => 1,
+            'ThanId' => 1,
+            'UnioId' => 1,
+
+        ]);
+
     }
 
     /**

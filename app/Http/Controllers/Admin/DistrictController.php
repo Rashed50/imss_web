@@ -15,8 +15,12 @@ use Image;
 
 class DistrictController extends Controller{
     public function getAll(){
-      return $all = District::orderBy('DistId','DESC')->get();
+      return $all = District::all();
     }
+
+    public function getAllDistrictsByDivisionId($id){
+        return $all = District::all()->where('DiviId',$id);
+      }
 
 
     public function add(){

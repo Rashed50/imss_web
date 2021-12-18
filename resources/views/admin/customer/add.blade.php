@@ -234,6 +234,33 @@
                     </div>
 
 
+                    
+                 <!-- Webcam Add -->
+            <div class="container">
+            <h1 class="text-center"> Test webcam image Capture <a href="#">Muajjam Hossain</a> </h1>
+        
+                <div class="row" id="hide">
+                    <div class="col-md-6">
+                        <div class="my_camera" id="my_camera"></div>
+                        <br/>
+                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                        <input type=button value="Off" class="" id="off" >
+                        <input type=button class="d-none" id="on"  value="on">
+                        <input type="hidden" name="image" class="image-tag">
+                    </div>
+                    <div class="col-md-6">
+                        <div id="results">Your captured image will appear here...</div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <br/>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+        </div>
+
+
+
+
                 </div>
             </div>
 
@@ -293,7 +320,7 @@
                                             <td>{{ $customer->InitialDue ??'' }}</td>
                                             <td>{{ $customer->NID ??'' }}</td>
                                             <td>
-                                                <img height="40" src="{{ asset('uploads/customer/'.$customer->Photo) }}" alt="">
+                                                <img height="40" src="{{ asset($customer->Photo) }}" alt="">
                                             </td>
                                             <td>
                                                 <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
@@ -315,4 +342,44 @@
   </div>
 
 
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+
+
+
+
+  
+<script language="JavaScript">
+    Webcam.set({
+        width: 490,
+        height: 390,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+
+    $('#off').click(function(){
+        $('#my_camera').removeClass('my_camera');
+        $('#off').addClass('d-none');
+        $('#on').removeClass('d-none');
+    });
+
+    $('#on').click(function(){
+        $('#my_camera').addClass('my_camera');
+        $('#on').addClass('d-none');
+        $('#off').removeClass('d-none');
+    });
+
+
+    Webcam.attach( '.my_camera' );
+
+    
+  
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+            $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+        } );
+    }
+</script>
 @endsection

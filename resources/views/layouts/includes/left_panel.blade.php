@@ -32,8 +32,9 @@
     <!-- sl-menu-link -->
     <ul class="sl-menu-sub nav flex-column">
       <li class="nav-item"><a href="{{ route('customer.add') }}" class="nav-link @yield('customer-add')">New Customer</a></li>
-      <li class="nav-item"><a href="{{ route('customer.type.add') }}" class="nav-link @yield('customer-type')">Customer List</a></li>
-      <li class="nav-item"><a href="{{ route('customer.type.add') }}" class="nav-link @yield('customer-type')">Customer Search</a></li>
+      <li class="nav-item"><a href="{{ route('customer.type.add') }}" class="nav-link @yield('customer-type')">Customer TYpe</a></li>
+      <li class="nav-item"><a href="{{ route('customer.list') }}" class="nav-link @yield('customer-type')">Customer List</a></li>
+      <li class="nav-item"><a href="#" class="nav-link @yield('customer-type')">Customer Search</a></li>
     </ul>
 
           <!-- multiple menu -->
@@ -65,7 +66,8 @@
     <!-- sl-menu-link -->
     <ul class="sl-menu-sub nav flex-column">
       <li class="nav-item"><a href="{{ route('due.payment.add')}}" class="nav-link @yield('due-payment')">Payment By Customer</a></li>
-      <li class="nav-item"><a href="" class="nav-link @yield('customer-payment')">Customer Payment Record</a></li>
+      <li class="nav-item"><a href="{{ route('payment.customer.list') }}" class="nav-link @yield('customer-payment')">Customer Payment</a></li>
+      <li class="nav-item"><a href="" class="nav-link @yield('customer-payment-record')">Customer Payment Record</a></li>
       <li class="nav-item"><a href="" class="nav-link @yield('customer-payment')">Vendor Payment</a></li>
       <li class="nav-item"><a href="" class="nav-link @yield('customer-payment')">Salary Payment(Employee) </a></li>
       <li class="nav-item"><a href="{{ route('customer.payment') }}" class="nav-link @yield('customer-payment')">Payment</a></li>

@@ -779,5 +779,17 @@
         })
       }
   </script>
+
+
+  <script>
+    $(document).ready(function(){
+      $(document).on("click", "#addPayment", function () {
+       
+        var softDel = $(this).data('id');
+        // alert(softDel);
+        $(".modal_card #modal_id").val( softDel );
+      });
+    })
+  </script>
   </body>
 </html>
