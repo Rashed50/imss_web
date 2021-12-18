@@ -25,6 +25,9 @@ class CustomerController extends Controller{
     public function getAllCustomer(){
       return $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
     }
+    // public function getAll(){
+    //     return $Customer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
+    //  }
 
     public function getAllWholeCustomer(){
       return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
@@ -34,7 +37,13 @@ class CustomerController extends Controller{
       return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',2)->get();
     }
 
-    // Holeseller Customer
+    /*
+    |--------------------------------------------------------------------------
+    | AJAX METHOD CALLING 
+    |--------------------------------------------------------------------------
+    */
+
+  
     public function holesellerCustomer(){
        $holeseller = CustomerInfo::where('CustTypeId',1)->get();
        return json_encode($holeseller);
@@ -57,7 +66,7 @@ class CustomerController extends Controller{
       return $vouchar ="SEL-".$date.'00'.$all;
     }
 
-    /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+    
     public function CustIdWiseCustomerInformation(Request $request){
       $allCustomer = CustomerInfo::where('status',true)->where('CustId',$request->TradeName)->first();
       return json_encode($allCustomer);
@@ -67,10 +76,14 @@ class CustomerController extends Controller{
 
 
 
-    public function getAll(){
 
-       return $Customer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
-    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | BALDE FILE OPERATION
+    |--------------------------------------------------------------------------
+    */
 
     public function add(){
         $typeObj= new CustomerTypeController;
@@ -79,7 +92,7 @@ class CustomerController extends Controller{
         $DivisionOBJ = new DivisionController();
         $Division = $DivisionOBJ->getAll();
 
-       $allCustomer = $this->getAll();
+       $allCustomer = $this->getAllCustomer();
        return view('admin.customer.add', compact('allCustomer','Division', 'allType'));
     }
 
@@ -90,7 +103,7 @@ class CustomerController extends Controller{
         $DivisionOBJ = new DivisionController();
         $Division = $DivisionOBJ->getAll();
 
-        $allCustomer = $this->getAll();
+        $allCustomer = $this->getAllCustomer();
         $data = $allCustomer->where('status',true)->where('CustId',$id)->firstOrFail();
         return view('admin.customer.add', compact('data', 'allCustomer', 'Division', 'allType'));
     }
