@@ -21,11 +21,15 @@ class CustomerPaymentController extends Controller{
   */
 
   public function getAllPaymentCustomer(){
-    return $all = CustomerPayment::orderBy('CustId','DESC')->get();
+    return $all = CustomerPayment::orderBy('CustPaymId','DESC')->get();
   }
 
   public function findPaymentCustomer($id){
     return $data = CustomerPayment::where('CustPaymId',$id)->first();
+  }
+
+  public function customerIdWiseFindPayment($id){
+    return $data = CustomerPayment::where('CustId',$id)->get();
   }
 
   public function delete($id){

@@ -30,7 +30,6 @@ use App\Http\Controllers\Admin\CreditTypeController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\DebitTypeController;
 use App\Http\Controllers\Admin\SellReturnController;
-use App\Http\Controllers\Admin\CustomerListController;
 
 
 
@@ -148,15 +147,15 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
 
     // ======##### customer list route   #######=======
-    Route::get('customer/list', [CustomerListController::class, 'list'])->name('customer.list');
-    Route::post('customer/search', [CustomerListController::class, 'search'])->name('customer.search');
+    Route::get('customer/list', [CustomerController::class, 'list'])->name('customer.list');
+    Route::post('customer/search', [CustomerController::class, 'search'])->name('customer.search');
 
 
     // ======##### customer payment route   #######=======
-    Route::get('payment/customer/list', [CustomerListController::class, 'listForPay'])->name('payment.customer.list');
-    Route::post('payment/customer/store', [CustomerListController::class, 'paymentStore'])->name('payment.customer.store');
-    Route::post('payment/customer/search', [CustomerListController::class, 'searchForPay'])->name('payment.customer.search');
-    Route::get('payment/info/customer/view/{id}', [CustomerListController::class, 'paymentInfo'])->name('payment.info.view.customer');
+    Route::get('payment/customer/list', [CustomerController::class, 'listForPay'])->name('payment.customer.list');
+    Route::post('payment/customer/store', [CustomerController::class, 'paymentStore'])->name('payment.customer.store');
+    Route::post('payment/customer/search', [CustomerController::class, 'searchForPay'])->name('payment.customer.search');
+    Route::get('payment/info/customer/view/{id}', [CustomerController::class, 'paymentInfo'])->name('payment.info.view.customer');
 
 
     /* =========== Customer Payment =========== */
