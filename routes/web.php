@@ -153,10 +153,8 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 
     // ======##### customer payment route   #######=======
     Route::get('payment/customer/list', [CustomerController::class, 'listForPay'])->name('payment.customer.list');
-    Route::post('payment/customer/store', [CustomerController::class, 'paymentStore'])->name('payment.customer.store');
-    Route::post('payment/customer/search', [CustomerController::class, 'searchForPay'])->name('payment.customer.search');
-    Route::get('payment/info/customer/view/{id}', [CustomerController::class, 'paymentInfo'])->name('payment.info.view.customer');
-
+     Route::post('payment/customer/search', [CustomerController::class, 'searchForPay'])->name('payment.customer.search');
+   
 
     /* =========== Customer Payment =========== */
     Route::get('customer/payment/add', [CustomerPaymentController::class, 'add'])->name('customer.payment');
@@ -164,6 +162,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('customer/payment/delete/{CustPaymId}', [CustomerPaymentController::class, 'delete'])->name('customer.payment-delete');
     Route::post('customer/payment/store', [CustomerPaymentController::class, 'store'])->name('store-customer.payment');
     Route::post('customer/payment/update', [CustomerPaymentController::class, 'update'])->name('update-customer.payment');
+    Route::post('payment/customer/store', [CustomerPaymentController::class, 'paymentStore'])->name('payment.customer.store');
+    Route::get('payment/info/customer/view/{id}', [CustomerPaymentController::class, 'custIdWisePaymentInfo'])->name('payment.info.view.customer');
+    Route::get('payment/info/view/{id}', [CustomerPaymentController::class, 'payIdWisePaymentInfo'])->name('payment.info.view');
 
 
 });
@@ -318,6 +319,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 /* ============ cseller controller ============ */
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('sell-info', [SellerController::class, 'index'])->name('sell.info');
+    Route::get('sell/info/customer/view/{id}', [SellerController::class, 'customerWieSell'])->name('customer.wise.sell.info');
 });
 
 

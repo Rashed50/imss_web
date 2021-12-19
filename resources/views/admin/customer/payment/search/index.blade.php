@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-lg-8">
-            <form class="form-horizontal" id="registration" method="post" action="{{ route('customer.search') }}" enctype="multipart/form-data">
+            <form class="form-horizontal" id="registration" method="post" action="{{ route('payment.customer.search') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
                   <div class="card-header">
@@ -46,10 +46,10 @@
                         <label class="col-sm-3 control-label">Customer Type:<span class="req_star">*</span></label>
                         <div class="col-sm-4">
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" name="type" value="1" id="btnradio1" autocomplete="off" checked>
+                            <input type="radio" class="btn-check" name="type" value="1" id="btnradio1" autocomplete="off" {{$allCustomer[0]->CustTypeId==1? 'checked': ''}}>
                             <label class="btn" for="btnradio1"> Whole Seller</label>
 
-                            <input type="radio" class="btn-check" name="type" value="2" id="btnradio2" autocomplete="off">
+                            <input type="radio" class="btn-check" name="type" value="2" id="btnradio2" autocomplete="off" {{$allCustomer[0]->CustTypeId==2? 'checked': ''}}>
                             <label class="btn" for="btnradio2">Retailer</label>
                             </div>
                         </div>
@@ -139,6 +139,7 @@
                                             <td>
                                             <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i>Add Payment</button>
                                                 <a class="btn btn-md btn-primary waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" target="_blank" title="Record">Payment Record</a>
+                                                <a class="btn btn-md btn-primary waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" target="_blank" title="Record">Sell Details</a>
                                             </td>
                                         </tr>
                                      @endforeach

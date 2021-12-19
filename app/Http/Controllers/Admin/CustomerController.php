@@ -90,9 +90,9 @@ class CustomerController extends Controller{
     | BALDE FILE OPERATION
     |--------------------------------------------------------------------------
     */
+
+    // ========================= Custtomer list ===============================
     public function list(){
-        // $DivisionOBJ = new DivisionController();
-        // $Division = $DivisionOBJ->getAll();
          $districeOBJ= new DistrictController();
          $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
  
@@ -103,38 +103,40 @@ class CustomerController extends Controller{
      public function search(Request $request){
          // dd($request->all());
  
-         // $DivisionOBJ = new DivisionController();
-         // $Division = $DivisionOBJ->getAll();
- 
          $districeOBJ= new DistrictController();
          $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
  
          $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',$request->type)
-         ->orWhere('DistId',$request->DistId)->get(); 
-         //where('ThanId',$request->ThanId)->
+         ->orWhere('DistId',$request->DistId)->orWhere('ThanId',$request->ThanId)->get(); 
  
          return view('admin.customer.list.index', compact('allDistrict', 'allCustomer'));
      }
  
  
+    //  ==================== ustomer list for payment ======================
      public function listForPay(){
-         // $DivisionOBJ = new DivisionController();
-         // $Division = $DivisionOBJ->getAll();
+
          $districeOBJ= new DistrictController();
          $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
  
          $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
          return view('admin.customer.payment.search.index', compact('allDistrict', 'allCustomer'));
      }
-     
- 
-     public function paymentInfo($id){
- 
-         $custIdWisePaymentOBJ= new CustomerPaymentController();
-          $allPayment= $custIdWisePaymentOBJ->customerIdWiseFindPayment($id);
- 
-         return view('admin.customer.payment.payment-info',compact('allPayment'));
-     }
+
+
+     public function searchForPay(Request $request){
+        // dd($request->all());
+
+        $districeOBJ= new DistrictController();
+        $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
+
+        $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',$request->type)
+        ->orWhere('DistId',$request->DistId)->orWhere('ThanId',$request->ThanId)->get(); 
+
+        return view('admin.customer.payment.search.index', compact('allDistrict', 'allCustomer'));
+    }
+
+
 
 
      public function add(){
@@ -159,58 +161,8 @@ class CustomerController extends Controller{
         $data = $allCustomer->where('status',true)->where('CustId',$id)->firstOrFail();
         return view('admin.customer.add', compact('data', 'allCustomer', 'Division', 'allType'));
     }
- 
+    
 
-    public function paymentStore(Request $request){
-        // dd($request->all());
-
-        // $currentDue = ( $request->CurrentDue - ($request->PayAmount + $request->Discount) );
-        $creator = Auth::user()->id;
-        /* data insert */
-    
-    
-    
-        $request['TranAmount'] = $request->Amount;
-        $request['TranTypeId'] = 1;
-    
-        $transObj = new  TransactionsController();
-        $transId = $transObj->createNewTransaction($request); 
-        
-    
-        $request['Amount'] = $request->Amount;
-        $request['TranId'] = $transId;
-        $request['ChartOfAcctId'] = 1;
-        $request['DrCrTypeId'] = 1;
-    
-        $decrObj = new  DebitCreditController();
-        $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
-    
-    
-        $insert = CustomerPayment::insert([
-        'PaymentDate' => $request->Date,
-        'PaymentAmount' => $request->Amount,
-        'AccountId' => 1,
-        'MoneyReciveBy' => $request->CreditedFromId,
-        'VoucharNo' => $request->VoucharNo,
-        'Discount' => $request->Discount,
-        'CreateById' => $creator,
-        'CustId' => $request->modal_id,
-        'TranId' => 1,
-        'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
-        // Redirect Back
-        if($insert){
-        CustomerInfo::where('CustId',$request->Customer)->update([
-            'DueAmount' => 00,
-            'updated_at' => Carbon::now(),
-        ]);
-        $notification=array(
-            'message'=>'Successfully Store Customer Payment Information',
-            'alert-type'=>'success'
-        );
-        return Redirect()->back()->with($notification);
-        }
-    }
 
    
 

@@ -49,7 +49,7 @@
                             <input type="radio" class="btn-check" name="type" value="1" id="btnradio1" autocomplete="off" checked>
                             <label class="btn" for="btnradio1"> Whole Seller</label>
 
-                            <input type="radio" class="btn-check" name="type" value="2" id="btnradio2" autocomplete="off">
+                            <input type="radio" class="btn-check" name="type" value="2" id="btnradio2" autocomplete="off" {{ ($allCustomer[0]->CustTypeId==2)?'checked' : '' }}>
                             <label class="btn" for="btnradio2">Retailer</label>
                             </div>
                         </div>

@@ -53,35 +53,42 @@
                                         <tr>
 
                                             <th>SL NO.</th>
-                                            <th>customer Name</th>
-                                            <th>Amount</th>
-                                            <th>Vouchar</th>
-                                            <th>Discount</th>
-                                            <th>Date</th>
+                                            <th>Customer id</th>
+                                            <th>Name</th>
+                                            <th>Trade No</th>
+                                            <th>Vouchar No</th>
+                                            <th>Sell Date</th>
+                                            <th>LB Cost</th>
+                                            <th>Total</th>
+                                            <th>Payment</th>
+                                            <th>Due Payment</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @php 
-                                    $date=date('Y-m-d',strtotime(Carbon\Carbon::now()));
-                                    @endphp
-                                      @foreach($allPayment as $key=>$payment)
-                                        <tr>
-                                            <td>{{ $key+1}}</td>
-                                            <td>{{$payment->Customer->CustName}}</td>
-                                            <td>{{$payment->PaymentAmount}}</td>
-                                            <td>{{$payment->VoucharNo}}</td>
-                                            <td>{{$payment->Discount}}</td>
-                                            <td>{{$payment->PaymentDate}}</td>
-                                            <td>
-                                                <a href="{{ route('payment.info.view',$payment->CustPaymId) }}" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
+                                        @php 
+                                        $date=date('Y-m-d',strtotime(Carbon\Carbon::now()));
+                                        @endphp
+                                    	@foreach($allSell as $sell)
+                                     	<tr>
+                                     		<td>{{$sell->Customer->CustName ?? ''}}</td>
+                                     		<td>{{$sell->Customer->TradeName ?? ''}}</td>
+                                     		<td>{{$sell->VoucharNo}}</td>
+                                     		<td>{{$sell->SellingDate}}</td>
+                                     		<td>{{$sell->LabourCost}}</td>
+                                     		<td>{{$sell->TotalAmount}}</td>
+                                     		<td>{{$sell->PaidAmount}}</td>
+                                     		<td>{{$sell->DueAmount}}</td>
+
+                                             <td>
+                                                <a href="{{ route('payment.info.view',$sell->CustPaymId) }}" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
                                                 @if($payment->PaymentDate== $date)
                                                 <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                                 @endif
                                                 
                                             </td>
-                                        </tr>
-                                      @endforeach
+                                     	</tr>
+                                     	@endforeach
                                     </tbody>
                                 </table>
                             </div>

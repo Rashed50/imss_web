@@ -42,7 +42,11 @@ class CustomerPaymentController extends Controller{
   }
 
 
-
+ /*
+  |--------------------------------------------------------------------------
+  |  BLADE OPERATION
+  |--------------------------------------------------------------------------
+  */
   public function add(){
     $getAllPaymentCustomer = $this->getAllPaymentCustomer();
     // Call Employee Controller
@@ -59,6 +63,78 @@ class CustomerPaymentController extends Controller{
     $employee = $employeeOBJ->getAllEmployees();
     return view('admin.customer.payment.edit',compact('employee','data', 'getAllPaymentCustomer'));
   }
+
+
+
+
+ // ============== search customer in list for Payment=========================== 
+  public function payIdWisePaymentInfo($id){
+    $payInfo= $this->findPaymentCustomer($id);
+    return view('admin.customer.payment.update-payment',compact('payInfo'));
+  }
+
+
+
+ // ============== search customer in list for Payment=========================== 
+  public function custIdWisePaymentInfo($id){
+ 
+     $allPayment= $this->customerIdWiseFindPayment($id);
+
+    return view('admin.customer.payment.payment-info',compact('allPayment'));
+}
+
+
+
+// ==============Payment insert by search customer list===========================
+
+public function paymentStore(Request $request){
+    dd($request->all());
+
+    // $currentDue = ( $request->CurrentDue - ($request->PayAmount + $request->Discount) );
+    $creator = Auth::user()->id;
+
+    $request['TranAmount'] = $request->Amount;
+    $request['TranTypeId'] = 1;
+
+    $transObj = new  TransactionsController();
+    $transId = $transObj->createNewTransaction($request); 
+    
+
+    $request['Amount'] = $request->Amount;
+    $request['TranId'] = $transId;
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 1;
+
+    $decrObj = new  DebitCreditController();
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+
+
+    $insert = CustomerPayment::insert([
+    'PaymentDate' => $request->Date,
+    'PaymentAmount' => $request->Amount,
+    'AccountId' => 1,
+    'MoneyReciveBy' => $request->CreditedFromId,
+    'VoucharNo' => $request->VoucharNo,
+    'Discount' => $request->Discount,
+    'CreateById' => $creator,
+    'CustId' => $request->modal_id,
+    'TranId' => 1,
+    'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
+    ]);
+    // Redirect Back
+    if($insert){
+    CustomerInfo::where('CustId',$request->Customer)->update([
+        'DueAmount' => 00,
+        'updated_at' => Carbon::now(),
+    ]);
+    $notification=array(
+        'message'=>'Successfully Store Customer Payment Information',
+        'alert-type'=>'success'
+    );
+    return Redirect()->back()->with($notification);
+    }
+}
+
 
   /* ============== insert Employee Information in DATABASE ============== */
   public function store(Request $request){
@@ -111,20 +187,23 @@ class CustomerPaymentController extends Controller{
     }
   }
 
+  
   /* ============== update Employee Information in DATABASE ============== */
   public function update(Request $request){
-    $currentDue = ( $request->CurrentDue - ($request->PayAmount + $request->Discount) );
+
+    dd($request->all());
+    // $currentDue = ( $request->CurrentDue - ($request->PayAmount + $request->Discount) );
     $creator = Auth::user()->id;
 
     
-    $request['TranAmount'] = 900;
+    $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
 
     $transObj = new  TransactionsController();
     $transId = $transObj->createNewTransaction($request); 
     
 
-    $request['Amount'] = 600;
+    $request['Amount'] = $request->PayAmount;
     $request['TranId'] = $transId;
     $request['ChartOfAcctId'] = 1;
     $request['DrCrTypeId'] = 1;
@@ -137,7 +216,7 @@ class CustomerPaymentController extends Controller{
       'PaymentDate' => $request->PaymentDate,
       'PaymentAmount' => $request->PayAmount,
       'AccountId' => 1,
-      'MoneyReciveBy' => $request->MoneyReciveBy,
+      'MoneyReciveBy' => 1,
       'VoucharNo' => $request->VoucharNo,
       'Discount' => $request->Discount,
       'CreateById' => $creator,
@@ -148,11 +227,11 @@ class CustomerPaymentController extends Controller{
     // Redirect Back
     if($update){
       CustomerInfo::where('CustId',$request->Customer)->update([
-        'DueAmount' => $currentDue,
+        'DueAmount' => 00,
         'updated_at' => Carbon::now(),
       ]);
       $notification=array(
-          'message'=>'Successfully Update Employee Information',
+          'message'=>'Successfully Update payment Information',
           'alert-type'=>'success'
       );
       return Redirect()->route('customer.payment')->with($notification);
