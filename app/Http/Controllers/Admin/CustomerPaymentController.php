@@ -88,7 +88,7 @@ class CustomerPaymentController extends Controller{
 // ==============Payment insert by search customer list===========================
 
 public function paymentStore(Request $request){
-    dd($request->all());
+    // dd($request->all());
 
     // $currentDue = ( $request->CurrentDue - ($request->PayAmount + $request->Discount) );
     $creator = Auth::user()->id;

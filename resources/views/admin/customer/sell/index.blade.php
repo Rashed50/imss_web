@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>Payment List</h3>
+                            <h3 class="card-title card_top_title"></i>Customer Sales Record</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -53,7 +53,6 @@
                                         <tr>
 
                                             <th>SL NO.</th>
-                                            <th>Customer id</th>
                                             <th>Name</th>
                                             <th>Trade No</th>
                                             <th>Vouchar No</th>
@@ -69,8 +68,9 @@
                                         @php 
                                         $date=date('Y-m-d',strtotime(Carbon\Carbon::now()));
                                         @endphp
-                                    	@foreach($allSell as $sell)
+                                    	@foreach($allSell as $key=>$sell)
                                      	<tr>
+                                             <td>{{$key+1}}</td>
                                      		<td>{{$sell->Customer->CustName ?? ''}}</td>
                                      		<td>{{$sell->Customer->TradeName ?? ''}}</td>
                                      		<td>{{$sell->VoucharNo}}</td>
@@ -81,8 +81,8 @@
                                      		<td>{{$sell->DueAmount}}</td>
 
                                              <td>
-                                                <a href="{{ route('payment.info.view',$sell->CustPaymId) }}" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
-                                                @if($payment->PaymentDate== $date)
+                                                <a href="#" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
+                                                @if($sell->PaymentDate== $date)
                                                 <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                                 @endif
                                                 

@@ -138,8 +138,8 @@
                                             <td>{{$customer->ContactNumber}}</td>
                                             <td>
                                             <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i>Add Payment</button>
-                                                <a class="btn btn-md btn-primary waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" target="_blank" title="Record">Payment Record</a>
-                                                <a class="btn btn-md btn-primary waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" target="_blank" title="Record">Sell Details</a>
+                                                <a class="btn btn-md btn-info waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" target="_blank" title="Record">Payment Record</a>
+                                                <a class="btn btn-md btn-success waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" target="_blank" title="Record">Sell Details</a>
                                             </td>
                                         </tr>
                                      @endforeach

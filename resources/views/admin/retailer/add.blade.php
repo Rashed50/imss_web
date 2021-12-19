@@ -30,12 +30,12 @@
                         </div>
 
                         <div class="form-group row custom_form_group{{ $errors->has('TradeName') ? ' has-error' : '' }}">
-                            <label class="col-sm-5 control-label">Trade Name:<span class="req_star">*</span></label>
+                            <label class="col-sm-5 control-label">Customer Name:<span class="req_star">*</span></label>
                             <div class="col-sm-7">
                               <select class="form-control" name="TradeName">
-                                <option value="">Select Trade Name</option>
+                                <option value="">Select  Name</option>
                                 @foreach ($allCustomer as $Customer)
-                                  <option value="{{ $Customer->CustId }}">{{ $Customer->TradeName }}</option>
+                                  <option value="{{ $Customer->CustId }}">{{ $Customer->CustName }}</option>
                                 @endforeach
                               </select>
                               @if ($errors->has('TradeName'))
