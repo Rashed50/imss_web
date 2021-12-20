@@ -83,7 +83,18 @@ class CustomerPaymentController extends Controller{
     return view('admin.customer.payment.payment-info',compact('allPayment'));
 }
 
+// =============== delete customer id wise payment info =========================
+public function payIdWisePaymentInfoDelete($id){
+  $delete = CustomerPayment::where('CustPaymId',$id)->delete();
 
+  if($delete){
+    $notification=array(
+        'message'=>'Successfully delete payment Information',
+        'alert-type'=>'success'
+    );
+    return Redirect()->back()->with($notification);
+  }
+}
 
 // ==============Payment insert by search customer list===========================
 
@@ -191,11 +202,10 @@ public function paymentStore(Request $request){
   /* ============== update Employee Information in DATABASE ============== */
   public function update(Request $request){
 
-    dd($request->all());
+    
     // $currentDue = ( $request->CurrentDue - ($request->PayAmount + $request->Discount) );
     $creator = Auth::user()->id;
 
-    
     $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
 
@@ -212,8 +222,8 @@ public function paymentStore(Request $request){
     $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
 
     /* data insert */
-    $update = CustomerPayment::where('CustPaymId',$request->id)->update([
-      'PaymentDate' => $request->PaymentDate,
+    $update = CustomerPayment::where('CustPaymId',$request->Customer)->update([
+      'PaymentDate' => date('Y-m-d',strtotime($request->PaymentDate)),
       'PaymentAmount' => $request->PayAmount,
       'AccountId' => 1,
       'MoneyReciveBy' => 1,
@@ -227,14 +237,14 @@ public function paymentStore(Request $request){
     // Redirect Back
     if($update){
       CustomerInfo::where('CustId',$request->Customer)->update([
-        'DueAmount' => 00,
+        'DueAmount' => $request->PayAmount,
         'updated_at' => Carbon::now(),
       ]);
       $notification=array(
           'message'=>'Successfully Update payment Information',
           'alert-type'=>'success'
       );
-      return Redirect()->route('customer.payment')->with($notification);
+      return Redirect()->back()->with($notification);
     }
   }
 

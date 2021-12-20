@@ -85,6 +85,18 @@
                               @endif
                             </div>
                         </div>
+                        <div class="form-group row custom_form_group{{ $errors->has('PaymentDate') ? ' has-error' : '' }}">
+                            <label class="col-sm-3 control-label">Date:</label>
+                            <div class="col-sm-7">
+                            <input type="text" class="form-control" id="datepicker" name="PaymentDate" value="{{(@$payInfo)? date('Y-m-d',strtotime(@$payInfo->PaymentDate)):date('Y-m-d',strtotime(Carbon\Carbon::now())) }}" required autocomplete="off">
+                            @if ($errors->has('PaymentDate'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('PaymentDate') }}</strong>
+                                </span>
+                            @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row custom_form_group{{ $errors->has('collected') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Collected by:<span class="req_star">*</span></label>
                             <div class="col-sm-7">
@@ -96,17 +108,6 @@
                               
                               </select>
                              
-                            </div>
-                        </div>
-                        <div class="form-group row custom_form_group{{ $errors->has('PaymentDate') ? ' has-error' : '' }}">
-                            <label class="col-sm-3 control-label">Date:</label>
-                            <div class="col-sm-7">
-                            <input type="text" class="form-control" id="datepicker" name="PaymentDate" value="{{(@$payInfo)? date('d-F-Y',strtotime(@$payInfo->PaymentDate)):date('m-d-Y',strtotime(Carbon\Carbon::now())) }}" required autocomplete="off">
-                            @if ($errors->has('PaymentDate'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('PaymentDate') }}</strong>
-                                </span>
-                            @endif
                             </div>
                         </div>
 

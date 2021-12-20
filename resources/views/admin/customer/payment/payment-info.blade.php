@@ -76,7 +76,7 @@
                                             <td>
                                                 <a href="{{ route('payment.info.view',$payment->CustPaymId) }}" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
                                                 @if($payment->PaymentDate== $date)
-                                                <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                                                <a href="{{route('payment.info.delete',$payment->CustPaymId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                                 @endif
                                                 
                                             </td>

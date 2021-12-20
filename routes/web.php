@@ -171,6 +171,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('payment/customer/store', [CustomerPaymentController::class, 'paymentStore'])->name('payment.customer.store');
     Route::get('payment/info/customer/view/{id}', [CustomerPaymentController::class, 'custIdWisePaymentInfo'])->name('payment.info.view.customer');
     Route::get('payment/info/view/{id}', [CustomerPaymentController::class, 'payIdWisePaymentInfo'])->name('payment.info.view');
+    Route::get('payment/info/delete/{id}', [CustomerPaymentController::class, 'payIdWisePaymentInfoDelete'])->name('payment.info.delete');
 
 
 });
