@@ -156,6 +156,12 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
      Route::post('payment/customer/search', [CustomerController::class, 'searchForPay'])->name('payment.customer.search');
    
 
+       // ======##### customer type wise sell info route   #######=======
+    Route::get('customer/type-wise/sell/details/list', [CustomerController::class, 'customerTypewiseSellDetailsList'])->name('customer.type-wise.sell-details.list');
+    Route::post('customer/type-wise/sell/details/list/search', [CustomerController::class, 'searchCustomerTypewiseSellDetailsList'])->name('customer.type-wise.sell-details.search');
+  
+
+
     /* =========== Customer Payment =========== */
     Route::get('customer/payment/add', [CustomerPaymentController::class, 'add'])->name('customer.payment');
     Route::get('customer/payment/edit/{CustPaymId}', [CustomerPaymentController::class, 'edit'])->name('customer.payment-edit');

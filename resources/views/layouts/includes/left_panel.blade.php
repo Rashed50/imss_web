@@ -56,6 +56,19 @@
         </ul>
 
 
+        <a href="#" class="sl-menu-link @yield('Sell-Details')">
+         <div class="sl-menu-item">
+           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+           <span class="menu-item-label">Sell-Info </span>
+           <i class="menu-item-arrow fa fa-angle-down"></i>
+         </div>
+       </a>
+       <!-- sl-menu-link -->
+       <ul class="sl-menu-sub nav flex-column">
+         <li class="nav-item"><a href="{{ route('customer.type-wise.sell-details.list') }}" class="nav-link @yield('Customer-Sell')">Customer Sell</a></li>
+       </ul>
+
+
       <a href="#" class="sl-menu-link @yield('payment-info')">
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>

@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-lg-8">
-            <form class="form-horizontal" id="registration" method="post" action="{{ route('customer.search') }}" enctype="multipart/form-data">
+            <form class="form-horizontal" id="registration" method="post" action="{{ route('customer.type-wise.sell-details.search') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
                   <div class="card-header">
@@ -23,9 +23,7 @@
                           <div class="clearfix"></div>
                       </div>
                   </div>
-                  
                   @include('layouts.includes.customer-search')
-
                   <div class="card-footer card_footer_button text-center">
                       <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">SEARCH</button>
                   </div>
@@ -65,7 +63,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     @foreach($allCustomer as $key=>$customer)
+                                    @foreach($allCustomer as $key=>$customer)
                                         <tr>
                                             <td>{{ $key+1}}</td>
                                             <td>{{$customer->CustomerType->TypeName}}</td>
@@ -74,9 +72,7 @@
                                             <td>{{$customer->CustName}}</td>
                                             <td>{{$customer->ContactNumber}}</td>
                                             <td>
-                                                <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
-                                                <a href="#" title="edit"><i class="fab fa-pencil-square fa-lg edit_icon">Edit</i></a>
-                                                <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                                                <a class="btn btn-md btn-success waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" target="_blank" title="Record">Sell Details</a>
                                             </td>
                                         </tr>
                                      @endforeach

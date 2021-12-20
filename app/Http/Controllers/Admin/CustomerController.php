@@ -113,7 +113,7 @@ class CustomerController extends Controller{
      }
  
  
-    //  ==================== ustomer list for payment ======================
+    //  ==================== customer list for payment ======================
      public function listForPay(){
 
          $districeOBJ= new DistrictController();
@@ -135,6 +135,31 @@ class CustomerController extends Controller{
 
         return view('admin.customer.payment.search.index', compact('allDistrict', 'allCustomer'));
     }
+
+
+    //  ==================== customer id wise sell details list  ======================
+    public function customerTypewiseSellDetailsList(){
+
+        $districeOBJ= new DistrictController();
+        $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
+
+        $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
+        return view('admin.sell.customer-sell', compact('allDistrict', 'allCustomer'));
+    }
+
+
+    public function searchCustomerTypewiseSellDetailsList(Request $request){
+       // dd($request->all());
+
+       $districeOBJ= new DistrictController();
+       $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
+
+       $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',$request->type)
+       ->orWhere('DistId',$request->DistId)->orWhere('ThanId',$request->ThanId)->get(); 
+
+       return view('admin.sell.customer-sell', compact('allDistrict', 'allCustomer'));
+   }
+
 
 
 
