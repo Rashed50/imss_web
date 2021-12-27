@@ -34,8 +34,25 @@ class ProductPurchaseController extends Controller{
   public function store(Request $request){
     // form validation
 
+    $request['TranAmount'] = $request->PayAmount;
+    $request['TranTypeId'] = 1;
 
+    $transObj = new  TransactionsController();
+    $transId = $transObj->createNewTransaction($request); 
+    
+   
+    // Credit Transaction
+    $request['Amount'] = $request->PayAmount;
+    $request['TranId'] = $transId;
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 1;
+    $decrObj = new  DebitCreditController();
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
  
+    // Debit Transaction
+    $request['ChartOfAcctId'] = 1;
+    $request['DrCrTypeId'] = 2;
+    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
 
     $CreateBy = Auth::user()->id;
 
