@@ -47,6 +47,9 @@ use App\Http\Controllers\Admin\SellReturnController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/pdf', function () {
+    return view('admin.voucher.pdf-voucher');
+});
 
 Route::get('/dashboard', function () {
     return view('admin.index');
@@ -172,6 +175,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('payment/info/customer/view/{id}', [CustomerPaymentController::class, 'custIdWisePaymentInfo'])->name('payment.info.view.customer');
     Route::get('payment/info/view/{id}', [CustomerPaymentController::class, 'payIdWisePaymentInfo'])->name('payment.info.view');
     Route::get('payment/info/delete/{id}', [CustomerPaymentController::class, 'payIdWisePaymentInfoDelete'])->name('payment.info.delete');
+    Route::post('customer/id/id/wise/payment/info/view', [CustomerPaymentController::class, 'dateAndCustomerIdWiseFindPayment'])->name('date.id.wise.payment.info.view');
 
 
 });

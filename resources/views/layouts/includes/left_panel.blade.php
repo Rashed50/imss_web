@@ -78,7 +78,7 @@
     </a>
     <!-- sl-menu-link -->
     <ul class="sl-menu-sub nav flex-column">
-      <li class="nav-item"><a href="{{ route('due.payment.add')}}" class="nav-link @yield('due-payment')">Payment By Customer</a></li>
+      <li class="nav-item"><a href="{{ route('due.payment.add')}}" class="nav-link @yield('due-payment')">New Payment</a></li>
       <li class="nav-item"><a href="{{ route('payment.customer.list') }}" class="nav-link @yield('customer-payment')">Customer Payment</a></li>
       <li class="nav-item"><a href="" class="nav-link @yield('customer-payment-record')">Customer Payment Record</a></li>
       <li class="nav-item"><a href="" class="nav-link @yield('customer-payment')">Vendor Payment</a></li>
@@ -157,7 +157,7 @@
       <li class="nav-item"><a href="{{ route('district.add') }}" class="nav-link">Add District</a></li>
       <li class="nav-item"><a href="{{ route('thana.add') }}" class="nav-link">Add Thana</a></li>
       <li class="nav-item"><a href="{{ route('union.add') }}" class="nav-link">Add Union</a></li>
-      <li class="nav-item"><a href="{{ route('employee.add') }}" class="nav-link @yield('add-employee')">Add Designation</a></li>
+      <li class="nav-item"><a href="#" class="nav-link @yield('add-employee')">Add Designation</a></li>
       <li class="nav-item"><a href="{{ route('employee.add') }}" class="nav-link @yield('add-employee')">Add Employee</a></li>
     </ul>
 

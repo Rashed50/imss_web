@@ -23,7 +23,7 @@
                         <h3 class="card-title card_top_title"><i class="fab fa-gg-circle"></i> New Employee Details</h3>
                     </div>
                     <div class="col-md-4 text-right">
-                        <a href="#" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-th"></i> All Employee Information</a>
+                        <a href="#" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-th"></i> Employees List</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -210,11 +210,11 @@
                   <thead>
                       <tr>
                           <th>SL</th>
-                          <th>Photo</th>
                           <th>Name</th>
                           <th>Mobile No</th>
                           <th>Join Date</th>
                           <th>Address</th>
+                          <th>Photo</th>
                           <th>Manage</th>
                       </tr>
                   </thead>
@@ -222,13 +222,13 @@
                     @foreach ($getAllEmployees as $employee)
                       <tr>
                           <td>{{ $loop->iteration }}</td>
-                          <td>
-                            <img src="{{ asset($employee->Photo) }}" alt="No Photo" class="custom_image">
-                          </td>
                           <td>{{ $employee->Name }}</td>
                           <td>{{ $employee->ContactNumber }}</td>
                           <td>{{ $employee->JoinDate }}</td>
                           <td>{{ $employee->Division->DiviName }},{{ $employee->District->DistName }}</td>
+                          <td>
+                            <img src="{{ asset($employee->Photo) }}" alt="No Photo" class="custom_image">
+                          </td>
                           <td>
                               <a href="{{ route('employee.edit',$employee->EmplInfoId) }}" title="edit"><i class="fas fa-edit fa-lg edit_icon"></i></a>
                               <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>

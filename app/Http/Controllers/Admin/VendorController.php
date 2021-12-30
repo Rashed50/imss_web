@@ -51,6 +51,7 @@ class VendorController extends Controller{
     }
 
     public function store(Request $request){
+
         $this->validate($request,[
             'VendName'=>'required|max:100',
             'ContactName'=>'required|max:70',
@@ -58,7 +59,7 @@ class VendorController extends Controller{
             'OpeningDate'=>'required|max:20',
             'Balance'=>'required|max:15',
             'InitialBalance'=>'required|max:15',
-            'ChartOfAcctId'=>'required|max:20',
+           // 'ChartOfAcctId'=>'required|max:20',
             'VendAddress'=>'required|max:200',
         ],[
             'VendName.required'=> 'please enter vendor name',
@@ -79,8 +80,8 @@ class VendorController extends Controller{
             'InitialBalance.required'=> 'please enter Initial Balance',
             'InitialBalance.max'=> 'max Initial Balance content is 15 character',
 
-            'ChartOfAcctId.required'=> 'please enter Accountant name',
-            'ChartOfAcctId.max'=> 'max Accountant name content is 20 character',
+            // 'ChartOfAcctId.required'=> 'please enter Accountant name',
+            // 'ChartOfAcctId.max'=> 'max Accountant name content is 20 character',
 
             'VendAddress.required'=> 'please enter vendor address',
             'VendAddress.max'=> 'max vendor address content is 200 character',

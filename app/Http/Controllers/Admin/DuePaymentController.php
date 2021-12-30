@@ -63,7 +63,7 @@ class DuePaymentController extends Controller{
         /* data insert */
     
     
-    
+     
         $request['TranAmount'] = 900;
         $request['TranTypeId'] = 1;
     

@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-body card_form">
             {{-- Topbar --}}
-            <form action="{{ route('product.seller') }}" method="post">
+            <form action="{{ route('product.seller') }}" target="_blank" method="post">
               @csrf
             <div class="row">
               <div class="col-md-12">

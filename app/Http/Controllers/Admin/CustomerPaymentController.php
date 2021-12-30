@@ -32,6 +32,10 @@ class CustomerPaymentController extends Controller{
     return $data = CustomerPayment::where('CustId',$id)->get();
   }
 
+  public function dateAndIdWisePayment($sDate, $eDate, $id){
+    return $data = CustomerPayment::where('CustId',$id)->whereDate('PaymentDate','>=',$sDate)->whereDate('PaymentDate','<=',$eDate)->get();
+  }
+
   public function delete($id){
     CustomerPayment::where('CustPaymId',$id)->delete();
     $notification=array(
@@ -75,12 +79,27 @@ class CustomerPaymentController extends Controller{
 
 
 
- // ============== search customer in list for Payment=========================== 
+ // ============== search id and date wise customer Payment list =========================== 
   public function custIdWisePaymentInfo($id){
- 
-     $allPayment= $this->customerIdWiseFindPayment($id);
+    
+     $eDate = date('Y-m-d', strtotime(Carbon::now()));
+     $sDate = date('Y-m-d', strtotime(Carbon::now()->subMonth(2)));  
 
-    return view('admin.customer.payment.payment-info',compact('allPayment'));
+     $allPayment = $this->dateAndIdWisePayment($sDate,$eDate,$id);
+
+     return view('admin.customer.payment.payment-info',compact('allPayment', 'sDate', 'eDate'));
+}
+
+//==============  id and date wise payment info ====================//
+
+public function dateAndCustomerIdWiseFindPayment(Request $request){
+ $eDate = $request->eDate;
+ $sDate = $request->sDate;
+ $id = $request->id;
+  $allPayment = $this->dateAndIdWisePayment($sDate,$eDate,$id);
+
+  // dd($allPayment);
+  return view('admin.customer.payment.payment-info',compact('allPayment', 'sDate', 'eDate'));
 }
 
 // =============== delete customer id wise payment info =========================

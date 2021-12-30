@@ -138,7 +138,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
+                        <!-- <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">AC Header:</span></label>
                             <div class="col-sm-7">
                               <input type="text" placeholder="AC Header" class="form-control" id="ChartOfAcctId" name="ChartOfAcctId" value="{{(@$data)?@$data->ChartOfAcctId:old('ChartOfAcctId')}}" required>
@@ -148,7 +148,7 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group row custom_form_group{{ $errors->has('BankId') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Bank Name:</span></label>
                             <div class="col-sm-7">

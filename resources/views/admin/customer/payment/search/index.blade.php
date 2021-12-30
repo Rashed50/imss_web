@@ -17,14 +17,14 @@
             <form class="form-horizontal" id="registration" method="post" action="{{ route('payment.customer.search') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
-                  <div class="card-header">
+                  <!-- <div class="card-header">
                       <div class="row">
                           <div class="col-md-12">
                               <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Customer Information</h3>
                           </div>
                           <div class="clearfix"></div>
                       </div>
-                  </div>
+                  </div> -->
                   
                   @include('layouts.includes.customer-search')
 
@@ -43,7 +43,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>Customer List</h3>
+                            <h3 class="card-title card_top_title"></i>Customer Payment Records</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>

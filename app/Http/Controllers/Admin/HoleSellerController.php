@@ -70,6 +70,7 @@ class HoleSellerController extends Controller{
   public function productSellStore(Request $request){
 
 
+
     $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
 
@@ -119,7 +120,7 @@ class HoleSellerController extends Controller{
         ProductSellRecord::insert([
           'Quantity' => $data->qty,
           'Amount' => $data->price,
-          'LabourCost' => $data->holLabourPerUnit,
+          'LabourCost' => $data->options->holLabourPerUnit,
           'ProdSellId' => $insert,
           'CateId' => $data->options->holCategoryId,
           'BranId' => $data->options->holBranId,
@@ -139,7 +140,11 @@ class HoleSellerController extends Controller{
           'message'=>'Successfully Purchase Product',
           'alert-type'=>'success'
       );
-      return Redirect()->back()->with($notification);
+     
+
+      $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
+      $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
+      return view('admin.voucher.voucher',compact('sellInfo', 'sellRecord'))->with($notification);
     }
 
   }

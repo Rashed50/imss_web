@@ -44,6 +44,51 @@
                         </div>
                         <div class="col-md-2"></div>
                     </div>
+
+                    <!-- #### Search ########### -->
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h6>Search For Employes Payments info</h6>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <form action="{{ route('date.id.wise.payment.info.view') }}" method="POST">
+                                @csrf
+                                <div class="row">
+
+                                        <div class="col-md-5">
+                                            <div class="form-group row">
+                                                <label for="inputDate" class="col-sm-5 col-form-label">Starting Date</label>
+                                                <div class="col-sm-7">
+                                                <input type="date" name="sDate" value="{{ @$sDate ?? date('Y-m-d') }}" class="form-control" id="inputDate">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            <div class="form-group row">
+                                                <label for="inputDate" class="col-sm-5 col-form-label">Ending Date</label>
+                                                <div class="col-sm-7">
+                                                <input type="hidden" name="id" value="{{ @$allPayment[0]->Customer->CustId }}">  
+                                                <input type="date" name="eDate" value="{{ @$eDate ?? date('Y-m-d') }}" class="form-control" id="inputDate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-outline-success">SEARCH</button>
+                                        </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+
+                    <!-- #### Search ########### -->
+                    <hr/>
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
