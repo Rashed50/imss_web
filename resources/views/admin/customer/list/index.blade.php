@@ -50,29 +50,41 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
-                                <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
-                                <table id="datatable1" class="table responsive mb-0">
-                                    <thead>
-                                        <tr>
-
+                                <table id="dtHorizontalExample" class="table table-striped table-bordered custom_table table-sm mb-0" cellspacing="0"width="100%">
+                                <thead>
+                                         <tr>
                                             <th>SL NO.</th>
-                                            <th>Customer type</th>
-                                            <th>District</th>
-                                            <th>Thana</th>
-                                            <th>Name</th>
-                                            <th>Phone</th>
+                                            <th>Customer</th>
+                                            <th>Father</th>
+                                            <th>TradeName</th>
+                                            <th>ContactNumber</th>
+                                            <th>Address</th>
+                                            <th>DueAmount</th>
+                                            <th>InitialDue</th>
+                                            <th>NID</th>
+                                            <th>Photo</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                      @foreach($allCustomer as $key=>$customer)
-                                        <tr>
-                                            <td>{{ $key+1}}</td>
-                                            <td>{{$customer->CustomerType->TypeName}}</td>
-                                            <td>{{$customer->Distict->DistName}}</td>
-                                            <td>{{$customer->Thana->ThanaName}}</td>
-                                            <td>{{$customer->CustName}}</td>
-                                            <td>{{$customer->ContactNumber}}</td>
+                                        <tr>                                            
+                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $customer->CustName ??'' }}</td>
+                                            <td>{{ $customer->FatherName ??'' }}</td>
+                                            <td>{{ $customer->TradeName ??'' }}</td>
+                                            <td>{{ $customer->ContactNumber ??'' }}</td>
+                                            <td>{{ $customer->Address ??'' }}</td>
+                                            <td>{{ $customer->DueAmount ??'' }}</td>
+                                            <td>{{ $customer->InitialDue ??'' }}</td>
+                                            <td>{{ $customer->NID ??'' }}</td>
+                                            <td>
+                                                <img height="40" src="{{ asset($customer->Photo) }}" alt="">
+                                            </td>
+                                            
+                                            
+                                            
+                                            
                                             <td>
                                                 <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
                                                 <a href="#" title="edit"><i class="fab fa-pencil-square fa-lg edit_icon">Edit</i></a>

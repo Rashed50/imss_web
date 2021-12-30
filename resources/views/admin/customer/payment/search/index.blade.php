@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+
+
 <!-- ########## START: MAIN PANEL ########## -->
 
   <nav class="breadcrumb sl-breadcrumb">
@@ -51,28 +53,38 @@
                         <div class="col-12">
                             <div class="table-responsive">
                                 <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
-                                <table id="datatable1" class="table responsive mb-0">
+                                <!-- <table id="datatable1" class="table table-responsive mb-0"> -->
+                                <table id="dtHorizontalExample" class="custom_table table table-striped table-bordered table-sm mb-0" cellspacing="0"width="100%">
                                     <thead>
                                         <tr>
-
                                             <th>SL NO.</th>
-                                            <th>Customer type</th>
-                                            <th>District</th>
-                                            <th>Thana</th>
-                                            <th>Name</th>
-                                            <th>Phone</th>
+                                            <th>Customer</th>
+                                            <th>Father</th>
+                                            <th>TradeName</th>
+                                            <th>ContactNumber</th>
+                                            <th>Address</th>
+                                            <th>DueAmount</th>
+                                            <th>InitialDue</th>
+                                            <th>NID</th>
+                                            <th>Photo</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                      @foreach($allCustomer as $key=>$customer)
                                         <tr>
-                                            <td>{{ $key+1}}</td>
-                                            <td>{{$customer->CustomerType->TypeName}}</td>
-                                            <td>{{$customer->Distict->DistName}}</td>
-                                            <td>{{$customer->Thana->ThanaName}}</td>
-                                            <td>{{$customer->CustName}}</td>
-                                            <td>{{$customer->ContactNumber}}</td>
+                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $customer->CustName ??'' }}</td>
+                                            <td>{{ $customer->FatherName ??'' }}</td>
+                                            <td>{{ $customer->TradeName ??'' }}</td>
+                                            <td>{{ $customer->ContactNumber ??'' }}</td>
+                                            <td>{{ $customer->Address ??'' }}</td>
+                                            <td>{{ $customer->DueAmount ??'' }}</td>
+                                            <td>{{ $customer->InitialDue ??'' }}</td>
+                                            <td>{{ $customer->NID ??'' }}</td>
+                                            <td>
+                                                <img height="40" src="{{ asset($customer->Photo) }}" alt="">
+                                            </td>                                            
                                             <td>
                                             <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i>Add Payment</button>
                                                 <a class="btn btn-md btn-info waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" target="_blank" title="Record">Payment Record</a>
@@ -188,6 +200,4 @@
   </div>
 
 <!-- Modal -->
-
-
 @endsection

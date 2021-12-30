@@ -293,7 +293,6 @@
                                 <table id="datatable1" class="table responsive mb-0">
                                     <thead>
                                         <tr>
-
                                             <th>SL NO.</th>
                                             <th>Customer</th>
                                             <th>Father</th>
