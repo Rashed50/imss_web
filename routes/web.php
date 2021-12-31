@@ -154,6 +154,11 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('customer/search', [CustomerController::class, 'search'])->name('customer.search');
 
 
+    // ======##### customer search name phone trade name list route   #######=======
+    Route::get('customer/list/search', [CustomerController::class, 'searchlist'])->name('customer.list.search');
+    Route::post('customer/list/search', [CustomerController::class, 'searchlistResult'])->name('customer.list.search.result');
+
+
     // ======##### customer payment route   #######=======
     Route::get('payment/customer/list', [CustomerController::class, 'listForPay'])->name('payment.customer.list');
      Route::post('payment/customer/search', [CustomerController::class, 'searchForPay'])->name('payment.customer.search');
@@ -188,12 +193,12 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 });
 
 
-Route::middleware('auth')->prefix('dashboard')->group(function () {
-    Route::get('customer/type/add', [CustomerTypeController::class, 'add'])->name('customer.type.add');
-    Route::get('customer/type/edit/{id}', [CustomerTypeController::class, 'edit'])->name('customer.type.edit');
-    Route::post('customer/type/add', [CustomerTypeController::class, 'store'])->name('customer.type.store');
-    Route::post('customer/type/edit', [CustomerTypeController::class, 'update'])->name('customer.type.update');
-});
+// Route::middleware('auth')->prefix('dashboard')->group(function () {
+//     Route::get('customer/type/add', [CustomerTypeController::class, 'add'])->name('customer.type.add');
+//     Route::get('customer/type/edit/{id}', [CustomerTypeController::class, 'edit'])->name('customer.type.edit');
+//     Route::post('customer/type/add', [CustomerTypeController::class, 'store'])->name('customer.type.store');
+//     Route::post('customer/type/edit', [CustomerTypeController::class, 'update'])->name('customer.type.update');
+// });
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {

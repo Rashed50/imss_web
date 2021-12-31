@@ -31,9 +31,12 @@ class CustomerController extends Controller{
     public function getAllCustomer(){
       return $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
     }
-    // public function getAll(){
-    //     return $Customer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
-    //  }
+
+
+    public function getCustomer($id){
+        return $allCustomer = CustomerInfo::where('status',true)->where('CustId',$id)->first();
+    }
+  
 
     public function getAllWholeCustomer(){
       return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
@@ -74,8 +77,9 @@ class CustomerController extends Controller{
 
     
     public function CustIdWiseCustomerInformation(Request $request){
-      $allCustomer = CustomerInfo::where('status',true)->where('CustId',$request->TradeName)->first();
-      return json_encode($allCustomer);
+
+       $allCustomer = $this->getCustomer($request->TradeName);
+       return json_encode($allCustomer);
     }
     /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
 
@@ -96,12 +100,62 @@ class CustomerController extends Controller{
          $districeOBJ= new DistrictController();
          $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
  
-         $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
+         $allCustomer = $this->getAllWholeCustomer();
          return view('admin.customer.list.index', compact('allDistrict', 'allCustomer'));
+     }
+
+      //  ==================== customer list for payment ======================
+      public function listForPay(){
+
+        $districeOBJ= new DistrictController();
+        $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
+
+        $allCustomer = $this->getAllWholeCustomer();
+        return view('admin.customer.payment.search.index', compact('allDistrict', 'allCustomer'));
+    }
+
+     //  ==================== customer id wise sell details list  ======================
+   public function customerTypewiseSellDetailsList(){
+
+       $districeOBJ= new DistrictController();
+       $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
+
+       $allCustomer = $this->getAllWholeCustomer();
+       return view('admin.sell.customer-sell', compact('allDistrict', 'allCustomer'));
+   }
+
+    public function searchlist(){
+        $typeObj= new CustomerTypeController;
+        $allType= $typeObj->getAll();
+         return view('admin.customer.list.search', compact('allType'));
+     }
+
+
+     public function searchlistResult(Request $request){
+        // dd($request->all());
+
+            $request->validate([
+                'CustTypeId'=>'required',
+                'searchCustomer'=>'required',
+            ],[
+                'CustTypeId.required'=>'please select customer type',
+                'searchCustomer.required'=>'please input text'
+            ]);
+            $sResult = $request->searchCustomer;
+            $typeObj= new CustomerTypeController;
+            $allType= $typeObj->getAll();
+
+            $allCustomer = CustomerInfo::where('CustTypeId',$request->CustTypeId)
+            ->orWhere('CustName', 'like', "%{$request->searchCustomer}%")
+            ->orWhere('TradeName', 'like', "%{$request->searchCustomer}%")
+            ->orWhere('ContactNumber', 'like', "%{$request->searchCustomer}%")
+            ->orWhere('Address', 'like', "%{$request->searchCustomer}%")
+            ->get();
+            return view('admin.customer.list.search-result', compact('allCustomer', 'allType', 'sResult'));
+         
      }
  
      public function search(Request $request){
-         // dd($request->all());
  
          $districeOBJ= new DistrictController();
          $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
@@ -111,22 +165,8 @@ class CustomerController extends Controller{
  
          return view('admin.customer.list.index', compact('allDistrict', 'allCustomer'));
      }
- 
- 
-    //  ==================== customer list for payment ======================
-     public function listForPay(){
-
-         $districeOBJ= new DistrictController();
-         $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
- 
-         $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
-         return view('admin.customer.payment.search.index', compact('allDistrict', 'allCustomer'));
-     }
-
 
      public function searchForPay(Request $request){
-        // dd($request->all());
-
         $districeOBJ= new DistrictController();
         $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
 
@@ -135,32 +175,18 @@ class CustomerController extends Controller{
 
         return view('admin.customer.payment.search.index', compact('allDistrict', 'allCustomer'));
     }
-
-
-    //  ==================== customer id wise sell details list  ======================
-    public function customerTypewiseSellDetailsList(){
+ 
+    
+    public function searchCustomerTypewiseSellDetailsList(Request $request){
 
         $districeOBJ= new DistrictController();
         $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
-
-        $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->get();
+ 
+        $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',$request->type)
+        ->orWhere('DistId',$request->DistId)->orWhere('ThanId',$request->ThanId)->get(); 
+ 
         return view('admin.sell.customer-sell', compact('allDistrict', 'allCustomer'));
     }
-
-
-    public function searchCustomerTypewiseSellDetailsList(Request $request){
-       // dd($request->all());
-
-       $districeOBJ= new DistrictController();
-       $allDistrict= $districeOBJ->getAllDistrictsByDivisionId(1);
-
-       $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',$request->type)
-       ->orWhere('DistId',$request->DistId)->orWhere('ThanId',$request->ThanId)->get(); 
-
-       return view('admin.sell.customer-sell', compact('allDistrict', 'allCustomer'));
-   }
-
-
 
 
 
@@ -183,7 +209,8 @@ class CustomerController extends Controller{
         $Division = $DivisionOBJ->getAll();
 
         $allCustomer = $this->getAllCustomer();
-        $data = $allCustomer->where('status',true)->where('CustId',$id)->firstOrFail();
+        
+        $data = $this->getCustomer($id);
         return view('admin.customer.add', compact('data', 'allCustomer', 'Division', 'allType'));
     }
     
@@ -303,7 +330,7 @@ class CustomerController extends Controller{
     // Wholeseller customer
     public function updateCustomerBalance($customerId,$amount)
     {
-            $aCust = CustomerInfo::where('CustId',$customerId)->first();
+            $aCust = $this->getCustomer($customerId);
             $aCust->DueAmount = $aCust->DueAmount + $amount;
            
             $aCust = CustomerInfo::where('CustId',$customerId)->update([
@@ -316,7 +343,7 @@ class CustomerController extends Controller{
     {
 
         if($customerId != null){ 
-            $aCust = CustomerInfo::where('CustId',$customerId)->first();
+            $aCust = $this->getCustomer($customerId);
             $aCust->DueAmount = $aCust->DueAmount + $amount;
            
               return  $aCust = CustomerInfo::where('CustId',$customerId)->update([

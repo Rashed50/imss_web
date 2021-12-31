@@ -36,8 +36,8 @@
                 <div class="col-md-8">
                     <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} customer Information</h3>
                 </div>
-                <div class="col-md-4 text-right" style="border-radius: 10px;">
-                    <a href class="btn btn-success btn-sm">Customer List</a>
+                <div class="col-md-4 text-right">
+                    <a href="{{ route('customer.list')}}" class="btn btn-success btn-sm"  style=" border: 1px solid red; border-radius: 10px;">Customer List</a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -240,24 +240,24 @@
               </div>
                 <style>
                     #my_camera{
-                    border: 2px solid green;
+                    border: 2px solid gray;
                     }
                     </style>
                     <div class="row" id="hide">
                         
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="my_camera" id="my_camera"></div>
-                            
                         </div>
 
-                        <div class="col-md-2">
-                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                        <div class="col-md-3">
+                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
                             <input type=button value="Off" class="" id="off" >
                             <input type=button class="d-none" id="on"  value="on">
                             <input type="hidden" name="image" class="image-tag">
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3">
                             <div id="results">Your captured image</div>
                         </div>
 
