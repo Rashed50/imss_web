@@ -33,8 +33,11 @@
 
         <div class="card-header">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} customer Information</h3>
+                </div>
+                <div class="col-md-4 text-right" style="border-radius: 10px;">
+                    <a href class="btn btn-success btn-sm">Customer List</a>
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -237,21 +240,28 @@
               </div>
                 <style>
                     #my_camera{
-                    border: 5px solid green;
+                    border: 2px solid green;
                     }
                     </style>
                     <div class="row" id="hide">
-                        <div class="col-md-6">
+                        
+                        <div class="col-md-4">
                             <div class="my_camera" id="my_camera"></div>
-                            <br/>
-                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                            
+                        </div>
+
+                        <div class="col-md-2">
+                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
                             <input type=button value="Off" class="" id="off" >
                             <input type=button class="d-none" id="on"  value="on">
                             <input type="hidden" name="image" class="image-tag">
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-4">
                             <div id="results">Your captured image</div>
                         </div>
+
+                        <div class="col-md-2"></div>
                     </div>
          
         </div>
@@ -265,17 +275,15 @@
 
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
 <script language="JavaScript">
 
 
     Webcam.set({
-        width: 490,
-        height: 350,
-        dest_width: 290,
-        dest_height: 190,
+        width: 200,
+        height: 100,
+        dest_width: 150,
+        dest_height: 100,
         image_format: 'jpeg',
         jpeg_quality: 90,
         force_flash: false
