@@ -232,38 +232,28 @@
                             <img id="showImage" height="70" alt="">
                         </div>
                     </div>
-
-
-                    
-                 <!-- Webcam Add -->
-            <div class="container">
-            <h1 class="text-center"> Test webcam image Capture <a href="#">Muajjam Hossain</a> </h1>
-        
-                <div class="row" id="hide">
-                    <div class="col-md-6">
-                        <div class="my_camera" id="my_camera"></div>
-                        <br/>
-                        <input type=button value="Take Snapshot" onClick="take_snapshot()">
-                        <input type=button value="Off" class="" id="off" >
-                        <input type=button class="d-none" id="on"  value="on">
-                        <input type="hidden" name="image" class="image-tag">
-                    </div>
-                    <div class="col-md-6">
-                        <div id="results">Your captured image will appear here...</div>
-                    </div>
-                    <div class="col-md-12 text-center">
-                        <br/>
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
+                
                 </div>
-        </div>
-
-
-
-
-                </div>
-            </div>
-
+              </div>
+                <style>
+                    #my_camera{
+                    border: 5px solid green;
+                    }
+                    </style>
+                    <div class="row" id="hide">
+                        <div class="col-md-6">
+                            <div class="my_camera" id="my_camera"></div>
+                            <br/>
+                            <input type=button value="Take Snapshot" onClick="take_snapshot()">
+                            <input type=button value="Off" class="" id="off" >
+                            <input type=button class="d-none" id="on"  value="on">
+                            <input type="hidden" name="image" class="image-tag">
+                        </div>
+                        <div class="col-md-6">
+                            <div id="results">Your captured image</div>
+                        </div>
+                    </div>
+         
         </div>
 
         <div class="card-footer card_footer_button text-center">
@@ -271,99 +261,40 @@
         </div>
     </div>
   </form>
-
-    <!-- list -->
-    <div class="row" style="margin-top:30px">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>customer List</h3>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="card-body">
-
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="table-responsive">
-                                <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
-                                <table id="datatable1" class="table responsive mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>SL NO.</th>
-                                            <th>Customer</th>
-                                            <th>Father</th>
-                                            <th>TradeName</th>
-                                            <th>ContactNumber</th>
-                                            <th>Address</th>
-                                            <th>DueAmount</th>
-                                            <th>InitialDue</th>
-                                            <th>NID</th>
-                                            <th>Photo</th>
-                                            <th>Manage</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                      @foreach ($allCustomer as $key=>$customer)
-                                        <tr>
-                                            <td>{{ $key+1 }}</td>
-                                            <td>{{ $customer->CustName ??'' }}</td>
-                                            <td>{{ $customer->FatherName ??'' }}</td>
-                                            <td>{{ $customer->TradeName ??'' }}</td>
-                                            <td>{{ $customer->ContactNumber ??'' }}</td>
-                                            <td>{{ $customer->Address ??'' }}</td>
-                                            <td>{{ $customer->DueAmount ??'' }}</td>
-                                            <td>{{ $customer->InitialDue ??'' }}</td>
-                                            <td>{{ $customer->NID ??'' }}</td>
-                                            <td>
-                                                <img height="40" src="{{ asset($customer->Photo) }}" alt="">
-                                            </td>
-                                            <td>
-                                                <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
-                                                <a href="{{ route('customer.edit',$customer->CustId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
-                                                <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
-                                            </td>
-                                        </tr>
-                                      @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end list -->
   </div>
 
 
 
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
 
 
-
-  
 <script language="JavaScript">
+
+
     Webcam.set({
         width: 490,
-        height: 390,
+        height: 350,
+        dest_width: 290,
+        dest_height: 190,
         image_format: 'jpeg',
-        jpeg_quality: 90
+        jpeg_quality: 90,
+        force_flash: false
     });
+     // preload shutter audio clip
+        var shutter = new Audio();
+        shutter.autoplay = true;
+        shutter.src = navigator.userAgent.match(/Firefox/) ? 'shutter.ogg' : 'shutter.mp3';
 
     $('#off').click(function(){
+        Webcam.reset();
         $('#my_camera').removeClass('my_camera');
         $('#off').addClass('d-none');
         $('#on').removeClass('d-none');
     });
 
     $('#on').click(function(){
+      Webcam.reset();
+        Webcam.on();
         $('#my_camera').addClass('my_camera');
         $('#on').addClass('d-none');
         $('#off').removeClass('d-none');
@@ -375,6 +306,7 @@
     
   
     function take_snapshot() {
+      shutter.play();
         Webcam.snap( function(data_uri) {
             $(".image-tag").val(data_uri);
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';

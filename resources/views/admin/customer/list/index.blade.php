@@ -60,8 +60,6 @@
                                             <th>ContactNumber</th>
                                             <th>Address</th>
                                             <th>DueAmount</th>
-                                            <th>InitialDue</th>
-                                            <th>NID</th>
                                             <th>Photo</th>
                                             <th>Manage</th>
                                         </tr>
@@ -76,14 +74,9 @@
                                             <td>{{ $customer->ContactNumber ??'' }}</td>
                                             <td>{{ $customer->Address ??'' }}</td>
                                             <td>{{ $customer->DueAmount ??'' }}</td>
-                                            <td>{{ $customer->InitialDue ??'' }}</td>
-                                            <td>{{ $customer->NID ??'' }}</td>
                                             <td>
                                                 <img height="40" src="{{ asset($customer->Photo) }}" alt="">
                                             </td>
-                                            
-                                            
-                                            
                                             
                                             <td>
                                                 <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>

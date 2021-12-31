@@ -59,14 +59,10 @@
                                         <tr>
                                             <th>SL NO.</th>
                                             <th>Customer</th>
-                                            <th>Father</th>
                                             <th>TradeName</th>
                                             <th>ContactNumber</th>
                                             <th>Address</th>
                                             <th>DueAmount</th>
-                                            <th>InitialDue</th>
-                                            <th>NID</th>
-                                            <th>Photo</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -75,20 +71,15 @@
                                         <tr>
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $customer->CustName ??'' }}</td>
-                                            <td>{{ $customer->FatherName ??'' }}</td>
                                             <td>{{ $customer->TradeName ??'' }}</td>
                                             <td>{{ $customer->ContactNumber ??'' }}</td>
                                             <td>{{ $customer->Address ??'' }}</td>
                                             <td>{{ $customer->DueAmount ??'' }}</td>
-                                            <td>{{ $customer->InitialDue ??'' }}</td>
-                                            <td>{{ $customer->NID ??'' }}</td>
+                                                                                     
                                             <td>
-                                                <img height="40" src="{{ asset($customer->Photo) }}" alt="">
-                                            </td>                                            
-                                            <td>
-                                            <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i>Add Payment</button>
-                                                <a class="btn btn-md btn-info waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" target="_blank" title="Record">Payment Record</a>
-                                                <a class="btn btn-md btn-success waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" target="_blank" title="Record">Sell Details</a>
+                                            <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" title="Add Payment" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i> <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                                                <a class="btn btn-md btn-info waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" target="_blank" title="Payment Record"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> <i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                <a class="btn btn-md btn-success waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" target="_blank" title="Sell Details"> <i class="fa fa-balance-scale" aria-hidden="true"></i> <i class="fa fa-database" aria-hidden="true"></i> </a>
                                             </td>
                                         </tr>
                                      @endforeach
