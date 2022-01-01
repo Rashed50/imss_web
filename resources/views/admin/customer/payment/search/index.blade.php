@@ -67,7 +67,7 @@
                                             <td>{{ $customer->DueAmount ??'' }}</td>
                                                                                      
                                             <td>
-                                            <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" title="Add Payment" data-trade="{{$customer->TradeName}}" data-name="{{$customer->CustName}}" data-customer_amount="{{$customer->DueAmount}}" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i> <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                                            <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" title="Add Payment" data-trade="{{$customer->TradeName}}" data-phone="{{$customer->ContactNumber}}" data-name="{{$customer->CustName}}" data-customer_amount="{{$customer->DueAmount}}" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i> <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
                                                 <a class="btn btn-md btn-info waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" title="Payment Record"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> <i class="fa fa-eye" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
@@ -103,10 +103,13 @@
                   <input type="hidden" id="modal_id" name="modal_id">
                 
                   <div class="form-group row custom_form_group">
-                     <strong>Name:</strong> <samp id="custName"></samp>
+                     <strong>Name: </strong> <strong id="custName"></strong>
                   </div>
                   <div class="form-group row custom_form_group">
-                     <strong>Trade:</strong> <samp id="tradeName"></samp>
+                     <strong>Trade: </strong> <strong id="tradeName"></strong>
+                  </div>
+                  <div class="form-group row custom_form_group">
+                     <strong>Phone: </strong> <strong id="custPhone"></strong>
                   </div>
                   <div class="form-group row custom_form_group">
                       <label class="col-sm-4 control-label">Due</label>

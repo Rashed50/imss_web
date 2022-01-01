@@ -786,11 +786,13 @@
         var amount = $(this).data('customer_amount');
         var name = $(this).data('name');
         var trade = $(this).data('trade');
+        var phone = $(this).data('phone');
         // alert(name);
         $(".modal_card #modal_id").val( softDel );
         $(".modal_card #DueAmount").val( amount );
         $(".modal_card #custName").text( name );
         $(".modal_card #tradeName").text( trade );
+        $(".modal_card #custPhone").text( phone );
       });
     })
   </script>
