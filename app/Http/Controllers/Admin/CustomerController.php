@@ -19,7 +19,7 @@ use App\Models\District;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Image;
+use Intervention\Image\Facades\Image as Image;
 
 
 class CustomerController extends Controller{
@@ -132,8 +132,6 @@ class CustomerController extends Controller{
 
 
      public function searchlistResult(Request $request){
-        // dd($request->all());
-
             $request->validate([
                 'CustTypeId'=>'required',
                 'searchCustomer'=>'required',
