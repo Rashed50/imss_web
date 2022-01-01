@@ -10,7 +10,7 @@
   <div class="sl-pagebody">
      <div class="row">
         <div class="col-md-12 text-center">
-            <h6>Search For Employes sell info</h6>
+            <h6>Searching Product Sales Customer</h6>
         </div>
     </div>
     <br>
@@ -21,14 +21,6 @@
             <form class="form-horizontal" id="registration" method="post" action="{{ route('customer.type-wise.sell-details.search') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
-                  <div class="card-header">
-                      <div class="row">
-                          <div class="col-md-12">
-                              <h3 class="card-title card_top_title"> Product Sell Information</h3>
-                          </div>
-                          <div class="clearfix"></div>
-                      </div>
-                  </div>
                   @include('layouts.includes.customer-search')
                   <div class="card-footer card_footer_button text-center">
                       <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">SEARCH</button>
@@ -45,7 +37,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>Customer List</h3>
+                            <h3 class="card-title card_top_title"></i>Salse Customer List</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -57,12 +49,13 @@
                             <table id="dtHorizontalExample" class="custom_table table table-striped table-bordered table-sm mb-0" cellspacing="0"width="100%">
                                     <thead>
                                         <tr>
-                                            <th>SL NO.</th>
-                                            <th>Customer type</th>
-                                            <th>District</th>
-                                            <th>Thana</th>
+                                            <th>S.N</th>
+                                            <th>Type</th>
                                             <th>Name</th>
-                                            <th>Phone</th>
+                                            <th>Trade</th>
+                                            <th>Contact</th>
+                                            <th>Address</th>
+                                            <th>Due</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -70,11 +63,12 @@
                                     @foreach($allCustomer as $key=>$customer)
                                         <tr>
                                             <td>{{ $key+1}}</td>
-                                            <td>{{$customer->CustomerType->TypeName}}</td>
-                                            <td>{{$customer->Distict->DistName}}</td>
-                                            <td>{{$customer->Thana->ThanaName}}</td>
-                                            <td>{{$customer->CustName}}</td>
-                                            <td>{{$customer->ContactNumber}}</td>
+                                            <td>{{substr($customer->CustomerType->TypeName,0,1) }}</td>
+                                            <td>{{ $customer->CustName ??'' }}</td>
+                                            <td>{{ $customer->TradeName ??'' }}</td>
+                                            <td>{{ $customer->ContactNumber ??'' }}</td>
+                                            <td>{{ $customer->Address ??'' }}</td>
+                                            <td>{{ $customer->DueAmount ??'' }}</td>
                                             <td>
                                              <a class="btn btn-md btn-success waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" title="Sell Details"> <i class="fa fa-balance-scale" aria-hidden="true"></i> <i class="fa fa-database" aria-hidden="true"></i> </a>
                                             </td>

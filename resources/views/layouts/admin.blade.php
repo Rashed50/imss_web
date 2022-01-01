@@ -784,9 +784,13 @@
        
         var softDel = $(this).data('id');
         var amount = $(this).data('customer_amount');
-        // alert(amount);
+        var name = $(this).data('name');
+        var trade = $(this).data('trade');
+        // alert(name);
         $(".modal_card #modal_id").val( softDel );
         $(".modal_card #DueAmount").val( amount );
+        $(".modal_card #custName").text( name );
+        $(".modal_card #tradeName").text( trade );
       });
     })
   </script>

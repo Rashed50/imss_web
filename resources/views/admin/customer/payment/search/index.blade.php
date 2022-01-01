@@ -12,20 +12,18 @@
   <div class="sl-pagebody">
     <!-- form -->
     <div class="row">
+        <div class="col-md-12 text-center">
+            <h6>Searching Customer Payment Record</h6>
+        </div>
+    </div>
+    <br>
+    <div class="row">
         <div class="col-md-2"></div>
         <div class="col-lg-8">
             <form class="form-horizontal" id="registration" method="post" action="{{ route('payment.customer.search') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
-                  <!-- <div class="card-header">
-                      <div class="row">
-                          <div class="col-md-12">
-                              <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Customer Information</h3>
-                          </div>
-                          <div class="clearfix"></div>
-                      </div>
-                  </div> -->
-                  
+               
                   @include('layouts.includes.customer-search')
 
                   <div class="card-footer card_footer_button text-center">
@@ -40,14 +38,6 @@
     <div class="row" style="margin-top:30px">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>Customer Payment Add  & View</h3>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
@@ -55,12 +45,13 @@
                                 <table id="dtHorizontalExample" class="custom_table table table-striped table-bordered table-sm mb-0" cellspacing="0"width="100%">
                                     <thead>
                                         <tr>
-                                            <th>SL NO.</th>
-                                            <th>Customer</th>
-                                            <th>TradeName</th>
-                                            <th>ContactNumber</th>
+                                           <th>S.N</th>
+                                            <th>Type</th>
+                                            <th>Name</th>
+                                            <th>Trade</th>
+                                            <th>Contact</th>
                                             <th>Address</th>
-                                            <th>DueAmount</th>
+                                            <th>Due</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -68,6 +59,7 @@
                                      @foreach($allCustomer as $key=>$customer)
                                         <tr>
                                             <td>{{ $key+1 }}</td>
+                                            <td>{{substr($customer->CustomerType->TypeName,0,1) }}</td>
                                             <td>{{ $customer->CustName ??'' }}</td>
                                             <td>{{ $customer->TradeName ??'' }}</td>
                                             <td>{{ $customer->ContactNumber ??'' }}</td>
@@ -75,7 +67,7 @@
                                             <td>{{ $customer->DueAmount ??'' }}</td>
                                                                                      
                                             <td>
-                                            <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" title="Add Payment" data-customer_amount="{{$customer->DueAmount}}" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i> <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                                            <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" title="Add Payment" data-trade="{{$customer->TradeName}}" data-name="{{$customer->CustName}}" data-customer_amount="{{$customer->DueAmount}}" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i> <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
                                                 <a class="btn btn-md btn-info waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" title="Payment Record"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> <i class="fa fa-eye" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
@@ -111,7 +103,13 @@
                   <input type="hidden" id="modal_id" name="modal_id">
                 
                   <div class="form-group row custom_form_group">
-                      <label class="col-sm-4 control-label">Due Amount:</label>
+                     <strong>Name:</strong> <samp id="custName"></samp>
+                  </div>
+                  <div class="form-group row custom_form_group">
+                     <strong>Trade:</strong> <samp id="tradeName"></samp>
+                  </div>
+                  <div class="form-group row custom_form_group">
+                      <label class="col-sm-4 control-label">Due</label>
                       <div class="col-sm-7">
                       <input type="text" class="form-control" id="DueAmount" name="DueAmount" value="" disabled>
                       </div>
