@@ -44,6 +44,19 @@
                         </div>
                         <div class="col-md-2"></div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <form action="{{ route('customer.id.date.wise.sell.info') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ @$allSell[0]->Customer->CustId }}">  
+                                 @include('layouts.includes.date')
+                            </form>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <hr>
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">

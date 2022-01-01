@@ -32,8 +32,8 @@ class CustomerPaymentController extends Controller{
     return $data = CustomerPayment::where('CustId',$id)->get();
   }
 
-  public function dateAndIdWisePayment($sDate, $eDate, $id){
-    return $data = CustomerPayment::where('CustId',$id)->whereDate('PaymentDate','>=',$sDate)->whereDate('PaymentDate','<=',$eDate)->get();
+  public function dateAndIdWisePayment($fromDate, $toDate, $id){
+    return $data = CustomerPayment::where('CustId',$id)->whereDate('PaymentDate','>=',$fromDate)->whereDate('PaymentDate','<=',$toDate)->get();
   }
 
   public function delete($id){
@@ -82,24 +82,24 @@ class CustomerPaymentController extends Controller{
  // ============== search id and date wise customer Payment list =========================== 
   public function custIdWisePaymentInfo($id){
     
-     $eDate = date('Y-m-d', strtotime(Carbon::now()));
-     $sDate = date('Y-m-d', strtotime(Carbon::now()->subMonth(2)));  
+     $toDate = date('Y-m-d', strtotime(Carbon::now()));
+     $fromDate = date('Y-m-d', strtotime(Carbon::now()->subMonth(2)));  
 
-     $allPayment = $this->dateAndIdWisePayment($sDate,$eDate,$id);
+     $allPayment = $this->dateAndIdWisePayment($fromDate,$toDate,$id);
 
-     return view('admin.customer.payment.payment-info',compact('allPayment', 'sDate', 'eDate'));
+     return view('admin.customer.payment.payment-info',compact('allPayment', 'fromDate', 'toDate'));
 }
 
 //==============  id and date wise payment info ====================//
 
 public function dateAndCustomerIdWiseFindPayment(Request $request){
- $eDate = $request->eDate;
- $sDate = $request->sDate;
+ $toDate = $request->eDate;
+ $fromDate = $request->fromDate;
  $id = $request->id;
-  $allPayment = $this->dateAndIdWisePayment($sDate,$eDate,$id);
+  $allPayment = $this->dateAndIdWisePayment($fromDate,$toDate,$id);
 
   // dd($allPayment);
-  return view('admin.customer.payment.payment-info',compact('allPayment', 'sDate', 'eDate'));
+  return view('admin.customer.payment.payment-info',compact('allPayment', 'fromDate', 'toDate'));
 }
 
 // =============== delete customer id wise payment info =========================

@@ -43,7 +43,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>Customer Payment Records</h3>
+                            <h3 class="card-title card_top_title"></i>Customer Payment Add  & View</h3>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -52,8 +52,6 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
-                                <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
-                                <!-- <table id="datatable1" class="table table-responsive mb-0"> -->
                                 <table id="dtHorizontalExample" class="custom_table table table-striped table-bordered table-sm mb-0" cellspacing="0"width="100%">
                                     <thead>
                                         <tr>
@@ -77,9 +75,8 @@
                                             <td>{{ $customer->DueAmount ??'' }}</td>
                                                                                      
                                             <td>
-                                            <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" title="Add Payment" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i> <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
-                                                <a class="btn btn-md btn-info waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" target="_blank" title="Payment Record"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> <i class="fa fa-eye" aria-hidden="true"></i></a>
-                                                <a class="btn btn-md btn-success waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" target="_blank" title="Sell Details"> <i class="fa fa-balance-scale" aria-hidden="true"></i> <i class="fa fa-database" aria-hidden="true"></i> </a>
+                                            <button class="btn btn-md btn-primary waves-effect card_top_button" id="addPayment" data-toggle="modal" data-target="#AddNewPayment" title="Add Payment" data-customer_amount="{{$customer->DueAmount}}" data-id="{{$customer->CustId }}"><i class="fa fa-plus-circle mr-2"></i> <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                                                <a class="btn btn-md btn-info waves-effect" href="{{ route('payment.info.view.customer',$customer->CustId ) }}" title="Payment Record"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> <i class="fa fa-eye" aria-hidden="true"></i></a>
                                             </td>
                                         </tr>
                                      @endforeach
@@ -113,6 +110,13 @@
 
                   <input type="hidden" id="modal_id" name="modal_id">
                 
+                  <div class="form-group row custom_form_group">
+                      <label class="col-sm-4 control-label">Due Amount:</label>
+                      <div class="col-sm-7">
+                      <input type="text" class="form-control" id="DueAmount" name="DueAmount" value="" disabled>
+                      </div>
+                  </div>
+                  
                   <div class="form-group row custom_form_group{{ $errors->has('VoucharNo') ? ' has-error' : '' }}">
                       <label class="col-sm-4 control-label">Vouchar No:<span class="req_star">*</span></label>
                       <div class="col-sm-7">

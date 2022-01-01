@@ -143,7 +143,8 @@ class HoleSellerController extends Controller{
      
 
       $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
-      $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
+     return $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
+
       return view('admin.voucher.voucher',compact('sellInfo', 'sellRecord'))->with($notification);
     }
 

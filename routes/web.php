@@ -180,7 +180,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('payment/info/customer/view/{id}', [CustomerPaymentController::class, 'custIdWisePaymentInfo'])->name('payment.info.view.customer');
     Route::get('payment/info/view/{id}', [CustomerPaymentController::class, 'payIdWisePaymentInfo'])->name('payment.info.view');
     Route::get('payment/info/delete/{id}', [CustomerPaymentController::class, 'payIdWisePaymentInfoDelete'])->name('payment.info.delete');
-    Route::post('customer/id/id/wise/payment/info/view', [CustomerPaymentController::class, 'dateAndCustomerIdWiseFindPayment'])->name('date.id.wise.payment.info.view');
+    Route::post('customer/id/date/wise/payment/info/view', [CustomerPaymentController::class, 'dateAndCustomerIdWiseFindPayment'])->name('date.id.wise.payment.info.view');
 
 
 });
@@ -336,6 +336,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('sell-info', [SellerController::class, 'index'])->name('sell.info');
     Route::get('sell/info/customer/view/{id}', [SellerController::class, 'customerWieSell'])->name('customer.wise.sell.info');
+    Route::get('sell/info/customer/view/', [SellerController::class, 'dateAndIdWiseSellInfo'])->name('customer.id.date.wise.sell.info');
 });
 
 

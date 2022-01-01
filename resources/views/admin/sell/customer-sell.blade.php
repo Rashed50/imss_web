@@ -3,11 +3,17 @@
 <!-- ########## START: MAIN PANEL ########## -->
 
   <nav class="breadcrumb sl-breadcrumb">
-    <a class="breadcrumb-item" href="index.html">Starlight</a>
+    <a class="breadcrumb-item" href="#">IMSS</a>
     <span class="breadcrumb-item active">Dashboard</span>
   </nav>
 
   <div class="sl-pagebody">
+     <div class="row">
+        <div class="col-md-12 text-center">
+            <h6>Search For Employes sell info</h6>
+        </div>
+    </div>
+    <br>
     <!-- form -->
     <div class="row">
         <div class="col-md-2"></div>
@@ -18,7 +24,7 @@
                   <div class="card-header">
                       <div class="row">
                           <div class="col-md-12">
-                              <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Customer Information</h3>
+                              <h3 class="card-title card_top_title"> Product Sell Information</h3>
                           </div>
                           <div class="clearfix"></div>
                       </div>
@@ -48,11 +54,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">
-                                <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
-                                <table id="datatable1" class="table responsive mb-0">
+                            <table id="dtHorizontalExample" class="custom_table table table-striped table-bordered table-sm mb-0" cellspacing="0"width="100%">
                                     <thead>
                                         <tr>
-
                                             <th>SL NO.</th>
                                             <th>Customer type</th>
                                             <th>District</th>
@@ -72,7 +76,7 @@
                                             <td>{{$customer->CustName}}</td>
                                             <td>{{$customer->ContactNumber}}</td>
                                             <td>
-                                                <a class="btn btn-md btn-success waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" target="_blank" title="Record">Sell Details</a>
+                                             <a class="btn btn-md btn-success waves-effect" href="{{ route('customer.wise.sell.info',$customer->CustId ) }}" title="Sell Details"> <i class="fa fa-balance-scale" aria-hidden="true"></i> <i class="fa fa-database" aria-hidden="true"></i> </a>
                                             </td>
                                         </tr>
                                      @endforeach
