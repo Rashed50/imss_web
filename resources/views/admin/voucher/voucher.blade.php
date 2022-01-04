@@ -19,7 +19,7 @@
 			text-decoration: none;
 		}
 		.pdf__wrap{
-			width: 800px;
+			width: 600px;
 			margin:  10px auto;
 			border: 1px solid #333;
 
@@ -36,8 +36,8 @@
 		.title{
 
 		}
-		.descrip{
-
+		.descrip {
+			padding: 0px 20px;
 		}
 		.address{
 			font-size: 18px;
@@ -75,7 +75,7 @@
 		.cust__details__table table,th,td{
 			border: 1px solid #333;
 			border-collapse: collapse;
-			padding: 10px;
+			padding: 2px 10px;
 		}
 		.cust__details__table table{
 			width: 95%;
@@ -88,6 +88,7 @@
 		.cust__details__table table tbody{}
 		.cust__details__table table tbody tr{}
 		.cust__details__table table tbody tr td{}
+
 		/* footer part */
 		.footer__part{
 			padding: 20px;
@@ -107,18 +108,36 @@
 			font-size: 20px;
 			font-weight: 900;
 		}
+		.print__menu{
+			text-align: center;
+		}
+		.print__menu a {
+			background: #ddd;
+			padding: 5px 15px;
+			display: inline-block;
+			font-weight: 700;
+			cursor: pointer;
+		}
+		@media print{
+			.print__menu{
+				display: none;
+			}
+		}
 	</style>
 	<!-- style -->
 </head>
 <body>
+	<div class="print__menu">
+		<a onclick="window.print()">Print Or Pdf</a>
+	</div>
 	<div class="pdf__wrap">
 		<!-- header part -->
 		<section class="header__part">
 		 	<p class="sub__title">ক্যাশ মেমো</p>
-		 	<h1 class="title">Lorem ipsum dolor sit amet consectetur adipisicing elit </h1>
-		 	<p class="descrip">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, perferendis!</p>
-		 	<p class="address">Lorem ipsum, dolor sit amet.</p>
-		 	<p class="phone"> <strong>lorem</strong> Lorem39339 <strong>lorem</strong> Lorem39339 </p>
+		 	<h1 class="title">{{$company[0]->CompName}}</h1>
+		 	<p class="descrip">{{$company[0]->CompTitle}}</p>
+		 	<p class="address">{{$company[0]->CompAddress}}</p>
+		 	<p class="phone"> <strong>Mobile</strong> {{$company[0]->Mobile1}} <strong>Mobile</strong> {{$company[0]->Mobile2}} </p>
 		</section>
 		<!-- body part -->
 		<section class="body__part">
@@ -127,16 +146,16 @@
 				<!-- customer info left -->
 				<div class="cust__info__left">
 					<ul>
-						<li> <strong>Payment Id:</strong> Lorem, ipsum dolor. </li>
-						<li> <strong>Payment Id:</strong> Lorem, ipsum dolor. </li>
-						<li> <strong>Payment Id:</strong> Lorem, ipsum dolor. </li>
+						<li> <strong>Payment Id: </strong> {{$sellInfo->VoucharNo}}</li>
+						<li> <strong>Name: </strong> {{$sellInfo->Customer->CustName}}</li>
+						<li> <strong>Address: </strong> {{$sellInfo->Customer->Address}}</li>
 					</ul>
 				</div>
 				<!-- customer info right -->
 				<div class="cust__info__right">
 					<ul>
-						<li> <strong>Date:</strong> Lorem, ipsum dolor. </li>
-						<li> <strong>Date:</strong> Lorem, ipsum dolor. </li>
+						<li> <strong>Date:</strong> {{$sellInfo->SellingDate}}</li>
+						<li> <strong>Mobile:</strong> {{$sellInfo->Customer->ContactNumber}}</li>
 					</ul>
 				</div>
 			</div>
@@ -155,36 +174,66 @@
 					<!-- tbody -->
 					<tbody>
 						<!-- loop -->
+						@foreach($sellRecord as $key=>$record)
 						<tr>
-							<td>1</td>
+							<td>{{$key+1}}</td>
 							<td>
-								Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor, deleniti?
+								{{$record->Category->CateName.' '.
+									$record->Brand->BranName.' '.
+									$record->Size->SizeName.' '.
+									$record->Thickness->ThicName}}
 							</td>
-							<td>3</td>
-							<td>8944</td>
-							<td>34039409</td>
+							<td style="text-align:right">{{$record->Quantity}}</td>
+							<td style="text-align:right">{{$record->Amount}}</td>
+							<td style="text-align:right">{{$record->Quantity*$record->Amount}}</td>
 						</tr>
+					  @endforeach
 						<!-- non loop -->
+
 						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td>8944</td>
-							<td>34039409</td>
+
+							<th colspan="4" style="text-align:right">GR.Total</th>
+							<td style="text-align:right">{{$sellInfo->TotalAmount}}</td>
+						</tr>
+						<tr>
+
+							<th colspan="4" style="text-align:right">Discount</th>
+							<td style="text-align:right">{{$sellInfo->Commission}}</td>
+						</tr>
+						<tr>
+
+							<th colspan="4" style="text-align:right">Paid</th>
+							<td style="text-align:right">{{$sellInfo->PaidAmount}}</td>
+						</tr>
+						<tr>
+
+							<th colspan="4" style="text-align:right">Due</th>
+							<td style="text-align:right">{{$sellInfo->DueAmount}}</td>
+						</tr>
+						<tr>
+
+							<th colspan="4" style="text-align:right">Pre Due</th>
+							<td style="text-align:right">{{$sellInfo->Customer->DueAmount}}</td>
+						</tr>
+						<tr>
+
+							<th colspan="4" style="text-align:right">Tot.Due</th>
+							<td style="text-align:right">{{$sellInfo->Customer->DueAmount+$sellInfo->DueAmount}}</td>
 						</tr>
 					</tbody>
-				</table>				
+				</table>
 			</div>
 			<!-- end section -->
 		</section>
 		<!-- footer part -->
 		<section class="footer__part">
 			<div class="ft__part__content">
-				<p>lorem</p>
-				<p> <span> &larr; </span> lorem <span> &larr; </span> </p>
-				<p>lorem</p>
+			  	<p>ক্রেতার স্বাক্ষর</p>
+					<p> <span> &larr; </span> ধন্যবাদ <span> &larr; </span> </p>
+					<p>বিক্রেতার স্বাক্ষর</p>
 			</div>
 		</section>
-	</div>
+
+
 </body>
 </html>

@@ -12,14 +12,23 @@ use Illuminate\Support\Facades\Session;
 use Image;
 
 class CompanyInfoController extends Controller{
+
+    public function getCompanyInfo(){
+        return $company = CompanyInfo::orderBy('CompId','ASC')->get();
+    }
+
+    public function findCompanyInfo($id){
+        return $company = CompanyInfo::where('CompId',$id)->firstOrFail();
+    }
+
     public function add(){
-        $allCom = CompanyInfo::orderBy('CompId','ASC')->get();
+        $allCom = $this->getCompanyInfo();
         return view('admin.company.add', compact('allCom'));
      }
  
      public function edit($id){
-         $allCom = CompanyInfo::orderBy('CompId','ASC')->get();
-         $data = CompanyInfo::where('CompId',$id)->firstOrFail();
+         $allCom = $this->getCompanyInfo();
+         $data = $this->findCompanyInfo($id);
          return view('admin.company.add', compact('data', 'allCom'));
      }
  
@@ -90,7 +99,7 @@ class CompanyInfoController extends Controller{
          ]);
  
          if($update){
-             // Session::flash('success_up','brand updated Successfully.');
+             Session::flash('success_up','brand updated Successfully.');
                  return redirect()->route('company.add');
          }else{
              Session::flash('error','please try again.');

@@ -69,7 +69,9 @@ class RetailSellerController extends Controller{
   // product Purchase in retailer
   public function store(Request $request){
 
-   // dd($request);
+    // company Info
+    $companyOBJ = new CompanyInfoController();
+    $company = $companyOBJ->getCompanyInfo();
     // form validation
     $this->validate($request,[
 
@@ -102,32 +104,7 @@ class RetailSellerController extends Controller{
     $aCustomer = $custObj->updateRetailerCustomerBalance(null,$request->DueAmount,$request->CustName,
     $request->TradeName,$request->ContactNo,$request->Address); 
     
-
-
-    // "VoucharNo" => "SEL-20211210002"
-    // "TradeName" => "n/a"
-    // "CustName" => "Abul Hossain"
-    // "ContactNo" => "01796410756"
-    // "Address" => "dhaka, rajbari"
-    // "CategoryID" => "1"
-    // "BranID" => "1"
-    // "SizeID" => "1"
-    // "ThicID" => "1"
-    // "LabourPerUnit" => "0"
-    // "UnitPrice" => "10"
-    // "Qunatity" => "10"
-    // "NetAmount" => "106"
-    // "LabourCost" => "6"
-    // "CarryingBill" => "0"
-    // "TotalCost" => "106"
-    // "PayAmount" => "6"
-    // "Discount" => "0"
-    // "DueAmount" => "100"
-    // "SellingDate" => "2021-12-10"
-    // "DebitAccount" => null
-
-
-
+    $address = $request->Address;
     // insert data in database
     $insert = ProductSell::insertGetId([
       'Commission' => $request->Discount,
@@ -176,7 +153,12 @@ class RetailSellerController extends Controller{
           'message'=>'Successfully Purchase Product',
           'alert-type'=>'success'
       );
-      return Redirect()->back()->with($notification);
+
+    
+      $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
+      $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
+      // dd($sellRecord);
+      return view('admin.voucher.voucher', compact('sellInfo', 'sellRecord', 'company', 'address'))->with($notification);
     }
 
   }

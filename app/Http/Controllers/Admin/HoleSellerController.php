@@ -69,7 +69,10 @@ class HoleSellerController extends Controller{
 
   public function productSellStore(Request $request){
 
-
+    // company info add
+    $companyOBJ = new CompanyInfoController();
+    $company = $companyOBJ->getCompanyInfo();
+    // company end
 
     $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
@@ -132,6 +135,7 @@ class HoleSellerController extends Controller{
           ,$data->options->holSize,$data->options->holThickness,$data->qty*(-1)); 
 
     }
+    // $address = $request->Address;
     // Cart Destroy
     Cart::destroy();
     // Redirect Back
@@ -143,9 +147,9 @@ class HoleSellerController extends Controller{
      
 
       $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
-     return $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
+      $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
 
-      return view('admin.voucher.voucher',compact('sellInfo', 'sellRecord'))->with($notification);
+      return view('admin.voucher.voucher',compact('sellInfo', 'sellRecord', 'company'))->with($notification);
     }
 
   }

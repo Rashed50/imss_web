@@ -8,7 +8,7 @@
     <div class="card">
         <div class="card-body card_form">
             {{-- Topbar --}}
-            <form action="{{ route('product.purchase-in.retailer') }}" method="post">
+            <form target="_blank" action="{{ route('product.purchase-in.retailer') }}" method="post">
               @csrf
             <div class="row">
               <div class="col-md-12">
