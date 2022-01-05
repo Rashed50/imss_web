@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Http\Request;
 use App\Models\ProductSell;
 use App\Models\ProductSellRecord;
+use App\Models\CustomerInfo;
 use Carbon\Carbon;
 use Session;
 use Image;
@@ -79,6 +80,35 @@ class RetailSellerController extends Controller{
 
     ]);
 
+     // Customer info + Duie update
+     $customerOBJ = new CustomerController();
+     $customerId = $customerOBJ->nameWiseFindCustomer($request->CustName,$request->ContactNo);
+  
+     if($customerId!= ''){
+        $Customer = CustomerInfo::where('status',true)->where('ContactNumber',$request->ContactNo)
+        ->where('CustName',$request->CustName)->first();
+
+
+          $oldDue = $Customer->DueAmount;
+          $updateDue = $oldDue+$request->DueAmount;
+      
+          $customerDueUpdate = CustomerInfo::where('status',true)
+                          ->where('CustId',$Customer->CustId)->update([
+                            'DueAmount' => $updateDue,
+                             ]);
+      }else{
+        $customerId = $customerOBJ->updateRetailerCustomerBalance(null,$request->DueAmount,
+            $request->CustName,
+            $request->TradeName,
+            $request->ContactNo,
+            $request->Address
+          );
+      }
+
+   
+     
+
+
     $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
 
@@ -100,11 +130,7 @@ class RetailSellerController extends Controller{
     $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
 
 
-    $custObj = new  CustomerController();
-    $aCustomer = $custObj->updateRetailerCustomerBalance(null,$request->DueAmount,$request->CustName,
-    $request->TradeName,$request->ContactNo,$request->Address); 
-    
-    $address = $request->Address;
+   
     // insert data in database
     $insert = ProductSell::insertGetId([
       'Commission' => $request->Discount,
@@ -118,13 +144,14 @@ class RetailSellerController extends Controller{
       'CarryingCost' => $request->CarryingBill,
       'CreateById' => Auth::user()->id,
       'TranId' => 1,
-      'CustId' => $aCustomer,
+      'CustId' => $customerId,
       'created_at' => Carbon::now(),
     ]);
    
+    $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
     // insert sale record
-    if($insert){
-      /* Hole Seller Record */
+    
+      /* Retailler Record */
       $stockConObj = new  StockController();
 
       $carts = Cart::content();
@@ -141,24 +168,25 @@ class RetailSellerController extends Controller{
         ]);
 
         $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
-          $data->options->holCategoryId,$data->options->holBranId
-          ,$data->options->holSize,$data->options->holThickness,$data->qty*(-1)); 
-
-
+          $data->options->holCategoryId,
+          $data->options->holBranId,
+          $data->options->holSize,
+          $data->options->holThickness,
+          $data->qty*(-1)); 
       }
+
+      if($insert){
       // Cart Destroy
       Cart::destroy();
       // Redirect Back
-      $notification=array(
-          'message'=>'Successfully Purchase Product',
-          'alert-type'=>'success'
-      );
-
-    
-      $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
+        $notification=array(
+            'message'=>'Successfully Purchase Product',
+            'alert-type'=>'success'
+        );
+      
       $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
       // dd($sellRecord);
-      return view('admin.voucher.voucher', compact('sellInfo', 'sellRecord', 'company', 'address'))->with($notification);
+      return view('admin.voucher.voucher', compact('sellInfo', 'sellRecord', 'company', 'oldDue'))->with($notification);
     }
 
   }

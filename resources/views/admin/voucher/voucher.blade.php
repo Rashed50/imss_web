@@ -178,9 +178,9 @@
 						<tr>
 							<td>{{$key+1}}</td>
 							<td>
-								{{$record->Category->CateName.' '.
-									$record->Brand->BranName.' '.
-									$record->Size->SizeName.' '.
+								{{$record->Category->CateName.', '.
+									$record->Brand->BranName.', '.
+									$record->Size->SizeName.', '.
 									$record->Thickness->ThicName}}
 							</td>
 							<td style="text-align:right">{{$record->Quantity}}</td>
@@ -188,37 +188,38 @@
 							<td style="text-align:right">{{$record->Quantity*$record->Amount}}</td>
 						</tr>
 					  @endforeach
+					  <tr>
+							<td></td>
+							<td colspan="1" > Labour Cost + Carrying Bill ({{$sellInfo->LabourCost}} + {{$sellInfo->CarryingCost}}) </td>
+							<td style="text-align:right">-</td>
+							<td style="text-align:right">-</td>
+							<td style="text-align:right">{{$sellInfo->LabourCost + $sellInfo->CarryingCost}}</td>
+						</tr>
 						<!-- non loop -->
-
 						<tr>
-
-							<th colspan="4" style="text-align:right">GR.Total</th>
+							<td rowspan="6" colspan="3"></td>
+							<th style="text-align:right">GR.Total</th>
 							<td style="text-align:right">{{$sellInfo->TotalAmount}}</td>
 						</tr>
 						<tr>
-
-							<th colspan="4" style="text-align:right">Discount</th>
+							<th style="text-align:right">Discount</th>
 							<td style="text-align:right">{{$sellInfo->Commission}}</td>
 						</tr>
 						<tr>
-
-							<th colspan="4" style="text-align:right">Paid</th>
+							<th style="text-align:right">Paid</th>
 							<td style="text-align:right">{{$sellInfo->PaidAmount}}</td>
 						</tr>
 						<tr>
-
-							<th colspan="4" style="text-align:right">Due</th>
+							<th style="text-align:right">Due</th>
 							<td style="text-align:right">{{$sellInfo->DueAmount}}</td>
 						</tr>
 						<tr>
-
-							<th colspan="4" style="text-align:right">Pre Due</th>
-							<td style="text-align:right">{{$sellInfo->Customer->DueAmount}}</td>
+							<th style="text-align:right">Pre Due</th>
+							<td style="text-align:right">{{$oldDue ?? ''}}</td>
 						</tr>
 						<tr>
-
-							<th colspan="4" style="text-align:right">Tot.Due</th>
-							<td style="text-align:right">{{$sellInfo->Customer->DueAmount+$sellInfo->DueAmount}}</td>
+							<th style="text-align:right">Tot.Due</th>
+							<td style="text-align:right">{{$oldDue+$sellInfo->DueAmount ?? $sellInfo->DueAmount}}</td>
 						</tr>
 					</tbody>
 				</table>

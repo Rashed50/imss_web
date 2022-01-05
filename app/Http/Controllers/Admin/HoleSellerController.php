@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Http\Request;
 use App\Models\ProductSell;
+use App\Models\CustomerInfo;
 use App\Models\ProductSellRecord;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -69,6 +70,16 @@ class HoleSellerController extends Controller{
 
   public function productSellStore(Request $request){
 
+    // Customer info + Duie update
+    $customerOBJ = new CustomerController();
+    $customer = $customerOBJ->getCustomer($request->TradeName);
+
+    $oldDue = $customer->DueAmount;
+    $updateDue = $oldDue+$request->DueAmount;
+
+    $customerDueUpdate = CustomerInfo::where('status',true)->where('CustId',$request->TradeName)->update([
+      'DueAmount' => $updateDue,
+    ]);
     // company info add
     $companyOBJ = new CompanyInfoController();
     $company = $companyOBJ->getCompanyInfo();
@@ -94,7 +105,6 @@ class HoleSellerController extends Controller{
     $request['DrCrTypeId'] = 2;
     $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
     
-
     /* From Validation */
     $createBy = Auth::user()->id;
     /* Insert Data IN Database */
@@ -130,12 +140,16 @@ class HoleSellerController extends Controller{
           'SizeId' => $data->options->holSize,
           'ThicId' => $data->options->holThickness,
         ]);
+        // Stock update
         $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
-          $data->options->holCategoryId,$data->options->holBranId
-          ,$data->options->holSize,$data->options->holThickness,$data->qty*(-1)); 
+          $data->options->holCategoryId,
+          $data->options->holBranId,
+          $data->options->holSize,
+          $data->options->holThickness,
+          $data->qty*(-1)); 
 
     }
-    // $address = $request->Address;
+
     // Cart Destroy
     Cart::destroy();
     // Redirect Back
@@ -144,19 +158,14 @@ class HoleSellerController extends Controller{
           'message'=>'Successfully Purchase Product',
           'alert-type'=>'success'
       );
-     
-
+    //  dd($insert);
       $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
       $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
 
-      return view('admin.voucher.voucher',compact('sellInfo', 'sellRecord', 'company'))->with($notification);
+      return view('admin.voucher.voucher',compact('sellInfo', 'sellRecord', 'company', 'oldDue'))->with($notification);
     }
 
   }
-
-
-
-
 
   /*
   |--------------------------------------------------------------------------

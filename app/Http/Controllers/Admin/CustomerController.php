@@ -34,7 +34,11 @@ class CustomerController extends Controller{
 
 
     public function getCustomer($id){
-        return $allCustomer = CustomerInfo::where('status',true)->where('CustId',$id)->first();
+        return $Customer = CustomerInfo::where('status',true)->where('CustId',$id)->first();
+    }
+
+    public function nameWiseFindCustomer($name,$number){
+        return $Customer = CustomerInfo::where('status',true)->where('ContactNumber',$number)->where('CustName',$name)->count();
     }
   
 
@@ -337,8 +341,7 @@ class CustomerController extends Controller{
     }
 
     // 
-    public function updateRetailerCustomerBalance($customerId,$amount,$customerName,$cusTrade,$phone,$address)
-    {
+    public function updateRetailerCustomerBalance($customerId,$amount,$customerName,$cusTrade,$phone,$address){
 
         if($customerId != null){ 
             $aCust = $this->getCustomer($customerId);
