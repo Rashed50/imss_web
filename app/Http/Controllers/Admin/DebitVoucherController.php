@@ -59,14 +59,14 @@ public function getAll(){
 
   public function store(Request $request){
 
-    $request['TranAmount'] = 900;
+    $request['TranAmount'] = $request->Amount;
     $request['TranTypeId'] = 1;
 
     $transObj = new  TransactionsController();
     $transId = $transObj->createNewTransaction($request); 
     
 
-    $request['Amount'] = 600;
+    $request['Amount'] = $request->Amount;
     $request['TranId'] = $transId;
     $request['ChartOfAcctId'] = 1;
     $request['DrCrTypeId'] = 1;

@@ -175,14 +175,14 @@ public function paymentStore(Request $request){
 
 
 
-    $request['TranAmount'] = 900;
+    $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
 
     $transObj = new  TransactionsController();
     $transId = $transObj->createNewTransaction($request); 
     
 
-    $request['Amount'] = 600;
+    $request['Amount'] = $request->PayAmount;
     $request['TranId'] = $transId;
     $request['ChartOfAcctId'] = 1;
     $request['DrCrTypeId'] = 1;
