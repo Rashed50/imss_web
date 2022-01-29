@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CustomerType;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Admin\CustomerController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Image;

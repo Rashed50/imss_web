@@ -1,28 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\admin\CategoryController;
-use App\Http\Controllers\admin\BrandController;
-use App\Http\Controllers\admin\SizeController;
-use App\Http\Controllers\admin\ThicknessController;
-use App\Http\Controllers\admin\StockController;
-use App\Http\Controllers\admin\VendorController;
-use App\Http\Controllers\admin\CustomerController;
-use App\Http\Controllers\admin\CustomerTypeController;
-use App\Http\Controllers\admin\CustomerPaymentController;
-use App\Http\Controllers\admin\CompanyInfoController;
-use App\Http\Controllers\admin\HoleSellerController;
-use App\Http\Controllers\admin\RetailSellerController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\ThicknessController;
+use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\CustomerTypeController;
+use App\Http\Controllers\Admin\CustomerPaymentController;
+use App\Http\Controllers\Admin\CompanyInfoController;
+use App\Http\Controllers\Admin\HoleSellerController;
+use App\Http\Controllers\Admin\RetailSellerController;
 
-use App\Http\Controllers\admin\ThanaController;
-use App\Http\Controllers\admin\ProductPurchaseController;
+use App\Http\Controllers\Admin\ThanaController;
+use App\Http\Controllers\Admin\ProductPurchaseController;
 
-use App\Http\Controllers\admin\EmployeeInfoController;
-use App\Http\Controllers\admin\DivisionController;
-use App\Http\Controllers\admin\DistrictController;
-use App\Http\Controllers\admin\AjaxController;
-use App\Http\Controllers\admin\UnionController;
-use App\Http\Controllers\admin\LabourRateController;
+use App\Http\Controllers\Admin\EmployeeInfoController;
+use App\Http\Controllers\Admin\DivisionController;
+use App\Http\Controllers\Admin\DistrictController;
+use App\Http\Controllers\Admin\AjaxController;
+use App\Http\Controllers\Admin\UnionController;
+use App\Http\Controllers\Admin\LabourRateController;
 use App\Http\Controllers\Admin\DebitVoucherController;
 use App\Http\Controllers\Admin\DuePaymentController;
 use App\Http\Controllers\Admin\CreditVoucherController;
