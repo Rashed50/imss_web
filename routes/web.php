@@ -257,12 +257,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 
     Route::post('product/purchase/add', [ProductPurchaseController::class, 'store'])->name('product.purchase.store');
 
-
-
     Route::post('product/purchase/edit', [ProductPurchaseController::class, 'update'])->name('product.purchase.update');
-
-
-
 
     /* ++++++++++++ Ajax Route IN Add To Cart ++++++++++++ */
     Route::post('product/purchase/add-to-cart', [ProductPurchaseController::class, 'productAddToCart'])->name('product-purchase.addToCart');

@@ -33,7 +33,7 @@
                             <label class="col-sm-5 control-label">Customer Name:<span class="req_star">*</span></label>
                             <div class="col-sm-7">
                               <select class="form-control" name="TradeName">
-                                <option value="">Select  Name</option>
+                                <option value="0">Select  Name</option>
                                 @foreach ($allCustomer as $Customer)
                                   <option value="{{ $Customer->CustId }}">{{ $Customer->CustName }}</option>
                                 @endforeach

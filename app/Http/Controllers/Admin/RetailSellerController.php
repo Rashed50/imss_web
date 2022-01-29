@@ -82,11 +82,13 @@ class RetailSellerController extends Controller{
 
      // Customer info + Duie update
      $customerOBJ = new CustomerController();
-     $customerId = $customerOBJ->nameWiseFindCustomer($request->CustName,$request->ContactNo);
-    // dd($customerId);
-     if($customerId!= ''){
-        $Customer = CustomerInfo::where('status',true)->where('ContactNumber',$request->ContactNo)
-        ->where('CustName',$request->CustName)->first();
+    //  $customerId = $customerOBJ->nameWiseFindCustomer($request->CustName,$request->ContactNo);
+    // dd('ookk');
+    $customerId = $request->TradeName ;
+    $oldDue = 0;
+     if($customerId != 0){
+      
+        $Customer = $customerOBJ->getCustomer($customerId);
 
 
           $oldDue = $Customer->DueAmount;
@@ -97,14 +99,15 @@ class RetailSellerController extends Controller{
                                   'DueAmount' => $updateDue,
                                 ]);
       }else{
-        $customerId = $customerOBJ->updateRetailerCustomerBalance(null,
+                    $customerId = $customerOBJ->updateRetailerCustomerBalance(null,
                           $request->DueAmount,
                           $request->CustName,
                           $request->TradeName,
                           $request->ContactNo,
                           $request->Address
                         );
-                      }
+                        $oldDue = 0;
+        }
 
     $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
@@ -141,7 +144,7 @@ class RetailSellerController extends Controller{
       'CarryingCost' => $request->CarryingBill,
       'CreateById' => Auth::user()->id,
       'TranId' => 1,
-      'CustId' => $Customer->CustId,
+      'CustId' => $customerId,
       'created_at' => Carbon::now(),
     ]);
    

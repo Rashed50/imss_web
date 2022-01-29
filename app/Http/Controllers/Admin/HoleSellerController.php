@@ -15,7 +15,6 @@ use Image;
 use Cart;
 use Auth;
 
-
 class HoleSellerController extends Controller{
   /*
   |--------------------------------------------------------------------------
