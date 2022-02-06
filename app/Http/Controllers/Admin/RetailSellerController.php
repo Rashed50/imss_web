@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use Illuminate\Http\Request;
 use App\Models\ProductSell;
 use App\Models\ProductSellRecord;
+use App\Models\CustomerInfo;
 use Carbon\Carbon;
 use Session;
 use Image;
@@ -69,13 +70,44 @@ class RetailSellerController extends Controller{
   // product Purchase in retailer
   public function store(Request $request){
 
-   // dd($request);
+    // company Info
+    $companyOBJ = new CompanyInfoController();
+    $company = $companyOBJ->getCompanyInfo();
     // form validation
     $this->validate($request,[
 
     ],[
 
     ]);
+
+     // Customer info + Duie update
+     $customerOBJ = new CustomerController();
+    //  $customerId = $customerOBJ->nameWiseFindCustomer($request->CustName,$request->ContactNo);
+    // dd('ookk');
+    $customerId = $request->TradeName ;
+    $oldDue = 0;
+     if($customerId != 0){
+      
+        $Customer = $customerOBJ->getCustomer($customerId);
+
+
+          $oldDue = $Customer->DueAmount;
+          $updateDue = $oldDue+$request->DueAmount;
+      
+          $customerDueUpdate = CustomerInfo::where('status',true)
+                              ->where('CustId',$Customer->CustId)->update([
+                                  'DueAmount' => $updateDue,
+                                ]);
+      }else{
+                    $customerId = $customerOBJ->updateRetailerCustomerBalance(null,
+                          $request->DueAmount,
+                          $request->CustName,
+                          $request->TradeName,
+                          $request->ContactNo,
+                          $request->Address
+                        );
+                        $oldDue = 0;
+        }
 
     $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
@@ -98,36 +130,7 @@ class RetailSellerController extends Controller{
     $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
 
 
-    $custObj = new  CustomerController();
-    $aCustomer = $custObj->updateRetailerCustomerBalance(null,$request->DueAmount,$request->CustName,
-    $request->TradeName,$request->ContactNo,$request->Address); 
-    
-
-
-    // "VoucharNo" => "SEL-20211210002"
-    // "TradeName" => "n/a"
-    // "CustName" => "Abul Hossain"
-    // "ContactNo" => "01796410756"
-    // "Address" => "dhaka, rajbari"
-    // "CategoryID" => "1"
-    // "BranID" => "1"
-    // "SizeID" => "1"
-    // "ThicID" => "1"
-    // "LabourPerUnit" => "0"
-    // "UnitPrice" => "10"
-    // "Qunatity" => "10"
-    // "NetAmount" => "106"
-    // "LabourCost" => "6"
-    // "CarryingBill" => "0"
-    // "TotalCost" => "106"
-    // "PayAmount" => "6"
-    // "Discount" => "0"
-    // "DueAmount" => "100"
-    // "SellingDate" => "2021-12-10"
-    // "DebitAccount" => null
-
-
-
+   
     // insert data in database
     $insert = ProductSell::insertGetId([
       'Commission' => $request->Discount,
@@ -141,13 +144,14 @@ class RetailSellerController extends Controller{
       'CarryingCost' => $request->CarryingBill,
       'CreateById' => Auth::user()->id,
       'TranId' => 1,
-      'CustId' => $aCustomer,
+      'CustId' => $customerId,
       'created_at' => Carbon::now(),
     ]);
    
+    $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
     // insert sale record
-    if($insert){
-      /* Hole Seller Record */
+    
+      /* Retailler Record */
       $stockConObj = new  StockController();
 
       $carts = Cart::content();
@@ -164,19 +168,25 @@ class RetailSellerController extends Controller{
         ]);
 
         $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
-          $data->options->holCategoryId,$data->options->holBranId
-          ,$data->options->holSize,$data->options->holThickness,$data->qty*(-1)); 
-
-
+          $data->options->holCategoryId,
+          $data->options->holBranId,
+          $data->options->holSize,
+          $data->options->holThickness,
+          $data->qty*(-1)); 
       }
+
+      if($insert){
       // Cart Destroy
       Cart::destroy();
       // Redirect Back
-      $notification=array(
-          'message'=>'Successfully Purchase Product',
-          'alert-type'=>'success'
-      );
-      return Redirect()->back()->with($notification);
+        $notification=array(
+            'message'=>'Successfully Purchase Product',
+            'alert-type'=>'success'
+        );
+      
+      $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
+      // dd($sellRecord);
+      return view('admin.voucher.voucher', compact('sellInfo', 'sellRecord', 'company', 'oldDue'))->with($notification);
     }
 
   }
