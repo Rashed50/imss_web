@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\CreditTypeController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\DebitTypeController;
 use App\Http\Controllers\Admin\SellReturnController;
+use App\Http\Controllers\Admin\ProductActivityController;
 
 
 
@@ -207,6 +208,14 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('company/add', [CompanyInfoController::class, 'store'])->name('company.store');
     Route::post('company/edit', [CompanyInfoController::class, 'update'])->name('company.update');
 
+});
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function () {
+    Route::get('product/activity', [ProductActivityController::class, 'index'])->name('product.activity');
+    Route::post('product/activity/brand', [ProductActivityController::class, 'brand'])->name('product.activity.brand');
+    Route::post('product/activity/size', [ProductActivityController::class, 'size'])->name('product.activity.size');
+    Route::post('product/activity/thik', [ProductActivityController::class, 'thikness'])->name('product.activity.thik');
 });
 
 

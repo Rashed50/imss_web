@@ -157,7 +157,8 @@
       <li class="nav-item"><a href="{{ route('district.add') }}" class="nav-link">Add District</a></li>
       <li class="nav-item"><a href="{{ route('thana.add') }}" class="nav-link">Add Thana</a></li>
       <li class="nav-item"><a href="{{ route('union.add') }}" class="nav-link">Add Union</a></li>
-      <li class="nav-item"><a href="#" class="nav-link @yield('add-employee')">Add Designation</a></li>
+      <li class="nav-item"><a href="#" class="nav-link @yield('add-designation')">Add Designation</a></li>
+      <li class="nav-item"><a href="{{ route('product.activity') }}" class="nav-link @yield('active-product')">Active Product</a></li>
       <li class="nav-item"><a href="{{ route('employee.add') }}" class="nav-link @yield('add-employee')">Add Employee</a></li>
     </ul>
 

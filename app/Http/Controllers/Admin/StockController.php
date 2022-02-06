@@ -12,7 +12,7 @@ use App\Models\Stock;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 
@@ -36,6 +36,12 @@ class StockController extends Controller{
     public function getAll(){
         return $allStock = Stock::with('cateInfo', 'brandInfo', 'sizeInfo', 'thickInfo')->orderBy('StocId','DESC')->get();
     }
+
+
+    public function countListOfActiveStock($id){
+        return $allStock = Stock::where('StocValue','>',0)->where('ThicId',$id)->count();
+    }
+
 
      public function add(){
        $allStock= $this->getAll();
