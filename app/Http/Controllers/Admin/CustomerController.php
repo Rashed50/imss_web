@@ -15,7 +15,10 @@ use App\Http\Controllers\Admin\ChartOfAccountController;
 use App\Http\Controllers\Admin\TransactionsController;
 use App\Http\Controllers\Admin\DebitCreditController;
 use App\Http\Controllers\Admin\CustomerPaymentController;
+use App\Models\CrType;
+use App\Models\CustomerIntialDue;
 use App\Models\District;
+use App\Models\EmployeeInformation;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -57,6 +60,17 @@ class CustomerController extends Controller{
     */
 
   
+    // public function checkCustomerContact(Request $request){
+    //    return $data = CustomerInfo::where('ContactNumber',$request->ContactNumber)->get();
+    //    return json_encode($data);
+    // }
+
+    public function checkCustomerContact(Request $request)
+    {
+       $data = CustomerInfo::where("ContactNumber",$request->ContactNumber)->first();
+      return response()->json($data);
+    }
+
     public function holesellerCustomer(){
        $holeseller = CustomerInfo::where('CustTypeId',1)->get();
        return json_encode($holeseller);
@@ -106,6 +120,22 @@ class CustomerController extends Controller{
  
          $allCustomer = $this->getAllWholeCustomer();
          return view('admin.customer.list.index', compact('allDistrict', 'allCustomer'));
+     }
+
+
+    public function searchSalesCustomer(){
+
+        $TType=CrType::orderBy('CrTypeName','ASC')->get();
+        $getAllEmployees= EmployeeInformation::orderBy('EmplInfoId','DESC')->get();
+
+        $typeObj= new CustomerTypeController;
+        $allType= $typeObj->getAll();
+
+        $DivisionOBJ = new DivisionController();
+        $Division = $DivisionOBJ->getAll();
+
+       $allCustomer = $this->getAllCustomer();
+         return view('admin.sell.search-sales', compact('allCustomer','getAllEmployees', 'TType'));
      }
 
       //  ==================== customer list for payment ======================
@@ -221,19 +251,19 @@ class CustomerController extends Controller{
    
 
     public function store(Request $request){
-        $this->validate($request,[
-            'CustName'=>'required|max:50',
-            'TradeName'=>'required|max:50',
-            'ContactNumber'=>'required|max:20',
-            'Address'=>'required|max:200',
-            'DueAmount'=>'required|max:20',
-            'InitialDue'=>'required|max:20',
-            'FatherName'=>'required|max:50',
-            'NID'=>'required|max:30',
-        ],[
-            'CateName.required'=> 'please enter customer name',
-            'CateName.max'=> 'max customer name content is 200 character',
-        ]);
+        // $this->validate($request,[
+        //     'CustName'=>'required|max:50',
+        //     'TradeName'=>'required|max:50',
+        //     'ContactNumber'=>'required|max:20',
+        //     'Address'=>'required|max:200',
+        //     'DueAmount'=>'required|max:20',
+        //     'InitialDue'=>'required|max:20',
+        //     'FatherName'=>'required|max:50',
+        //     'NID'=>'required|max:30',
+        // ],[
+        //     'CateName.required'=> 'please enter customer name',
+        //     'CateName.max'=> 'max customer name content is 200 character',
+        // ]);
 
       //  dd($request);
 
@@ -244,7 +274,7 @@ class CustomerController extends Controller{
             'CustTypeId' => $request['CustTypeId'],
             'ContactNumber'=>$request['ContactNumber'],
             'Address'=>$request['Address'],
-            'DueAmount'=>$request['DueAmount'],
+            'DueAmount'=>$request['InitialDue'],
             'InitialDue'=>$request['InitialDue'],
             'FatherName'=>$request['FatherName'],
             'NID'=>$request['NID'],
@@ -256,6 +286,16 @@ class CustomerController extends Controller{
             "UnioId" => $request['UnioId'],
             // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
+
+
+        $dataInit['DueAmount'] = $request->InitialDue;
+        $dataInit['Year'] = Carbon::now()->format('Y');
+        $dataInit['EntryDate'] = Carbon::now();
+        $dataInit['CustId'] = $insert;
+        $dataInit['CreateById'] = Auth::user()->id;
+        $dataInit['created_at'] = Carbon::now();
+
+        CustomerIntialDue::create($dataInit);
  
 
 

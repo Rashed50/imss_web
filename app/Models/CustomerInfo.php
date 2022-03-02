@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerInfo extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];  
+
+    
      public function Distict(){
          return $this->belongsTo(District::class, 'DistId', 'DistId');
      }

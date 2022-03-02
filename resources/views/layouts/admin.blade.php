@@ -18,10 +18,12 @@
     <!-- dataTables css -->
     <link href="{{ asset('contents/admin') }}/assets/lib/datatables/jquery.dataTables.css" rel="stylesheet">
     <link href="{{ asset('contents/admin') }}/assets/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="{{ asset('contents/admin') }}/assets/css/starlight.css">
     <link rel="stylesheet" href="{{ asset('contents/admin') }}/assets/css/style.css">
     <script src="{{ asset('contents/admin') }}/assets/lib/jquery/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
   <body>
     <!-- left panel Include -->
@@ -803,6 +805,16 @@
     "scrollX": true
     });
     $('.dataTables_length').addClass('bs-select');
+    });
+
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2({
+            placeholder: 'Select an option'
+        });
+        $('#retailer-select').select2({
+            
+        });
+
     });
 </script>
   </body>

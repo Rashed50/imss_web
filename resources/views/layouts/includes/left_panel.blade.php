@@ -50,7 +50,7 @@
           <li class="nav-item"><a href="{{ route('Product.Hole.Seller') }}" class="nav-link @yield('whole-sell')">Whole Sale</a></li>
           <li class="nav-item"><a href="{{ route('Product.Retailer.Seller') }}" class="nav-link @yield('retrail-sell')">Retrail Sale</a></li>
           <li class="nav-item"><a href="{{ route('sell.info') }}" class="nav-link @yield('sell-info')">Sales Records</a></li>
-          <li class="nav-item"><a href="#" class="nav-link @yield('sell-info')"> Search Sales Record</a></li>
+          <li class="nav-item"><a href="{{ route('customer.search.sales') }}" class="nav-link @yield('sell-info')"> Search Sales Record</a></li>
           <li class="nav-item"><a href="{{ route('sell.return') }}" class="nav-link @yield('Sale-Return')">Sale Return</a></li>
           
         </ul>

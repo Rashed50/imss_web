@@ -47,9 +47,9 @@
                 <div class="col-md-6">
 
                     <div class="form-group row custom_form_group{{ $errors->has('CustName') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Customer Name:<span class="req_star">*</span></label>
+                        <label class="col-sm-3 control-label">Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <input type="text" placeholder="Customer Name" class="form-control" id="CustName" name="CustName" value="{{(@$data)?@$data->CustName:old('CustName')}}" required>
+                          <input type="text" placeholder="Customer Name" class="form-control" id="CustName" name="CustName" value="{{(@$data)?@$data->CustName : old('CustName')}}" required>
                           <input type="hidden" name="CustId" value="{{@$data->CustId ?? ''}}">
                           @if ($errors->has('CustName'))
                               <span class="invalid-feedback" role="alert">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="form-group row custom_form_group{{ $errors->has('ContactNumber') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Contact Number:<span class="req_star">*</span></label>
+                        <label class="col-sm-3 control-label">Contact No. :<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                             <input type="hidden" name="VendId" value="{{@$data->VendId ?? ''}}">
                             <input type="text" placeholder="Contact Number" class="form-control" id="ContactNumber" name="ContactNumber" value="{{(@$data)?@$data->ContactNumber:old('ContactNumber')}}" required>
@@ -103,35 +103,19 @@
                         @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('DueAmount') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Due Amount :</label>
-                        <div class="col-sm-7">
-                        <input type="text" placeholder="Due Amount is 0.00 TK" class="form-control" id="DueAmount" name="DueAmount" value="{{(@$data)?@$data->DueAmount:old('DueAmount')}}" required>
-                        @if ($errors->has('DueAmount'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('DueAmount') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('InitialDue') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Initial Due Balance:</label>
+                   
+                    <div class="form-group row custom_form_group">
+                        <label class="col-sm-3 control-label">Initial Due:</label>
                         <div class="col-sm-7">
                         <input type="text" placeholder="Initial Balance is 0.00 TK" class="form-control" id="InitialDue" name="InitialDue" value="{{(@$data)?@$data->InitialDue:old('InitialDue')}}" required>
-                        @if ($errors->has('InitialDue'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('InitialDue') }}</strong>
-                            </span>
-                        @endif
                         </div>
                     </div>
 
                 </div>
 
-
                 <div class="col-md-6">
                     <div class="form-group row custom_form_group{{ $errors->has('CustTypeId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Customer Type :</span></label>
+                        <label class="col-sm-3 control-label">Cust Type :</span></label>
                         <div class="col-sm-7">
                             <select class="form-control" name="CustTypeId" id="CustTypeId">
                                 <option value="">Select category</option>
@@ -148,7 +132,7 @@
                     </div>
 
                     <div class="form-group row custom_form_group{{ $errors->has('DiviId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Division Name:<span class="req_star">*</span></label>
+                        <label class="col-sm-3 control-label">Division:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
                           <select class="form-control" id="DiviId" name="DiviId">
                               <option value="">Select Division</option>
@@ -320,5 +304,35 @@
             document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
         } );
     }
+</script>
+
+
+<script>
+    
+    // $("#ContactNumber").keyup(function(){
+    //  var ContactNumber = $('#ContactNumber').val();
+    //  if(ContactNumber != ''){
+    //     //  alert(ContactNumber);
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: "{{ url('dashboard/check/Contact/number') }}",
+    //         data: {
+    //             ContactNumber:ContactNumber
+    //         },
+    //         success: function(data){
+    //             // alert(data);
+    //             // $("#showContact").text(data);
+    //             if(data != null){
+    //                 alert('ook');
+    //             }else{
+    //                 alert('no');
+    //             }
+
+    //         }
+    //     });
+      
+    //  }
+
+    // });
 </script>
 @endsection

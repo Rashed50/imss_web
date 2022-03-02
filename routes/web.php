@@ -138,10 +138,13 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('customer/add', [CustomerController::class, 'add'])->name('customer.add');
+    Route::get('customer/search/customer/sale', [CustomerController::class, 'searchSalesCustomer'])->name('customer.search.sales');
     Route::get('customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::post('customer/add', [CustomerController::class, 'store'])->name('customer.store');
     Route::post('customer/edit', [CustomerController::class, 'update'])->name('customer.update');
     /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
+    Route::post('check/Contact/number', [CustomerController::class, 'checkCustomerContact'])->name('check.Contact-Number');
+
     Route::post('customer/information/for/product-purchase', [CustomerController::class, 'CustIdWiseCustomerInformation'])->name('TradeName-wise-Customer.information');
 
     Route::get('holeseller/customer-list', [CustomerController::class, 'holesellerCustomer'])->name('holeseller-wise.customer');

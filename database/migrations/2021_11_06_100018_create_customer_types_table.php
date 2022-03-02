@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateCustomerTypesTable extends Migration
@@ -19,10 +20,10 @@ class CreateCustomerTypesTable extends Migration
         });
 
         DB::table('customer_types')->insert([
-            'TypeName' => 'ReSeller'
+            'TypeName' => 'Hole Seller'
          ]);
          DB::table('customer_types')->insert([
-            'TypeName' => 'User'
+            'TypeName' => 'Retailer'
          ]);
     }
 
