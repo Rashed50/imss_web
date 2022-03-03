@@ -74,7 +74,7 @@
                         <div class="col-sm-7">
                             <input type="hidden" name="VendId" value="{{@$data->VendId ?? ''}}">
                             <input type="text" placeholder="Contact Number" class="form-control" id="ContactNumber" name="ContactNumber" value="{{(@$data)?@$data->ContactNumber:old('ContactNumber')}}" required>
-                            <span id="duplicate_number"></span>
+                            <span id="duplicate_number" style="color: red;"></span>
                             @if ($errors->has('ContactNumber'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('ContactNumber') }}</strong>
@@ -324,8 +324,8 @@
                 // alert(data);
                 // $("#showContact").text(data);
                 if(data.customer != null){
-                    $('#duplicate_number').text('This Number Already Exist').style.color = "blue";
-                    $('#duplicate_number').style.color = "blue";
+                    $('#duplicate_number').text('This Number Already Exist').style.color = "red";
+                    // $('#duplicate_number').style.color = "blue";
                 }else{
                     $('#duplicate_number').text('');
                 }
