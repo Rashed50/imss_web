@@ -78,8 +78,16 @@ class CustomerController extends Controller{
 
     public function checkCustomerContact(Request $request)
     {
-       $data = CustomerInfo::where('ContactNumber',$request->ContactNumber)->first();
-      return response()->json($data);
+        $typeObj= new CustomerTypeController;
+        $allType= $typeObj->getAll();
+
+        $DivisionOBJ = new DivisionController();
+        $Division = $DivisionOBJ->getAll();
+
+       $allCustomer = $this->getAllCustomer();
+
+       $customer = CustomerInfo::where('ContactNumber', $request->ContactNumber)->first();
+      return response()->json(['customer' => $customer, 'allCustomer' => $allCustomer, 'Division' => $Division, 'allType' => $allType]);
     }
 
     public function holesellerCustomer(){
@@ -94,15 +102,18 @@ class CustomerController extends Controller{
     // Define Customer Due
     public function DefineCustomerDue(Request $request){
        $customerDue = CustomerInfo::where('CustId',$request->Customer)->pluck('DueAmount');
-       $salesReport = ProductSell::with('Customer')->where('CustId',$request->Customer)->get();
+       $salesReport = ProductSell::with('customer')->where('CustId',$request->Customer)->get();
        return response()->json([ 'customerDue' => $customerDue, 'salesReport' => $salesReport ]);
     }
 
 
     public function sellIdWiseSaleRecord(Request $request){
-       $salesRecord = ProductSellRecord::where('ProdSellId',$request->ProdSellId)->get();
+       $salesRecord = ProductSellRecord::with('category', 'size', 'thickness', 'brand')->where('ProdSellId',$request->ProdSellId)->get();
        return response()->json([ 'salesRecord' => $salesRecord ]);
     }
+    
+
+
 
     /* ++++++++++ Vouchar No ++++++++++ */
     public function vouchar(){

@@ -2,6 +2,29 @@
 @section('content')
 <!-- ########## START: MAIN PANEL ########## -->
 
+<style>
+    .dtHorizontalWrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    }
+    #dtHorizontal th, td {
+    white-space: nowrap;
+    }
+
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+    bottom: .5em;
+    }
+</style>
+
 <nav class="breadcrumb sl-breadcrumb">
     <a class="breadcrumb-item" href="index.html">Starlight</a>
     <span class="breadcrumb-item active">Dashboard</span>
@@ -92,7 +115,7 @@
                 <div class="row">
                     <div class="col-md-6 rounded border border-primary">
 
-                        <table class="table table-hover table-striped">
+                    <table id="dtHorizontal" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <!-- <th scope="col">#</th> -->
@@ -115,13 +138,13 @@
 
                     <div class="col-md-6 rounded border border-primary">
 
-                        <table class="table table-hover table-striped table-responsive">
+                    <table id="dtHorizontal2" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                    
                                     <td>Quty</td>
                                     <td>Amount</td>
-                                    <td>LabourCost</td>
+                                    <td>Labour</td>
                                     <td>CateId</td>
                                     <td>BranId</td>
                                     <td>SizeId</td>
@@ -229,7 +252,7 @@
                         $.each(data.salesReport, function(key, value) {
                             rows += `
                                 <tr>
-                                    <td>${value.CustId}</td>
+                                    <td>${value.customer.CustName}</td>
                                     <td>${value.TotalAmount}</td>
                                     <td>${value.DueAmount}</td>
                                     <td>${value.PaidAmount}</td>
@@ -275,10 +298,10 @@
                                     <td>${value.Quantity}</td>
                                     <td>${value.Amount}</td>
                                     <td>${value.LabourCost}</td>
-                                    <td>${value.CateId}</td>
-                                    <td>${value.BranId}</td>
-                                    <td>${value.SizeId}</td>
-                                    <td>${value.ThicId}</td>
+                                    <td>${value.category.CateName}</td>
+                                    <td>${value.brand.BranName}</td>
+                                    <td>${value.size.SizeName}</td>
+                                    <td>${value.thickness.ThicName}</td>
                                 </tr>
                                `
                         });
@@ -293,6 +316,20 @@
 
 
     // {{-- end script tags --}}
+
+
+        $(document).ready(function () {
+            $('#dtHorizontal').DataTable({
+            "scrollX": true,
+            });
+
+            $('#dtHorizontal2').DataTable({
+            "scrollY": 200,
+            });
+
+            $('.dataTables_length').addClass('bs-select');
+        });
+
 </script>
 
 

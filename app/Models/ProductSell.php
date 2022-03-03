@@ -9,7 +9,7 @@ class ProductSell extends Model
 {
     use HasFactory;
 
-        public function Customer(){
+        public function customer(){
            return $this->belongsTo(CustomerInfo::class, 'CustId', 'CustId');
         }
 
