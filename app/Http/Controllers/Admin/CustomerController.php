@@ -19,6 +19,8 @@ use App\Models\CrType;
 use App\Models\CustomerIntialDue;
 use App\Models\District;
 use App\Models\EmployeeInformation;
+use App\Models\ProductSell;
+use App\Models\ProductSellRecord;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -34,6 +36,15 @@ class CustomerController extends Controller{
     public function getAllCustomer(){
       return $allCustomer = CustomerInfo::where('status',true)->orderBy('CustId','DESC')->get();
     }
+    
+    // public function getAllWholeseller(){
+    //   return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',1)->orderBy('CustId','DESC')->get();
+    // }
+
+
+    // public function getAllRetailer(){
+    //   return $allCustomer = CustomerInfo::where('status',true)->where('CustTypeId',2)->orderBy('CustId','DESC')->get();
+    // }
 
 
     public function getCustomer($id){
@@ -67,7 +78,7 @@ class CustomerController extends Controller{
 
     public function checkCustomerContact(Request $request)
     {
-       $data = CustomerInfo::where("ContactNumber",$request->ContactNumber)->first();
+       $data = CustomerInfo::where('ContactNumber',$request->ContactNumber)->first();
       return response()->json($data);
     }
 
@@ -83,7 +94,14 @@ class CustomerController extends Controller{
     // Define Customer Due
     public function DefineCustomerDue(Request $request){
        $customerDue = CustomerInfo::where('CustId',$request->Customer)->pluck('DueAmount');
-       return response()->json([ 'customerDue' => $customerDue  ]);
+       $salesReport = ProductSell::with('Customer')->where('CustId',$request->Customer)->get();
+       return response()->json([ 'customerDue' => $customerDue, 'salesReport' => $salesReport ]);
+    }
+
+
+    public function sellIdWiseSaleRecord(Request $request){
+       $salesRecord = ProductSellRecord::where('ProdSellId',$request->ProdSellId)->get();
+       return response()->json([ 'salesRecord' => $salesRecord ]);
     }
 
     /* ++++++++++ Vouchar No ++++++++++ */

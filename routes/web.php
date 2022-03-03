@@ -151,6 +151,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('retailer/customer-list', [CustomerController::class, 'retailerCustomer'])->name('retailer-wise.customer');
     
     Route::post('define/customer-due', [CustomerController::class, 'DefineCustomerDue'])->name('customerId-wise-customerdue');
+    Route::post('Product/sellId/wise/sale/record', [CustomerController::class, 'sellIdWiseSaleRecord'])->name('Product-SellId-wise-sale-record');
     /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
 
     // ======##### customer list route   #######=======
