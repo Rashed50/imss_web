@@ -65,6 +65,19 @@ class BrandController extends Controller
     }
 
 
+    public function delete($id)
+    {
+        $allBrand = $this->getAll();
+        $delete = Brand::where('BranId', $id)->delete();
+        if($delete){
+            Session::flash('delete', 'Brand delete');
+        }else{
+            Session::flash('error', 'please try again.'); 
+        }
+        return redirect()->back();
+    }
+
+
     public function store(Request $request)
     {
 
@@ -106,8 +119,8 @@ class BrandController extends Controller
         $id = $request->BranId;
         $this->validate($request, [
             'BranName' => 'required|max:150|unique:brands,BranName,' . $id . ',BranId',
-            // 'BranName'=>'required|unique:brands,BranName,'.$id.',BranId,CateId,'.$CateId,
-            'CateId' => 'required',
+            // 'BranName' => 'required|unique:brands,BranName,'.$id.',BranId,CateId,'.$CateId,
+            'CategoryID' => 'required',
         ], [
             'BranName.required' => 'please enter brand name',
             'CateId.required' => 'please select category name',
@@ -116,7 +129,7 @@ class BrandController extends Controller
         ]);
 
         $update = Brand::where('BranStatus', true)->where('BranId', $id)->update([
-            'CateId' => $request['CateId'],
+            'CateId' => $request['CategoryID'],
             'BranName' => $request['BranName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);

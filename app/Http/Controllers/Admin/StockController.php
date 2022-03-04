@@ -60,6 +60,17 @@ class StockController extends Controller{
         return view('admin.stock.add', compact('data','allCate', 'allStock'));
     }
 
+
+    public function delete($id){
+        $delete = Stock::where('StocId',$id)->delete();
+        if($delete){
+            Session::flash('delete', 'size delete');
+        }else{
+            Session::flash('error', 'please try again.'); 
+        }
+        return redirect()->back();
+    }
+
     public function store(Request $request){
         $this->validate($request,[
             'StocValue'=>'required|max:30',

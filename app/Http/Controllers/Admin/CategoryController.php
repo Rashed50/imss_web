@@ -34,6 +34,16 @@ class CategoryController extends Controller{
         return view('admin.category.add', compact('data', 'allCate'));
     }
 
+    public function delete($id){
+        $delete = Category::where('CateStatus',true)->where('CateId',$id)->delete();
+        if($delete){
+            Session::flash('delete', 'Category delete');
+        }else{
+            Session::flash('error', 'please try again.'); 
+        }
+        return redirect()->back();
+    }
+
     public function store(Request $request){
         $this->validate($request,[
             'CateName'=>'required|unique:categories,CateName|max:200'
@@ -81,5 +91,6 @@ class CategoryController extends Controller{
         }
 
     }
+
 
 }
