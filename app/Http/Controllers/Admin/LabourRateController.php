@@ -45,6 +45,16 @@ class LabourRateController extends Controller{
         return view('admin.labour-rate.add', compact('data', 'allLabour', 'allCate'));
     }
 
+    public function delete($id){
+        $delete = LabourRate::where('LaboId',$id)->delete();
+        if($delete){
+            Session::flash('delete', 'size delete');
+        }else{
+            Session::flash('error', 'please try again.'); 
+        }
+        return redirect()->back();
+    }
+
 
     public function store(Request $request){
 
@@ -77,32 +87,32 @@ class LabourRateController extends Controller{
 
 
 
-    // public function update(Request $request){
+    public function update(Request $request){
 
-    //      $sizes = LabourRate::where('CateId',$request->idOfcategory)->where('sizeId',$request->sizeID)->where('LaboType',$request->LaboType)->count();
+         $sizes = LabourRate::where('CateId',$request->idOfcategory)->where('sizeId',$request->sizeID)->where('LaboType',$request->LaboType)->count();
 
-    //     if($sizes>0){
-    //         Session::flash('error','this labour cost already exit.');
-    //             return redirect()->back();
-    //     }else{
-    //         $insert = LabourRate::insertGetId([
-    //         'CateId'=>$request['idOfcategory'],
-    //         'SizeId'=>$request['sizeID'],
-    //         'LaboType'=>$request['LaboType'],
-    //         'Amount'=>$request['Amount'],
-    //         // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
-    //     ]);
+        if($sizes>1){
+            Session::flash('error','this labour cost already exit.');
+                return redirect()->back();
+        }else{
+            $insert = LabourRate::insertGetId([
+            'CateId'=>$request['idOfcategory'],
+            'SizeId'=>$request['sizeID'],
+            'LaboType'=>$request['LaboType'],
+            'Amount'=>$request['Amount'],
+            // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+        ]);
 
-    //     if($insert){
-    //             Session::flash('success','new labour cost store Successfully.');
-    //                 return redirect()->route('labour.add');
-    //         }else{
-    //             Session::flash('error','please try again.');
-    //                 return redirect()->back();
-    //         }
-    //     } 
+        if($insert){
+                Session::flash('success','new labour cost store Successfully.');
+                    return redirect()->route('labour.add');
+            }else{
+                Session::flash('error','please try again.');
+                    return redirect()->back();
+            }
+        } 
 
-    // }
+    }
 
 
 }

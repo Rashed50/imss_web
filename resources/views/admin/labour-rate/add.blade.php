@@ -33,6 +33,11 @@
                                  <strong>Success!</strong> {{Session::get('success')}}
                               </div>
                             @endif
+                            @if(Session::has('delete'))
+                              <div class="alert alert-success alertsuccess" role="alert">
+                                 <strong>Success!</strong> {{Session::get('delete')}}
+                              </div>
+                            @endif
                             @if(Session::has('error'))
                               <div class="alert alert-danger alerterror" role="alert">
                                  <strong>Opps!</strong> {{Session::get('error')}}
@@ -159,9 +164,8 @@
                                             <td>{{ $labour->LaboType ??'' }}</td>
                                             <td>{{ $labour->Amount ??'' }}</td>
                                             <td>
-                                                <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
                                                 <a href="{{ route('labour.edit',$labour->LaboId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
-                                                <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                                                <a href="{{ route('labour.delete',$labour->LaboId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                             </td>
                                         </tr>
                                       @endforeach

@@ -64,6 +64,16 @@ class ThicknessController extends Controller
         return view('admin.thickness.add', compact('data', 'allThickness', 'allCate'));
     }
 
+    public function delete($id){
+        $delete = Thickness::where('ThicId',$id)->delete();
+        if($delete){
+            Session::flash('delete', 'thickness delete');
+        }else{
+            Session::flash('error', 'please try again.'); 
+        }
+        return redirect()->back();
+    }
+
 
     public function store(Request $request)
     {
@@ -109,22 +119,21 @@ class ThicknessController extends Controller
     {
         $id = $request->ThicId;
         $this->validate($request, [
-            'ThicName' => 'required|max:150|unique:thicknesses,ThicName,' . $id . ',ThicId',
-            'CateId' => 'required',
-            'BranId' => 'required',
-            'SizeId' => 'required',
+            'ThicName' => 'required|max:150',
+            'CategoryID' => 'required',
+            'BranID' => 'required',
+            'SizeID' => 'required',
         ], [
             'ThicName.required' => 'please enter thickness name',
             'SizeId.required' => 'please select size name',
             'ThicName.max' => 'max thickness name content is 150 character',
-            'ThicName.unique' => 'this thickness name already exists! please another name',
         ]);
 
 
         $update = Thickness::where('ThicStatus', true)->where('ThicId', $id)->update([
-            'CateId' => $request['CateId'],
-            'BranId' => $request['BranId'],
-            'SizeId' => $request['SizeId'],
+            'CateId' => $request['CategoryID'],
+            'BranId' => $request['BranID'],
+            'SizeId' => $request['SizeID'],
             'ThicName' => $request['ThicName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);

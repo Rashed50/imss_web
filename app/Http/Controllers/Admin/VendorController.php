@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\ChartOfAccountController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\AccountTypeController;
-
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 
@@ -48,6 +48,16 @@ class VendorController extends Controller{
         $allBank= $bankOBJ->getAll();
         $data = Vendor::where('ActiveStatus',true)->where('VendId',$id)->firstOrFail();
         return view('admin.vendor.add', compact('data', 'allVendor', 'allBank', 'allType'));
+    }
+
+    public function delete($id){
+        $delete = Vendor::where('VendId',$id)->delete();
+        if($delete){
+            Session::flash('delete', 'vendor delete');
+        }else{
+            Session::flash('error', 'please try again.'); 
+        }
+        return redirect()->back();
     }
 
     public function store(Request $request){
@@ -154,8 +164,8 @@ class VendorController extends Controller{
             'InitialBalance.required'=> 'please enter Initial Balance',
             'InitialBalance.max'=> 'max Initial Balance content is 15 character',
 
-            'ChartOfAcctId.required'=> 'please enter Accountant name',
-            'ChartOfAcctId.max'=> 'max Accountant name content is 20 character',
+            // 'ChartOfAcctId.required'=> 'please enter Accountant name',
+            // 'ChartOfAcctId.max'=> 'max Accountant name content is 20 character',
 
             'VendAddress.required'=> 'please enter vendor address',
             'VendAddress.max'=> 'max vendor address content is 200 character',

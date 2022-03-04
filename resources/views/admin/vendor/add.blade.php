@@ -2,6 +2,30 @@
 @section('content')
 <!-- ########## START: MAIN PANEL ########## -->
 
+
+<style>
+    .dtHorizontalExampleWrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        }
+        #scroldatatable th, td {
+        white-space: nowrap;
+        }
+
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_desc:before,
+        table.dataTable thead .sorting_desc_disabled:after,
+        table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+     }
+</style>
+
   <nav class="breadcrumb sl-breadcrumb">
     <a class="breadcrumb-item" href="index.html">Starlight</a>
     <span class="breadcrumb-item active">Vendor</span>
@@ -20,6 +44,11 @@
                         @if(Session::has('success'))
                         <div class="alert alert-success alertsuccess" role="alert">
                             <strong>Success!</strong> {{Session::get('success')}}
+                        </div>
+                        @endif
+                        @if(Session::has('delete'))
+                        <div class="alert alert-success alertsuccess" role="alert">
+                            <strong>Success!</strong> {{Session::get('delete')}}
                         </div>
                         @endif
                         @if(Session::has('error'))
@@ -227,10 +256,9 @@
                         <div class="col-12">
                             <div class="table-responsive">
                                 <!-- <table id="alltableinfo" class="table table-bordered custom_table mb-0"> -->
-                                <table id="datatable1" class="table responsive mb-0">
+                                <table id="scroldatatable" class="table table-striped table-bordered table-sm" cellspacing="0"width="100%">
                                     <thead>
                                         <tr>
-
                                             <th>SL NO.</th>
                                             <th>Vendor Name</th>
                                             <th>Contact Name</th>
@@ -256,9 +284,8 @@
                                             <td>{{ $vendor->ChartOfAcctId ??'' }}</td>
                                             <td>{{ $vendor->VendAddress ??'' }}</td>
                                             <td>
-                                                <a href="#" title="view"><i class="fa fa-plus-square fa-lg view_icon"></i></a>
                                                 <a href="{{ route('vendor.edit',$vendor->VendId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
-                                                <a href="#" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
+                                                <a href="{{ route('vendor.delete',$vendor->VendId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
                                             </td>
                                         </tr>
                                       @endforeach
@@ -274,5 +301,15 @@
     <!-- end list -->
   </div>
   <!-- sl-pagebody -->
+
+
+  <script>
+        $(document).ready(function () {
+        $('#scroldatatable').DataTable({
+        "scrollX": true
+        });
+        $('.dataTables_length').addClass('bs-select');
+        });
+  </script>
 
 @endsection

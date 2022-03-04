@@ -67,6 +67,16 @@ class SizeController extends Controller
         return view('admin.size.add', compact('data', 'allSize', 'allCate'));
     }
 
+    public function delete($id){
+        $delete = Size::where('SizeId',$id)->delete();
+        if($delete){
+            Session::flash('delete', 'size delete');
+        }else{
+            Session::flash('error', 'please try again.'); 
+        }
+        return redirect()->back();
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -78,7 +88,7 @@ class SizeController extends Controller
             'BranID.required' => 'please select brand name',
             'SizeName.max' => 'max size name content is 150 character',
         ]);
-
+        
         $SizeName = strtolower($request->SizeName);
         $sizes = Size::where('CateId', $request->CategoryID)->where('BranId', $request->BranID)->where('SizeName', $SizeName)->count();
 
@@ -107,22 +117,23 @@ class SizeController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all());
         $id = $request->SizeId;
+
         $this->validate($request, [
-            'SizeName' => 'required|max:150|unique:sizes,SizeName,' . $id . ',SizeId',
-            'BranId' => 'required',
-            'CateId' => 'required',
+            'SizeName' => 'required|max:150',
+            'BranID' => 'required',
+            'CategoryID' => 'required',
         ], [
             'SizeName.required' => 'please enter size name',
-            'CateId.required' => 'please select category name',
-            'BranId.required' => 'please select brand name',
+            'CategoryID.required' => 'please select category name',
+            'BranID.required' => 'please select brand name',
             'SizeName.max' => 'max size name content is 150 character',
-            'SizeName.unique' => 'this size name already exists! please another name',
         ]);
 
         $insert = Size::where('SizeStatus', true)->where('SizeId', $id)->update([
-            'CateId' => $request['CateId'],
-            'BranId' => $request['BranId'],
+            'CateId' => $request['CategoryID'],
+            'BranId' => $request['BranID'],
             'SizeName' => $request['SizeName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
