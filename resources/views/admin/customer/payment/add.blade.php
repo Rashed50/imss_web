@@ -122,8 +122,9 @@
                   <div class="col-sm-7">
                     <select class="form-control" name="AccountId">
                       <option value="">Select Here</option>
-                      <option value="1">Account 01</option>
-                      <option value="2">Account 02</option>
+                      @foreach ($chartOffAccountList as $chOfAcc)
+                      <option value="{{ $chOfAcc->ChartOfAcctId }}">{{ $chOfAcc->ChartOfAcctName }}</option>
+                      @endforeach
                     </select>
 
                     @if ($errors->has('AccountId'))

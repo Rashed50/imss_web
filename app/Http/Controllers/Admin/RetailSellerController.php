@@ -206,9 +206,11 @@ class RetailSellerController extends Controller{
     $allCustomer = $CustomerOBJ->getRetailCustomer();
 
     $vouchar = $CustomerOBJ->vouchar();
+    $chartOfAcc = new  ChartOfAccountController();
+    $chartOffAccountList = $chartOfAcc->getAllChartOfAccount();
     // Cart Destroy
     Cart::destroy();
-    return view('admin.retailer.add',compact('allCatg','allCustomer','vouchar'));
+    return view('admin.retailer.add',compact('allCatg','allCustomer','vouchar','chartOffAccountList'));
   }
 
 

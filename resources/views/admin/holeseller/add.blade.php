@@ -79,7 +79,10 @@
 
                               <select class="form-control" name="DebitAccount">
                                 <option value="">Select Debit Account</option>
-
+                                
+                                @foreach ($chartOffAccountList as $chOfAcc)
+                                 <option value="{{ $chOfAcc->ChartOfAcctId }}">{{ $chOfAcc->ChartOfAcctName }}</option>
+                                @endforeach
                               </select>
                               @if ($errors->has('DebitAccount'))
                                   <span class="invalid-feedback" role="alert">

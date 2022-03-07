@@ -10,7 +10,9 @@ use Carbon\Carbon;
 
 class ChartOfAccountController extends Controller
 {
-    //
+    public function getAllChartOfAccount(){
+      return ChartOfAccount::get();
+    }
 
     public function addNewChartOfAccount(Request $request){
 

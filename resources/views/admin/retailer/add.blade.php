@@ -334,13 +334,16 @@
                                   <label class="col-sm-5 control-label">Debit Acct:<span class="req_star">*</span></label>
                                   <div class="col-sm-6">
                                       <select class="form-control" name="DebitAccount">
-                                        <option value="">Pety Cash</option>
+                                        <option value="">Select Account</option>
+                                        @foreach ($chartOffAccountList as $chOfAcc)
+                                        <option value="{{ $chOfAcc->ChartOfAcctId }}">{{ $chOfAcc->ChartOfAcctName }}</option>
+                                        @endforeach
                                       </select>
                                   </div>
                               </div>
 
                               <div class="form-group row custom_form_group">
-                                  <label class="col-sm-5 control-label">Debit Acct:</label>
+                                  <label class="col-sm-5 control-label">Previous Amount:</label>
                                   <div class="col-sm-6">
                                       <input type="text" id="predueAmount" placeholder="Amount" class="form-control" disabled value="">
                                   </div>

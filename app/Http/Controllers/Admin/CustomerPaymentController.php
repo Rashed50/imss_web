@@ -57,7 +57,10 @@ class CustomerPaymentController extends Controller{
     // Call Employee Controller
     $employeeOBJ = new EmployeeInfoController();
     $employee = $employeeOBJ->getAllEmployees();
-    return view('admin.customer.payment.add',compact('employee','getAllPaymentCustomer'));
+    $chartOfAcc = new  ChartOfAccountController();
+    $chartOffAccountList = $chartOfAcc->getAllChartOfAccount();
+
+    return view('admin.customer.payment.add',compact('employee','getAllPaymentCustomer','chartOffAccountList'));
   }
 
   public function edit($id){

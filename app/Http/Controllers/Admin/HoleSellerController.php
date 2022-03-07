@@ -179,9 +179,13 @@ class HoleSellerController extends Controller{
     $allCustomer = $CustomerOBJ->getAllWholeCustomer();
 
     $vouchar = $CustomerOBJ->vouchar();
+
+    $chartOfAcc = new  ChartOfAccountController();
+    $chartOffAccountList = $chartOfAcc->getAllChartOfAccount();
+   // dd($chartOffAccountList);
     // Cart Destroy
     Cart::destroy();
-    return view('admin.holeseller.add',compact('allCatg','allCustomer','vouchar'));
+    return view('admin.holeseller.add',compact('allCatg','allCustomer','vouchar','chartOffAccountList'));
   }
 
 
