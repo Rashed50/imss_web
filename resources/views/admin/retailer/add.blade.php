@@ -32,7 +32,7 @@
                         <div class="form-group row custom_form_group{{ $errors->has('TradeName') ? ' has-error' : '' }}">
                             <label class="col-sm-5 control-label">Customer Name:<span class="req_star">*</span></label>
                             <div class="col-sm-7">
-                              <select class="form-control" name="TradeName">
+                              <select class="form-control js-example-basic-single" name="TradeName">
                                 <option value="0">Select  Name</option>
                                 @foreach ($allCustomer as $Customer)
                                   <option value="{{ $Customer->CustId }}">{{ $Customer->CustName }}</option>
@@ -90,7 +90,8 @@
                       </div>
                       {{-- Third --}}
                       <div class="col-md-2">
-                        <img src="" id="holeCustomerImage" alt="no image" style="width: 100px; border: 1px solid #ddd;">
+                        <img src="" id="holeCustomerImageShow" class="d-none" alt="no image" style="width: 100px; border: 1px solid #ddd;">
+                        <img src="{{asset('uploads/no.png') }}" id="holeCustomerImage" class="d-block" alt="no image" style="width: 100px; border: 1px solid #ddd;">
                       </div>
 
                   </div>
