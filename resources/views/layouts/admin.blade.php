@@ -68,7 +68,7 @@
     <script src="{{ asset('contents/admin') }}/assets/lib/sweetalert/code.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/lib/toast/toast.min.js"></script>
     <script>
-      @if(Session::has('message'))
+      if(Session.hasSession('message'))
         var type ="{{Session::get('alert-type','info')}}"
         switch(type){
             case 'info':
@@ -87,7 +87,7 @@
                 toastr.error(" {{Session::get('message')}} ");
                 break;
         }
-    @endif
+    endif
     </script>
 
     <script src="{{ asset('contents/admin') }}/assets/lib/flot-spline/jquery.flot.spline.js"></script>
@@ -616,18 +616,7 @@
       }
 
 
-      // Qunatity Decrement
-      // function cartDecrement(rowId){
-      //   $.ajax({
-      //       type:'POST',
-      //       url: "",
-      //       data: { rowId:rowId },
-      //       dataType:'json',
-      //       success:function(data){
-      //         getOrderListInAddToCart();
-      //       }
-      //   });
-      // }
+      
 
 
 
