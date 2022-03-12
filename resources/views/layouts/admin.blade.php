@@ -228,7 +228,18 @@
                          $('input[name="TradeName"]').val(data.TradeName);
                          $('input[id="predueAmount"]').val(data.DueAmount);
                          $('textarea[name="Address"]').val(data.Address);
-                         $('#holeCustomerImage').prop("src", data.Photo);
+
+                         if(data.Photo != ''){
+                            // var noimage = {{asset('')}}
+                            $('#holeCustomerImageShow').addClass("d-block");
+                            $('#holeCustomerImageShow').removeAttr("d-none");
+                            $('#holeCustomerImageShow').attr("src",'uploads/customer/'+data.Photo);
+                            $('#holeCustomerImage').addClass("d-none");
+                         }else{
+                          $('#holeCustomerImage').addClass("d-block");
+                          $('#holeCustomerImageShow').addClass("d-none");
+                          $('#holeCustomerImage').removeAttr("d-none");
+                         }
                          /* +++++++++++++++++++++++++++++++++++ */
                       },
 
