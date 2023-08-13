@@ -72,6 +72,9 @@ class EmployeeInfoController extends Controller{
 
   /* ============== update Employee Information in DATABASE ============== */
   public function update(Request $request){
+
+
+    dd($request->all());
     $this->validate($request,[
       'emp_name' => 'required'
     ],[
