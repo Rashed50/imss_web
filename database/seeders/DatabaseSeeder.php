@@ -15,6 +15,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        DB::table('users')->insert([
+          'name' =>'admin',
+          'email' => 'admin@gmail.com',
+          'email_verified_at' => now(),
+          'password' => bcrypt('123456'),
+          'remember_token' => Str::random(10),
+        ]);
+
+
 
         DB::table('chart_of_accounts')->insert([ // step 01
            // 'ChartOfAcctId' => 1,
@@ -38,7 +47,7 @@ class DatabaseSeeder extends Seeder
             'AcctTypeId' => 2,
             'BankAcctTypeId' => 2,
           ]);
-  
+
 
     }
 }
