@@ -104,7 +104,7 @@
                         @endif
                         </div>
                     </div>
-                   
+
                     <div class="form-group row custom_form_group">
                         <label class="col-sm-3 control-label">Initial Due:</label>
                         <div class="col-sm-7">
@@ -205,7 +205,7 @@
                             @endif
                         </div>
                      </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('Photo') ? ' has-error' : '' }}">
+                    <!-- <div class="form-group row custom_form_group{{ $errors->has('Photo') ? ' has-error' : '' }}">
                          <label class="col-sm-3 control-label">Photo :</span></label>
                             <div class="col-sm-5">
                              <input type="file" id="image" class="form-control" id="Photo" name="Photo">
@@ -219,17 +219,17 @@
                         <div class="pl-2">
                             <img id="showImage" height="70" alt="">
                         </div>
-                    </div>
-                
+                    </div> -->
+
                 </div>
               </div>
                 <style>
-                    #my_camera{
+                    /* #my_camera{
                     border: 2px solid gray;
-                    }
+                    } */
                     </style>
-                    <div class="row" id="hide">
-                        
+                    <!-- <div class="row" id="hide">
+
                         <div class="col-md-3">
                             <div class="my_camera" id="my_camera"></div>
                         </div>
@@ -247,8 +247,8 @@
                         </div>
 
                         <div class="col-md-2"></div>
-                    </div>
-         
+                    </div> -->
+
         </div>
 
         <div class="card-footer card_footer_button text-center">
@@ -263,41 +263,41 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
 <script language="JavaScript">
 
+    //
+    // Webcam.set({
+    //     width: 200,
+    //     height: 100,
+    //     dest_width: 150,
+    //     dest_height: 100,
+    //     image_format: 'jpeg',
+    //     jpeg_quality: 90,
+    //     force_flash: false
+    // });
+    //  // preload shutter audio clip
+    //     var shutter = new Audio();
+    //     shutter.autoplay = true;
+    //     shutter.src = navigator.userAgent.match(/Firefox/) ? 'shutter.ogg' : 'shutter.mp3';
+    //
+    // $('#off').click(function(){
+    //     Webcam.reset();
+    //     $('#my_camera').removeClass('my_camera');
+    //     $('#off').addClass('d-none');
+    //     $('#on').removeClass('d-none');
+    // });
+    //
+    // $('#on').click(function(){
+    //   Webcam.reset();
+    //     Webcam.on();
+    //     $('#my_camera').addClass('my_camera');
+    //     $('#on').addClass('d-none');
+    //     $('#off').removeClass('d-none');
+    // });
+    //
+    //
+    // Webcam.attach( '.my_camera' );
 
-    Webcam.set({
-        width: 200,
-        height: 100,
-        dest_width: 150,
-        dest_height: 100,
-        image_format: 'jpeg',
-        jpeg_quality: 90,
-        force_flash: false
-    });
-     // preload shutter audio clip
-        var shutter = new Audio();
-        shutter.autoplay = true;
-        shutter.src = navigator.userAgent.match(/Firefox/) ? 'shutter.ogg' : 'shutter.mp3';
-
-    $('#off').click(function(){
-        Webcam.reset();
-        $('#my_camera').removeClass('my_camera');
-        $('#off').addClass('d-none');
-        $('#on').removeClass('d-none');
-    });
-
-    $('#on').click(function(){
-      Webcam.reset();
-        Webcam.on();
-        $('#my_camera').addClass('my_camera');
-        $('#on').addClass('d-none');
-        $('#off').removeClass('d-none');
-    });
 
 
-    Webcam.attach( '.my_camera' );
-
-    
-  
     function take_snapshot() {
       shutter.play();
         Webcam.snap( function(data_uri) {
@@ -309,7 +309,7 @@
 
 
 <script>
-    
+
     $("#ContactNumber").keyup(function(){
      var ContactNumber = $('#ContactNumber').val();
      if(ContactNumber != ''){
@@ -332,7 +332,7 @@
 
             }
         });
-      
+
      }
 
     });
