@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use Illuminate\Support\Str;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
-use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,9 +20,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         DB::table('users')->insert([
           'name' =>'admin',
-          'email' => 'admin@gmail.com',
+          'email' => 'admin@admin.com',
           'email_verified_at' => now(),
-          'password' => bcrypt('123456'),
+          'password' => bcrypt('12345678'),
           'remember_token' => Str::random(10),
         ]);
 
