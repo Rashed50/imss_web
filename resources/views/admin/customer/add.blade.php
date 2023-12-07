@@ -45,6 +45,22 @@
         <div class="card-body card_form">
             <div class="row">
                 <div class="col-md-6">
+                    <div class="form-group row custom_form_group{{ $errors->has('CustTypeId') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Customer Type :</span></label>
+                        <div class="col-sm-7">
+                            <select class="form-control" name="CustTypeId" id="CustTypeId" autofocus required>
+                                <option value="">Select category</option>
+                                @foreach($allType as $type)
+                                <option value="{{$type->CusTypeId}}">{{$type->TypeName}}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('CustTypeId'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('CustTypeId') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
 
                     <div class="form-group row custom_form_group{{ $errors->has('CustName') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Name:<span class="req_star">*</span></label>
@@ -58,6 +74,19 @@
                           @endif
                         </div>
                     </div>
+
+                    <div class="form-group row custom_form_group{{ $errors->has('CustNameBl') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Name Bengla:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                          <input type="text" placeholder="Customer Name (Bengla)" class="form-control" id="CustNameBl" name="CustNameBl" value="{{(@$data)?@$data->CustNameBl : old('CustNameBl')}}">
+                           @if ($errors->has('CustNameBl'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('CustNameBl') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
+
                     <div class="form-group row custom_form_group{{ $errors->has('TradeName') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Trade Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
@@ -69,6 +98,30 @@
                         @endif
                         </div>
                     </div>
+
+                    <div class="form-group row custom_form_group{{ $errors->has('TradeNameBl') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Trade Name (Bengla):<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                        <input type="text" placeholder="Trade Name (Bengla)" class="form-control" id="TradeNameBl" name="TradeNameBl" value="{{(@$data)?@$data->TradeNameBl:old('TradeNameBl')}}">
+                        @if ($errors->has('TradeNameBl'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('TradeNameBl') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+                    <div class="form-group row custom_form_group{{ $errors->has('FatherName') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Father Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                        <input type="text" placeholder="Father Name" class="form-control" id="FatherName" name="FatherName" value="{{(@$data)?@$data->FatherName:old('FatherName')}}">
+                        @if ($errors->has('FatherName'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('FatherName') }}</strong>
+                            </span>
+                        @endif
+                        </div>
+                    </div>
+
                     <div class="form-group row custom_form_group{{ $errors->has('ContactNumber') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Contact No. :<span class="req_star">*</span></label>
                         <div class="col-sm-7">
@@ -82,19 +135,9 @@
                         @endif
                         </div>
                     </div>
-                    <div class="form-group row custom_form_group{{ $errors->has('FatherName') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Father Name:<span class="req_star">*</span></label>
-                        <div class="col-sm-7">
-                        <input type="text" placeholder="Father Name" class="form-control" id="FatherName" name="FatherName" value="{{(@$data)?@$data->FatherName:old('FatherName')}}" required>
-                        @if ($errors->has('FatherName'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('FatherName') }}</strong>
-                            </span>
-                        @endif
-                        </div>
-                    </div>
+
                     <div class="form-group row custom_form_group{{ $errors->has('NID') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">NID NO. :</label>
+                        <label class="col-sm-3 control-label">NID No. :</label>
                         <div class="col-sm-7">
                         <input type="text" placeholder="NID NO." class="form-control" name="NID" value="{{(@$data)? @$data->NID:old('NID')}}" required autocomplete="off">
                         @if ($errors->has('NID'))
@@ -108,29 +151,14 @@
                     <div class="form-group row custom_form_group">
                         <label class="col-sm-3 control-label">Initial Due:</label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="Initial Balance is 0.00 TK" class="form-control" id="InitialDue" name="InitialDue" value="{{(@$data)?@$data->InitialDue:old('InitialDue')}}" required>
+                        <input type="text" placeholder="Initial Balance is 0.00 TK" class="form-control" id="InitialDue" name="InitialDue" value="{{(@$data)?@$data->InitialDue:0}}" required>
                         </div>
                     </div>
 
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-group row custom_form_group{{ $errors->has('CustTypeId') ? ' has-error' : '' }}">
-                        <label class="col-sm-3 control-label">Cust Type :</span></label>
-                        <div class="col-sm-7">
-                            <select class="form-control" name="CustTypeId" id="CustTypeId">
-                                <option value="">Select category</option>
-                                @foreach($allType as $type)
-                                <option value="{{$type->CusTypeId}}">{{$type->TypeName}}</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('CustTypeId'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('CustTypeId') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+
 
                     <div class="form-group row custom_form_group{{ $errors->has('DiviId') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Division:<span class="req_star">*</span></label>
@@ -197,7 +225,7 @@
                     <div class="form-group row custom_form_group{{ $errors->has('Address') ? ' has-error' : '' }}">
                          <label class="col-sm-3 control-label">Address :</span></label>
                         <div class="col-sm-7">
-                        <input type="text" placeholder="Vendor Address" class="form-control" id="Address" name="Address" value="{{(@$data)?@$data->Address:old('Address')}}" required>
+                        <input type="text" placeholder="Vendor Address" class="form-control" id="Address" name="Address" value="{{(@$data)?@$data->Address:old('Address')}}">
                             @if ($errors->has('Address'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('Address') }}</strong>
@@ -224,11 +252,11 @@
                 </div>
               </div>
                 <style>
-                    /* #my_camera{
+                     #my_camera{
                     border: 2px solid gray;
-                    } */
+                    } 
                     </style>
-                    <!-- <div class="row" id="hide">
+                    <div class="row" id="hide">
 
                         <div class="col-md-3">
                             <div class="my_camera" id="my_camera"></div>
@@ -247,7 +275,7 @@
                         </div>
 
                         <div class="col-md-2"></div>
-                    </div> -->
+                    </div>
 
         </div>
 
@@ -310,10 +338,37 @@
 
 <script>
 
-    $("#ContactNumber").keyup(function(){
+
+
+    $('#CustName').keyup(function(){
+        const customerType = $('#CustTypeId').val(); // 2 = retail, 1 whole sell
+        var tradeName = document.getElementById('TradeName');
+        if(customerType == 2){
+            $('input[id="TradeName"]').val($('#CustName').val());
+           // tradeName.disabled = true;
+        }else {
+          //  tradeName.disabled = false;
+
+        }
+
+    });
+
+    $('#CustNameBl').keyup(function(){
+        const customerType = $('#CustTypeId').val(); // 2 = retail, 1 whole sell
+        var tradeNameBl = document.getElementById('TradeNameBl');
+
+        if(customerType == 2){
+            $('input[id="TradeNameBl"]').val($('#CustNameBl').val());
+          //  tradeNameBl.disabled = true;
+        }else {
+           // tradeNameBl.disabled = false;
+        }
+    });
+
+    {{-- $("#ContactNumber").keyup(function(){
      var ContactNumber = $('#ContactNumber').val();
      if(ContactNumber != ''){
-        //  alert(ContactNumber);
+
         $.ajax({
             type: 'POST',
             url: "{{ url('dashboard/check/Contact/number') }}",
@@ -321,12 +376,10 @@
                 ContactNumber:ContactNumber
             },
             success: function(data){
-                // alert(data);
-                // $("#showContact").text(data);
+
                 if(data.customer != null){
                     $('#duplicate_number').text('This Number Already Exist').style.color = "red";
-                    // $('#duplicate_number').style.color = "blue";
-                }else{
+                 }else{
                     $('#duplicate_number').text('');
                 }
 
@@ -335,6 +388,8 @@
 
      }
 
-    });
+    }); --}}
+
+
 </script>
 @endsection

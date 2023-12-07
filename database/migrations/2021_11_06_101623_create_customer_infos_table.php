@@ -16,13 +16,15 @@ class CreateCustomerInfosTable extends Migration
     {
         Schema::create('customer_infos', function (Blueprint $table) {
             $table->id('CustId');
-            $table->string('CustName',50)->nullable();
-            $table->string('TradeName')->nullable();
+            $table->string('CustName',50);
+            $table->string('CustNameBl',50)->nullable();
+            $table->string('TradeName');
+            $table->string('TradeNameBl')->nullable();
             $table->integer('CustTypeId');
-            $table->string('ContactNumber',50)->nullable();
+            $table->string('ContactNumber',15);
             $table->text('Address')->nullable();
-            $table->float('DueAmount')->nullable();
-            $table->float('InitialDue')->nullable();
+            $table->float('DueAmount')->default(0);
+            $table->float('InitialDue')->default(0);
             $table->string('Photo')->nullable();
             $table->string('FatherName',50)->nullable();
             $table->string('NID',30)->nullable();
@@ -43,7 +45,9 @@ class CreateCustomerInfosTable extends Migration
 
         DB::table('customer_infos')->insert([
             'CustName' => 'Rashed' ,
+            'CustNameBl' => 'Rashed' ,
             'TradeName' => '',
+            'TradeNameBl' => '',
             'CustTypeId' => 1,
             'ContactNumber' => '01731540704',
             'Address' => 'dhaka',
@@ -62,7 +66,9 @@ class CreateCustomerInfosTable extends Migration
 
         DB::table('customer_infos')->insert([
             'CustName' => 'Salam' ,
+            'CustNameBl' => 'Salam' ,
             'TradeName' => '',
+            'TradeNameBl' => '',
             'CustTypeId' => 2,
             'ContactNumber' => '01987654321',
             'Address' => 'dhaka',
@@ -80,7 +86,9 @@ class CreateCustomerInfosTable extends Migration
         ]);
         DB::table('customer_infos')->insert([
             'CustName' => 'Masud' ,
+            'CustNameBl' => 'Masud' ,
             'TradeName' => '',
+            'TradeNameBl' => '',
             'CustTypeId' => 1,
             'ContactNumber' => '01987654321',
             'Address' => 'dhaka',
@@ -97,8 +105,10 @@ class CreateCustomerInfosTable extends Migration
 
         ]);
         DB::table('customer_infos')->insert([
-            'CustName' => 'Jafor' ,
+            'CustName' => 'Karim' ,
+            'CustNameBl' => 'Karim' ,
             'TradeName' => '',
+            'TradeNameBl' => '',
             'CustTypeId' => 2,
             'ContactNumber' => '01987654321',
             'Address' => 'dhaka',
@@ -114,24 +124,7 @@ class CreateCustomerInfosTable extends Migration
             'UnioId' => 1,
 
         ]);
-        DB::table('customer_infos')->insert([
-            'CustName' => 'kalam' ,
-            'TradeName' => '',
-            'CustTypeId' => 1,
-            'ContactNumber' => '01987654321',
-            'Address' => 'dhaka',
-            'DueAmount' => 0,
-            'InitialDue' => 0,
-            'Photo' => 'null',
-            'FatherName' => 'na',
-            'NID' => '89328402398432',
-            'CreateById' => 1,
-            'DiviId' => 1,
-            'DistId' => 1,
-            'ThanId' => 1,
-            'UnioId' => 1,
-
-        ]);
+      
 
     }
 

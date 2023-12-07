@@ -52,7 +52,7 @@
           <li class="nav-item"><a href="{{ route('sell.info') }}" class="nav-link @yield('sell-info')">Sales Records</a></li>
           <li class="nav-item"><a href="{{ route('customer.search.sales') }}" class="nav-link @yield('sell-info')"> Search Sales Record</a></li>
           <li class="nav-item"><a href="{{ route('sell.return') }}" class="nav-link @yield('Sale-Return')">Sale Return</a></li>
-          
+
         </ul>
 
 
@@ -87,9 +87,9 @@
     </ul>
 
 
-  
+
   <!-- Vendor -->
-  
+
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
@@ -102,10 +102,10 @@
     <ul class="sl-menu-sub nav flex-column">
          <li class="nav-item"><a href="{{ route('vendor.add') }}" class="nav-link @yield('Vendor')">New Venodr</a></li>
          <li class="nav-item"><a href="#" class="nav-link @yield('Vendor Report')">Vendor Report</a></li>
-        
+
     </ul>
 
- 
+
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
@@ -125,7 +125,7 @@
       <li class="nav-item"><a href="{{ route('product.purchase.add') }}" class="nav-link">New Purchase</a></li>
     </ul>
 
- 
+
  <!-- Voucher -->
           <a href="#" class="sl-menu-link @yield('Voucher')">
          <div class="sl-menu-item">
@@ -152,7 +152,10 @@
     </a>
     <!-- sl-menu-link -->
     <ul class="sl-menu-sub nav flex-column">
-    <li class="nav-item"><a href="{{ route('company.add') }}" class="nav-link">Company Profile</a></li>
+
+      <li class="nav-item"><a href="{{ route('company.add') }}" class="nav-link">Company Profile</a></li>
+      {{-- <li class="nav-item"><a href="{{ route('index') }}" class="nav-link">User</a></li> --}}
+
       <li class="nav-item"><a href="{{ route('division.add') }}" class="nav-link">Add Division</a></li>
       <li class="nav-item"><a href="{{ route('district.add') }}" class="nav-link">Add District</a></li>
       <li class="nav-item"><a href="{{ route('thana.add') }}" class="nav-link">Add Thana</a></li>

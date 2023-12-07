@@ -32,6 +32,11 @@ use App\Http\Controllers\Admin\DebitTypeController;
 use App\Http\Controllers\Admin\SellReturnController;
 use App\Http\Controllers\Admin\ProductActivityController;
 
+use App\Http\Controllers\Admin\Authorization\RoleController;
+//use App\Http\Controllers\Admin\Authorization\RoleController;
+use App\Http\Controllers\Admin\Authorization\UserController;
+//App\Http\Controllers\App\Http\Controllers\Admin\Authorization\RoleController
+
 
 
 /*
@@ -59,6 +64,19 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard/add', function () {
     return view('admin.add');
 })->middleware(['auth'])->name('add.here');
+
+
+
+Route::middleware('auth')->prefix('dashboard')->group(function() {
+   // Route::resource('roles', RoleController::class);
+    Route::get('roles/add', [RoleController::class, 'index'])->name('roles.add');
+    Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::get('roles/store', [RoleController::class, 'store'])->name('roles.store');
+
+    Route::resource('users', UserController::class);
+   // Route::resource('roles', RoleController::class);
+});
+
 
 /* ++++++++++++++++++++++ Employee ++++++++++++++++++++++ */
 Route::middleware('auth')->prefix('dashboard')->group(function () {
@@ -156,7 +174,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 
     Route::get('holeseller/customer-list', [CustomerController::class, 'holesellerCustomer'])->name('holeseller-wise.customer');
     Route::get('retailer/customer-list', [CustomerController::class, 'retailerCustomer'])->name('retailer-wise.customer');
-    
+
     Route::post('define/customer-due', [CustomerController::class, 'DefineCustomerDue'])->name('customerId-wise-customerdue');
     Route::post('Product/sellId/wise/sale/record', [CustomerController::class, 'sellIdWiseSaleRecord'])->name('Product-SellId-wise-sale-record');
     /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
@@ -174,12 +192,12 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     // ======##### customer payment route   #######=======
     Route::get('payment/customer/list', [CustomerController::class, 'listForPay'])->name('payment.customer.list');
      Route::post('payment/customer/search', [CustomerController::class, 'searchForPay'])->name('payment.customer.search');
-   
+
 
        // ======##### customer type wise sell info route   #######=======
     Route::get('customer/type-wise/sell/details/list', [CustomerController::class, 'customerTypewiseSellDetailsList'])->name('customer.type-wise.sell-details.list');
     Route::post('customer/type-wise/sell/details/list/search', [CustomerController::class, 'searchCustomerTypewiseSellDetailsList'])->name('customer.type-wise.sell-details.search');
-  
+
 
 
     /* =========== Customer Payment =========== */
@@ -221,13 +239,14 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 
 });
 
-
 Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('product/activity', [ProductActivityController::class, 'index'])->name('product.activity');
     Route::post('product/activity/brand', [ProductActivityController::class, 'brand'])->name('product.activity.brand');
     Route::post('product/activity/size', [ProductActivityController::class, 'size'])->name('product.activity.size');
     Route::post('product/activity/thik', [ProductActivityController::class, 'thikness'])->name('product.activity.thik');
 });
+
+
 
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {

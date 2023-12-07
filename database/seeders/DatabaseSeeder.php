@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         DB::table('users')->insert([
-          'name' =>'admin',
-          'email' => 'admin@admin.com',
+          'user_name' =>'admin',
+          'user_email' => 'admin@admin.com',
+          'user_phone'=> '01731540704',
           'email_verified_at' => now(),
-          'password' => bcrypt('12345678'),
+          'password' => Hash::make('12345678'),
           'remember_token' => Str::random(10),
         ]);
-
 
 
         DB::table('chart_of_accounts')->insert([ // step 01
@@ -49,6 +49,33 @@ class DatabaseSeeder extends Seeder
             'BankId' => 2,
             'AcctTypeId' => 2,
             'BankAcctTypeId' => 2,
+          ]);
+
+
+          DB::table('divisions')->insert([ // step 02
+             'DiviId' => 1,
+             'DiviName' => 'Khulna',
+           ]);
+
+           DB::table('districts')->insert([ // step 02
+            'DistId' => 1,
+            'DistName' => 'Meherpur',
+            'DiviId' => 1,
+          ]);
+
+          DB::table('thanas')->insert([ // step 02
+            'ThanId'=> 1,
+            'ThanaName' => 'Meherpur Sadar',
+            'DistId' => 1,
+            'DiviId' => 1,
+          ]);
+
+          DB::table('unions')->insert([ // step 02
+            'UnioId'=> 1,
+            'UnioName' => 'ABC',
+            'ThanId'=> 1,
+            'DistId' => 1,
+            'DiviId' => 1,
           ]);
 
     }

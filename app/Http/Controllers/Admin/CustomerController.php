@@ -72,7 +72,7 @@ class CustomerController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | AJAX METHOD CALLING 
+    | AJAX METHOD CALLING
     |--------------------------------------------------------------------------
     */
 
@@ -317,12 +317,14 @@ class CustomerController extends Controller
         //     'CateName.max'=> 'max customer name content is 200 character',
         // ]);
 
-        //  dd($request);
+       //   dd($request->all());
 
         $creator = Auth::user()->id;
         $insert = CustomerInfo::insertGetId([
             'CustName' => $request['CustName'],
+            'CustNameBl' => $request['CustNameBl'],
             'TradeName' => $request['TradeName'],
+            'TradeNameBl' => $request['TradeNameBl'],
             'CustTypeId' => $request['CustTypeId'],
             'ContactNumber' => $request['ContactNumber'],
             'Address' => $request['Address'],
@@ -374,7 +376,7 @@ class CustomerController extends Controller
     public function update(Request $request)
     {
         $id = $request->CustId;
-       
+
         $this->validate($request, [
             'CustName' => 'required|max:50',
             'TradeName' => 'required|max:50',
@@ -387,7 +389,7 @@ class CustomerController extends Controller
             'CateName.required' => 'please enter customer name',
             'CateName.max' => 'max customer name content is 200 character',
         ]);
-      
+
 
 
         $insert = CustomerInfo::where('status', true)->where('CustId', $id)->update([
@@ -432,7 +434,7 @@ class CustomerController extends Controller
         ]);
     }
 
-    // 
+    //
     public function updateRetailerCustomerBalance($customerId, $amount, $customerName, $cusTrade, $phone, $address)
     {
 
