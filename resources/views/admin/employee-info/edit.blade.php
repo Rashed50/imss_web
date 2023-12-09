@@ -170,10 +170,8 @@
                     <input type="date" name="joining_date" class="form-control" max="{{ Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->JoinDate }}">
                   </div>
               </div>
- 
-<!-- 
+  
               <div class="form-group row custom_form_group">
- 
                   <label class="col-sm-3 control-label">Profile Photo:</label>
                   <div class="col-sm-4">
                     <div class="input-group">
@@ -191,7 +189,7 @@
                   <div class="col-sm-3">
                       <img id='img-upload4' class="upload_image"/>
                   </div>
-              </div> -->
+              </div>
 
             </div>
             <div class="card-footer card_footer_button text-center">

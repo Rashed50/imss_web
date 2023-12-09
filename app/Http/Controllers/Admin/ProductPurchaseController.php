@@ -33,7 +33,7 @@ class ProductPurchaseController extends Controller{
   // Produt Purchase Form Save Button Action
   public function store(Request $request){
     // form validation
-
+    
     $request['TranAmount'] = $request->PayAmount;
     $request['TranTypeId'] = 1;
 
@@ -58,6 +58,7 @@ class ProductPurchaseController extends Controller{
 
     // insert data in database
     $insert = ProductPurchase::insertGetId([
+      
       'TransactionId' => $transId,
       'TotalPrice' => $request->PayAmount,
       'PurchaseDate' => $request->PurchaseDate,

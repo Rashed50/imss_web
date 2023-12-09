@@ -1,7 +1,7 @@
 <!-- ########## START: LEFT PANEL ########## -->
 <div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> IMSS Software </a></div>
 <div class="sl-sideleft">
-
+     
   <!-- <div class="input-group input-group-search">
     <input type="search" name="search" class="form-control" placeholder="Search">
     <span class="input-group-btn">
@@ -51,10 +51,13 @@
           <li class="nav-item"><a href="{{ route('Product.Retailer.Seller') }}" class="nav-link @yield('retrail-sell')">Retrail Sale</a></li>
           <li class="nav-item"><a href="{{ route('sell.info') }}" class="nav-link @yield('sell-info')">Sales Records</a></li>
           <li class="nav-item"><a href="{{ route('customer.search.sales') }}" class="nav-link @yield('sell-info')"> Search Sales Record</a></li>
+<<<<<<< HEAD
           <li class="nav-item"><a href="{{ route('sell.return') }}" class="nav-link @yield('Sale-Return')">Sale Return</a></li>
 
+=======
+          <li class="nav-item"><a href="{{ route('sell.return') }}" class="nav-link @yield('Sale-Return')">Sale Return</a></li>        
+>>>>>>> development
         </ul>
-
 
         <a href="#" class="sl-menu-link @yield('Sell-Details')">
          <div class="sl-menu-item">

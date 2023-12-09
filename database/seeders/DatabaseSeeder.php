@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
           'email_verified_at' => now(),
           'password' => Hash::make('12345678'),
           'remember_token' => Str::random(10),
+
         ]);
 
 

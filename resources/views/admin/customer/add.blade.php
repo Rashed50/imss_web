@@ -2,7 +2,6 @@
 @section('content')
 <!-- ########## START: MAIN PANEL ########## -->
 
-
 <!-- Session Message -->
 <div class="row">
     <div class="col-md-1"></div>
