@@ -89,7 +89,7 @@ class RetailSellerController extends Controller{
      if($customerId != 0){
       
         $Customer = $customerOBJ->getCustomer($customerId);
-
+        dd($request->$Customer);
 
           $oldDue = $Customer->DueAmount;
           $updateDue = $oldDue+$request->DueAmount;

@@ -31,6 +31,8 @@ use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\DebitTypeController;
 use App\Http\Controllers\Admin\SellReturnController;
 use App\Http\Controllers\Admin\ProductActivityController;
+use App\Http\Controllers\Admin\TestController;
+
 
 
 
@@ -149,6 +151,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::post('customer/add', [CustomerController::class, 'store'])->name('customer.store');
     Route::post('customer/edit', [CustomerController::class, 'update'])->name('customer.update');
+    Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    
+    
     /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
     Route::post('check/Contact/number', [CustomerController::class, 'checkCustomerContact'])->name('check.Contact-Number');
 

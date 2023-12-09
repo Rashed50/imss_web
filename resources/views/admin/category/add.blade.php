@@ -60,6 +60,19 @@
                         </div>
                     </div>
 
+                    <div class="form-group row custom_form_group{{ $errors->has('CateName') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">CategoryBL Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                          <input type="text" placeholder="CategoryBL Title" class="form-control" id="CateName" name="CateBlName" value="{{(@$data)?@$data->CateName:old('CateName')}}" required>
+                          <input type="hidden" name="CateId" value="{{@$data->CateId ?? ''}}">
+                          @if ($errors->has('CateName'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('CateName') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
+
                   </div>
                   <div class="card-footer card_footer_button text-center">
                       <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">{{ (@$data)?'UPDATE':'SAVE' }}</button>

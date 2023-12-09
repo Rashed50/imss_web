@@ -374,12 +374,12 @@ class CustomerController extends Controller
     public function update(Request $request)
     {
         $id = $request->CustId;
+       
         $this->validate($request, [
             'CustName' => 'required|max:50',
             'TradeName' => 'required|max:50',
             'ContactNumber' => 'required|max:20',
             'Address' => 'required|max:200',
-            'DueAmount' => 'required|max:20',
             'InitialDue' => 'required|max:20',
             'FatherName' => 'required|max:50',
             'NID' => 'required|max:30',
@@ -387,13 +387,14 @@ class CustomerController extends Controller
             'CateName.required' => 'please enter customer name',
             'CateName.max' => 'max customer name content is 200 character',
         ]);
+      
+
 
         $insert = CustomerInfo::where('status', true)->where('CustId', $id)->update([
             'CustName' => $request['CustName'],
             'TradeName' => $request['TradeName'],
             'ContactNumber' => $request['ContactNumber'],
             'Address' => $request['Address'],
-            'DueAmount' => $request['DueAmount'],
             'InitialDue' => $request['InitialDue'],
             'FatherName' => $request['FatherName'],
             'NID' => $request['NID'],
@@ -415,6 +416,17 @@ class CustomerController extends Controller
             return redirect()->route('customer.add');
         } else {
             Session::flash('error', 'please try again.');
+            return redirect()->back();
+        }
+    }
+
+    public function delete($id){
+        $delete=CustomerInfo::where('status',true)->where('CustId',$id)->delete();
+        if($delete){
+            Session::flash('delete','Customer Information Delete Successfully.');
+            return redirect()->route('customer.add');
+        }else{
+            Session::flash('error','please try again');
             return redirect()->back();
         }
     }

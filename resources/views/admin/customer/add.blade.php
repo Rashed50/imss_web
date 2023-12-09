@@ -17,6 +17,11 @@
                 <strong>Success!</strong> {{Session::get('success')}}
             </div>
             @endif
+            @if(Session::has('delete'))
+            <div class="alert alert-success alertsuccess" role="alert">
+                <strong>Success!</strong>{{Session::get('delete')}}
+            </div>
+            @endif        
             @if(Session::has('error'))
             <div class="alert alert-danger alerterror" role="alert">
                 <strong>Opps!</strong> {{Session::get('error')}}
