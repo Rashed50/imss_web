@@ -294,6 +294,8 @@ class CustomerController extends Controller
         $allCustomer = $this->getAllCustomer();
 
         $data = $this->getCustomer($id);
+        $data->Photo = 'uploads/customer/'.$data->Photo;
+     //   dd($data);
         return view('admin.customer.add', compact('data', 'allCustomer', 'Division', 'allType'));
     }
 
@@ -303,24 +305,24 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        // $this->validate($request,[
-        //     'CustName'=>'required|max:50',
-        //     'TradeName'=>'required|max:50',
-        //     'ContactNumber'=>'required|max:20',
-        //     'Address'=>'required|max:200',
-        //     'DueAmount'=>'required|max:20',
-        //     'InitialDue'=>'required|max:20',
-        //     'FatherName'=>'required|max:50',
-        //     'NID'=>'required|max:30',
-        // ],[
-        //     'CateName.required'=> 'please enter customer name',
-        //     'CateName.max'=> 'max customer name content is 200 character',
-        // ]);
+        $this->validate($request,[
+            'CustName'=>'required|max:50',
+            'TradeName'=>'required|max:50',
+            'ContactNumber'=>'required|max:20',
+            'Address'=>'required|max:200',
+            'DueAmount'=>'required|max:20',
+            'InitialDue'=>'required|max:20',
+          //  'FatherName'=>'required|max:50',
+           // 'NID'=>'required|max:30',
+        ],[
+            'CateName.required'=> 'please enter customer name',
+            'CateName.max'=> 'max customer name content is 200 character',
+        ]);
 
        //   dd($request->all());
 
-        $creator = Auth::user()->id;
-        $insert = CustomerInfo::insertGetId([
+
+        $inserted_id = CustomerInfo::insertGetId([
             'CustName' => $request['CustName'],
             'CustNameBl' => $request['CustNameBl'],
             'TradeName' => $request['TradeName'],
@@ -333,7 +335,7 @@ class CustomerController extends Controller
             'FatherName' => $request['FatherName'],
             'NID' => $request['NID'],
             'Photo' => '',
-            'CreateById' => $creator,
+            'CreateById' => Auth::user()->id,
             "DiviId" => $request['DiviId'],
             "DistId" => $request['DistId'],
             "ThanId" => $request['ThanId'],
@@ -355,7 +357,7 @@ class CustomerController extends Controller
 
         if ($request->hasFile('Photo')) {
             $image = $request->file('Photo');
-            $imageName = 'customer_' . $request->CustName . '.' . $image->getClientOriginalExtension();
+            $imageName = 'c' . $inserted_id . '.' . $image->getClientOriginalExtension();
             Image::make($image)->resize(300, 200)->save('uploads/customer/' . $imageName);
             $saveurl = 'uploads/customer/' . $imageName;
 
@@ -364,11 +366,11 @@ class CustomerController extends Controller
             ]);
         }
 
-        if ($insert) {
-            Session::flash('success', 'new customer add Successfully.');
+        if ($inserted_id) {
+            Session::flash('success', 'Customer Added Successfully');
             return redirect()->route('customer.add');
         } else {
-            Session::flash('error', 'please try again.');
+            Session::flash('error', 'Please Try Again.');
             return redirect()->back();
         }
     }
@@ -383,8 +385,8 @@ class CustomerController extends Controller
             'ContactNumber' => 'required|max:20',
             'Address' => 'required|max:200',
             'InitialDue' => 'required|max:20',
-            'FatherName' => 'required|max:50',
-            'NID' => 'required|max:30',
+        //    'FatherName' => 'required|max:50',
+           // 'NID' => 'required|max:30',
         ], [
             'CateName.required' => 'please enter customer name',
             'CateName.max' => 'max customer name content is 200 character',
@@ -400,24 +402,26 @@ class CustomerController extends Controller
             'InitialDue' => $request['InitialDue'],
             'FatherName' => $request['FatherName'],
             'NID' => $request['NID'],
-            // 'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            'updated_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
         if ($request->hasFile('Photo')) {
             $image = $request->file('Photo');
-            $imageName = 'customer_' . $request->CustName . '.' . $image->getClientOriginalExtension();
+            $imageName = 'c-' . $id . '.' . $image->getClientOriginalExtension();
             Image::make($image)->resize(300, 200)->save('uploads/customer/' . $imageName);
+            $saveurl = 'uploads/customer/' . $imageName;
 
+            //dd($saveurl);
             CustomerInfo::where('CustId', $id)->update([
-                'Photo' => $imageName,
+                'Photo' => $saveurl,
             ]);
         }
 
         if ($insert) {
-            Session::flash('success', 'customer information updated Successfully.');
+            Session::flash('success', 'Successfully Updated');
             return redirect()->route('customer.add');
         } else {
-            Session::flash('error', 'please try again.');
+            Session::flash('error', 'Please Try Again');
             return redirect()->back();
         }
     }

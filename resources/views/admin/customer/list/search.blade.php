@@ -2,12 +2,7 @@
 @section('content')
 <!-- ########## START: MAIN PANEL ########## -->
 
-  <nav class="breadcrumb sl-breadcrumb">
-    <a class="breadcrumb-item" href="index.html">Starlight</a>
-    <span class="breadcrumb-item active">Dashboard</span>
-  </nav>
-
-  <div class="sl-pagebody">
+  <div class="sl-pagebody" style="padding:0px;">
     <!-- form -->
     <div class="row">
         <div class="col-md-2"></div>
@@ -23,9 +18,7 @@
                           <div class="clearfix"></div>
                       </div>
                   </div>
-                  
                    @include('layouts.includes.customer-text')
-                   
                   <div class="card-footer card_footer_button text-center">
                       <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">SEARCH</button>
                   </div>
@@ -34,7 +27,7 @@
         </div>
         <div class="col-md-2"></div>
     </div>
-    
+
   </div>
   <!-- sl-pagebody -->
 @endsection

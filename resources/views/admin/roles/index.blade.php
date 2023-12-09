@@ -11,18 +11,14 @@
         </ol>
     </div>
 </div> --}}
-<!--  -->
+<!-- Session Message -->
+<!-- Session Message -->
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
         @if(Session::has('success'))
           <div class="alert alert-success alertsuccess" role="alert">
                 <strong> {{Session::get('success')}}</strong>
-          </div>
-        @endif
-        @if(Session::has('success_update'))
-          <div class="alert alert-success alertsuccess" role="alert">
-             <strong>Successfully!</strong> Update User Role.
           </div>
         @endif
         @if(Session::has('error'))
