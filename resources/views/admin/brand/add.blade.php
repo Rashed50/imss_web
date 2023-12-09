@@ -76,6 +76,19 @@
                         </div>
                     </div>
 
+                    <div class="form-group row custom_form_group{{ $errors->has('BranBlName') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">BrandBl Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="BrandBl Title" class="form-control" id="BranBlName" name="BranBlName" value="{{(@$data)?@$data->BranBlName:old('BranBlName')}}" required>
+                            <input type="hidden" name="BranId" value="{{@$data->BranId ?? ''}}">
+                            @if($errors->has('BranBlName'))
+                                <span class="invalid-feedback" role="alert"></span>
+                                <strong>{{$errors->first('BranBlName')}}</strong>
+                            @endif
+                        </div>
+                        
+                    </div>
+                
                   </div>
                   <div class="card-footer card_footer_button text-center">
                       <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">{{ (@$data)?'UPDATE':'SAVE' }}</button>

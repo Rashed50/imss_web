@@ -83,9 +83,11 @@ class BrandController extends Controller
 
         $this->validate($request, [
             'BranName' => 'required|max:150',
+            'BranBlName'=>'required|max:150',
             'CategoryID' => 'required',
         ], [
             'BranName.required' => 'please enter brand name',
+            'BranBLName.required' => 'Please enter brandBl name',
             'CategoryID.required' => 'please select category name',
             'BranName.max' => 'max brand name content is 150 character',
         ]);
@@ -100,6 +102,7 @@ class BrandController extends Controller
             $insert = Brand::insertGetId([
                 'CateId' => $request['CategoryID'],
                 'BranName' => $BranName,
+                'BranBlName' => $request['BranBlName'],
                 'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
             ]);
 
@@ -119,18 +122,22 @@ class BrandController extends Controller
         $id = $request->BranId;
         $this->validate($request, [
             'BranName' => 'required|max:150|unique:brands,BranName,' . $id . ',BranId',
+            'BranBlName'=>'required|max:150',
             // 'BranName' => 'required|unique:brands,BranName,'.$id.',BranId,CateId,'.$CateId,
             'CategoryID' => 'required',
         ], [
             'BranName.required' => 'please enter brand name',
+            'BranBlName.required' => 'please enter brandBl name',
             'CateId.required' => 'please select category name',
             'BranName.max' => 'max brand name content is 150 character',
+            'BranBlName.max' => 'max brandBl name content is 150 character',
             'BranName.unique' => 'this brand name already exists! please another name',
         ]);
 
         $update = Brand::where('BranStatus', true)->where('BranId', $id)->update([
             'CateId' => $request['CategoryID'],
             'BranName' => $request['BranName'],
+            'BranBlName' => $request['BranBlName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
