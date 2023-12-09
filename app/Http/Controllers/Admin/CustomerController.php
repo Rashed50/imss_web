@@ -420,6 +420,17 @@ class CustomerController extends Controller
         }
     }
 
+    public function delete($id){
+        $delete=CustomerInfo::where('status',true)->where('CustId',$id)->delete();
+        if($delete){
+            Session::flash('delete','Customer Information Delete Successfully.');
+            return redirect()->route('customer.add');
+        }else{
+            Session::flash('error','please try again');
+            return redirect()->back();
+        }
+    }
+
 
     // Wholeseller customer
     public function updateCustomerBalance($customerId, $amount)

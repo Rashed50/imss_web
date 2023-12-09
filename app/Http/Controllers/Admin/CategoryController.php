@@ -46,16 +46,20 @@ class CategoryController extends Controller{
 
     public function store(Request $request){
         $this->validate($request,[
-            'CateName'=>'required|unique:categories,CateName|max:200'
+            'CateName'=>'required|unique:categories,CateName|max:200',
+            'CateBlName'=>'required|unique:categories,CateBlName|max:200'
         ],[
             'CateName.required'=> 'please enter category name',
             'CateName.max'=> 'max category name content is 200 character',
             'CateName.unique' => 'this category name already exists! please another name',
+            'CateBlName.required'=>'please enter categoryBL name',
+            'CateBlName.max'=> 'max categoryBL name content is 200 character',
         ]);
         $catName=strtolower($request->CateName);
         
         $insert = Category::insertGetId([
             'CateName'=>$catName,
+            
         ]);
 
         if($insert){
