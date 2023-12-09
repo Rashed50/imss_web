@@ -16,21 +16,27 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id('CateId');
             $table->string('CateName')->unique();
-            $table->string('CateBLName');
+            $table->string('CateBlName');
             $table->boolean('CateStatus')->default(true);
            // $table->timestamps();
         });
 
 
         DB::table('categories')->insert([
-            'CateName' => 'Road' 
+            'CateName' => 'Road', 
+            'CateBlName'=>'Road1'
         ]);
+        
         DB::table('categories')->insert([
-            'CateName' => 'Cement' 
+            'CateName' => 'Cement',
+            'CateBlName'=>'Cement1' 
         ]);
+      
         DB::table('categories')->insert([
-            'CateName' => 'Tin' 
+            'CateName' => 'Tin',
+            'CateBlName'=>'Tin1' 
         ]);
+        
 
     }
 

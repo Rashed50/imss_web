@@ -60,14 +60,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group row custom_form_group{{ $errors->has('CateName') ? ' has-error' : '' }}">
+                    <div class="form-group row custom_form_group{{ $errors->has('CateBlName') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">CategoryBL Name:<span class="req_star">*</span></label>
                         <div class="col-sm-7">
-                          <input type="text" placeholder="CategoryBL Title" class="form-control" id="CateName" name="CateBlName" value="{{(@$data)?@$data->CateName:old('CateName')}}" required>
+                          <input type="text" placeholder="CategoryBL Title" class="form-control" id="CateBlName" name="CateBlName" value="{{(@$data)?@$data->CateBlName:old('CateBlName')}}" required>
                           <input type="hidden" name="CateId" value="{{@$data->CateId ?? ''}}">
-                          @if ($errors->has('CateName'))
+                          @if ($errors->has('CateBlName'))
                               <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $errors->first('CateName') }}</strong>
+                                  <strong>{{ $errors->first('CateBlName') }}</strong>
                               </span>
                           @endif
                         </div>

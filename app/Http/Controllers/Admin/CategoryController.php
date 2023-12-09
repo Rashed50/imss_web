@@ -59,6 +59,7 @@ class CategoryController extends Controller{
         
         $insert = Category::insertGetId([
             'CateName'=>$catName,
+            'CateBlName'=>$request['CateBlName'],
             
         ]);
 
@@ -76,14 +77,18 @@ class CategoryController extends Controller{
         $id= $request->CateId;
         $this->validate($request,[
             'CateName'=>'required|max:200|unique:categories,CateName,'.$id.',CateId',
+            'CateBlName'=>'required|unique:categories,CateBlName|max:200',
         ],[
             'CateName.required'=> 'please enter category name',
             'CateName.max'=> 'max category name content is 200 character',
             'CateName.unique' => 'this category name already exists! please another name',
+            'CateBlName.required'=>'please enter categoryBL name',
+            'CateBlName.max'=> 'max categoryBL name content is 200 character',
         ]);
 
         $insert = Category::where('CateStatus',true)->where('CateId',$id)->update([
             'CateName'=>$request['CateName'],
+            'CateBlName'=>$request['CateBlName'],
         ]);
 
         if($insert){
