@@ -93,6 +93,18 @@
                           @endif
                         </div>
                     </div>
+                    <div class="form-group row custom_form_group{{ $errors->has('SizeBlName') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">SizeBl Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="SizeBl Title" class="form-control" id="SizeBlName" name="SizeBlName" value="{{(@$data)?@$data->SizeBlName:old('SizeBlName')}}" required>
+                            <input type="hidden" name="SizeId" value="{{@$data->SizeId ?? ''}}">
+                            @if($errors->has('SizeBlName'))
+                               <span class="invalid-feedback" role="alert">
+                                    <strong>{{$errors->first('SizeBlName')}}</strong>
+                               </span>
+                            @endif
+                        </div>
+                    </div>
 
                   </div>
                   <div class="card-footer card_footer_button text-center">

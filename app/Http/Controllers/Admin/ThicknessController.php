@@ -79,6 +79,7 @@ class ThicknessController extends Controller
     {
         $this->validate($request, [
             'ThicName' => 'required|max:150',
+            'ThicBlName' => 'required|max:150',
             'CategoryID' => 'required',
             'BranID' => 'required',
             'SizeID' => 'required',
@@ -86,7 +87,10 @@ class ThicknessController extends Controller
             'CategoryID.required' => 'please enter category name',
             'BranID.required' => 'please enter thickness name',
             'SizeID.required' => 'please select size name',
+            'ThicName.required' => 'please enter Thick name',
+            'ThicBlName.required' => 'please enter ThickBl name',
             'ThicName.max' => 'max thickness name content is 150 character',
+            'ThicBlName.max' => 'max thickness name content is 150 character',
         ]);
 
         $ThicName = strtolower($request->ThicName);
@@ -103,6 +107,7 @@ class ThicknessController extends Controller
             'BranId' => $request['BranID'],
             'SizeId' => $request['SizeID'],
             'ThicName' => $ThicName,
+            'ThicBlName' => $request['ThicBlName'],
             'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
@@ -120,13 +125,16 @@ class ThicknessController extends Controller
         $id = $request->ThicId;
         $this->validate($request, [
             'ThicName' => 'required|max:150',
+            'ThicBlName' => 'required|max:150',
             'CategoryID' => 'required',
             'BranID' => 'required',
             'SizeID' => 'required',
         ], [
             'ThicName.required' => 'please enter thickness name',
+            'ThicBlName.required' => 'please enter thicknessBl name',
             'SizeId.required' => 'please select size name',
             'ThicName.max' => 'max thickness name content is 150 character',
+            'ThicBlName.max' => 'max thicknessBl name content is 150 character',
         ]);
 
 
@@ -135,6 +143,7 @@ class ThicknessController extends Controller
             'BranId' => $request['BranID'],
             'SizeId' => $request['SizeID'],
             'ThicName' => $request['ThicName'],
+            'ThicBlName' => $request['ThicBlName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 

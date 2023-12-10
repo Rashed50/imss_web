@@ -111,6 +111,18 @@
                           @endif
                         </div>
                     </div>
+                    <div class="form-group row custom_form_group{{ $errors->has('ThicBlName') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">ThicknessBl:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                           <input type="text" placeholder="Thickness Title" class="form-control" id="ThicBlName" name="ThicBlName" value="{{(@$data)?@$data->ThicBlName:old('ThicBlName')}}" required>
+                           <input type="hidden" name="ThicId" value="{{@$data->ThicId ?? ''}}">
+                           @if ($errors->has('ThicBlName'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('ThicBlName') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
 
                   </div>
                   <div class="card-footer card_footer_button text-center">
