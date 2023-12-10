@@ -128,6 +128,7 @@
 
                                             <th>SL NO.</th>
                                             <th>Category Name</th>
+                                            <th>CategoryBl Name</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -136,6 +137,7 @@
                                         <tr>
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $cate->CateName ??'' }}</td>
+                                            <td>{{$cate->CateBlName ??''}}</td>
                                             <td>
                                                 <a href="{{ route('category.edit',$cate->CateId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="{{ route('category.delete',$cate->CateId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>

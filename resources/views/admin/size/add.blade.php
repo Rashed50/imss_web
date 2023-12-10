@@ -140,6 +140,7 @@
                                             <th>Category Name</th>
                                             <th>Brand Name</th>
                                             <th>Size</th>
+                                            <th>SizeBL</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -150,6 +151,7 @@
                                             <td>{{ $size->cateInfo->CateName ??'' }}</td>
                                             <td>{{ $size->brandInfo->BranName ??'' }}</td>
                                             <td>{{ $size->SizeName ??'' }}</td>
+                                            <td>{{ $size->SizeBlName ??''}}</td>
                                             <td>
                                                 <a href="{{ route('size.edit',$size->SizeId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="{{ route('size.delete',$size->SizeId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>

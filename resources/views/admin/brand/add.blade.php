@@ -122,6 +122,7 @@
                                             <th>SL NO.</th>
                                             <th>Category Name</th>
                                             <th>Brand Name</th>
+                                            <th>BrandBL Name</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -131,6 +132,7 @@
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $brand->cateInfo->CateName ??'' }}</td>
                                             <td>{{ $brand->BranName ??'' }}</td>
+                                            <td>{{ $brand->BranBlName ??''}}</td>
                                             <td>
                                                 <a href="{{ route('brand.edit',$brand->BranId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="{{ route('brand.delete',$brand->BranId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>

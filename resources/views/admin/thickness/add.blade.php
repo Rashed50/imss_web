@@ -158,6 +158,7 @@
                                             <th>Brand</th>
                                             <th>Size</th>
                                             <th>Thickness</th>
+                                            <th>ThicknessBL</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -169,6 +170,7 @@
                                             <td>{{ $thickness->brandInfo->BranName ??'' }}</td>
                                             <td>{{ $thickness->sizeInfo->SizeName ??'' }}</td>
                                             <td>{{ $thickness->ThicName ??'' }}</td>
+                                            <td>{{ $thickness->ThicBlName ??''}}</td>
                                             <td>
                                                 <a href="{{ route('thickness.edit',$thickness->ThicId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="{{ route('thickness.delete',$thickness->ThicId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
