@@ -152,7 +152,7 @@
     <ul class="sl-menu-sub nav flex-column">
 
       <li class="nav-item"><a href="{{ route('company.add') }}" class="nav-link">Company Profile</a></li>
-      {{-- <li class="nav-item"><a href="{{ route('index') }}" class="nav-link">User</a></li> --}}
+      <li class="nav-item"><a href="{{ route('roles.add') }}" class="nav-link">Role</a></li>
 
       <li class="nav-item"><a href="{{ route('division.add') }}" class="nav-link">Add Division</a></li>
       <li class="nav-item"><a href="{{ route('district.add') }}" class="nav-link">Add District</a></li>

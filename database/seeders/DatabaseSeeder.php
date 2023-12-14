@@ -28,6 +28,16 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
+        DB::table('users')->insert([
+          'user_name' =>'admin',
+          'user_email' => 'superadmin@admin.com',
+          'user_phone'=> '01731540704',
+          'email_verified_at' => now(),
+          'password' => Hash::make('Rashed@084050.'),
+          'remember_token' => Str::random(10),
+
+        ]);
+
 
         DB::table('chart_of_accounts')->insert([ // step 01
            // 'ChartOfAcctId' => 1,

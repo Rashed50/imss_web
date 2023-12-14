@@ -73,7 +73,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function() {
    // Route::resource('roles', RoleController::class);
     Route::get('roles/add', [RoleController::class, 'index'])->name('roles.add');
     Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
-    Route::get('roles/store', [RoleController::class, 'store'])->name('roles.store');
+    Route::post('roles/store', [RoleController::class, 'store'])->name('roles.store');
 
     Route::resource('users', UserController::class);
    // Route::resource('roles', RoleController::class);
@@ -170,8 +170,8 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('customer/add', [CustomerController::class, 'store'])->name('customer.store');
     Route::post('customer/edit', [CustomerController::class, 'update'])->name('customer.update');
     Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
-    
-    
+
+
     /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */
     Route::post('check/Contact/number', [CustomerController::class, 'checkCustomerContact'])->name('check.Contact-Number');
 

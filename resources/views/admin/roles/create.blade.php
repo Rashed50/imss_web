@@ -85,8 +85,8 @@
                                             <tr>
                                                 <td>
                                                 {{ $value->name }}
-                                                  {{-- <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
-                                                      {{ $value->name }}</label> --}}
+                                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
+                                                      {{ $value->name }}</label> 
                                                   <br />
                                                 </td>
                                             </tr>

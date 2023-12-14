@@ -47,6 +47,7 @@ class RoleController extends Controller
     {
        // dd(120);
         $permission = Permission::get();
+        dd($permission);
         return view('admin.roles.create',compact('permission'));
     }
 
@@ -58,6 +59,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
