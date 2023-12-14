@@ -81,12 +81,15 @@ class SizeController extends Controller
     {
         $this->validate($request, [
             'SizeName' => 'required|max:150',
+            'SizeBlName' => 'required|max:150',
             'BranID' => 'required',
             'CategoryID' => 'required',
         ], [
             'SizeName.required' => 'please enter size name',
+            'SizeBlName.required' => 'please enter sizeBl name',
             'BranID.required' => 'please select brand name',
             'SizeName.max' => 'max size name content is 150 character',
+            'SizeBlName.max' => 'max size name content is 150 character',
         ]);
         
         $SizeName = strtolower($request->SizeName);
@@ -101,6 +104,7 @@ class SizeController extends Controller
                 'CateId' => $request['CategoryID'],
                 'BranId' => $request['BranID'],
                 'SizeName' => $SizeName,
+                'SizeBlName' => $request['SizeBlName'],
                 'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
             ]);
 
@@ -122,12 +126,15 @@ class SizeController extends Controller
 
         $this->validate($request, [
             'SizeName' => 'required|max:150',
+            'SizeBlName' => 'required|max:150',
             'BranID' => 'required',
             'CategoryID' => 'required',
         ], [
             'SizeName.required' => 'please enter size name',
+            'SizeBlName.required' => 'please enter size name',
             'CategoryID.required' => 'please select category name',
             'BranID.required' => 'please select brand name',
+            'SizeName.max' => 'max size name content is 150 character',
             'SizeName.max' => 'max size name content is 150 character',
         ]);
 
@@ -135,6 +142,7 @@ class SizeController extends Controller
             'CateId' => $request['CategoryID'],
             'BranId' => $request['BranID'],
             'SizeName' => $request['SizeName'],
+            'SizeBlName' => $request['SizeBlName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 

@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-
         DB::table('chart_of_accounts')->insert([ // step 01
            // 'ChartOfAcctId' => 1,
             'ChartOfAcctName' => 'Chart Of Account Name 01',

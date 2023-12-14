@@ -16,6 +16,7 @@ class CreateThicknessesTable extends Migration
         Schema::create('thicknesses', function (Blueprint $table) {
             $table->id('ThicId');
             $table->string('ThicName');
+            $table->string('ThicBlName');
             $table->boolean('ThicStatus')->default(true);
             $table->unsignedBigInteger('CateId');
             $table->unsignedBigInteger('BranId');
@@ -31,12 +32,14 @@ class CreateThicknessesTable extends Migration
 
         DB::table('thicknesses')->insert([
             'ThicName' => 'na' ,
+            'ThicBlName' => 'na1' ,
             'CateId' => 1,
             'BranId' => 2,
             'SizeId' => 1
         ]);
         DB::table('thicknesses')->insert([
             'ThicName' => 'n/a' ,
+            'ThicBlName' => 'RT',
             'CateId' => 1,
             'BranId' => 2,
             'SizeId' => 2

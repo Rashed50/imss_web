@@ -16,6 +16,7 @@ class CreateSizesTable extends Migration
         Schema::create('sizes', function (Blueprint $table) {
             $table->id('SizeId');
             $table->string('SizeName');
+            $table->string('SizeBlName');
             $table->boolean('SizeStatus')->default(true);
             $table->unsignedBigInteger('CateId');
             $table->unsignedBigInteger('BranId');
@@ -27,12 +28,14 @@ class CreateSizesTable extends Migration
 
         DB::table('sizes')->insert([
             'SizeName' => 'n/a' ,
+            'SizeBlName'=>'RT',
             'CateId' => 1,
             'BranId' => 1,
         ]);
 
         DB::table('sizes')->insert([
             'SizeName' => 'na' ,
+            'SizeBlName'=>'na1',
             'CateId' => 1,
             'BranId' => 2,
         ]);
