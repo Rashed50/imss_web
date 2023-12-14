@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\database\AdminUserSeeder;
+use App\database\CustomerSeeder;
+use App\database\DivisionSeeder;
+use App\database\PermissionTableSeeder;
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
@@ -18,25 +23,25 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        DB::table('users')->insert([
-          'user_name' =>'admin',
-          'user_email' => 'admin@admin.com',
-          'user_phone'=> '01731540704',
-          'email_verified_at' => now(),
-          'password' => Hash::make('12345678'),
-          'remember_token' => Str::random(10),
 
-        ]);
 
-        DB::table('users')->insert([
-          'user_name' =>'admin',
-          'user_email' => 'superadmin@admin.com',
-          'user_phone'=> '01731540704',
-          'email_verified_at' => now(),
-          'password' => Hash::make('Rashed@084050.'),
-          'remember_token' => Str::random(10),
+            $this->call([
+                AdminUserSeeder::class,
+                CustomerSeeder::class,
+                DivisionSeeder::class,
+                PermissionTableSeeder::class,
+            ]);
 
-        ]);
+
+        // DB::table('users')->insert([
+        //   'user_name' =>'admin',
+        //   'user_email' => 'admin@admin.com',
+        //   'user_phone'=> '01731540704',
+        //   'email_verified_at' => now(),
+        //   'password' => Hash::make('12345678'),
+        //   'remember_token' => Str::random(10),
+        //
+        // ]);
 
 
         DB::table('chart_of_accounts')->insert([ // step 01
@@ -62,32 +67,32 @@ class DatabaseSeeder extends Seeder
             'BankAcctTypeId' => 2,
           ]);
 
-
-          DB::table('divisions')->insert([ // step 02
-             'DiviId' => 1,
-             'DiviName' => 'Khulna',
-           ]);
-
-           DB::table('districts')->insert([ // step 02
-            'DistId' => 1,
-            'DistName' => 'Meherpur',
-            'DiviId' => 1,
-          ]);
-
-          DB::table('thanas')->insert([ // step 02
-            'ThanId'=> 1,
-            'ThanaName' => 'Meherpur Sadar',
-            'DistId' => 1,
-            'DiviId' => 1,
-          ]);
-
-          DB::table('unions')->insert([ // step 02
-            'UnioId'=> 1,
-            'UnioName' => 'ABC',
-            'ThanId'=> 1,
-            'DistId' => 1,
-            'DiviId' => 1,
-          ]);
+          //
+          // DB::table('divisions')->insert([ // step 02
+          //    'DiviId' => 1,
+          //    'DiviName' => 'Khulna',
+          //  ]);
+          //
+          //  DB::table('districts')->insert([ // step 02
+          //   'DistId' => 1,
+          //   'DistName' => 'Meherpur',
+          //   'DiviId' => 1,
+          // ]);
+          //
+          // DB::table('thanas')->insert([ // step 02
+          //   'ThanId'=> 1,
+          //   'ThanaName' => 'Meherpur Sadar',
+          //   'DistId' => 1,
+          //   'DiviId' => 1,
+          // ]);
+          //
+          // DB::table('unions')->insert([ // step 02
+          //   'UnioId'=> 1,
+          //   'UnioName' => 'ABC',
+          //   'ThanId'=> 1,
+          //   'DistId' => 1,
+          //   'DiviId' => 1,
+          // ]);
 
     }
 }
