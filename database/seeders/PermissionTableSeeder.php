@@ -15,14 +15,13 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-           ['name'=> 'user_role_create','permision_title'=>'User Role Create','guard_name'=>'web'],
-           ['name'=> 'user_role_list','permision_title'=>'User Role List','guard_name'=>'web'],
-           ['name'=> 'user_role_update','permision_title'=>'User Role Update','guard_name'=>'web'],
+           ['name'=> 'user_role_create','guard_name'=>'web'],
+           ['name'=> 'user_role_list','guard_name'=>'web'],
+           ['name'=> 'user_role_update','guard_name'=>'web'],
 
         ];
 
         foreach ($permissions as $permission) {
-           // dd($permission['name']);
           Permission::create(['name' => $permission['name'], 'guard_name'=>'web']);
         }
     }

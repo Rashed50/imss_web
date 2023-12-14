@@ -2,12 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\database\AdminUserSeeder;
-use App\database\CustomerSeeder;
-use App\database\DivisionSeeder;
-use App\database\PermissionTableSeeder;
-
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
@@ -25,12 +19,12 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
 
-            $this->call([
-                AdminUserSeeder::class,
-                CustomerSeeder::class,
-                DivisionSeeder::class,
-                PermissionTableSeeder::class,
-            ]);
+          //  $this->call(AdminUserSeeder::class);
+            $this->call(PermissionTableSeeder::class);
+            $this->call(AdminUserSeeder::class);
+            $this->call(DivisionSeeder::class);
+            $this->call(CustomerSeeder::class);
+
 
 
         // DB::table('users')->insert([
