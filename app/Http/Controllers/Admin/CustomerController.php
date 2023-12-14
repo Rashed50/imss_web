@@ -305,21 +305,19 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
+
+  //    dd($request->all());
         $this->validate($request,[
-            'CustName'=>'required|max:50',
-            'TradeName'=>'required|max:50',
-            'ContactNumber'=>'required|max:20',
-            'Address'=>'required|max:200',
-            'DueAmount'=>'required|max:20',
-            'InitialDue'=>'required|max:20',
+            'CustName'=>'required|max:70',
+            'TradeName'=>'required|max:70',
+            'ContactNumber'=>'required|max:15',
+            'InitialDue'=>'required|max:10',
           //  'FatherName'=>'required|max:50',
            // 'NID'=>'required|max:30',
         ],[
-            'CateName.required'=> 'please enter customer name',
-            'CateName.max'=> 'max customer name content is 200 character',
+            'CustName.required'=> 'please enter customer name',
         ]);
 
-       //   dd($request->all());
 
 
         $inserted_id = CustomerInfo::insertGetId([
@@ -347,7 +345,7 @@ class CustomerController extends Controller
         $dataInit['DueAmount'] = $request->InitialDue;
         $dataInit['Year'] = Carbon::now()->format('Y');
         $dataInit['EntryDate'] = Carbon::now();
-        $dataInit['CustId'] = $insert;
+        $dataInit['CustId'] = $inserted_id;
         $dataInit['CreateById'] = Auth::user()->id;
         $dataInit['created_at'] = Carbon::now();
 
@@ -361,7 +359,7 @@ class CustomerController extends Controller
             Image::make($image)->resize(300, 200)->save('uploads/customer/' . $imageName);
             $saveurl = 'uploads/customer/' . $imageName;
 
-            CustomerInfo::where('CustId', $insert)->update([
+            CustomerInfo::where('CustId', $inserted_id)->update([
                 'Photo' => $saveurl,
             ]);
         }

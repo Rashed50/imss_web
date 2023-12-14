@@ -344,8 +344,28 @@
           //  tradeName.disabled = false;
 
         }
+        showSweetAlertMessage('success','demo');
 
     });
+
+    function showSweetAlertMessage(type,message){
+    // const Toast = Swal.mixin({
+    //         toast: true,
+    //         position: 'top-end',
+    //         showConfirmButton: false,
+    //         timer: 3000
+    //     })
+    //         Toast.fire({
+    //             type: type,
+    //             title: message,
+    //         })
+
+      // Swal.fire(
+      //   'Techsolutionstuff!',
+      //   'You clicked the button!',
+      //   'success'
+      // )
+}
 
     $('#CustNameBl').keyup(function(){
         const customerType = $('#CustTypeId').val(); // 2 = retail, 1 whole sell

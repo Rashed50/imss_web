@@ -23,13 +23,16 @@ class CreateCategoriesTable extends Migration
 
 
         DB::table('categories')->insert([
-            'CateName' => 'Road' 
+            'CateName' => 'Road' ,
+              'CateBLName' => 'রড' ,
         ]);
         DB::table('categories')->insert([
-            'CateName' => 'Cement' 
+            'CateName' => 'Cement',
+                'CateBLName' => 'সিমেন্ট' ,
         ]);
         DB::table('categories')->insert([
-            'CateName' => 'Tin' 
+            'CateName' => 'Tin',
+                'CateBLName' => 'টিন' ,
         ]);
 
     }
