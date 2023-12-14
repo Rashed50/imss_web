@@ -76,6 +76,19 @@
                         </div>
                     </div>
 
+                    <div class="form-group row custom_form_group{{ $errors->has('BranBlName') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">BrandBl Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="BrandBl Title" class="form-control" id="BranBlName" name="BranBlName" value="{{(@$data)?@$data->BranBlName:old('BranBlName')}}" required>
+                            <input type="hidden" name="BranId" value="{{@$data->BranId ?? ''}}">
+                            @if($errors->has('BranBlName'))
+                                <span class="invalid-feedback" role="alert"></span>
+                                <strong>{{$errors->first('BranBlName')}}</strong>
+                            @endif
+                        </div>
+                        
+                    </div>
+                
                   </div>
                   <div class="card-footer card_footer_button text-center">
                       <button type="submit" id="onSubmit" onclick="formValidation();" class="btn btn-primary waves-effect">{{ (@$data)?'UPDATE':'SAVE' }}</button>
@@ -109,6 +122,7 @@
                                             <th>SL NO.</th>
                                             <th>Category Name</th>
                                             <th>Brand Name</th>
+                                            <th>BrandBL Name</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -118,6 +132,7 @@
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $brand->cateInfo->CateName ??'' }}</td>
                                             <td>{{ $brand->BranName ??'' }}</td>
+                                            <td>{{ $brand->BranBlName ??''}}</td>
                                             <td>
                                                 <a href="{{ route('brand.edit',$brand->BranId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="{{ route('brand.delete',$brand->BranId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>

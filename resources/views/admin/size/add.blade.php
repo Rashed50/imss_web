@@ -93,6 +93,18 @@
                           @endif
                         </div>
                     </div>
+                    <div class="form-group row custom_form_group{{ $errors->has('SizeBlName') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">SizeBl Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                            <input type="text" placeholder="SizeBl Title" class="form-control" id="SizeBlName" name="SizeBlName" value="{{(@$data)?@$data->SizeBlName:old('SizeBlName')}}" required>
+                            <input type="hidden" name="SizeId" value="{{@$data->SizeId ?? ''}}">
+                            @if($errors->has('SizeBlName'))
+                               <span class="invalid-feedback" role="alert">
+                                    <strong>{{$errors->first('SizeBlName')}}</strong>
+                               </span>
+                            @endif
+                        </div>
+                    </div>
 
                   </div>
                   <div class="card-footer card_footer_button text-center">
@@ -128,6 +140,7 @@
                                             <th>Category Name</th>
                                             <th>Brand Name</th>
                                             <th>Size</th>
+                                            <th>SizeBL</th>
                                             <th>Manage</th>
                                         </tr>
                                     </thead>
@@ -138,6 +151,7 @@
                                             <td>{{ $size->cateInfo->CateName ??'' }}</td>
                                             <td>{{ $size->brandInfo->BranName ??'' }}</td>
                                             <td>{{ $size->SizeName ??'' }}</td>
+                                            <td>{{ $size->SizeBlName ??''}}</td>
                                             <td>
                                                 <a href="{{ route('size.edit',$size->SizeId) }}" title="edit"><i class="fa fa-pencil-square fa-lg edit_icon">Edit</i></a>
                                                 <a href="{{ route('size.delete',$size->SizeId) }}" title="delete" id="delete"><i class="fa fa-trash fa-lg delete_icon"></i></a>
