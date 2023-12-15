@@ -15,6 +15,9 @@
     <link href="{{ asset('contents/admin') }}/assets/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
     <link href="{{ asset('contents/admin') }}/assets/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
     <link href="{{ asset('contents/admin') }}/assets/lib/toast/toast.css" rel="stylesheet">
+    <link href="{{ asset('contents/admin') }}/assets/lib/sweetalert/sweetalert2.css" rel="stylesheet">
+
+
     <!-- dataTables css -->
     <link href="{{ asset('contents/admin') }}/assets/lib/datatables/jquery.dataTables.css" rel="stylesheet">
     <link href="{{ asset('contents/admin') }}/assets/lib/select2/css/select2.min.css" rel="stylesheet">
@@ -44,7 +47,7 @@
     </footer> -->
     <!-- script file -->
 
-    <script src="{{ asset('contents/admin') }}/assets/lib/popper.js/popper.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/lib/popper/popper.js"></script>
     <script src="{{ asset('contents/admin') }}/assets/lib/bootstrap/bootstrap.js"></script>
 
     <script src="{{ asset('contents/admin') }}/assets/lib/jquery-ui/jquery-ui.js"></script>
@@ -63,11 +66,24 @@
     <!-- <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.js"></script> -->
     <!-- <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.pie.js"></script> -->
 
-    <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.resize.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/lib/sweetalert/sweetalert.min.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/lib/sweetalert/code.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/lib/toast/toast.min.js"></script>
-    <script>
+    {{-- <script src="{{ asset('contents/admin') }}/assets/lib/Flot/jquery.flot.resize.js"></script> --}}
+    {{-- <script src="{{ asset('contents/admin') }}/assets/lib/flot-spline/jquery.flot.spline.js"></script> --}}
+    
+    {{-- <script src="{{ asset('contents/admin') }}/assets/lib/toast/toast.min.js"></script> --}}
+    {{-- <script src="{{ asset('contents/admin') }}/assets/lib/sweetalert/sweetalert.min.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/lib/sweetalert/code.js"></script> --}}
+
+    <script src="{{ asset('contents/admin') }}/assets/lib/sweetalert/sweetalert2.min.js"></script>
+
+
+
+    <script src="{{ asset('contents/admin') }}/assets/js/starlight.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/js/ResizeSensor.js"></script>
+    <script src="{{ asset('contents/admin') }}/assets/js/custom.js"></script>
+
+
+
+    {{-- <script>
       if(Session.hasSession('message'))
         var type ="{{Session::get('alert-type','info')}}"
         switch(type){
@@ -88,12 +104,12 @@
                 break;
         }
     endif
-    </script>
+    </script> --}}
 
-    <script src="{{ asset('contents/admin') }}/assets/lib/flot-spline/jquery.flot.spline.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/js/starlight.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/js/ResizeSensor.js"></script>
-    <script src="{{ asset('contents/admin') }}/assets/js/custom.js"></script>
+
+
+
+
     <script type="text/javascript">
       $.ajaxSetup({
           headers:{
@@ -128,7 +144,7 @@
                            $('#ThicId_val[name="ThicID"]').empty();
                            $('#ThicId_val[name="ThicID"]').append('<option value="">Select Thickness</option>');
 
-                       
+
                            $.each(data, function(key, value){
                               $('#BranId_val[name="BranID"]').append('<option value="'+ value.BranId+'">' + value.BranName + '</option>');
                            });
@@ -152,14 +168,14 @@
                       data: { BranId:BranId },
                       success:function(data) {
                          if(data == ""){
-                         
+
                            $('#SizeId_val[name="SizeID"]').empty();
                            $('#SizeId_val[name="SizeID"]').append('<option value="">Data Not Found!</option>');
                            $('#ThicId_val[name="ThicID"]').empty();
                            $('#ThicId_val[name="ThicID"]').append('<option value="">Data Not Found!</option>');
 
                          }else{
-                          
+
                            $('#SizeId_val[name="SizeID"]').empty();
                            $('#SizeId_val[name="SizeID"]').append('<option value="">Select Size</option>');
                            $('#ThicId_val[name="ThicID"]').empty();
@@ -187,12 +203,12 @@
                       data: { Size:Size },
                       success:function(data) {
                          if(data == ""){
-                          
+
                            $('#ThicId_val[name="ThicID"]').empty();
                            $('#ThicId_val[name="ThicID"]').append('<option value="">Data Not Found!</option>');
 
                          }else{
-                          
+
                            $('#ThicId_val[name="ThicID"]').empty();
                            $('#ThicId_val[name="ThicID"]').append('<option value="">Select Thickness</option>');
 
@@ -508,7 +524,7 @@
             type:"GET",
             dataType:"json",
             success:function(response) {
-             
+
               var rows = "";
               var totalLabourCost = 0;
               $.each(response.carts,function(key, value){
@@ -616,7 +632,7 @@
       }
 
 
-      
+
 
 
 
@@ -746,7 +762,7 @@
 
 
       });
-      
+
   </script>
 
 
@@ -763,13 +779,13 @@
             $('input[id="Amount"]').val(response.data.Amount);
             $('input[id="Date"]').val(response.data.	ExpenseDate);
             $('input[id="id"]').val(response.data.	DrVoucId);
-           
+
             $('select[name="Purpose"]').empty();
             $('select[name="Purpose"]').append('<option value="'+ response.data.DrTypeId +'">' + response.data.DrTypeId + '</option>');
-           
+
             $('select[name="DebitedTo"]').empty();
             $('select[name="DebitedTo"]').append('<option value="'+ response.data.DebitedTold +'">' + response.data.DebitedTold + '</option>');
-            
+
             $('select[name="CreditedFromId"]').empty();
             $('select[name="CreditedFromId"]').append('<option value="'+ response.data.CreditedFromId +'">' + response.data.CreditedFromId + '</option>');
 
@@ -783,7 +799,7 @@
   <script>
     $(document).ready(function(){
       $(document).on("click", "#addPayment", function () {
-       
+
         var softDel = $(this).data('id');
         var amount = $(this).data('customer_amount');
         var name = $(this).data('name');
@@ -812,7 +828,7 @@
             placeholder: 'Select an option'
         });
         $('#retailer-select').select2({
-            
+
         });
 
     });

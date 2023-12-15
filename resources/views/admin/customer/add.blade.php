@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 @section('content')
+
+
 <!-- ########## START: MAIN PANEL ########## -->
 
 <!-- Session Message -->
@@ -283,6 +285,15 @@
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.js"></script>
+
+{{-- <script src="contents/lib/sweetalert/sweetalert2.min.js"></script> --}}
+
+
+  <!-- Sweet Alert  -->
+  {{-- <script src="contents/lib/sweetalert/sweetalert.min.js"></script>
+  <script src="contents/lib/sweetalert/code.js"></script> --}}
+  <!-- end Sweet Alert -->
+
 <script language="JavaScript">
 
     //
@@ -339,33 +350,25 @@
         var tradeName = document.getElementById('TradeName');
         if(customerType == 2){
             $('input[id="TradeName"]').val($('#CustName').val());
-           // tradeName.disabled = true;
-        }else {
-          //  tradeName.disabled = false;
-
         }
-        showSweetAlertMessage('success','demo');
-
+        showSweetAlertMessage('success','This is Testing ');
     });
 
     function showSweetAlertMessage(type,message){
-    // const Toast = Swal.mixin({
-    //         toast: true,
-    //         position: 'top-end',
-    //         showConfirmButton: false,
-    //         timer: 3000
-    //     })
-    //         Toast.fire({
-    //             type: type,
-    //             title: message,
-    //         })
+        const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            })
+        Toast.fire({
+            type: type,
+            title: message
+        })
+    }
 
-      // Swal.fire(
-      //   'Techsolutionstuff!',
-      //   'You clicked the button!',
-      //   'success'
-      // )
-}
+
+
 
     $('#CustNameBl').keyup(function(){
         const customerType = $('#CustTypeId').val(); // 2 = retail, 1 whole sell
