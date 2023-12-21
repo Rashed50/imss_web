@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\DataLayers\ItemsDataService;
 use Illuminate\Http\Request;
 use App\Models\ProductSell;
 use App\Models\ProductSellRecord;
@@ -200,7 +201,7 @@ class RetailSellerController extends Controller{
   */
   public function add(){
     $CatgOBJ = new CategoryController();
-    $allCatg = $CatgOBJ->getAll();
+    $allCatg = (new ItemsDataService())->GetAllActiveCategoryRecords();
     // Call Customer
     $CustomerOBJ = new CustomerController();
     $allCustomer = $CustomerOBJ->getRetailCustomer();

@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Faker\Factory as Faker;
-use Carbon;
+use Carbon\Carbon;
 
 class AdminUserSeeder extends Seeder
 {
