@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\DataLayers\ItemsDataService;
 use Illuminate\Http\Request;
 use App\Models\Size;
 use App\Models\Category;
@@ -40,10 +41,10 @@ class SizeController extends Controller
         ]);
     }
 
-    public function getAll()
-    {
-        return $allSize = Size::with('cateInfo', 'brandInfo')->where('SizeStatus', true)->orderBy('SizeId', 'DESC')->get();
-    }
+    // public function getAll()
+    // {
+    //     return $allSize = Size::with('cateInfo', 'brandInfo')->where('SizeStatus', true)->orderBy('SizeId', 'DESC')->get();
+    // }
     /*
     |--------------------------------------------------------------------------
     | BLADE OPERATION
@@ -52,18 +53,17 @@ class SizeController extends Controller
 
     public function add()
     {
-        $allSize = $this->getAll();
-        $CategoryOBJ = new CategoryController();
-        $allCate = $CategoryOBJ->getAll();
-        return view('admin.size.add', compact('allSize', 'allCate'));
+        $allSize = (new ItemsDataService())->getAllActiveSizeRecords();
+        $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
+        $allBrand = (new ItemsDataService())->getAllActiveBrandRecords();
+        return view('admin.size.add', compact('allSize', 'allCate', 'allBrand'));
     }
 
     public function edit($id)
     {
-        $allSize = $this->getAll();
+        $allSize = (new ItemsDataService())->getAllActiveSizeRecords();
         $data = $allSize->where('SizeId', $id)->firstOrFail();
-        $CategoryOBJ = new CategoryController();
-        $allCate = $CategoryOBJ->getAll();
+        $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.size.add', compact('data', 'allSize', 'allCate'));
     }
 

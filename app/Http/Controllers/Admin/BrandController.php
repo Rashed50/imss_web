@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\DataLayers\BrandDataService;
 use App\Http\DataLayers\ItemsDataService;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -46,14 +45,14 @@ class BrandController extends Controller
     */
     public function add()
     {
-        $allBrand = (new BrandDataService())->getAllActiveBrandRecords();
+        $allBrand = (new ItemsDataService())->getAllActiveBrandRecords();
         $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.brand.add', compact('allCate', 'allBrand'));
     }
 
     public function edit($id)
     {
-        $allBrand = (new BrandDataService())->getAllActiveBrandRecords();
+        $allBrand = (new ItemsDataService())->getAllActiveBrandRecords();
         $data = $allBrand->where('BranId', $id)->firstOrFail();
         $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.brand.add', compact('data', 'allCate', 'allBrand'));

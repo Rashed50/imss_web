@@ -72,6 +72,9 @@
                             <option value="{{ @$data->BranId }}">{{ @$data->brandInfo->BranName }}</option>
                             @else
                             <option value="">Select Brand</option>
+                            @foreach ($allBrand as $brand)
+                             <option value="{{ $brand->BranId }}" {{ (@$data->BranId==$brand->BranId)?'selected': '' }}>{{ $brand->BranName }}</option>
+                            @endforeach
                             @endif
                           </select>
                           @if ($errors->has('BranID'))
