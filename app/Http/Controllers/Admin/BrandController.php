@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\DataLayers\BrandDataService;
+use App\Http\DataLayers\ItemsDataService;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Brand;
@@ -37,11 +39,6 @@ class BrandController extends Controller
         ]);
     }
 
-
-    public function getAll()
-    {
-        return $allBrand = Brand::with('cateInfo')->where('BranStatus', true)->orderBy('BranId', 'DESC')->get();
-    }
     /*
     |--------------------------------------------------------------------------
     | BLADE OPERATION
@@ -49,25 +46,22 @@ class BrandController extends Controller
     */
     public function add()
     {
-        $allBrand = $this->getAll();
-        $CategoryOBJ = new CategoryController();
-        $allCate = $CategoryOBJ->getAll();
+        $allBrand = (new BrandDataService())->getAllActiveBrandRecords();
+        $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.brand.add', compact('allCate', 'allBrand'));
     }
 
     public function edit($id)
     {
-        $allBrand = $this->getAll();
+        $allBrand = (new BrandDataService())->getAllActiveBrandRecords();
         $data = $allBrand->where('BranId', $id)->firstOrFail();
-        $CategoryOBJ = new CategoryController();
-        $allCate = $CategoryOBJ->getAll();
+        $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.brand.add', compact('data', 'allCate', 'allBrand'));
     }
 
 
     public function delete($id)
     {
-        $allBrand = $this->getAll();
         $delete = Brand::where('BranId', $id)->delete();
         if($delete){
             Session::flash('delete', 'Brand delete');
