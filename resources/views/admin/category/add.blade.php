@@ -12,13 +12,14 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-lg-8">
-            <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('category.update') : route('category.store') }}" enctype="multipart/form-data">
+            
+            <form class="form-horizontal" id="add_store_category" method="post" action="{{ (@$data) ? route('category.update') : route('category.store') }}" enctype="multipart/form-data">
               @csrf
               <div class="card">
                   <div class="card-header">
                       <div class="row">
                           <div class="col-md-12">
-                              <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Category Information</h3>
+                              <h3 class="card-title card_top_title">{{ (@$data) ? 'Update' : 'New' }} Category Information</h3>
                           </div>
                           <div class="clearfix"></div>
                       </div>

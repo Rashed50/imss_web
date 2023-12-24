@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\DataLayers\ItemsDataService;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -19,18 +20,18 @@ class CategoryController extends Controller{
     |--------------------------------------------------------------------------
     */
     public function getAll(){
-      return $allCate = Category::where('CateStatus',true)->orderBy('CateId','DESC')->get();
+      return $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
     }
 
 
     public function add(){
-       $allCate = Category::where('CateStatus',true)->orderBy('CateId','DESC')->get();
+        $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.category.add', compact('allCate'));
     }
 
     public function edit($id){
         $data = Category::where('CateStatus',true)->where('CateId',$id)->firstOrFail();
-        $allCate = Category::where('CateStatus',true)->orderBy('CateId','DESC')->get();
+        $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.category.add', compact('data', 'allCate'));
     }
 
