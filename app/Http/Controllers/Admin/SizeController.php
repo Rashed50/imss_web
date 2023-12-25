@@ -72,7 +72,7 @@ class SizeController extends Controller
         if($delete){
             Session::flash('delete', 'size delete');
         }else{
-            Session::flash('error', 'please try again.'); 
+            Session::flash('error', 'please try again.');
         }
         return redirect()->back();
     }
@@ -91,7 +91,7 @@ class SizeController extends Controller
             'SizeName.max' => 'max size name content is 150 character',
             'SizeBlName.max' => 'max size name content is 150 character',
         ]);
-        
+
         $SizeName = strtolower($request->SizeName);
         $sizes = Size::where('CateId', $request->CategoryID)->where('BranId', $request->BranID)->where('SizeName', $SizeName)->count();
 

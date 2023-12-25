@@ -28,11 +28,9 @@ class CreateCompanyInfosTable extends Migration
             $table->string('Logo');
             $table->string('Website')->nullable();
             $table->string('Email');
-
-             
         });
     }
- 
+
 
     /**
      * Reverse the migrations.
