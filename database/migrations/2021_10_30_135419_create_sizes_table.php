@@ -26,19 +26,19 @@ class CreateSizesTable extends Migration
 
         });
 
-        DB::table('sizes')->insert([
-            'SizeName' => 'n/a' ,
-            'SizeBlName'=>'RT',
-            'CateId' => 1,
-            'BranId' => 1,
-        ]);
+        // DB::table('sizes')->insert([
+        //     'SizeName' => 'n/a' ,
+        //     'SizeBlName'=>'RT',
+        //     'CateId' => 1,
+        //     'BranId' => 1,
+        // ]);
 
-        DB::table('sizes')->insert([
-            'SizeName' => 'na' ,
-            'SizeBlName'=>'na1',
-            'CateId' => 1,
-            'BranId' => 2,
-        ]);
+        // DB::table('sizes')->insert([
+        //     'SizeName' => 'na' ,
+        //     'SizeBlName'=>'na1',
+        //     'CateId' => 1,
+        //     'BranId' => 2,
+        // ]);
     }
 
     /**
