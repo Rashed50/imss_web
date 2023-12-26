@@ -79,12 +79,10 @@ Route::middleware('auth')->prefix('dashboard')->group(function() {
     Route::get('users/list', [UserController::class, 'index'])->name('users.index');
     Route::get('user/add', [UserController::class, 'loadNewUserForm'])->name('user.add');
     Route::post('user/store', [UserController::class, 'createNewUser'])->name('user.store');
- //   Route::get('users/list', [UserController::class, 'index'])->name('users.index');
-   // Route::get('users/list', [UserController::class, 'index'])->name('users.index');
-
-
+    Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('user/update', [UserController::class, 'update'])->name('user.update');
     
- });
+});
 
 
 /* ++++++++++++++++++++++ Employee ++++++++++++++++++++++ */

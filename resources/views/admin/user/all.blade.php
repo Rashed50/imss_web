@@ -56,11 +56,11 @@
                           <td>{{ $auser->status == 1 ? 'Active' : 'Inactive' }}</td>
                           <td>{{ $auser->profile_photo }}</td>
                           <td>
-                              {{-- @can('user_edit')
-                                      <a class="btn btn-primary" href="{{ route('user.edit',$role->id) }}">Edit</a>
+                              @can('user_edit')
+                                      <a class="btn btn-primary" href="{{ route('user.edit',$auser->id) }}">Edit</a>
                               @endcan
                               <br>
-                              <a class="btn btn-primary" href="{{ route('role.edit',$role->id) }}">Edit w</a> --}}
+                              <a class="btn btn-primary" href="{{ route('user.edit',$auser->id) }}">Edit w</a>
 
                           </td>
                         </tr>
