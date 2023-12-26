@@ -30,20 +30,20 @@ class CreateThicknessesTable extends Migration
         });
 
 
-        DB::table('thicknesses')->insert([
-            'ThicName' => 'na' ,
-            'ThicBlName' => 'na1' ,
-            'CateId' => 1,
-            'BranId' => 2,
-            'SizeId' => 1
-        ]);
-        DB::table('thicknesses')->insert([
-            'ThicName' => 'n/a' ,
-            'ThicBlName' => 'RT',
-            'CateId' => 1,
-            'BranId' => 2,
-            'SizeId' => 2
-        ]);
+        // DB::table('thicknesses')->insert([
+        //     'ThicName' => 'na' ,
+        //     'ThicBlName' => 'na1' ,
+        //     'CateId' => 1,
+        //     'BranId' => 2,
+        //     'SizeId' => 1
+        // ]);
+        // DB::table('thicknesses')->insert([
+        //     'ThicName' => 'n/a' ,
+        //     'ThicBlName' => 'RT',
+        //     'CateId' => 1,
+        //     'BranId' => 2,
+        //     'SizeId' => 2
+        // ]);
     }
 
     /**

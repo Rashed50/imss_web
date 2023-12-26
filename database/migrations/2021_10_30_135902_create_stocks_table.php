@@ -19,7 +19,7 @@ class CreateStocksTable extends Migration
             $table->unsignedBigInteger('BranId');
             $table->unsignedBigInteger('SizeId');
             $table->unsignedBigInteger('ThicId');
-            $table->unsignedInteger('StocValue');
+            $table->Integer('StocValue');
             $table->foreign('CateId')->references('CateId')->on('categories')->onDelete('cascade');
             $table->foreign('BranId')->references('BranId')->on('brands')->onDelete('cascade');
             $table->foreign('ThicId')->references('ThicId')->on('thicknesses')->onDelete('cascade');
