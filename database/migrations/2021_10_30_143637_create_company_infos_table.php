@@ -58,11 +58,11 @@ class CreateCompanyInfosTable extends Migration
             'InvoiceTitle2Bl' => "GN Traders",
             'InvoiceDescriptionEn' => "সিমেন্ট, টিন, ডি ফর্ম, অ্যাঙ্গেল এবং লোহজাত দ্রব্যাদি পাইকারী ও খুচরা বিক্রেতা।",
             'InvoiceDescriptionBl' => "সিমেন্ট, টিন, ডি ফর্ম, অ্যাঙ্গেল এবং লোহজাত দ্রব্যাদি পাইকারী ও খুচরা বিক্রেতা।",
-            'InvoiceMobile1' => '০১৬৬৬৮৪১৯২০' ,
+            'InvoiceMobile1' => '০১৬৬৮৪১৯২০' ,
             'InvoiceMobile2' => "০১৭১২০০১১১",
             'InvoiceMobile3' => "০১৭১১১৯৫৭০১",
-            'InvoiceWaterMarkEn' => "Meherpur Sadar",
-            'InvoiceWaterMarkBl' => "Meherpur Sadar",
+            'InvoiceWaterMarkEn' => "GN Enterprise",
+            'InvoiceWaterMarkBl' => "GN Enterprise",
         ]);
 
 
