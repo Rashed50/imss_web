@@ -35,9 +35,7 @@ use App\Http\Controllers\Admin\TestController;
 
 
 use App\Http\Controllers\Admin\Authorization\RoleController;
-//use App\Http\Controllers\Admin\Authorization\RoleController;
 use App\Http\Controllers\Admin\Authorization\UserController;
-//App\Http\Controllers\App\Http\Controllers\Admin\Authorization\RoleController
 
 
 
@@ -71,13 +69,22 @@ Route::get('/dashboard/add', function () {
 
 Route::middleware('auth')->prefix('dashboard')->group(function() {
    // Route::resource('roles', RoleController::class);
-    Route::get('roles/add', [RoleController::class, 'index'])->name('roles.add');
-    Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
-    Route::post('roles/store', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('role/add', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::post('role/store', [RoleController::class, 'store'])->name('role.store');
+    Route::get('role/{id}/edit', [RoleController::class, 'edit'])->name('role.edit');
+    Route::post('role/update', [RoleController::class, 'update'])->name('role.update');   
+    Route::post('permission/create', [RoleController::class, 'createPermission'])->name('permission.create'); 
+  //  Route::resource('users', UserController::class);
+    Route::get('users/list', [UserController::class, 'index'])->name('users.index');
+    Route::get('user/add', [UserController::class, 'loadNewUserForm'])->name('user.add');
+    Route::post('user/store', [UserController::class, 'createNewUser'])->name('user.store');
+ //   Route::get('users/list', [UserController::class, 'index'])->name('users.index');
+   // Route::get('users/list', [UserController::class, 'index'])->name('users.index');
 
-    Route::resource('users', UserController::class);
-   // Route::resource('roles', RoleController::class);
-});
+
+    
+ });
 
 
 /* ++++++++++++++++++++++ Employee ++++++++++++++++++++++ */

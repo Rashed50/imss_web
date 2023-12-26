@@ -1,8 +1,11 @@
-@extends('layouts.admin-master')
-@section('title') Update New Role @endsection
+@extends('layouts.admin')
+@section('title') Update Role @endsection
+  @section('internal-css')
+    <link href="{{ asset('contents/admin') }}/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+  @endsection
 @section('content')
 
-<div class="row bread_part">
+{{-- <div class="row bread_part">
     <div class="col-sm-12 bread_col">
         <h4 class="pull-left page-title bread_title"> Role Update</h4>
         <ol class="breadcrumb pull-right">
@@ -10,7 +13,7 @@
             <li class="active"> Role Update</li>
         </ol>
     </div>
-</div>
+</div> --}}
 
 <div class="row">
     <div class="col-md-3"></div>
@@ -31,7 +34,8 @@
 
 <div class="row">
     <div class="col-lg-12">
-        {!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
+        {{-- {!! Form::model($role, ['method' => 'PATCH','route' => ['role.update', $role->id]]) !!} --}}
+      <form class="form-horizontal" id="role_update" method="POST" action="{{ route('role.update') }}">
           @csrf
 
           <div class="card">
@@ -41,7 +45,7 @@
                           <h3 class="card-title card_top_title"><i class="fab fa-gg-circle"></i> Create New Role</h3>
                       </div>
                       <div class="col-md-4 text-right">
-                          <a href="{{ route('users.index') }}" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-th"></i> All Role</a>
+                          {{-- <a href="{{ route('users.index') }}" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-th"></i> All Role</a> --}}
                       </div>
                       <div class="clearfix"></div>
                   </div>
@@ -49,31 +53,37 @@
               <div class="card-body card_form">
                 <div class="row">
                     <div class="col-md-4">
-                      <div class="form-group custom_form_group{{ $errors->has('name') ? ' has-error' : '' }}">
-                          <label class="control-label">Name:<span class="req_star">*</span></label>
-                          <div class="">
-                            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-                            @if ($errors->has('name'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('name') }}</strong>
-                                </span>
-                            @endif
-                          </div>
+                      <div class="form-group row custom_form_group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <input type="text" hidden id="id" name="id" value="{{$role->id}}">
+                          <label class="col-md-6 control-label">Role Name:<span class="req_star">*</span></label>
+                          <input type="text" class="col-md-6" name="name" value="{{$role->name}}">
                       </div>
                     </div>
                     {{-- permission --}}
-                    <div class="col-md-8">
-                      {{-- permission --}}
-                      <div class="form-group">
-                        <strong>Permission:</strong>
-                        <br/>
-                        @foreach($permission as $value)
-                          <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                          {{ $value->name }}</label>
-                          <br/>
-                        @endforeach
-                       </div>
-                      {{-- permission --}}
+                    <div class="col-md-8">                   
+                      <div class="table-responsive">
+                          <table id="alltableinfo" class="table table-bordered table-hover custom_table mb-0">
+                              <thead>
+                                  <tr>
+                                      <th>Permission </th>
+                                      <th>Action </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach($permission as $value)
+                                  <tr>
+                                      <td>
+                                          {{ $value->name }} 
+                                      </td>
+                                      <td>  
+                                          <input type="hidden" name="permission[]" value="{{$value->name}}">                                                 
+                                          <input type="checkbox" name="permission_checkbox-{{$value->id}}" id="permission_checkbox-{{$value->id}}" checked  {{ in_array($value->id, $rolePermissions) ? true : false}}  value="0">                                                  
+                                      </td>
+                                  </tr>
+                                  @endforeach
+                              </tbody>
+                          </table>
+                      </div>
                     </div>
                 </div>
 
@@ -82,7 +92,7 @@
                   <button type="submit" class="btn btn-primary waves-effect">Update</button>
               </div>
           </div>
-        {!! Form::close() !!}
+        </form>
     </div>
 </div>
 @endsection
