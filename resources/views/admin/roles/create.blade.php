@@ -44,7 +44,9 @@
                   </div>
 
                   <div class="col-md-6 text-right">
+                    @can('user_role_create')
                     <a href="{{ route('role.create') }}" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-plus-circle mr-2"></i>Create New Role</a>
+                    @endcan
                    </div>
                   <div class="clearfix"></div>
               </div>

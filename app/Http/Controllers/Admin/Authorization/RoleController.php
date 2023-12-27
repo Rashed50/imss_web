@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
+use App\Models\User;
 
 class RoleController extends Controller
 {
@@ -101,7 +102,7 @@ class RoleController extends Controller
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
           
-          //  dd($role, $permission, $rolePermissions);
+        //  dd($role, $permission, $rolePermissions);
 
         return view('admin.roles.edit',compact('role','permission','rolePermissions'));
     }
@@ -120,12 +121,24 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
 
-        $role = Role::find($request->id);
-        $role->name = $request->input('name');
-        $role->save();
+        $role = Role::find($request->id);        
+       //$role->name = $request->input('name');
+       // $role->save();
 
-        $role->syncPermissions($request->input('permission'));
+       // dd($request->all());
+        $permissions = $request->input('permission');
+        $selected_permissions = array();
+        $counter=0;
+        foreach($permissions as $aperm){
+            if ($request->has('checkbox-' . $aperm)) {
+                $selected_permissions[$counter++] =(int) $aperm;
+            }
+        }
+       // dd($permissions,$selected_permissions);
+        $role->syncPermissions($selected_permissions);
 
+        $user = User::find(3);
+        $user->assignRole($role);
         return redirect()->route('roles.index')
                         ->with('success','Role updated successfully');
     }

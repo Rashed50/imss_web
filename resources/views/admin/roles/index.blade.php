@@ -60,8 +60,9 @@
                                         @can('user_role_edit')
                                                 <a class="btn btn-primary" href="{{ route('role.edit',$role->id) }}">Edit</a>
                                         @endcan
+                                        {{-- <a class="btn btn-primary" href="{{ route('role.edit',$role->id) }}">Edit</a> --}}
+
                                         <br>
-                                        <a class="btn btn-primary" href="{{ route('role.edit',$role->id) }}">Edit w</a>
 
                                     </td>
                                   </tr>

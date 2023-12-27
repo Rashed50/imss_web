@@ -131,8 +131,6 @@
             .container {
                 max-width: 98%;
                 margin: 5 auto ;
-
-
             }
 
             @page {

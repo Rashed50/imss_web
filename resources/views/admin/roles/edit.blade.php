@@ -76,8 +76,8 @@
                                           {{ $value->name }} 
                                       </td>
                                       <td>  
-                                          <input type="hidden" name="permission[]" value="{{$value->name}}">                                                 
-                                          <input type="checkbox" name="permission_checkbox-{{$value->id}}" id="permission_checkbox-{{$value->id}}" checked  {{ in_array($value->id, $rolePermissions) ? true : false}}  value="0">                                                  
+                                          <input type="hidden" name="permission[]" value="{{$value->id}}">                                                 
+                                          <input type="checkbox" name="checkbox-{{$value->id}}" id="checkbox-{{$value->id}}" checked ="{{ in_array($value->id, $rolePermissions) ? true:false  }}"  value="0">                                                  
                                       </td>
                                   </tr>
                                   @endforeach
@@ -95,4 +95,10 @@
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    function checkRole(){
+
+    }
+</script>
 @endsection

@@ -351,7 +351,7 @@
         if(customerType == 2){
             $('input[id="TradeName"]').val($('#CustName').val());
         }
-        showSweetAlertMessage('success','This is Testing ');
+      //  showSweetAlertMessage('success','This is Testing ');
     });
 
     function showSweetAlertMessage(type,message){
