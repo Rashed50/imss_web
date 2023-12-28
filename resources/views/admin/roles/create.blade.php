@@ -20,12 +20,12 @@
     <div class="col-md-7">
         @if(Session::has('success'))
           <div class="alert alert-success alertsuccess" role="alert" style="margin-left: -20px">
-             <strong>Successfully!</strong> Added New Role.
+             <strong> {{Session::get('success')}}</strong>  
           </div>
         @endif
         @if(Session::has('error'))
           <div class="alert alert-warning alerterror" role="alert" style="margin-left: -20px">
-             <strong>Opps!</strong> please try again.
+            <strong> {{Session::get('error')}}</strong>  
           </div>
         @endif
     </div>
@@ -34,7 +34,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <form class="form-horizontal" id="registration" method="post" action="{{ route('roles.store') }}">
+        <form class="form-horizontal" id="registration" method="post" action="{{ route('role.store') }}">
           @csrf
           <div class="card">
             <div class="card-header">
@@ -44,7 +44,9 @@
                   </div>
 
                   <div class="col-md-6 text-right">
-                    <a href="{{ route('roles.create') }}" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-plus-circle mr-2"></i>Create New Role</a>
+                    @can('user_role_create')
+                    <a href="{{ route('role.create') }}" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-plus-circle mr-2"></i>Create New Role</a>
+                    @endcan
                    </div>
                   <div class="clearfix"></div>
               </div>
@@ -73,8 +75,8 @@
                                 <input type="button" name="Un_CheckAll" id="Un_CheckAll" value="Uncheck All" onClick="UnCheckAll(document.myform.check_list)">
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="example2" class="display" style="width:100%">
+                               
+                                    {{-- <table id="example2" class="display" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th>Permission</th>
@@ -84,10 +86,38 @@
                                             @foreach($permission as $value)
                                             <tr>
                                                 <td>
-                                                {{ $value->name }}
+                                                    {{ $value->name }}
                                                     <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
                                                       {{ $value->name }}</label> 
-                                                  <br />
+                                                      <input type="checkbox" name="permission_checkbox-{{$value->id}}" id="permission_checkbox-{{$value->id}}"   value="0">                                                  
+                                                </td>
+                                                <td>
+                                                  {{ $value->name }}
+                                                  
+                                                    <input type="checkbox" name="permission_checkbox-{{$value->id}}" id="permission_checkbox-{{$value->id}}"   value="0">                                                  
+                                              </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table> --}}
+                                
+                                <div class="table-responsive">
+                                  <table id="alltableinfo" class="table table-bordered table-hover custom_table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Permission </th>
+                                                <th>Action </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($permission as $value)
+                                            <tr>
+                                                <td>
+                                                    {{ $value->name }} 
+                                                </td>
+                                                <td>  
+                                                    <input type="hidden" name="permission[]" value="{{$value->name}}">                                                 
+                                                    <input type="checkbox" name="permission_checkbox-{{$value->id}}" id="permission_checkbox-{{$value->id}}"   value="0">                                                  
                                                 </td>
                                             </tr>
                                             @endforeach

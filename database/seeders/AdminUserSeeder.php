@@ -33,12 +33,12 @@ class AdminUserSeeder extends Seeder
             'created_at'=>Carbon::now()->toDateTimeString(),
         ]);
 
-        $role = Role::create(['name' => 'Admin']);
-       // $role = Role::where('id',4)->first();
-        $permissions = Permission::pluck('id', 'id')->all();
-        $role->syncPermissions($permissions);
-       // dd($role,$user);
-        $user->assignRole([$role->id]);
+    //     $role = Role::create(['name' => 'Admin']);
+    //    // $role = Role::where('id',4)->first();
+    //     $permissions = Permission::pluck('id', 'id')->all();
+    //     $role->syncPermissions($permissions);
+    //    // dd($role,$user);
+    //     $user->assignRole([$role->id]);
 
     }
 }

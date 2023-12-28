@@ -2,16 +2,7 @@
 @section('title') Role @endsection
 @section('content')
 
-{{-- <div class="row bread_part">
-    <div class="col-sm-12 bread_col">
-        <h4 class="pull-left page-title bread_title"> User Role </h4>
-        <ol class="breadcrumb pull-right">
-            <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-            <li class="active"> User Role </li>
-        </ol>
-    </div>
-</div> --}}
-<!-- Session Message -->
+ 
 <!-- Session Message -->
 <div class="row">
     <div class="col-md-1"></div>
@@ -41,8 +32,8 @@
                   </div>
 
                   <div class="col-md-6 text-right">
-                    <a href="{{ route('roles.create') }}" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-plus-circle mr-2"></i>Create New Role</a>
-                    <a data-toggle="modal" data-target="#loginModal" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-plus-circle mr-2"></i>Create New Permission</a>
+                    <a href="{{ route('role.create') }}" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-plus-circle mr-2"></i>Create New Role</a>
+                    <a data-toggle="modal" data-target="#new_permission_modal" class="btn btn-md btn-primary waves-effect card_top_button"><i class="fa fa-plus-circle mr-2"></i>Create New Permission</a>
 
                   </div>
                   <div class="clearfix"></div>
@@ -66,9 +57,13 @@
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $role->name }}</td>
                                     <td>
-                                        @can('role-edit')
-                                            <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                                        @can('user_role_edit')
+                                                <a class="btn btn-primary" href="{{ route('role.edit',$role->id) }}">Edit</a>
                                         @endcan
+                                        {{-- <a class="btn btn-primary" href="{{ route('role.edit',$role->id) }}">Edit</a> --}}
+
+                                        <br>
+
                                     </td>
                                   </tr>
                                 @endforeach
@@ -84,24 +79,24 @@
 </div>
 
 <!-- Modal For Create Permission -->
-{{-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+ <div class="modal fade" id="new_permission_modal" tabindex="-1" role="dialog" aria-labelledby="new_permission_modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModal"> Add New Permission </h5>
+                <h5 class="modal-title" id="loginModal">Insertion of New Permission  </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('user.permission.newpermission') }}">
+                <form method="POST" action="{{ route('permission.create') }}">
                     @csrf
-                    <div class="form-group row custom_form_group{{ $errors->has('role_name') ? ' has-error' : '' }}" style="margin-bottom: 0">
-                        <label class="control-label col-md-4">Permission Name:<span class="req_star">*</span></label>
-                        <div class="col-md-6">
+                    <div class="form-group row custom_form_group{{ $errors->has('permission_name') ? ' has-error' : '' }}" style="margin-bottom: 0">
+                        <label class="control-label col-md-4">Name:<span class="req_star">*</span></label>
+                        <div class="col-md-12">
                             <input type="text" placeholder="Input Permision Name" class="form-control keyup-characters" id="permission_name" name="permission_name"   required>
                         </div>
-                    </div>
+                    </div><br>
 
                     <button type="submit"  id="onSubmit" class="btn btn-primary waves-effect">SAVE</button>
 
@@ -109,5 +104,5 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 @endsection
