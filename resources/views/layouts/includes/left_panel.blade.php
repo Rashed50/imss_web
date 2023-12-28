@@ -143,7 +143,6 @@
     <a href="#" class="sl-menu-link">
       <div class="sl-menu-item">
         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-
         <span class="menu-item-label">Admin Setting </span>
         <i class="menu-item-arrow fa fa-angle-down"></i>
       </div>
@@ -152,7 +151,8 @@
     <ul class="sl-menu-sub nav flex-column">
 
       <li class="nav-item"><a href="{{ route('company.add') }}" class="nav-link">Company Profile</a></li>
-      <li class="nav-item"><a href="{{ route('roles.add') }}" class="nav-link">Role</a></li>
+      <li class="nav-item"><a href="{{ route('roles.index') }}" class="nav-link">Role</a></li>
+      <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link">Users</a></li>
 
       <li class="nav-item"><a href="{{ route('division.add') }}" class="nav-link">Add Division</a></li>
       <li class="nav-item"><a href="{{ route('district.add') }}" class="nav-link">Add District</a></li>
@@ -162,8 +162,6 @@
       <li class="nav-item"><a href="{{ route('product.activity') }}" class="nav-link @yield('active-product')">Active Product</a></li>
       <li class="nav-item"><a href="{{ route('employee.add') }}" class="nav-link @yield('add-employee')">Add Employee</a></li>
     </ul>
-
-
   </div>
   <!-- sl-sideleft-menu -->
 

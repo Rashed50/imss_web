@@ -25,13 +25,13 @@ class CompanyInfoController extends Controller{
         $allCom = $this->getCompanyInfo();
         return view('admin.company.add', compact('allCom'));
      }
- 
+
      public function edit($id){
          $allCom = $this->getCompanyInfo();
          $data = $this->findCompanyInfo($id);
          return view('admin.company.add', compact('data', 'allCom'));
      }
- 
+
      public function store(Request $request){
 
          $this->validate($request,[
@@ -40,9 +40,9 @@ class CompanyInfoController extends Controller{
              'ownerName'=>'required|max:150',
              'CompTitle'=>'required|max:150',
          ],[
-             
+
          ]);
- 
+
          $insert = CompanyInfo::insertGetId([
              'CompTitle'=>$request['CompTitle'],
              'BengleTitle'=>$request['BengleTitle'],
@@ -59,7 +59,7 @@ class CompanyInfoController extends Controller{
              'Email'=>$request['Email'],
              //'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
          ]);
- 
+
          if($insert){
              Session::flash('success','new company info store Successfully.');
                  return redirect()->route('company.add');
@@ -67,10 +67,10 @@ class CompanyInfoController extends Controller{
              Session::flash('error','please try again.');
                  return redirect()->back();
          }
- 
+
      }
- 
- 
+
+
      public function update(Request $request){
          $id= $request->CompId;
         $this->validate($request,[
@@ -79,9 +79,9 @@ class CompanyInfoController extends Controller{
              'ownerName'=>'required|max:150',
              'CompTitle'=>'required|max:150',
          ],[
-             
+
          ]);
- 
+
          $update = CompanyInfo::where('CompId',$id)->update([
              'CompTitle'=>$request['CompTitle'],
              'BengleTitle'=>$request['BengleTitle'],
@@ -97,7 +97,7 @@ class CompanyInfoController extends Controller{
              'Website'=>$request['Website'],
              'Email'=>$request['Email']
          ]);
- 
+
          if($update){
              Session::flash('success_up','brand updated Successfully.');
                  return redirect()->route('company.add');
@@ -105,7 +105,7 @@ class CompanyInfoController extends Controller{
              Session::flash('error','please try again.');
                  return redirect()->back();
          }
- 
+
      }
- 
+
 }

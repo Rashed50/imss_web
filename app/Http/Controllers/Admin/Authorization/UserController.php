@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Authorization;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -18,18 +19,22 @@ class UserController extends Controller{
     }
 
     public function index(){
-        $all=User::where('status',1)->orderBy('id','ASC')->get();
-        return view('admin.user.all',compact('all'));
+        $users=User::where('status',1)->orderBy('id','ASC')->get();
+        //dd($all);
+        return view('admin.user.all',compact('users'));
     }
 
-    public function add(){
+    public function loadNewUserForm(){
 
-        return view('admin.user.add');
+        $roles =Role::orderBy('id','ASC')->get();
+
+        return view('admin.user.add',compact('roles'));
     }
 
-    public function edit($slug){
-        $data=User::where('status',1)->where('slug',$slug)->firstOrFail();
-        return view('admin.user.edit',compact('data'));
+    public function edit($id){
+        $data=User::where('status',1)->where('id',$id)->firstOrFail();
+        $roles =Role::orderBy('id','ASC')->get();
+        return view('admin.user.edit',compact('data','roles'));
     }
 
     public function view($slug){
@@ -37,9 +42,9 @@ class UserController extends Controller{
         return view('admin.user.view',compact('data'));
     }
 
-    public function insert(Request $request){
+    public function createNewUser(Request $request){
 
-        dd(100);
+        
         $this->validate($request,[
             'user_name' => 'required|string|max:255',
             'user_email' => 'required|string|email|max:255|unique:users',
@@ -52,39 +57,49 @@ class UserController extends Controller{
             'role.required'=>'Please choose user role.',
         ]);
 
+//         "name" => "sdfds"
+//   "phone" => "fdsfds"
+//   "email" => "superadmin3@gmail.com"
+//   "password" => "superadmin3@gmail.com"
+//   "password_confirmation" => "superadmin3@gmail.com"
+//   "role" => "1"
+
+      //  dd($request->all());
+
         $slug='U'.uniqid();
         $code=time();
         $insert=User::insertGetId([
-            'user_name'=>$request->name,
-            'user_phone'=>$request->phone,
-            'user_email'=>$request->email,
+            'user_name'=>$request->user_name,
+            'user_phone'=>$request->user_phone,
+            'user_email'=>$request->user_email,
             'password'=>Hash::make($request->password),
             // 'role'=>$request->role,
-            // 'code'=>$code,
+             'user_type'=> 1,
             // 'slug'=>$slug,
             // 'created_at'=>Carbon::now()->toDateTimeString()
         ]);
         $user = User::where('id', $insert)->first();
-         $role = Role::first();
+        $role = Role::where('id',$request->role)->first();
         $permissions = Permission::pluck('id', 'id')->all();
         $role->syncPermissions($permissions);
        // dd($role,$user);
         $user->assignRole([$role->id]);
 
-        if($request->hasFile('pic')){
-            $image=$request->file('pic');
-            $imageName=$insert.'_'.time().'.'.$image->getClientOriginalExtension();
-            Image::make($image)->resize(250,250)->save(base_path('public/uploads/users/'.$imageName));
+        // if($request->hasFile('pic')){
+        //     $image=$request->file('pic');
+        //     $imageName=$insert.'_'.time().'.'.$image->getClientOriginalExtension();
+        //     Image::make($image)->resize(250,250)->save(base_path('public/uploads/users/'.$imageName));
 
-            User::where('id',$insert)->update([
-                'profile_photo'=>$imageName,
-                'updated_at'=>Carbon::now()->toDateTimeString(),
-            ]);
-        }
+        //     User::where('id',$insert)->update([
+        //         'profile_photo'=>$imageName,
+        //         'updated_at'=>Carbon::now()->toDateTimeString(),
+        //     ]);
+        // }
 
         if($insert){
-            Session::flash('success','user registrion success.');
-            return redirect('dashboard/user/add');
+          //  Session::flash('success','user registrion success.');
+           // return redirect()->back();//'dashboard/user/add');
+            return $this->index();
         }else{
             Session::flash('error','please try again.');
             return redirect('dashboard/user/add');
@@ -92,26 +107,40 @@ class UserController extends Controller{
     }
 
     public function update(Request $request){
+ 
+      // dd($request->all());
         $this->validate($request,[
             'user_name' => 'required|string|max:255',
             'user_email' => 'required|string|email|max:255',
+          //  'password' => 'required|string|confirmed|min:8',
             'role' => 'required',
         ],[
             'user_name.required'=>'Please enter your name.',
             'user_email.required'=>'Please enter your email address.',
+            'password.required'=>'Please enter password.',
             'role.required'=>'Please choose user role.',
         ]);
 
-        $id=$request->id;
-        $slug=$request->slug;
+      //  dd($request->all());
+
+        $id= $request->id;
+       // $slug=$request->slug;
         $update=User::where('status',1)->where('id',$id)->update([
-            'user_name'=>$request->name,
-            'user_phone'=>$request->phone,
-            'user_email'=>$request->email,
-            'role'=>$request->role,
+            'user_name'=>$request->user_name,
+            'user_phone'=>$request->user_phone,
+            'user_email'=>$request->user_email,
+          //  'role'=>$request->role,
             'created_at'=>Carbon::now()->toDateTimeString()
         ]);
 
+      //  dd($request->all(),22);
+        $user = User::where('id', $id)->first();
+        $role = Role::where('id',$request->role)->first();
+        $permissions = Permission::pluck('id', 'id')->all();
+        $role->syncPermissions($permissions);
+       // dd($role,$user);
+        $user->assignRole([$role->id]);
+       // dd($role,$user);
         if($request->hasFile('pic')){
             $image=$request->file('pic');
             $imageName='user_'.$id.'_'.time().'.'.$image->getClientOriginalExtension();
@@ -123,12 +152,12 @@ class UserController extends Controller{
             ]);
         }
 
+        
         if($update){
-            Session::flash('success','successfully updated user information.');
-            return redirect('dashboard/user/view/'.$slug);
+            return $this->index();
         }else{
             Session::flash('error','please try again.');
-            return redirect('dashboard/user/edit/'.$slug);
+            return redirect()->back();
         }
     }
 

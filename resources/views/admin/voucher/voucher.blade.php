@@ -34,7 +34,10 @@
 
 		}
 		.title{
-
+			font-size: 40px;
+			font-weight: bold;
+			padding: 0px;
+			margin: 5px;
 		}
 		.descrip {
 			padding: 0px 20px;
@@ -118,11 +121,41 @@
 			font-weight: 700;
 			cursor: pointer;
 		}
-		@media print{
+		  /* @media print{
 			.print__menu{
 				display: none;
 			}
-		}
+		}   */
+
+		@media print {
+            .container {
+                max-width: 98%;
+                margin: 5 auto ;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 15mm 5mm 10mm 15mm;
+                /* top, right,bottom, left */
+
+            }
+
+            .print__button {
+                visibility: hidden;
+            }
+
+            table { page-break-after:auto }
+            tr    { page-break-inside:avoid; page-break-after:auto }
+            td    { page-break-inside:avoid; page-break-after:auto }
+            thead { display:table-header-group }
+            tfoot { display:table-footer-group }
+
+        }
+	
+       
+
+
+
 	</style>
 	<!-- style -->
 </head>
@@ -134,10 +167,10 @@
 		<!-- header part -->
 		<section class="header__part">
 		 	<p class="sub__title">ক্যাশ মেমো</p>
-		 	<h1 class="title">{{$company[0]->CompName}}</h1>
-		 	<p class="descrip">{{$company[0]->CompTitle}}</p>
+		 	<h1 class="title">{{$company[0]->BengleName}}</h1>
+		 	<p class="descrip">{{$company[0]->InvoiceDescriptionBl}}</p>
 		 	<p class="address">{{$company[0]->CompAddress}}</p>
-		 	<p class="phone"> <strong>Mobile</strong> {{$company[0]->Mobile1}} <strong>Mobile</strong> {{$company[0]->Mobile2}} </p>
+		 	<p class="phone"> <strong>Mobile</strong> {{$company[0]->InvoiceMobile1}},{{$company[0]->InvoiceMobile2}}, {{$company[0]->InvoiceMobile3}}</p>
 		</section>
 		<!-- body part -->
 		<section class="body__part">

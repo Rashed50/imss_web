@@ -62,13 +62,16 @@ class SizeController extends Controller
     public function edit($id)
     {
         $allSize = (new ItemsDataService())->getAllActiveSizeRecords();
-        $data = $allSize->where('SizeId', $id)->firstOrFail();
+        $data = (new ItemsDataService())->getSizeDataEdit($id, $allSize);
         $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
+
         return view('admin.size.add', compact('data', 'allSize', 'allCate'));
     }
 
     public function delete($id){
-        $delete = Size::where('SizeId',$id)->delete();
+
+        $delete = (new ItemsDataService())->deleteSize($id);
+
         if($delete){
             Session::flash('delete', 'size delete');
         }else{
@@ -93,26 +96,36 @@ class SizeController extends Controller
         ]);
 
         $SizeName = strtolower($request->SizeName);
-        $sizes = Size::where('CateId', $request->CategoryID)->where('BranId', $request->BranID)->where('SizeName', $SizeName)->count();
+        $sizes = (new ItemsDataService())->checkExistSize($request->CategoryID, $request->BranID, $SizeName);
 
         if ($sizes > 0) {
 
             Session::flash('error', 'this size allready exit, please another size.');
             return redirect()->back();
         } else {
-            $insert = Size::insertGetId([
+            $data = [
                 'CateId' => $request['CategoryID'],
                 'BranId' => $request['BranID'],
                 'SizeName' => $SizeName,
                 'SizeBlName' => $request['SizeBlName'],
                 'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
-            ]);
+            ];
 
-            if ($insert) {
-                Session::flash('success', 'new size store Successfully.');
-                return redirect()->route('size.add');
-            } else {
-                Session::flash('error', 'please try again.');
+            try {
+
+                $insert = (new ItemsDataService())->storeSize($data);
+
+                if ($insert) {
+                    Session::flash('success', 'new size store Successfully.');
+                    return redirect()->route('size.add');
+                } else {
+                    Session::flash('error', 'please try again.');
+                    return redirect()->back();
+                }
+    
+            } catch (\Exception $exception){
+                
+                Session::flash('error','Not addeed!!');
                 return redirect()->back();
             }
         }
@@ -138,19 +151,29 @@ class SizeController extends Controller
             'SizeName.max' => 'max size name content is 150 character',
         ]);
 
-        $insert = Size::where('SizeStatus', true)->where('SizeId', $id)->update([
+        $data = [
             'CateId' => $request['CategoryID'],
             'BranId' => $request['BranID'],
             'SizeName' => $request['SizeName'],
             'SizeBlName' => $request['SizeBlName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
+        ];
 
-        if ($insert) {
-            Session::flash('success', 'size update Successfully.');
-            return redirect()->route('size.add');
-        } else {
-            Session::flash('error', 'please try again.');
+        try {
+
+            $insert = (new ItemsDataService())->updateSize($id, $data);
+
+            if ($insert) {
+                Session::flash('success', 'size update Successfully.');
+                return redirect()->route('size.add');
+            } else {
+                Session::flash('error', 'please try again.');
+                return redirect()->back();
+            }
+    
+        } catch (\Exception $exception){
+            
+            Session::flash('error','Not addeed!!');
             return redirect()->back();
         }
     }

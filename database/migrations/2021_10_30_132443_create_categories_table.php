@@ -20,24 +20,7 @@ class CreateCategoriesTable extends Migration
             $table->boolean('CateStatus')->default(true);
            // $table->timestamps();
         });
-
-
-        DB::table('categories')->insert([
-            'CateName' => 'Road' ,
-              'CateBLName' => 'রড' ,
-        ]);
-
-        DB::table('categories')->insert([
-            'CateName' => 'Cement',
-                'CateBLName' => 'সিমেন্ট' ,
-        ]);
-
-        DB::table('categories')->insert([
-            'CateName' => 'Tin',
-                'CateBLName' => 'টিন' ,
-        ]);
-
-
+ 
     }
 
     /**
