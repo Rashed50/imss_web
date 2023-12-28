@@ -20,6 +20,10 @@ class CategoryController extends Controller{
     |--------------------------------------------------------------------------
     */
 
+    public function getAll(){
+        return $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
+      }
+
     public function add(){
         $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.category.add', compact('allCate'));
