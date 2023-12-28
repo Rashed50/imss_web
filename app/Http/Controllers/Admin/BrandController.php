@@ -43,6 +43,7 @@ class BrandController extends Controller
     | BLADE OPERATION
     |--------------------------------------------------------------------------
     */
+
     public function add()
     {
         $allBrand = (new ItemsDataService())->getAllActiveBrandRecords();
@@ -53,7 +54,7 @@ class BrandController extends Controller
     public function edit($id)
     {
         $allBrand = (new ItemsDataService())->getAllActiveBrandRecords();
-        $data = $allBrand->where('BranId', $id)->firstOrFail();
+        $data = (new ItemsDataService())->GetAllBrandForDropdownlist($id, $allBrand);
         $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.brand.add', compact('data', 'allCate', 'allBrand'));
     }
@@ -61,7 +62,8 @@ class BrandController extends Controller
 
     public function delete($id)
     {
-        $delete = Brand::where('BranId', $id)->delete();
+        $delete = (new ItemsDataService())->deleteBrand($id);
+
         if($delete){
             Session::flash('delete', 'Brand delete');
         }else{
@@ -86,24 +88,34 @@ class BrandController extends Controller
         ]);
 
         $BranName = strtolower($request->BranName);
-        $brands = Brand::where('CateId', $request->CategoryID)->where('BranName', $BranName)->count();
+        $brands = (new ItemsDataService())->checkExistBrand($request->CategoryID, $BranName);
 
         if ($brands > 0) {
             Session::flash('error', 'this name already exit, please another name.');
             return redirect()->back();
         } else {
-            $insert = Brand::insertGetId([
+            $data = [
                 'CateId' => $request['CategoryID'],
                 'BranName' => $BranName,
                 'BranBlName' => $request['BranBlName'],
                 'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
-            ]);
+            ];
 
-            if ($insert) {
-                Session::flash('success', 'new brand store Successfully.');
-                return redirect()->route('brand.add');
-            } else {
-                Session::flash('error', 'please try again.');
+            try{
+
+                $insert = (new ItemsDataService())->storeBrand($data);
+
+                if ($insert) {
+                    Session::flash('success', 'new brand store Successfully.');
+                    return redirect()->route('brand.add');
+                } else {
+                    Session::flash('error', 'please try again.');
+                    return redirect()->back();
+                }
+    
+            }catch (\Exception $exception){
+                
+                Session::flash('error','Not addeed!!');
                 return redirect()->back();
             }
         }
@@ -127,18 +139,27 @@ class BrandController extends Controller
             'BranName.unique' => 'this brand name already exists! please another name',
         ]);
 
-        $update = Brand::where('BranStatus', true)->where('BranId', $id)->update([
+        $data = [
             'CateId' => $request['CategoryID'],
             'BranName' => $request['BranName'],
             'BranBlName' => $request['BranBlName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
+        ];
 
-        if ($update) {
-            Session::flash('success', 'brand updated Successfully.');
-            return redirect()->route('brand.add');
-        } else {
-            Session::flash('error', 'please try again.');
+        try{
+    
+            $update = (new ItemsDataService())->updateBrand($id, $data);
+
+            if ($update) {
+                Session::flash('success', 'brand updated Successfully.');
+                return redirect()->route('brand.add');
+            } else {
+                Session::flash('error', 'please try again.');
+                return redirect()->back();
+            }
+        } catch (\Exception $exception){
+            
+            Session::flash('error','Not addeed!!');
             return redirect()->back();
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\DataLayers\ItemsDataService;
 use Illuminate\Http\Request;
 use App\Models\Thickness;
 use App\Models\Category;
@@ -48,24 +49,23 @@ class ThicknessController extends Controller
 
     public function add()
     {
-        $allThickness = $this->getAll();
-        $CateOBJ = new CategoryController();
-        $allCate = $CateOBJ->getAll();
+        $allThickness = (new ItemsDataService())->getAllActiveThicknessRecords();
+        $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.thickness.add', compact('allThickness', 'allCate'));
     }
 
     public function edit($id)
     {
-        $allThickness = $this->getAll();
-        $data = $allThickness->where('ThicId', $id)->firstOrFail();
-
-        $CateOBJ = new CategoryController();
-        $allCate = $CateOBJ->getAll();
+        $allThickness = (new ItemsDataService())->getAllActiveThicknessRecords();
+        $data = (new ItemsDataService())->GetAllThiknessForDropdownlist($id, $allThickness);
+        $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.thickness.add', compact('data', 'allThickness', 'allCate'));
     }
 
     public function delete($id){
-        $delete = Thickness::where('ThicId',$id)->delete();
+
+        $delete = (new ItemsDataService())->deleteThickness($id);
+
         if($delete){
             Session::flash('delete', 'thickness delete');
         }else{
@@ -94,7 +94,7 @@ class ThicknessController extends Controller
         ]);
 
         $ThicName = strtolower($request->ThicName);
-        $Thickness = Thickness::where('CateId', $request->CategoryID)->where('BranId', $request->BranID)->where('SizeId', $request->SizeID)->where('ThicName', $ThicName)->count();
+        $Thickness = (new ItemsDataService())->checkExistThickness($request->CategoryID, $request->BranID, $request->SizeID, $ThicName);
 
         if ($Thickness > 0) {
 
@@ -102,20 +102,30 @@ class ThicknessController extends Controller
             return redirect()->back();
         }
 
-        $insert = Thickness::insertGetId([
+        $data = [
             'CateId' => $request['CategoryID'],
             'BranId' => $request['BranID'],
             'SizeId' => $request['SizeID'],
             'ThicName' => $ThicName,
             'ThicBlName' => $request['ThicBlName'],
             'created_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
+        ];
 
-        if ($insert) {
-            Session::flash('success', 'new thickness store Successfully.');
-            return redirect()->route('thickness.add');
-        } else {
-            Session::flash('error', 'please try again.');
+        try {
+
+            $insert = (new ItemsDataService())->storeThickness($data);
+
+            if ($insert) {
+                Session::flash('success', 'new thickness store Successfully.');
+                return redirect()->route('thickness.add');
+            } else {
+                Session::flash('error', 'please try again.');
+                return redirect()->back();
+            }
+    
+        } catch (\Exception $exception){
+            
+            Session::flash('error','Not addeed!!');
             return redirect()->back();
         }
     }
@@ -138,20 +148,30 @@ class ThicknessController extends Controller
         ]);
 
 
-        $update = Thickness::where('ThicStatus', true)->where('ThicId', $id)->update([
+        $data = [
             'CateId' => $request['CategoryID'],
             'BranId' => $request['BranID'],
             'SizeId' => $request['SizeID'],
             'ThicName' => $request['ThicName'],
             'ThicBlName' => $request['ThicBlName'],
             'updated_at' => Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
+        ];
 
-        if ($update) {
-            Session::flash('success', 'thickness update Successfully.');
-            return redirect()->route('thickness.add');
-        } else {
-            Session::flash('error', 'please try again.');
+        try {
+    
+            $update = (new ItemsDataService())->updateThickness($id, $data);
+
+            if ($update) {
+                Session::flash('success', 'thickness update Successfully.');
+                return redirect()->route('thickness.add');
+            } else {
+                Session::flash('error', 'please try again.');
+                return redirect()->back();
+            }
+
+        } catch (\Exception $exception){
+            
+            Session::flash('error','Not addeed!!');
             return redirect()->back();
         }
     }

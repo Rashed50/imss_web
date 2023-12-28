@@ -19,10 +19,6 @@ class CategoryController extends Controller{
     | DATABASE OPERATION
     |--------------------------------------------------------------------------
     */
-    public function getAll(){
-      return $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
-    }
-
 
     public function add(){
         $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
@@ -30,13 +26,15 @@ class CategoryController extends Controller{
     }
 
     public function edit($id){
-        $data = Category::where('CateStatus',true)->where('CateId',$id)->firstOrFail();
+        $data = (new ItemsDataService())->getTargetCategoryToEdit($id);
         $allCate = (new ItemsDataService())->GetAllActiveCategoryRecords();
         return view('admin.category.add', compact('data', 'allCate'));
     }
 
     public function delete($id){
-        $delete = Category::where('CateStatus',true)->where('CateId',$id)->delete();
+
+        $delete = (new ItemsDataService())->deleteCategory($id);
+        
         if($delete){
             Session::flash('delete', 'Category delete');
         }else{
@@ -56,20 +54,28 @@ class CategoryController extends Controller{
             'CateBlName.required'=>'please enter categoryBL name',
             'CateBlName.max'=> 'max categoryBL name content is 200 character',
         ]);
-        $catName=strtolower($request->CateName);
-        
-        $insert = Category::insertGetId([
-            'CateName'=>$catName,
-            'CateBlName'=>$request['CateBlName'],
-            
-        ]);
 
-        if($insert){
-            Session::flash('success','new category store Successfully.');
+        $data = [
+            'CateName' => $request['CateName'],
+            'CateBlName' => $request['CateBlName'],
+        ];
+
+        try{
+
+            $insert = (new ItemsDataService())->storeCategory($data);
+
+            if($insert){
+                Session::flash('success','new category store Successfully.');
                 return redirect()->route('category.add');
-        }else{
-            Session::flash('error','please try again.');
+            }else{
+                Session::flash('error','please try again.');
                 return redirect()->back();
+            }
+
+        }catch (\Exception $exception){
+            
+            Session::flash('error','Not addeed!!');
+            return redirect()->back();
         }
 
     }
@@ -87,17 +93,27 @@ class CategoryController extends Controller{
             'CateBlName.max'=> 'max categoryBL name content is 200 character',
         ]);
 
-        $insert = Category::where('CateStatus',true)->where('CateId',$id)->update([
+        $data = [
             'CateName'=>$request['CateName'],
             'CateBlName'=>$request['CateBlName'],
-        ]);
+        ];
 
-        if($insert){
-            Session::flash('success','category updated Successfully.');
-                return redirect()->route('category.add');
-        }else{
-            Session::flash('error','please try again.');
-                return redirect()->back();
+        try{
+
+            $insert = (new ItemsDataService())->updateCategory($id, $data);
+
+            if($insert){
+                Session::flash('success','category updated Successfully.');
+                    return redirect()->route('category.add');
+            }else{
+                Session::flash('error','please try again.');
+                    return redirect()->back();
+            }
+
+        }catch (\Exception $exception){
+            
+            Session::flash('error','Not addeed!!');
+            return redirect()->back();
         }
 
     }
