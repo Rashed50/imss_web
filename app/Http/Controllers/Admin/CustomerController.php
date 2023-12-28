@@ -273,13 +273,13 @@ class CustomerController extends Controller
 
     public function add()
     {
-        $typeObj = new CustomerTypeController;
-        $allType = $typeObj->getAll();
 
-        $DivisionOBJ = new DivisionController();
-        $Division = $DivisionOBJ->getAll();
 
+        $allType = (new CustomerTypeController)->getAll();
+        $Division = (new DivisionController())->getAll();
+    //    $districts = (new DistrictController())->getAll();
         $allCustomer = $this->getAllCustomer();
+
         return view('admin.customer.add', compact('allCustomer', 'Division', 'allType'));
     }
 
@@ -350,8 +350,6 @@ class CustomerController extends Controller
         $dataInit['created_at'] = Carbon::now();
 
         CustomerIntialDue::create($dataInit);
-
-
 
         if ($request->hasFile('Photo')) {
             $image = $request->file('Photo');
