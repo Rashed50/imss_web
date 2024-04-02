@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ChartOfAccountController;
 use App\Http\Controllers\Admin\TransactionsController;
 use App\Http\Controllers\Admin\DebitCreditController;
 use App\Http\Controllers\Admin\CustomerPaymentController;
+use App\Http\Controllers\Helpers\UploadDownloadController;
 use App\Models\CrType;
 use App\Models\CustomerIntialDue;
 use App\Models\District;
@@ -351,16 +352,26 @@ class CustomerController extends Controller
 
         CustomerIntialDue::create($dataInit);
 
-        if ($request->hasFile('Photo')) {
-            $image = $request->file('Photo');
-            $imageName = 'c' . $inserted_id . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(300, 200)->save('uploads/customer/' . $imageName);
-            $saveurl = 'uploads/customer/' . $imageName;
-
-            CustomerInfo::where('CustId', $inserted_id)->update([
-                'Photo' => $saveurl,
+         // profile photo
+         if ($request->hasFile('Photo')) {
+            $file = $request->file('Photo');
+            $uplodedPath =  (new  UploadDownloadController())->uploadCustomerProfilePhoto($file, null);
+             CustomerInfo::where('CustId', $inserted_id)->update([
+                'Photo' => $uplodedPath,
             ]);
         }
+
+        // if ($request->hasFile('Photo')) {
+        //     $image = $request->file('Photo');
+        //     $imageName = 'c' . $inserted_id . '.' . $image->getClientOriginalExtension();
+        //     Image::make($image)->resize(300, 200)->save('uploads/customer/' . $imageName);
+        //     $saveurl = 'uploads/customer/' . $imageName;
+             
+
+        //     CustomerInfo::where('CustId', $inserted_id)->update([
+        //         'Photo' => $saveurl,
+        //     ]);
+        // }
 
         if ($inserted_id) {
             Session::flash('success', 'Customer Added Successfully');
@@ -402,16 +413,12 @@ class CustomerController extends Controller
         ]);
 
         if ($request->hasFile('Photo')) {
-            $image = $request->file('Photo');
-            $imageName = 'c-' . $id . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->resize(300, 200)->save('uploads/customer/' . $imageName);
-            $saveurl = 'uploads/customer/' . $imageName;
-
-            //dd($saveurl);
-            CustomerInfo::where('CustId', $id)->update([
-                'Photo' => $saveurl,
+            $file = $request->file('Photo');
+            $uplodedPath =  (new  UploadDownloadController())->uploadCustomerProfilePhoto($file, null);
+             CustomerInfo::where('CustId', $inserted_id)->update([
+                'Photo' => $uplodedPath,
             ]);
-        }
+        } 
 
         if ($insert) {
             Session::flash('success', 'Successfully Updated');

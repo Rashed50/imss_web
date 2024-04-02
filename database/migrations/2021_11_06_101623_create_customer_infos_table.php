@@ -16,6 +16,7 @@ class CreateCustomerInfosTable extends Migration
     {
         Schema::create('customer_infos', function (Blueprint $table) {
             $table->id('CustId');
+            $table->string('CustomerID',5)->nullable();
             $table->string('CustName',50);
             $table->string('CustNameBl',50)->nullable();
             $table->string('TradeName');
@@ -37,10 +38,10 @@ class CreateCustomerInfosTable extends Migration
             $table->unsignedBigInteger('ThanId');
             $table->unsignedBigInteger('UnioId');
 
-            // $table->foreign('DiviId')->references('DiviId')->on('divisions')->onDelete('cascade');
-            // $table->foreign('DistId')->references('DistId')->on('districts')->onDelete('cascade');
-            // $table->foreign('ThanId')->references('ThanId')->on('thanas')->onDelete('cascade');
-            // $table->foreign('UnioId')->references('UnioId')->on('unions')->onDelete('cascade');
+            $table->foreign('DiviId')->references('DiviId')->on('divisions');
+            $table->foreign('DistId')->references('DistId')->on('districts');
+            $table->foreign('ThanId')->references('ThanId')->on('thanas');
+            $table->foreign('UnioId')->references('UnioId')->on('unions');
         });
 
     }

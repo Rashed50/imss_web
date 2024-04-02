@@ -20,7 +20,7 @@ class CreateCustomerTypesTable extends Migration
         });
 
         DB::table('customer_types')->insert([
-            'TypeName' => 'Hole Seller'
+            'TypeName' => 'Whole Seller'
          ]);
          DB::table('customer_types')->insert([
             'TypeName' => 'Retailer'

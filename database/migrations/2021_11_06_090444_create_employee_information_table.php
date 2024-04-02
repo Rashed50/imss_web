@@ -32,10 +32,10 @@ class CreateEmployeeInformationTable extends Migration
             $table->unsignedBigInteger('ThanId');
             $table->unsignedBigInteger('UnioId');
 
-            $table->foreign('DiviId')->references('DiviId')->on('divisions')->onDelete('cascade');
-            $table->foreign('DistId')->references('DistId')->on('districts')->onDelete('cascade');
-            $table->foreign('ThanId')->references('ThanId')->on('thanas')->onDelete('cascade');
-            $table->foreign('UnioId')->references('UnioId')->on('unions')->onDelete('cascade');
+            $table->foreign('DiviId')->references('DiviId')->on('divisions');
+            $table->foreign('DistId')->references('DistId')->on('districts');
+            $table->foreign('ThanId')->references('ThanId')->on('thanas');
+            $table->foreign('UnioId')->references('UnioId')->on('unions');
 
 
         });

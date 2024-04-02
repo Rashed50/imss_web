@@ -28,7 +28,6 @@ class CreateCompanyInfosTable extends Migration
            // $table->string('Fax')->nullable();
             $table->string('Logo')->nullable();
             $table->string('Website')->nullable();
-            $table->string('Email');
             $table->string('Email')->nullable();
             $table->string('InvoiceTitleEn')->nullable();
             $table->string('InvoiceTitleBl')->nullable();
