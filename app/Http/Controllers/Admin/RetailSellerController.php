@@ -89,10 +89,10 @@ class RetailSellerController extends Controller{
     $oldDue = 0;
      if($customerId != 0){
       
-        $Customer = $customerOBJ->getCustomer($customerId);
-        dd($request->$Customer);
+        $Customer = $customerOBJ->getCustomerByPhoneNumber($request->ContactNo);
+       // dd($Customer,$request->all());
 
-          $oldDue = $Customer->DueAmount;
+          $oldDue = $Customer->DueAmount ;
           $updateDue = $oldDue+$request->DueAmount;
       
           $customerDueUpdate = CustomerInfo::where('status',true)

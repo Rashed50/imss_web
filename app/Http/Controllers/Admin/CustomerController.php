@@ -54,7 +54,12 @@ class CustomerController extends Controller
     {
         return $Customer = CustomerInfo::where('status', true)->where('CustId', $id)->first();
     }
+    public function getCustomerByPhoneNumber($ContactNo)
+    {
+        return  CustomerInfo::where('status', true)->where('ContactNumber', $ContactNo)->first();
+    }
 
+    
     public function nameWiseFindCustomer($name, $number)
     {
         return $Customer = CustomerInfo::where('status', true)->where('ContactNumber', $number)->where('CustName', $name)->count();
