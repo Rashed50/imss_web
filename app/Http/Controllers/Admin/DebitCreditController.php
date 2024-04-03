@@ -11,6 +11,17 @@ class DebitCreditController extends Controller
 {
     
 
+    public function createNewTransaction($trans){
+
+        $insert = Transactions::insertGetId([
+            'TranAmount'=>$request['TranAmount'],
+            'TranDate'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+            'TranTypeId'=>$request['TranTypeId'],
+          //  'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
+        ]);
+        return $insert;
+    }
+
     public function insertNewDebitCreditTransaction(Request $request){
 
  

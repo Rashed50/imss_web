@@ -325,7 +325,7 @@ class CustomerController extends Controller
         ]);
 
 
-
+        
         $inserted_id = CustomerInfo::insertGetId([
             'CustName' => $request['CustName'],
             'CustNameBl' => $request['CustNameBl'],
@@ -347,6 +347,14 @@ class CustomerController extends Controller
             // 'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
         ]);
 
+             // profile photo
+             if ($request->hasFile('Photo')) {
+                $file = $request->file('Photo');
+                $uplodedPath =  (new  UploadDownloadController())->uploadCustomerProfilePhoto($file, null);
+                 CustomerInfo::where('CustId', $inserted_id)->update([
+                    'Photo' => $uplodedPath,
+                ]);
+            }
 
         $dataInit['DueAmount'] = $request->InitialDue;
         $dataInit['Year'] = Carbon::now()->format('Y');
@@ -357,26 +365,9 @@ class CustomerController extends Controller
 
         CustomerIntialDue::create($dataInit);
 
-         // profile photo
-         if ($request->hasFile('Photo')) {
-            $file = $request->file('Photo');
-            $uplodedPath =  (new  UploadDownloadController())->uploadCustomerProfilePhoto($file, null);
-             CustomerInfo::where('CustId', $inserted_id)->update([
-                'Photo' => $uplodedPath,
-            ]);
-        }
+    
 
-        // if ($request->hasFile('Photo')) {
-        //     $image = $request->file('Photo');
-        //     $imageName = 'c' . $inserted_id . '.' . $image->getClientOriginalExtension();
-        //     Image::make($image)->resize(300, 200)->save('uploads/customer/' . $imageName);
-        //     $saveurl = 'uploads/customer/' . $imageName;
-             
-
-        //     CustomerInfo::where('CustId', $inserted_id)->update([
-        //         'Photo' => $saveurl,
-        //     ]);
-        // }
+    
 
         if ($inserted_id) {
             Session::flash('success', 'Customer Added Successfully');

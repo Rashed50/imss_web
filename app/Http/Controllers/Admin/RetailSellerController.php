@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\DataLayers\CustomerDataService;
+use App\Http\DataLayers\SalesDataService;
+use App\Http\DataLayers\DebitCreditDataService;
+
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\DataLayers\ItemsDataService;
@@ -81,92 +85,43 @@ class RetailSellerController extends Controller{
 
     ]);
 
+// dd($request->all());
+
      // Customer info + Duie update
      $customerOBJ = new CustomerController();
-    //  $customerId = $customerOBJ->nameWiseFindCustomer($request->CustName,$request->ContactNo);
-    // dd('ookk');
-    $customerId = $request->TradeName ;
+    
+    $acustomer = (new CustomerDataService())->searchACustomerByPhoneNumber($request->ContactNo);
+   // dd($Customer);
+    $login_user_id = Auth::user()->id;
     $oldDue = 0;
-     if($customerId != 0){
-      
-        $Customer = $customerOBJ->getCustomerByPhoneNumber($request->ContactNo);
-       // dd($Customer,$request->all());
+      if($acustomer){
+          $customerId = $acustomer->CustId ;
 
-          $oldDue = $Customer->DueAmount ;
+          $oldDue = $acustomer->DueAmount ;
           $updateDue = $oldDue+$request->DueAmount;
       
           $customerDueUpdate = CustomerInfo::where('status',true)
-                              ->where('CustId',$Customer->CustId)->update([
+                              ->where('CustId',$acustomer->CustId)->update([
                                   'DueAmount' => $updateDue,
                                 ]);
       }else{
-                    $customerId = $customerOBJ->updateRetailerCustomerBalance(null,
-                          $request->DueAmount,
-                          $request->CustName,
-                          $request->TradeName,
-                          $request->ContactNo,
-                          $request->Address
-                        );
-                        $oldDue = 0;
-        }
+        $customerId =  (new CustomerDataService())->insertNewCustomerWithMinimumInformation($request->CustName,$request->ContactNo,$request->DueAmount,2,$request->Address,$login_user_id);          
+        $oldDue = 0;
+      }
 
-    $request['TranAmount'] = $request->PayAmount;
-    $request['TranTypeId'] = 1;
-
-    $transObj = new  TransactionsController();
-    $transId = $transObj->createNewTransaction($request); 
-    
-   
-    // Credit Transaction
-    $request['Amount'] = $request->PayAmount;
-    $request['TranId'] = $transId;
-    $request['ChartOfAcctId'] = 1;
-    $request['DrCrTypeId'] = 1;
-    $decrObj = new  DebitCreditController();
-    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+        $request['TranTypeId'] = 1; // income
+        $debitToAccount = 1;// 200;// Item Sales
+        $creditToAccount = 1;// 190;// Petty Cash
+        $newTransactionId =  (new DebitCreditDataService())->insertNewDebitCreditTransaction($debitToAccount,$creditToAccount,$request->PayAmount,$request->TranTypeId,$request->SellingDate);
  
-    // Debit Transaction
-    $request['ChartOfAcctId'] = 1;
-    $request['DrCrTypeId'] = 2;
-    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
-
-
-   
-    // insert data in database
-    $insert = ProductSell::insertGetId([
-      'Commission' => $request->Discount,
-      'TotalAmount' => $request->TotalCost,
-      'NetAmount' => $request->NetAmount,
-      'DueAmount' => $request->DueAmount,
-      'PaidAmount' => $request->PayAmount,
-      'LabourCost' => $request->LabourCost,
-      'SellingDate' => $request->SellingDate,
-      'VoucharNo' => $request->VoucharNo,
-      'CarryingCost' => $request->CarryingBill,
-      'CreateById' => Auth::user()->id,
-      'TranId' => 1,
-      'CustId' => $customerId,
-      'created_at' => Carbon::now(),
-    ]);
-   
-    $sellInfo = ProductSell::where('ProdSellId',$insert)->first();
-    // insert sale record
-    
-      /* Retailler Record */
+       $sale_auto_id =  (new SalesDataService())->insertNewSalesInformation($customerId,$newTransactionId, $request->TotalCost, $request->NetAmount, $request->Discount, $request->DueAmount, $request->LabourCost, 
+      $request->PayAmount, $request->SellingDate, $request->VoucharNo, $request->CarryingBill, $login_user_id);
+     
       $stockConObj = new  StockController();
 
       $carts = Cart::content();
       foreach ($carts as $data) {
-        ProductSellRecord::insert([
-          'Quantity' => $data->qty,
-          'Amount' => $data->price,
-          'LabourCost' => $data->holLabourPerUnit,
-          'ProdSellId' => $insert,
-          'CateId' => $data->options->holCategoryId,
-          'BranId' => $data->options->holBranId,
-          'SizeId' => $data->options->holSize,
-          'ThicId' => $data->options->holThickness,
-        ]);
+        (new SalesDataService())->insertNewSaleItemRecord($sale_auto_id,$data->qty,$data->price,$data->holLabourPerUnit,$data->options->holCategoryId,$data->options->holBranId,$data->options->holSize,$data->options->holThickness);
 
         $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
           $data->options->holCategoryId,
@@ -176,7 +131,7 @@ class RetailSellerController extends Controller{
           $data->qty*(-1)); 
       }
 
-      if($insert){
+      if($sale_auto_id){
       // Cart Destroy
       Cart::destroy();
       // Redirect Back
@@ -185,9 +140,10 @@ class RetailSellerController extends Controller{
             'alert-type'=>'success'
         );
       
-      $sellRecord = ProductSellRecord::where('ProdSellId',$insert)->get();
-      // dd($sellRecord);
-      return view('admin.voucher.voucher', compact('sellInfo', 'sellRecord', 'company', 'oldDue'))->with($notification);
+        // for making printable invoice 
+      $sellInfo = ProductSell::where('ProdSellId',$sale_auto_id)->first();
+      $sellRecord = ProductSellRecord::where('ProdSellId',$sale_auto_id)->get();
+       return view('admin.voucher.voucher', compact('sellInfo', 'sellRecord', 'company', 'oldDue'))->with($notification);
     }
 
   }
