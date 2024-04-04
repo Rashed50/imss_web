@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DebitCreditController;
 use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\Admin\ChartOfAccountController;
+use App\Http\DataLayers\PurchaseDataService;
+use App\Http\DataLayers\VendorDataService;
 use Illuminate\Http\Request;
 use App\Models\ProductPurchase;
 use App\Models\PurchaseRecord;
@@ -33,78 +36,23 @@ class ProductPurchaseController extends Controller{
   // Produt Purchase Form Save Button Action
   public function store(Request $request){
     // form validation
-    
-    $request['TranAmount'] = $request->PayAmount;
-    $request['TranTypeId'] = 1;
+     
 
-    $transObj = new  TransactionsController();
-    $transId = $transObj->createNewTransaction($request); 
-    
-   
-    // Credit Transaction
-    $request['Amount'] = $request->PayAmount;
-    $request['TranId'] = $transId;
-    $request['ChartOfAcctId'] = 1;
-    $request['DrCrTypeId'] = 1;
-    $decrObj = new  DebitCreditController();
-    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
- 
-    // Debit Transaction
-    $request['ChartOfAcctId'] = 1;
-    $request['DrCrTypeId'] = 2;
-    $drcrId = $decrObj->insertNewDebitCreditTransaction($request); 
+    $loginId = Auth::user()->id;
+    $debitAccount = $request->DebitAccount;
+    $carts = Cart::content(); // cart items
+    $aVendor = (new VendorDataService())->getAVendorRecordByVendorAutoId($request->VendorName);
+    $purchaseId = (new PurchaseDataService())->insertNewPurchaseInformation($request->PayAmount,$request->CarryingBill,$request->Discount,
+    $request->LabourCost, $request->PurchaseDate, $request->VendorName,1, $request->doNO, $request->TruckNo, $loginId,$debitAccount,$aVendor->ChartOfAcctId,$carts );
 
-    $CreateBy = Auth::user()->id;
 
-    // insert data in database
-    $insert = ProductPurchase::insertGetId([
-      
-      'TransactionId' => $transId,
-      'TotalPrice' => $request->PayAmount,
-      'PurchaseDate' => $request->PurchaseDate,
-      'VendorId' => $request->VendorName,
-      'LabourCost' => $request->LabourCost,
-      'PaymentType' => 1,
-      'BankId' => 1,
-      'Discount' => $request->Discount,
-      'CarringCost' => $request->CarryingBill,
-      'DoNo' => $request->doNO,
-      'TruckNo' => $request->TruckNo,
-      'CreateById' => $CreateBy,
-      'created_at' => Carbon::now(),
-    ]);
- 
-    // update Vendor Due Amount
-    $vendorObj = new  VendorController();
-    $aVendor = $vendorObj->updateVendorBalance($request->VendorName,$request->PayAmount); 
-    
-    // insert Cart Content
-    $stockConObj = new  StockController();
-    $carts = Cart::content();
-    foreach ($carts as $data) {
-            PurchaseRecord::insert([
-              'Quantity' => $data->qty,
-              'UnitPrice' => $data->price,
-              'Amount' => $data->subtotal,
-              'ProdPurcId' => $insert,
-              'CateId' => $data->options->CategoryId,
-              'BranId' => $data->options->BranId,
-              'SizeId' => $data->options->Size,
-              'ThicId' => $data->options->Thickness,
-            ]);
-           $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
-            $data->options->CategoryId,$data->options->BranId
-            ,$data->options->Size,$data->options->Thickness,$data->qty); 
-
-    }
-
-    // Cart Destroy
-    Cart::destroy();
-    // Redirect Back
-    if($insert){
-      Session::flash('success','value');
+    if($purchaseId){
+      // Cart Destroy
+      // Cart::destroy();
+      Session::flash('success','Successfully Saved');
       return redirect()->back();
-    }
+    } 
+   
   }
 
 
@@ -185,7 +133,10 @@ class ProductPurchaseController extends Controller{
      $purchaseProduct = $this->getAll();
      // Cart Destroy
      Cart::destroy();
-     return view('admin.purchase.add', compact('purchaseProduct','allCatg','vendorList'));
+     $chartOfAcc = new  ChartOfAccountController();
+     $chartOffAccountList = $chartOfAcc->getAllChartOfAccount();
+    // dd($chartOffAccountList);
+     return view('admin.purchase.add', compact('purchaseProduct','allCatg','vendorList','chartOffAccountList'));
 
   }
 

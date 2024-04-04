@@ -25,20 +25,8 @@
         bottom: .5em;
      }
 </style>
-
-  <nav class="breadcrumb sl-breadcrumb">
-    <a class="breadcrumb-item" href="index.html">Starlight</a>
-    <span class="breadcrumb-item active">Vendor</span>
-  </nav>
-
-  <div class="sl-pagebody">
-    <!-- form -->
-   <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('vendor.update') : route('vendor.store') }}" enctype="multipart/form-data">
-     @csrf
-        <div class="card">
-
-            <div class="card-body card_form">
-                <div class="row">
+ <!-- Session Flash Message   -->
+<div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-7">
                         @if(Session::has('success'))
@@ -46,11 +34,7 @@
                             <strong>Success!</strong> {{Session::get('success')}}
                         </div>
                         @endif
-                        @if(Session::has('delete'))
-                        <div class="alert alert-success alertsuccess" role="alert">
-                            <strong>Success!</strong> {{Session::get('delete')}}
-                        </div>
-                        @endif
+                        
                         @if(Session::has('error'))
                         <div class="alert alert-danger alerterror" role="alert">
                             <strong>Opps!</strong> {{Session::get('error')}}
@@ -58,20 +42,18 @@
                         @endif
                     </div>
                     <div class="col-md-2"></div>
-                </div>
+</div>
 
+  <div class="sl-pagebody">
+    <!-- form -->
+   <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('vendor.update') : route('vendor.store') }}" enctype="multipart/form-data">
+     @csrf
+        <div class="card">
+            <h5>{{ (@$data)?'Update':'New' }} Vendor Information</h5>
+            <div class="card-body card_form">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="card-header">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <h3 class="card-title card_top_title">{{ (@$data)?'Update':'New' }} Vendor Information</h3>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
+                       
 
                         <div class="form-group row custom_form_group{{ $errors->has('VendName') ? ' has-error' : '' }}">
                             <label class="col-sm-3 control-label">Vendor Name:<span class="req_star">*</span></label>
@@ -240,17 +222,10 @@
 
 
     <!-- list -->
-    <div class="row" style="margin-top:30px">
+    <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3 class="card-title card_top_title"></i>Vendor List</h3>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
+               
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">

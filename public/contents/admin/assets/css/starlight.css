@@ -12373,11 +12373,14 @@ textarea.parsley-success:focus {
 }
 
 .sl-pagebody {
-  padding: 20px;
+  padding: 5px;
+  /* padding: 25px;  rashed */
 }
 @media (min-width: 576px) {
   .sl-pagebody {
-    padding: 25px;
+    padding: 5px;
+  /* padding: 25px;  rashed */
+
   }
 }
 

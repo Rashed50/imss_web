@@ -22,7 +22,7 @@
     <div class="col-md-1"></div>
 </div>
 
-<div class="sl-pagebody" style="padding:0px;">
+<div class="sl-pagebody">
     <form class="form-horizontal" id="registration" method="post" action="{{ (@$data)?route('customer.update') : route('customer.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="card">

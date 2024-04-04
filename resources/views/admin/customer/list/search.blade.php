@@ -2,7 +2,7 @@
 @section('content')
 <!-- ########## START: MAIN PANEL ########## -->
 
-  <div class="sl-pagebody" style="padding:0px;">
+  <div class="sl-pagebody">
     <!-- form -->
     <div class="row">
         <div class="col-md-2"></div>

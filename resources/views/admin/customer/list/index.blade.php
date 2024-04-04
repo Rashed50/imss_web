@@ -2,7 +2,7 @@
 @section('content')
 <!-- ########## START: MAIN PANEL ########## -->
 
-  <div class="sl-pagebody" style="padding:0px;">
+  <div class="sl-pagebody">
     <!-- form -->
     <div class="row">
         <div class="col-md-2"></div>
@@ -21,7 +21,7 @@
         <div class="col-md-2"></div>
     </div>
     <!-- list -->
-    <div class="row" style="margin-top:30px">
+    <div class="row" >
         <div class="col-lg-12">
             <div class="card">
 

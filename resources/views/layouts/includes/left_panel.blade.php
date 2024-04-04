@@ -98,7 +98,7 @@
     </a>
     <!-- sl-menu-link -->
     <ul class="sl-menu-sub nav flex-column">
-         <li class="nav-item"><a href="{{ route('vendor.add') }}" class="nav-link @yield('Vendor')">New Venodr</a></li>
+         <li class="nav-item"><a href="{{ route('vendor.add') }}" class="nav-link @yield('Vendor')">New Vendor</a></li>
          <li class="nav-item"><a href="#" class="nav-link @yield('Vendor Report')">Vendor Report</a></li>
 
     </ul>

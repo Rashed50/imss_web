@@ -2,14 +2,14 @@
 @section('content')
 <!-- ########## START: MAIN PANEL ########## -->
 
-  <div class="sl-pagebody">
+  <div class="sl-pagebody pd 0">
     {{-- Response Massage --}}
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-7">
             @if(Session::has('success'))
             <div class="alert alert-success alertsuccess" role="alert">
-                <strong>Success</strong> Added New Product
+                <strong>{{Session::get('success')}}</strong>
             </div>
             @endif
             @if(Session::has('error'))
@@ -209,7 +209,7 @@
                                 <div class="form-group row custom_form_group{{ $errors->has('doNO') ? ' has-error' : '' }}">
                                     <label class="col-sm-5 control-label">DO No:<span class="req_star">*</span></label>
                                     <div class="col-sm-7">
-                                      <input type="text" class="form-control" name="doNO" value="{{ old('doNO') }}" placeholder="Input DO No">
+                                      <input type="text" class="form-control" name="doNO" value="{{ old('doNO') }}" placeholder="Input DO No" required>
                                       @if ($errors->has('doNO'))
                                       <span class="invalid-feedback" role="alert">
                                           <strong>{{ $errors->first('doNO') }}</strong>
@@ -254,6 +254,22 @@
                                         @if ($errors->has('VendorName'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('VendorName') }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group row custom_form_group{{ $errors->has('ChartOfAcctId') ? ' has-error' : '' }}">
+                                    <label class="col-sm-5 control-label">Debit Account:<span class="req_star">*</span></label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" name="DebitAccount" id="DebitAccount">
+                                            <option value="">Select Debit Account </option>
+                                            @foreach ($chartOffAccountList as $ac)
+                                              <option value="{{ $ac->ChartOfAcctId }}"> {{ $ac->ChartOfAcctName }} </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('ChartOfAcctId'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('ChartOfAcctId') }}</strong>
                                         </span>
                                         @endif
                                     </div>

@@ -15,7 +15,7 @@ class ItemsSeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-            'CateName' => 'Road' , // 1
+            'CateName' => 'Rod' , // 1
               'CateBLName' => 'রড' ,
         ]);
 

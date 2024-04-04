@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\ChartOfAccountController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\AccountTypeController;
+use App\Http\DataLayers\VendorDataService;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
@@ -13,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Image;
 
 
@@ -98,6 +100,8 @@ class VendorController extends Controller{
             'VendName.unique' => 'this vendor name already exists! please another name',
         ]);
 
+        $loginId = Auth::user()->id;
+        $date = date('Y-m-d', strtotime($request->OpeningDate));
 
         $request['ChartOfAcctName'] = $request['VendName'];
         $request['ChartOfAcctNumber'] = '38439842';
@@ -109,27 +113,16 @@ class VendorController extends Controller{
        $chartOfAcc = new  ChartOfAccountController();
        $vendorAccId = $chartOfAcc->addNewChartOfAccount($request);
 
-       
+       $vendorId = (new VendorDataService())->insertNewVendorInformation($request['VendName'],$request['ContactName'],$request['Mobile1'],
+       $request['VendAddress'],$date,$request['Balance'],$request['InitialBalance'],$vendorAccId,$loginId);
 
-        $date = date('Y-m-d', strtotime($request->OpeningDate));
-        $insert = Vendor::insertGetId([
-            'VendName'=>$request['VendName'],
-            'ContactName'=>$request['ContactName'],
-            'Mobile1'=>$request['Mobile1'],
-            'OpeningDate'=>$date,
-            'Balance'=>$request['Balance'],
-            'InitialBalance'=>$request['InitialBalance'],
-            'ChartOfAcctId'=> $vendorAccId ,//request['ChartOfAcctId'],
-            'VendAddress'=>$request['VendAddress'],
-            'CreateById' => 1,
-            'created_at'=>Carbon::now('Asia/Dhaka')->toDateTimeString(),
-        ]);
+  
 
-        if($insert){
-            Session::flash('success','new vendor store Successfully.');
+        if($vendorId){
+            Session::flash('success','Successfully Saved');
                 return redirect()->route('vendor.add');
         }else{
-            Session::flash('error','please try again.');
+            Session::flash('error','Please Try Again.');
                 return redirect()->back();
         }
 
