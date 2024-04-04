@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller{
   public function index(){
-    // updated code
+    // updated from office pc code
     return view('admin.dashboard.index');
   }
 
