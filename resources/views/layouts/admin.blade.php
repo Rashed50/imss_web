@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Admin Panel</title>
+    <title>Dashboard</title>
 
     <!-- vendor css -->
     <link href="{{ asset('contents/admin') }}/assets/css/all.min.css" rel="stylesheet">
@@ -40,11 +40,11 @@
       @yield('content')
     </div>
     <!-- footer part -->
-    <!-- <footer class="sl-footer-custom">
+    <footer class="sl-footer-custom">
       <div class="footer-left">
-        <div class="mg-b-2">Copyright &copy; 2021. 3iengineers.com</div>
+        <div class="mg-b-2">Copyright &copy; Md Rashedul Hoque</div>
       </div>
-    </footer> -->
+    </footer>
     <!-- script file -->
 
     <script src="{{ asset('contents/admin') }}/assets/lib/popper/popper.js"></script>
@@ -272,9 +272,7 @@
         var BranId = $('select[name="BranID"]').val();
         var Size = $('select[name="SizeID"]').val();
         var Thickness = $('select[name="ThicID"]').val();
-
-       // alert(BradId);
-        // Name
+ 
         var CategoryName = $('select[name="CategoryID"] option:selected').text();
         var BrandName = $('select[name="BranID"] option:selected').text();
         var SizeName = $('select[name="SizeID"] option:selected').text();
@@ -682,7 +680,7 @@
 
               }
           });
-          // Union
+          // District
           $('select[name="DistId"]').on('change', function(){
               var DistId = $(this).val();
               // alert(DistId);
@@ -724,7 +722,7 @@
           });
 
 
-           // Union
+           // Thana
           $('select[name="ThanId"]').on('change', function(){
               var ThanId = $(this).val();
               if(ThanId) {

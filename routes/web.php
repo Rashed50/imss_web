@@ -31,7 +31,7 @@ use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\DebitTypeController;
 use App\Http\Controllers\Admin\SellReturnController;
 use App\Http\Controllers\Admin\ProductActivityController;
-use App\Http\Controllers\Admin\TestController;
+use App\Http\Controllers\Admin\Reports\ReportController;
 
 
 use App\Http\Controllers\Admin\Authorization\RoleController;
@@ -81,6 +81,10 @@ Route::middleware('auth')->prefix('dashboard')->group(function() {
     Route::post('user/store', [UserController::class, 'createNewUser'])->name('user.store');
     Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('user/update', [UserController::class, 'update'])->name('user.update');
+
+
+    Route::get("report/dashboard",[ReportController::class,"loadReportDasboard"])->name("report.dashboard");
+    Route::post("repor/customer/list",[ReportController::class,"getActiveCustomerReport"])->name("report.customer.list");
     
 });
 

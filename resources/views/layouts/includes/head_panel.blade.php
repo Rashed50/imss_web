@@ -15,10 +15,10 @@
         <div class="dropdown-menu dropdown-menu-header wd-200">
           <ul class="list-unstyled user-profile-nav">
             <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
-            <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
+            <!-- <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
             <li><a href=""><i class="icon ion-ios-download-outline"></i> Downloads</a></li>
             <li><a href=""><i class="icon ion-ios-star-outline"></i> Favorites</a></li>
-            <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li>
+            <li><a href=""><i class="icon ion-ios-folder-outline"></i> Collections</a></li> -->
             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="waves-effect"><i class="icon ion-power"></i><span>Logout</span></a></li>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               @csrf
@@ -28,12 +28,10 @@
       </div><!-- dropdown -->
     </nav>
     <div class="navicon-right">
-      <a id="btnRightMenu" href="" class="pos-relative">
+      <!-- <a id="btnRightMenu" href="" class="pos-relative">
         <i class="icon ion-ios-bell-outline"></i>
-        <!-- start: if statement -->
-        <span class="square-8 bg-danger"></span>
-        <!-- end: if statement -->
-      </a>
+         <span class="square-8 bg-danger"></span>
+       </a> -->
     </div><!-- navicon-right -->
   </div><!-- sl-header-right -->
 </div><!-- sl-header -->

@@ -1,5 +1,5 @@
 <!-- ########## START: LEFT PANEL ########## -->
-<div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> IMSS Software </a></div>
+<div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> IMS Software </a></div>
 <div class="sl-sideleft">
 
   <!-- <div class="input-group input-group-search">
@@ -125,7 +125,7 @@
 
 
  <!-- Voucher -->
-          <a href="#" class="sl-menu-link @yield('Voucher')">
+        <a href="#" class="sl-menu-link @yield('Voucher')">
          <div class="sl-menu-item">
            <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
            <span class="menu-item-label">Accounts </span>
@@ -138,6 +138,23 @@
          <li class="nav-item"><a href="{{ route('CreitVoucher.add') }}" class="nav-link @yield('credit-voucher')">Credit Voucher</a></li>
          <li class="nav-item"><a href="#" class="nav-link @yield('credit-voucher')">New Account Head</a></li>
        </ul>
+
+       
+
+ <!-- Reports -->
+      <a href="#" class="sl-menu-link @yield('Voucher')">
+         <div class="sl-menu-item">
+           <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
+           <span class="menu-item-label">Reports </span>
+           <i class="menu-item-arrow fa fa-angle-down"></i>
+         </div>
+       </a>
+       <!-- sl-menu-link -->
+      <ul class="sl-menu-sub nav flex-column">
+         <li class="nav-item"><a href="{{ route('report.dashboard') }}" class="nav-link @yield('Report')">Reports</a></li>
+      </ul>
+
+       
 
       <!-- multiple menu -->
     <a href="#" class="sl-menu-link">
