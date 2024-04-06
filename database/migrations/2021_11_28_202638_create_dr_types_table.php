@@ -18,6 +18,24 @@ class CreateDrTypesTable extends Migration
             $table->string('DrTypeName');
             $table->timestamps();
         });
+
+        DB::table('dr_types')->insert([
+            'DrTypeName' => 'Transportation Expense'  
+        ]);
+
+        DB::table('dr_types')->insert([
+            'DrTypeName' => 'Office Expense'  
+        ]);
+
+        DB::table('dr_types')->insert([
+            'DrTypeName' => 'Employee Salary'  
+        ]);
+
+       
+
+        
+
+
     }
 
     /**

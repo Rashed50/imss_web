@@ -15,19 +15,20 @@ class CreateProductPurchasesTable extends Migration
     {
         Schema::create('product_purchases', function (Blueprint $table) {
             $table->id('ProdPurcId');
-            $table->integer('TransactionId');
-            $table->float('TotalPrice',11,2)->nullable();
-            $table->date('PurchaseDate')->nullable();
-            $table->integer('VendorId')->nullable();
-            $table->float('LabourCost',11,2)->nullable();
+            $table->unsignedBigInteger('TransactionId');
+            $table->float('TotalPrice',11,2)->default(0);
+            $table->date('PurchaseDate');
+            $table->integer('VendorId');
+            $table->float('LabourCost',11,2)->default(0);
             $table->integer('PaymentType');
             $table->integer('BankId')->nullable();
-            $table->integer('Discount');
-            $table->integer('CarringCost');
+            $table->integer('Discount')->default(0);
+            $table->integer('CarringCost')->default(0);
             $table->integer('ToSaleId')->default(0);
-            $table->string('DoNo',40);
-            $table->string('TruckNo',40);
-            $table->unsignedBigInteger('CreateById');
+            $table->string('DoNo',40)->nullable();
+            $table->string('TruckNo',40)->nullable();
+            $table->integer('CreateById');
+            $table->integer('UpdateById')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

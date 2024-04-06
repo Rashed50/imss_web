@@ -16,13 +16,12 @@ class CreateCrVouchersTable extends Migration
         Schema::create('cr_vouchers', function (Blueprint $table) {
             $table->id('CrVoucId');
             $table->unsignedBigInteger('TransactionId');
-            $table->unsignedBigInteger('CrTypeId');
-            $table->date('ExpenseDate');
-            $table->float('Amount',11,2);
-            $table->integer('DebitedTold');
-            $table->integer('CreditedFromId');
-            $table->string('VoucherId');
+            $table->integer('CrTypeId')->unsigned()->nullable();;
+            $table->date('CrDate');
+            $table->float('CrAmount',11,2); 
+            $table->string('CrVoucherNo');
             $table->unsignedBigInteger('CreateById');
+            $table->unsignedBigInteger('UpdateById')->nullable();
             $table->timestamps();
         });
     }

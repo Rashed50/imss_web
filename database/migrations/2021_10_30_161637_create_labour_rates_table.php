@@ -16,11 +16,17 @@ class CreateLabourRatesTable extends Migration
         Schema::create('labour_rates', function (Blueprint $table) {
             $table->id('LaboId');
             $table->unsignedBigInteger('CateId');
+            $table->unsignedBigInteger('BranId');
             $table->unsignedBigInteger('SizeId');
             $table->string('LaboType',6); // load , unload
             $table->float('Amount')->default(0);
-            $table->foreign('CateId')->references('CateId')->on('categories')->onDelete('cascade');
-            $table->foreign('SizeId')->references('SizeId')->on('sizes')->onDelete('cascade');
+
+            $table->integer('CreateById')->unsigned();
+            $table->integer('UpdateById')->unsigned()->nullable();
+
+            $table->foreign('CateId')->references('CateId')->on('categories');
+            $table->foreign('BranId')->references('BranId')->on('brands');
+            $table->foreign('SizeId')->references('SizeId')->on('sizes');
 
         });
     }

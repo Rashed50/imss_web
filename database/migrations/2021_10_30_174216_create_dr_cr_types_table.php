@@ -20,7 +20,7 @@ class CreateDrCrTypesTable extends Migration
 
 
          DB::table('dr_cr_types')->insert([
-            'TypeName' => 'Debit'
+            'TypeName' => 'Debit'  
         ]);
 
         DB::table('dr_cr_types')->insert([

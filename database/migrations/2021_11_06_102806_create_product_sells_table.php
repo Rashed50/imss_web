@@ -21,11 +21,12 @@ class CreateProductSellsTable extends Migration
             $table->float('DueAmount',11,2)->default(0);
             $table->float('PaidAmount',11,2)->default(0);
             $table->float('LabourCost',11,2)->default(0);
-            $table->date('SellingDate')->nullable();
+            $table->date('SellingDate');
             $table->string('VoucharNo',15)->default(0);
             $table->float('CarryingCost',11,2)->default(0);
-            $table->boolean('status')->default(1);
-            $table->unsignedBigInteger('CreateById');
+            $table->boolean('status')->default(1); 
+            $table->integer('CreateById');
+            $table->integer('UpdateById')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('TranId');

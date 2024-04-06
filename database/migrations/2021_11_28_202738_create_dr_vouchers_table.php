@@ -16,13 +16,12 @@ class CreateDrVouchersTable extends Migration
         Schema::create('dr_vouchers', function (Blueprint $table) {
           $table->id('DrVoucId');
           $table->unsignedBigInteger('TransactionId');
-          $table->unsignedBigInteger('DrTypeId');
-          $table->date('ExpenseDate');
-          $table->float('Amount',11,2);
-          $table->integer('DebitedTold');
-          $table->integer('CreditedFromId');
-          $table->string('VoucherId');
+          $table->integer('DrTypeId')->unsigned()->nullable();
+          $table->date('DrDate');
+          $table->float('DrAmount',11,2); 
+          $table->string('DrVoucherNo');
           $table->unsignedBigInteger('CreateById');
+          $table->unsignedBigInteger('UpdateById')->nullable();
           $table->timestamps();
         });
     }

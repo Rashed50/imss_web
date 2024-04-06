@@ -15,16 +15,17 @@ class CreateCustomerPaymentsTable extends Migration
     {
         Schema::create('customer_payments', function (Blueprint $table) {
             $table->id('CustPaymId');
-            $table->date('PaymentDate')->nullable();
+            $table->date('PaymentDate');
             $table->float('PaymentAmount',11,2);
             $table->unsignedBigInteger('AccountId');
-            $table->unsignedBigInteger('MoneyReciveBy')->nullable();
+            $table->integer('MoneyReceiveBy')->nullable();
             $table->string('VoucharNo',50)->nullable();
-            $table->float('Discount',11,2)->nullable();
+            $table->float('Discount',11,2)->default(0); 
             $table->unsignedBigInteger('CreateById');
+            $table->unsignedBigInteger('UpdateById')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
-            $table->unsignedBigInteger('CustId');
+            $table->unsignedBigInteger('CustId')->unsigned();
             $table->unsignedBigInteger('TranId');
             /* Foreign Key */
             $table->foreign('CustId')->references('CustId')->on('customer_infos')->onDelete('cascade');

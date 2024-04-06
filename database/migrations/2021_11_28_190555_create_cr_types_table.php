@@ -17,6 +17,15 @@ class CreateCrTypesTable extends Migration
             $table->id('CrTypeId');
             $table->string('CrTypeName');
         });
+
+        DB::table('cr_types')->insert([
+            'CrTypeName' => 'Abuse Materials'  
+        ]);
+
+        DB::table('cr_types')->insert([
+            'CrTypeName' => 'Others'  
+        ]); 
+
     }
 
     /**
