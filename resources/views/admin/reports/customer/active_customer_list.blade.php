@@ -23,7 +23,7 @@
 
             @page {
                 size: A4 landscape;
-                margin: 15mm 5mm 10mm 15mm;
+                margin: 5mm 5mm 5mm 10mm;
                 /* top, right,bottom, left */
             }
             .print__button {
@@ -173,7 +173,7 @@
             </div>
             <!-- title -->
             <div class="title__part">
-                <h6>{{$company->CompName}} <small>{{$company->BengleName}} </small> </h6>
+                <h3 style="padding-top: 0px;">{{$company->CompName}} <small>{{$company->BengleName}} </small> </h3>
                 <address class="address">
                     {{$company->CompAddress}}
                 </address>
@@ -221,11 +221,9 @@
                         <td class="td__amount"> {{ $emp->DueAmount }} </td>
                         <td class="td__photo"> 
                             <a href="{{ route('customer.photo.download',[$emp->CustId]) }}"> 
-                                    @if ($emp->Photo != null)
+                                @if ($emp->Photo != null)
                                     <img src="{{ asset($emp->Photo) }}" alt="profile_img" height="50px;" width="50px;">
-                                    @else
-                                    "" 
-                                    @endif  
+                                @endif  
                              </a>
 
                             
