@@ -24,6 +24,7 @@ use App\Models\ProductSell;
 use App\Models\ProductSellRecord;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image as Image;
 
@@ -159,6 +160,24 @@ class CustomerController extends Controller
     | BALDE FILE OPERATION
     |--------------------------------------------------------------------------
     */
+
+    public function downloadCustomerPhoto($customerId){
+        try {
+
+          //  $emp = (new EmployeeDataService())->getAnEmployeeInfoByEmpId($customerId);     
+            $customer =  CustomerInfo::where('CustId', $customerId)->first();
+            $lst = explode('.', $customer->Photo);
+            $file_ext = $lst[1];
+            $file = $customer->Photo; // server code for file path
+            $headers = array(
+                    'Content-Type: application/'.$file_ext,
+                    );
+            return Response::download($file, $customer->CustId.'-photo.'.$file_ext, $headers); 
+        }catch(Exception $ex){
+            return $ex;
+        }
+
+    }
 
     // ========================= Custtomer list ===============================
     public function list()

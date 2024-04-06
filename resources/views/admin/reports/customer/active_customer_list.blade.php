@@ -219,7 +219,17 @@
                         <td class="td_contact"> {{ $emp->ContactNumber }}</td> 
                         <td class="td_address"> {{ Str::limit($emp->Address),30 }}</td>
                         <td class="td__amount"> {{ $emp->DueAmount }} </td>
-                        <td class="td__photo"> {{ $emp->Photo }}</td>
+                        <td class="td__photo"> 
+                            <a href="{{ route('customer.photo.download',[$emp->CustId]) }}"> 
+                                    @if ($emp->Photo != null)
+                                    <img src="{{ asset($emp->Photo) }}" alt="profile_img" height="50px;" width="50px;">
+                                    @else
+                                    "" 
+                                    @endif  
+                             </a>
+
+                            
+                        </td>
                        </tr>
                     @endforeach
                 </tbody>

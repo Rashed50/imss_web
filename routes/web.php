@@ -85,6 +85,8 @@ Route::middleware('auth')->prefix('dashboard')->group(function() {
 
     Route::get("report/dashboard",[ReportController::class,"loadReportDasboard"])->name("report.dashboard");
     Route::post("repor/customer/list",[ReportController::class,"getActiveCustomerReport"])->name("report.customer.list");
+    // download customer photo
+
     
 });
 
@@ -179,6 +181,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::post('customer/add', [CustomerController::class, 'store'])->name('customer.store');
     Route::post('customer/edit', [CustomerController::class, 'update'])->name('customer.update');
     Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    Route::get('customer/photo/{id}', [CustomerController::class, 'downloadCustomerPhoto'])->name('customer.photo.download');
 
 
     /* ++++++++++++ Ajax Route IN Customer Id Wise Customer information ++++++++++++ */

@@ -14,6 +14,14 @@
         </div>
       </div>
 
+      <div class="col-sm-4 col-xl-3">
+        <div class="card pd-20 bg-primary">
+            <a href="" class="tx-white-8 hover-white" id="leave_application_edit_button" data-toggle="modal" data-target="#dayclosing_report_modal">
+                   Day Closing Report
+            </a>
+        </div>
+      </div>
+
       <div class="col-sm-6 col-xl-3 mg-t-20 mg-sm-t-0">
         <div class="card pd-20 bg-info">
 
@@ -88,6 +96,45 @@
                   <select name="report_type" class="form-control col-md-8" id="report_type">
                     <option value="1">Employee List</option>
                     <option value="2">Summary Month by Month</option>
+                  </select>
+                </div> 
+            
+          </div>
+          <div class="modal-footer">
+              <div class="row">
+                <div class="col-sm-6 text-left">
+                <button type="submit" class="btn btn-primary">Report</button>
+                </div>
+                <div class="col-sm-6 text-right">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+          </div>
+        </form> 
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="dayclosing_report_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Day Closing Report </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form-horizontal" id="customer_report_form" target="_blank" action="{{ route('report.customer.list') }}" method="post">
+        @csrf
+          <div class="modal-body">
+               
+                <div class="form-group row custom_form_group">
+                  <label class="control-label col-md-4">Account </label>
+                  <select name="report_type" class="form-control col-md-8" name ="account" id="account">
+                    <option value="">Select Account</option>
+                    <option value="1">Pettry Cash</option>
+
+                    {{-- <option value="2"> </option> --}}
                   </select>
                 </div> 
             
