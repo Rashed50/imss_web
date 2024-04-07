@@ -12,7 +12,6 @@ use Carbon\Carbon;
  
  class DebitCreditDataService{ 
     
- 
 
  public function createNewTransaction($amount,$date,$transaction_type){
 

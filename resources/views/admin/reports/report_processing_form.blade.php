@@ -124,7 +124,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form class="form-horizontal" id="customer_report_form" target="_blank" action="{{ route('report.customer.list') }}" method="post">
+      <form class="form-horizontal" id="customer_report_form" target="_blank" action="{{ route('report.dayclosing') }}" method="post">
         @csrf
           <div class="modal-body">
                

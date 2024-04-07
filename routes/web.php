@@ -84,7 +84,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function() {
 
 
     Route::get("report/dashboard",[ReportController::class,"loadReportDasboard"])->name("report.dashboard");
-    Route::post("repor/customer/list",[ReportController::class,"getActiveCustomerReport"])->name("report.customer.list");
+    Route::post("report/customer/list",[ReportController::class,"getActiveCustomerReport"])->name("report.customer.list");
+    Route::post("report/dayclosing",[ReportController::class,"processDayClosingReport"])->name("report.dayclosing");
+    
     // download customer photo
 
     

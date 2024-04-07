@@ -48,23 +48,27 @@ class PurchaseDataService{
 
 
     public function insertNewPurchaseItemRecords($itemRecords,$purchaseId){
-        foreach ($itemRecords as $data) {
-            PurchaseRecord::insert([
-              'Quantity' => $data->qty,
-              'UnitPrice' => $data->price,
-              'Amount' => $data->subtotal,
-              'ProdPurcId' => $purchaseId,
-              'CateId' => $data->options->CategoryId,
-              'BranId' => $data->options->BranId,
-              'SizeId' => $data->options->Size,
-              'ThicId' => $data->options->Thickness,
-            ]);
+            foreach ($itemRecords as $data) {
+                PurchaseRecord::insert([
+                'Quantity' => $data->qty,
+                'UnitPrice' => $data->price,
+                'Amount' => $data->subtotal,
+                'ProdPurcId' => $purchaseId,
+                'CateId' => $data->options->CategoryId,
+                'BranId' => $data->options->BranId,
+                'SizeId' => $data->options->Size,
+                'ThicId' => $data->options->Thickness,
+                ]);
 
-        //    $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
-        //     $data->options->CategoryId,$data->options->BranId
-        //     ,$data->options->Size,$data->options->Thickness,$data->qty); 
+            //    $stockUpdate = $stockConObj->updateProductStockByCategoryBrandSizeThicknessId(
+            //     $data->options->CategoryId,$data->options->BranId
+            //     ,$data->options->Size,$data->options->Thickness,$data->qty); 
 
+            }
     }
+
+    public function getPurchaseRecordsForDayClosingReport($date){
+       return ProductPurchase::get();
     }
 
 }
