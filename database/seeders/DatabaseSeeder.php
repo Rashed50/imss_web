@@ -18,12 +18,13 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-
-           //  $this->call(PermissionTableSeeder::class);
-           // $this->call(AdminUserSeeder::class);
-          //  $this->call(DivisionSeeder::class);
+            $this->call(PermissionTableSeeder::class);
+            $this->call(AdminUserSeeder::class);
+           $this->call(DivisionSeeder::class);
             $this->call(CustomerSeeder::class);
             $this->call(ItemsSeeder::class);
+           
+
 
 
 

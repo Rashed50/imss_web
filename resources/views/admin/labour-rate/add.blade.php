@@ -63,7 +63,25 @@
                           @endif
                         </div>
                     </div>
+                    <div class="form-group row custom_form_group{{ $errors->has('BranID') ? ' has-error' : '' }}">
+                        <label class="col-sm-3 control-label">Brand Name:<span class="req_star">*</span></label>
+                        <div class="col-sm-7">
+                          <select class="form-control" name="BranID" id="BranId_val">
+                            @if(@$data)
+                            <option value="{{ @$data->BranId }}">{{ @$data->brandInfo->BranName }}</option>
+                            @else
+                            <option value="">Select Brand</option>
+                            @endif
+                          </select>
+                          @if ($errors->has('BranID'))
+                              <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('BranID') }}</strong>
+                              </span>
+                          @endif
+                        </div>
+                    </div>
 
+                  
                  
                     <div class="form-group row custom_form_group{{ $errors->has('sizeID') ? ' has-error' : '' }}">
                         <label class="col-sm-3 control-label">Size Name:<span class="req_star">*</span></label>
@@ -95,7 +113,9 @@
                           <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="LaboType" id="Unload" value="Unload"{{(@$data->LaboType=='Unload')? 'checked':''}}>
                             <label class="form-check-label" for="Unload">Unload</label>
+
                           </div>
+
                         </div>
                         @if ($errors->has('LaboType'))
                               <span class="invalid-feedback" role="alert">
