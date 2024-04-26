@@ -16,17 +16,34 @@ class ItemsSeeder extends Seeder
     {
         DB::table('categories')->insert([
             'CateName' => 'Rod' , // 1
-              'CateBLName' => 'রড' ,
+              'CateBlName' => 'রড' ,
         ]);
 
         DB::table('categories')->insert([
             'CateName' => 'Cement', // 2
-                'CateBLName' => 'সিমেন্ট' ,
+                'CateBlName' => 'সিমেন্ট' ,
         ]);
 
         DB::table('categories')->insert([
             'CateName' => 'Tin', // 3
-                'CateBLName' => 'টিন' ,
+            'CateBlName' => 'টিন' ,
+        ]);
+
+    // Rod
+        DB::table('brands')->insert([
+            'BranName' => 'BSRM' ,
+            'BranBlName'=>'BSRM1',
+            'CateId' => 1
+        ]);
+        DB::table('brands')->insert([
+            'BranName' => 'PSRM' ,
+            'BranBlName'=>'PSRM1',
+            'CateId' => 1
+        ]);
+        DB::table('brands')->insert([
+            'BranName' => 'CSRM' ,
+            'BranBlName'=>'CSRM1',
+            'CateId' => 1
         ]);
 
 
@@ -34,35 +51,20 @@ class ItemsSeeder extends Seeder
          DB::table('brands')->insert([
             'BranName' => 'Holcim' ,
             'BranBlName'=>'Holcim1',
-            'CateId' => 1
+            'CateId' => 2
         ]);
         DB::table('brands')->insert([
             'BranName' => 'OPC' ,
             'BranBlName'=>'OPC1',
-            'CateId' => 1
+            'CateId' => 2
         ]);
         DB::table('brands')->insert([
             'BranName' => 'Bengle' ,
             'BranBlName'=>'Bengle1',
-            'CateId' => 1
+            'CateId' => 2
         ]);
 
-// Rod
-        DB::table('brands')->insert([
-            'BranName' => 'BSRM' ,
-            'BranBlName'=>'BSRM1',
-            'CateId' => 2
-        ]);
-        DB::table('brands')->insert([
-            'BranName' => 'PSRM' ,
-            'BranBlName'=>'PSRM1',
-            'CateId' => 2
-        ]);
-        DB::table('brands')->insert([
-            'BranName' => 'CSRM' ,
-            'BranBlName'=>'CSRM1',
-            'CateId' => 2
-        ]);
+
 
 // Tin
         DB::table('brands')->insert([

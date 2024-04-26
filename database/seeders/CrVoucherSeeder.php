@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use App\Models\CrVoucher;
 use App\Models\Transactions;
 use App\Models\DebitCredit;
+use Illuminate\Support\Facades\DB;
+
 use Carbon\Carbon;
 
 class CrVoucherSeeder extends Seeder
@@ -17,20 +19,22 @@ class CrVoucherSeeder extends Seeder
      */
     public function run()
     {
-        $trnId = Transactions::insertGetId([
+         Transactions::insert([
             "TranDate" => Carbon::now(),
             "TranAmount" => 300,
             "TranTypeId" => 1,
         ]);
+        $trnId = DB::getPdo()->lastInsertId();
 
-        DebitCredit::insertGetId([ 
+
+        DebitCredit::insert([ 
             "Amount" =>300,
             "TranId" =>  $trnId,
             "ChartOfAcctId" => 1,
             "DrCrTypeId" => 2,  // credit
         ]);
 
-        DebitCredit::insertGetId([
+        DebitCredit::insert([
            
             "Amount" => 300,
             "TranId" =>  $trnId,
@@ -38,7 +42,7 @@ class CrVoucherSeeder extends Seeder
             "DrCrTypeId" => 1, // debit
         ]);
 
-        CrVoucher::insertGetId([
+        CrVoucher::insert([
            
             "CrTypeId" => 1,
             "TransactionId" =>  $trnId,

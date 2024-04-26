@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Transactions;
 use App\Models\DebitCredit;
 use App\Models\VendorPayment;
+use Illuminate\Support\Facades\DB;
+
 use Carbon\Carbon;
 
 class VendorPaymentSeeder extends Seeder
@@ -18,20 +20,22 @@ class VendorPaymentSeeder extends Seeder
     public function run()
     {
 
-        $trnId = Transactions::insertGetId([
+        Transactions::insert([
             "TranDate" => Carbon::now(),
             "TranAmount" => 5000,
             "TranTypeId" => 1,
         ]);
+        $trnId = DB::getPdo()->lastInsertId();
 
-        DebitCredit::insertGetId([ 
+
+        DebitCredit::insert([ 
             "Amount" => 5000,
             "TranId" =>  $trnId,
             "ChartOfAcctId" => 1,
             "DrCrTypeId" => 1,
         ]);
 
-        DebitCredit::insertGetId([
+        DebitCredit::insert([
            
             "Amount" => 5000,
             "TranId" =>  $trnId,

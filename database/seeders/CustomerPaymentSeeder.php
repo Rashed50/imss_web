@@ -18,20 +18,24 @@ class CustomerPaymentSeeder extends Seeder
     public function run()
     {
         
-        $trnId = Transactions::insertGetId([
+      //  $trnId = rand(100,999);
+         Transactions::insert([
             "TranDate" => Carbon::now(),
             "TranAmount" => 200,
             "TranTypeId" => 1,
         ]);
 
-        DebitCredit::insertGetId([ 
+        $trnId = DB::getPdo()->lastInsertId();
+
+
+        DebitCredit::insert([ 
             "Amount" => 200,
             "TranId" =>  $trnId,
             "ChartOfAcctId" => 1,
             "DrCrTypeId" => 2,  // credit
         ]);
 
-        DebitCredit::insertGetId([
+        DebitCredit::insert([
            
             "Amount" => 200,
             "TranId" =>  $trnId,
