@@ -1,5 +1,5 @@
 <!-- ########## START: LEFT PANEL ########## -->
-<div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> IMS Software </a></div>
+<div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i>GN IMS </a></div>
 <div class="sl-sideleft">
 
   <!-- <div class="input-group input-group-search">
